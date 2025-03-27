@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from data_models.models import Estrategia
+from data_models.models import Estrategia, Evento
 
 def estra_view(request):
     return render(request, 'estra.html')
@@ -103,7 +103,44 @@ def formulario_estrategia_view(request):
     return render(request, 'formulario_estrategia.html')
 
 def formulario_evento_view(request):
-    return render(request, 'formulario_evento.html')
+    if request.method == 'POST':
+        # Obtener datos del formulario
+        estrategia_id = request.POST.get('estrategia')  # ID de la estrategia seleccionada
+        estrategia = get_object_or_404(Estrategia, id=estrategia_id)
+
+        nombre_evento = request.POST.get('nombre-evento')
+        fecha_inicio = request.POST.get('fecha-inicio')
+        fecha_fin = request.POST.get('fecha-fin')
+        hora_inicio = request.POST.get('hora-inicio')
+        hora_fin = request.POST.get('hora-fin')
+        ubicacion_evento = request.POST.get('ubicacion-evento')
+        tipo_evento = request.POST.get('tipo-evento')
+        descripcion_evento = request.POST.get('descripcion-evento')
+        profesor_cargo = request.POST.get('profesor-cargo')
+        telefono_contacto = request.POST.get('telefono-contacto')
+
+        # Crear y guardar el objeto Evento
+        evento = Evento(
+            estrategia=estrategia,
+            nombre_evento=nombre_evento,
+            fecha_inicio=fecha_inicio,
+            fecha_fin=fecha_fin,
+            hora_inicio=hora_inicio,
+            hora_fin=hora_fin,
+            ubicacion_evento=ubicacion_evento,
+            tipo_evento=tipo_evento,
+            descripcion_evento=descripcion_evento,
+            profesor_cargo=profesor_cargo,
+            telefono_contacto=telefono_contacto
+        )
+        evento.save()
+
+        # Redirigir a la página de eventos
+        return redirect('eventos')
+
+    # Renderizar el formulario en caso de GET
+    estrategias = Estrategia.objects.all()  # Obtener todas las estrategias para el dropdown
+    return render(request, 'formulario_evento.html', {'estrategias': estrategias})
 
 def formulario_usuario_view(request):
     return render(request, 'formulario_usuario.html')

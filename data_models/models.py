@@ -36,7 +36,11 @@ class Estrategia(models.Model):
     # Representación de la estrategia
     def __str__(self):
         return f"Estrategia: {self.nombre or 'Sin nombre'} ({self.curso} - {self.anio_escolar} - {self.grupo})"
+
 class Evento(models.Model):
+    # Relación con Estrategia
+    estrategia = models.ForeignKey('Estrategia', on_delete=models.CASCADE, related_name='eventos')
+
     # Campo: Nombre del Evento
     nombre_evento = models.CharField(max_length=100)
 

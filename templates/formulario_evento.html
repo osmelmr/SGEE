@@ -16,7 +16,7 @@
   <!--<<link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">-->
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
   <!-- Archivos CSS de Vendor -->
   <!--
@@ -116,7 +116,18 @@
 
     <section id="formulario-evento" class="formulario-evento">
       <div class="container">
-        <form id="form-evento" class="php-email-form">
+        <form id="form-evento" method="POST" class="php-email-form">
+          {% csrf_token %}
+          <!-- Campo: Estrategia -->
+          <div class="form-group mb-4">
+            <label for="estrategia">Estrategia Asociada</label>
+            <select id="estrategia" name="estrategia" class="form-control" required>
+              <option value="">Seleccione una estrategia</option>
+              {% for estrategia in estrategias %}
+              <option value="{{ estrategia.id }}">{{ estrategia.nombre }}</option>
+              {% endfor %}
+            </select>
+          </div>
           <!-- Campo: Nombre del Evento -->
           <div class="form-group mb-4">
             <label for="nombre-evento">Nombre del Evento</label>
