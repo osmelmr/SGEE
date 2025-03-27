@@ -41,4 +41,4 @@ urlpatterns = [
     path('formulario_informacion_pro/', views.formulario_informacion_pro_view, name='formulario_informacion_pro'),
     path('eliminar_estrategia/<int:estra_id>/', views.eliminarEstrategia, name='eliminar_estrategia'),
 ]
-"""probando4"""
+"""probando2"""
