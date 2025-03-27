@@ -32,8 +32,8 @@ def sobrenos_view(request):
 def testimonials_view(request):
     return render(request, 'testimonials.html')
 
-def formularios_encuestas_view(request):
-    return render(request, 'formularios_encuestas.html')
+def formulario_encuesta_view(request):
+    return render(request, 'formulario_encuesta.html')
 
 def formulario_estrategia_view(request):
     if request.method == 'POST':
@@ -102,11 +102,11 @@ def formulario_estrategia_view(request):
     # Renderizar el formulario en caso de que el método sea GET
     return render(request, 'formulario_estrategia.html')
 
-def formulario_eventos_view(request):
-    return render(request, 'formulario_eventos.html')
+def formulario_evento_view(request):
+    return render(request, 'formulario_evento.html')
 
-def formulario_usuarios_view(request):
-    return render(request, 'formulario_usuarios.html')
+def formulario_usuario_view(request):
+    return render(request, 'formulario_usuario.html')
 
 def formulario_reporte_view(request):
     return render(request, 'formulario_reporte.html')

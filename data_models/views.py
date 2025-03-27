@@ -84,7 +84,7 @@ def evento_create(request):
     else:
         form = EventoForm()
     context = {'form': form}
-    return render(request, 'formulario_eventos.html', context)
+    return render(request, 'formulario_evento.html', context)
 
 def evento_update(request, pk):
     evento = get_object_or_404(Evento, pk=pk)
@@ -99,7 +99,7 @@ def evento_update(request, pk):
     else:
         form = EventoForm(instance=evento)
     context = {'form': form, 'evento': evento}
-    return render(request, 'formulario_eventos.html', context)
+    return render(request, 'formulario_evento.html', context)
 
 def evento_delete(request, pk):
     evento = get_object_or_404(Evento, pk=pk)
@@ -231,7 +231,7 @@ def registro_usuario_create(request):
     else:
         form = RegistroUsuarioForm()
     context = {'form': form}
-    return render(request, 'formulario_usuarios.html', context)
+    return render(request, 'formulario_usuario.html', context)
 
 def registro_usuario_update(request, pk):
     usuario = get_object_or_404(RegistroUsuario, pk=pk)
@@ -246,7 +246,7 @@ def registro_usuario_update(request, pk):
     else:
         form = RegistroUsuarioForm(instance=usuario)
     context = {'form': form, 'usuario': usuario}
-    return render(request, 'formulario_usuarios.html', context)
+    return render(request, 'formulario_usuario.html', context)
 
 def registro_usuario_delete(request, pk):
     usuario = get_object_or_404(RegistroUsuario, pk=pk)
@@ -280,7 +280,7 @@ def encuesta_create(request):
     else:
         form = EncuestaForm()
     context = {'form': form}
-    return render(request, 'formularios_encuestas.html', context)
+    return render(request, 'formulario_encuesta.html', context)
 
 def encuesta_update(request, pk):
     encuesta = get_object_or_404(Encuesta, pk=pk)
@@ -295,7 +295,7 @@ def encuesta_update(request, pk):
     else:
         form = EncuestaForm(instance=encuesta)
     context = {'form': form, 'encuesta': encuesta}
-    return render(request, 'formularios_encuestas.html', context)
+    return render(request, 'formulario_encuesta.html', context)
 
 def encuesta_delete(request, pk):
     encuesta = get_object_or_404(Encuesta, pk=pk)

@@ -33,12 +33,11 @@ urlpatterns = [
     path('encuestas/', encuestas_view, name='encuestas'),
     path('sobrenos/',sobrenos_view, name='sobrenos'),
     path('testimonials/',testimonials_view, name='testimonials'),
-    path('formularios_encuestas/', views.formularios_encuestas_view, name='formularios_encuestas'),
+    path('formulario_encuesta/', views.formulario_encuesta_view, name='formulario_encuesta'),
     path('formulario_estrategia/', views.formulario_estrategia_view, name='formulario_estrategia'),
-    path('formulario_eventos/', views.formulario_eventos_view, name='formulario_eventos'),
-    path('formulario_usuarios/', views.formulario_usuarios_view, name='formulario_usuarios'),
+    path('formulario_evento/', views.formulario_evento_view, name='formulario_evento'),
+    path('formulario_usuario/', views.formulario_usuario_view, name='formulario_usuario'),
     path('formulario_reporte/', views.formulario_reporte_view, name='formulario_reporte'),
     path('formulario_informacion_pro/', views.formulario_informacion_pro_view, name='formulario_informacion_pro'),
     path('eliminar_estrategia/<int:estra_id>/', views.eliminarEstrategia, name='eliminar_estrategia'),
 ]
-"""probando2"""
