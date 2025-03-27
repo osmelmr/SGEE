@@ -39,6 +39,5 @@ urlpatterns = [
     path('formulario_usuarios/', views.formulario_usuarios_view, name='formulario_usuarios'),
     path('formulario_reporte/', views.formulario_reporte_view, name='formulario_reporte'),
     path('formulario_informacion_pro/', views.formulario_informacion_pro_view, name='formulario_informacion_pro'),
-    path('exito/', views.bien, name='success_page'),
     path('eliminar_estrategia/<int:estra_id>/', views.eliminarEstrategia, name='eliminar_estrategia'),
 ]

@@ -101,8 +101,7 @@ def formulario_estrategia_view(request):
 
     # Renderizar el formulario en caso de que el método sea GET
     return render(request, 'formulario_estrategia.html')
-def bien(request):
-    return render(request, 'okk.html')
+
 def formulario_eventos_view(request):
     return render(request, 'formulario_eventos.html')
 
