@@ -165,7 +165,7 @@
   <div class="container-fluid">
     <div class="row">
       <!-- Imagen con animación -->
-      <div class="col-lg-5 align-items-stretch position-relative fade-in image-box" style="background-image: url('assets/img/why-us.jpg');">
+      <div class="col-lg-5 align-items-stretch position-relative fade-in image-box" style="background-image: url('{% static ".assets/img/why-us.jpg"%}')">
         <img src="{% static './imagenes/estrategiaeducativa1.jpeg'%}" alt="Estrategias Educativas" class="custom-image img-fluid mb-4">
       </div>
 
@@ -360,7 +360,7 @@
             </div>
             <div class="gallery-scale-in swiper-slide">
               <a class="glightbox" data-gallery="images-gallery" href="{% static './imagenes/galeria/galeria8.jpg' %}">
-                <img src="{% static './imagenes/galeria/galeria8.jpeg" class="img-fluid" alt="Galería 7">
+                <img src="{% static './imagenes/galeria/galeria8.jpeg'%}" class="img-fluid" alt="Galería 7">
               </a>
             </div>
             <div class="gallery-scale-in swiper-slide">
