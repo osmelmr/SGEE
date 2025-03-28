@@ -195,7 +195,6 @@
         todosLlenos = false;
         campo.classList.add('is-invalid');
         
-        // Mostrar mensaje de error debajo del campo
         let errorMsg = campo.nextElementSibling;
         if (!errorMsg || !errorMsg.classList.contains('invalid-feedback')) {
           errorMsg = document.createElement('div');
@@ -216,24 +215,20 @@
 
   window.mostrarError = function(mensaje, elemento = null) {
     if (elemento) {
-      // Eliminar mensajes de error previos
       const existingErrors = elemento.parentNode.querySelectorAll('.invalid-feedback');
       existingErrors.forEach(error => error.remove());
       
-      // Mostrar error
       elemento.classList.add('is-invalid');
       const errorMsg = document.createElement('div');
       errorMsg.className = 'invalid-feedback d-block';
       errorMsg.textContent = mensaje;
       elemento.parentNode.appendChild(errorMsg);
       
-      // Desplazarse al primer error si hay varios
       if (!document.querySelector('.is-invalid:focus')) {
         elemento.scrollIntoView({ behavior: 'smooth', block: 'center' });
         elemento.focus();
       }
     } else {
-      // Mostrar error general
       const errorContainer = select('#error-message');
       if (errorContainer) {
         errorContainer.textContent = mensaje;
@@ -245,30 +240,202 @@
     }
   };
 
+  // =============== VALIDACIONES ESPECÍFICAS ===============
+
   window.validarNombreApellido = function(valor, campo) {
-    const regex = /^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/;
+    const regex = /^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]{2,}$/;
     const valido = regex.test(valor);
     if (campo) {
-      if (!valido && valor) {
-        mostrarError('Solo se permiten letras y espacios', campo);
-      } else {
-        campo.classList.remove('is-invalid');
-        const errorMsg = campo.nextElementSibling;
-        if (errorMsg && errorMsg.classList.contains('invalid-feedback')) {
-          errorMsg.remove();
+        if (!valido && valor) {
+            mostrarError('Solo se permiten letras y espacios (mínimo 2 caracteres)', campo);
+        } else if (valido) {
+            campo.classList.remove('is-invalid');
+            const errorMsg = campo.nextElementSibling;
+            if (errorMsg && errorMsg.classList.contains('invalid-feedback')) {
+                errorMsg.remove();
+            }
         }
-      }
+    }
+    return valido;
+  };
+
+  window.validarGrupo = function(valor, campo) {
+    const regex = /^ID[A-Z0-9]{2,}$/;
+    const valido = regex.test(valor);
+    if (campo) {
+        if (!valido && valor) {
+            mostrarError('Debe comenzar con ID seguido de números (ej: ID123)', campo);
+        } else if (valido) {
+            campo.classList.remove('is-invalid');
+            const errorMsg = campo.nextElementSibling;
+            if (errorMsg && errorMsg.classList.contains('invalid-feedback')) {
+                errorMsg.remove();
+            }
+        }
+    }
+    return valido;
+  };
+
+  window.validarSolapin = function(valor, campo) {
+    const regex = /^#[A-Za-z0-9]{4,}$/;
+    const valido = regex.test(valor);
+    if (campo) {
+        if (!valido && valor) {
+            mostrarError('Debe comenzar con # seguido de letras/números (mínimo 4 caracteres)', campo);
+        } else if (valido) {
+            campo.classList.remove('is-invalid');
+            const errorMsg = campo.nextElementSibling;
+            if (errorMsg && errorMsg.classList.contains('invalid-feedback')) {
+                errorMsg.remove();
+            }
+        }
+    }
+    return valido;
+  };
+
+  window.validarNombreEvento = function(valor, campo) {
+    const regex = /^[A-Za-zÁÉÍÓÚáéíóúñÑ\s0-9]{5,}$/;
+    const valido = regex.test(valor);
+    if (campo) {
+        if (!valido && valor) {
+            mostrarError('No se permiten caracteres especiales (mínimo 5 caracteres)', campo);
+        } else if (valido) {
+            campo.classList.remove('is-invalid');
+            const errorMsg = campo.nextElementSibling;
+            if (errorMsg && errorMsg.classList.contains('invalid-feedback')) {
+                errorMsg.remove();
+            }
+        }
+    }
+    return valido;
+  };
+
+  window.validarProfesorCargo = function(valor, campo) {
+    const regex = /^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]{5,}$/;
+    const valido = regex.test(valor);
+    if (campo) {
+        if (!valido && valor) {
+            mostrarError('Solo se permiten letras y espacios (mínimo 5 caracteres)', campo);
+        } else if (valido) {
+            campo.classList.remove('is-invalid');
+            const errorMsg = campo.nextElementSibling;
+            if (errorMsg && errorMsg.classList.contains('invalid-feedback')) {
+                errorMsg.remove();
+            }
+        }
+    }
+    return valido;
+  };
+
+  window.validarFechasEvento = function(fechaInicio, fechaFin, campoFin) {
+    const inicio = new Date(fechaInicio);
+    const fin = new Date(fechaFin);
+    const valido = fin >= inicio;
+    
+    if (campoFin) {
+        if (!valido && fechaInicio && fechaFin) {
+            mostrarError('La fecha de finalización no puede ser anterior a la de inicio', campoFin);
+        } else if (valido) {
+            campoFin.classList.remove('is-invalid');
+            const errorMsg = campoFin.nextElementSibling;
+            if (errorMsg && errorMsg.classList.contains('invalid-feedback')) {
+                errorMsg.remove();
+            }
+        }
+    }
+    return valido;
+  };
+
+  window.validarTelefono = function(telefono, campo) {
+    const regex = /^[\d\s+-]{8,15}$/;
+    const valido = regex.test(telefono);
+    
+    if (campo) {
+        if (!valido && telefono) {
+            mostrarError('Formato inválido. Use solo números, +, - o espacios (8-15 caracteres)', campo);
+        } else if (valido) {
+            campo.classList.remove('is-invalid');
+            const errorMsg = campo.nextElementSibling;
+            if (errorMsg && errorMsg.classList.contains('invalid-feedback')) {
+                errorMsg.remove();
+            }
+        }
+    }
+    return valido;
+  };
+
+  window.validarBrigada = function(valor, campo) {
+    const regex = /^ID[A-Z0-9]{2,}$/;
+    const valido = regex.test(valor);
+    if (campo) {
+        if (!valido && valor) {
+            mostrarError('Debe comenzar con ID seguido de letras mayúsculas/números', campo);
+        } else if (valido) {
+            campo.classList.remove('is-invalid');
+            const errorMsg = campo.nextElementSibling;
+            if (errorMsg && errorMsg.classList.contains('invalid-feedback')) {
+                errorMsg.remove();
+            }
+        }
+    }
+    return valido;
+  };
+
+  window.validarCurso = function(valor, campo) {
+    const regex = /^\d{2}-\d{2}$/;
+    const valido = regex.test(valor);
+    if (campo) {
+        if (!valido && valor) {
+            mostrarError('Formato inválido. Use dos números, guión y dos números (ej: 01-05)', campo);
+        } else if (valido) {
+            campo.classList.remove('is-invalid');
+            const errorMsg = campo.nextElementSibling;
+            if (errorMsg && errorMsg.classList.contains('invalid-feedback')) {
+                errorMsg.remove();
+            }
+        }
+    }
+    return valido;
+  };
+
+  window.validarNombreAutor = function(valor, campo) {
+    const regex = /^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]{5,}$/;
+    const valido = regex.test(valor);
+    if (campo) {
+        if (!valido && valor) {
+            mostrarError('Solo se permiten letras y espacios (mínimo 5 caracteres)', campo);
+        } else if (valido) {
+            campo.classList.remove('is-invalid');
+            const errorMsg = campo.nextElementSibling;
+            if (errorMsg && errorMsg.classList.contains('invalid-feedback')) {
+                errorMsg.remove();
+            }
+        }
+    }
+    return valido;
+  };
+
+  window.validarCampoGrande = function(valor, campo) {
+    const valido = valor.length >= 50;
+    if (campo) {
+        if (!valido && valor) {
+            mostrarError('Este campo requiere al menos 50 caracteres', campo);
+        } else if (valido) {
+            campo.classList.remove('is-invalid');
+            const errorMsg = campo.nextElementSibling;
+            if (errorMsg && errorMsg.classList.contains('invalid-feedback')) {
+                errorMsg.remove();
+            }
+        }
     }
     return valido;
   };
 
   window.validarCorreo = function(correo, campo) {
-    // Expresión regular mejorada para validación de correo
     const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const valido = regex.test(correo);
     
     if (campo) {
-      // Mostrar ayuda sobre el formato esperado
       const helpText = campo.parentNode.querySelector('.email-help');
       if (!helpText) {
         const help = document.createElement('small');
@@ -277,8 +444,13 @@
         campo.parentNode.appendChild(help);
       }
       
+      if (correo && !correo.endsWith('@') && !correo.endsWith('.') && !valido) {
+        campo.classList.add('is-validating');
+      } else {
+        campo.classList.remove('is-validating');
+      }
+      
       if (!valido && correo) {
-        // Mensajes de error más descriptivos
         if (!correo.includes('@')) {
           mostrarError('El correo debe contener un @', campo);
         } else if (correo.indexOf('@') === 0 || correo.indexOf('@') === correo.length - 1) {
@@ -292,7 +464,7 @@
         } else {
           mostrarError('Formato de correo inválido. Ejemplo válido: usuario@dominio.com', campo);
         }
-      } else {
+      } else if (valido) {
         campo.classList.remove('is-invalid');
         const errorMsg = campo.nextElementSibling;
         if (errorMsg && errorMsg.classList.contains('invalid-feedback')) {
@@ -308,7 +480,6 @@
     const valido = regex.test(usuario);
     
     if (campo) {
-      // Mostrar requisitos
       const helpText = campo.parentNode.querySelector('.username-help');
       if (!helpText) {
         const help = document.createElement('small');
@@ -327,7 +498,7 @@
         } else {
           mostrarError('Formato de usuario inválido', campo);
         }
-      } else {
+      } else if (valido) {
         campo.classList.remove('is-invalid');
         const errorMsg = campo.nextElementSibling;
         if (errorMsg && errorMsg.classList.contains('invalid-feedback')) {
@@ -343,7 +514,6 @@
     const valido = regex.test(contraseña);
     
     if (campo) {
-      // Mostrar requisitos
       const helpText = campo.parentNode.querySelector('.password-help');
       if (!helpText) {
         const help = document.createElement('small');
@@ -360,25 +530,7 @@
         if (!/[!@#$%^&*]/.test(contraseña)) mensaje += '\n- Al menos 1 carácter especial (!@#$%^&*)';
         
         mostrarError(mensaje, campo);
-      } else {
-        campo.classList.remove('is-invalid');
-        const errorMsg = campo.nextElementSibling;
-        if (errorMsg && errorMsg.classList.contains('invalid-feedback')) {
-          errorMsg.remove();
-        }
-      }
-    }
-    return valido;
-  };
-
-  window.validarTelefono = function(telefono, campo) {
-    const regex = /^[\d\s+-]{8,15}$/;
-    const valido = regex.test(telefono);
-    
-    if (campo) {
-      if (!valido && telefono) {
-        mostrarError('Formato inválido. Use solo números, +, - o espacios (8-15 caracteres)', campo);
-      } else {
+      } else if (valido) {
         campo.classList.remove('is-invalid');
         const errorMsg = campo.nextElementSibling;
         if (errorMsg && errorMsg.classList.contains('invalid-feedback')) {
@@ -473,7 +625,6 @@
         `;
         preguntasContainer.appendChild(nuevaPregunta);
         
-        // Añadir evento al nuevo botón eliminar
         nuevaPregunta.querySelector('.btn-eliminar').addEventListener('click', function() {
           eliminarPregunta(this);
         });
@@ -503,13 +654,11 @@
         event.preventDefault();
         let valido = true;
 
-        // Validar campos vacíos
         if (!validarCamposVacios('form-crear-encuesta')) {
           mostrarError('Por favor complete todos los campos requeridos.');
           valido = false;
         }
 
-        // Validar título de encuesta
         const tituloEncuesta = select('#titulo-encuesta');
         if (tituloEncuesta && !validarNombreApellido(tituloEncuesta.value, tituloEncuesta)) {
           valido = false;
@@ -517,7 +666,6 @@
 
         if (!valido) return;
 
-        // Verificar si la encuesta ya existe
         try {
           const existeEncuesta = await verificarExistencia('/verificar-encuesta', { titulo: tituloEncuesta.value });
           if (existeEncuesta) {
@@ -543,27 +691,34 @@
         event.preventDefault();
         let valido = true;
 
-        // Validar campos vacíos
         if (!validarCamposVacios('form-evento')) {
           mostrarError('Por favor complete todos los campos requeridos.');
           valido = false;
         }
 
-        // Validar nombre del evento
         const nombreEvento = select('#nombre-evento');
-        if (nombreEvento && !validarNombreApellido(nombreEvento.value, nombreEvento)) {
+        if (nombreEvento && !validarNombreEvento(nombreEvento.value, nombreEvento)) {
           valido = false;
         }
 
-        // Validar teléfono
+        const profesorCargo = select('#profesor-cargo');
+        if (profesorCargo && !validarProfesorCargo(profesorCargo.value, profesorCargo)) {
+          valido = false;
+        }
+
         const telefonoContacto = select('#telefono-contacto');
         if (telefonoContacto && !validarTelefono(telefonoContacto.value, telefonoContacto)) {
           valido = false;
         }
 
+        const fechaInicio = select('#fecha-inicio').value;
+        const fechaFin = select('#fecha-fin');
+        if (!validarFechasEvento(fechaInicio, fechaFin.value, fechaFin)) {
+          valido = false;
+        }
+
         if (!valido) return;
 
-        // Verificar si el evento ya existe
         try {
           const existeEvento = await verificarExistencia('/verificar-evento', { nombre: nombreEvento.value });
           if (existeEvento) {
@@ -589,13 +744,11 @@
         event.preventDefault();
         let valido = true;
 
-        // Validar campos vacíos
         if (!validarCamposVacios('form-profesoral')) {
           mostrarError('Por favor complete todos los campos requeridos.');
           valido = false;
         }
 
-        // Validar nombres y apellidos
         const nombre = select('#nombre-profesor');
         const primerApellido = select('#primer-apellido');
         const segundoApellido = select('#segundo-apellido');
@@ -604,11 +757,12 @@
         if (primerApellido && !validarNombreApellido(primerApellido.value, primerApellido)) valido = false;
         if (segundoApellido && segundoApellido.value && !validarNombreApellido(segundoApellido.value, segundoApellido)) valido = false;
 
-        // Validar teléfono
+        const solapin = select('#solapin');
+        if (solapin && !validarSolapin(solapin.value, solapin)) valido = false;
+
         const telefono = select('#telefono');
         if (telefono && !validarTelefono(telefono.value, telefono)) valido = false;
 
-        // Validar correo
         const correo = select('#correo');
         if (correo) {
           correo.addEventListener('input', function() {
@@ -619,7 +773,6 @@
 
         if (!valido) return;
 
-        // Verificar si el profesor ya existe
         try {
           const existeProfesor = await verificarExistencia('/verificar-profesor', {
             nombre: nombre.value,
@@ -649,15 +802,22 @@
         event.preventDefault();
         let valido = true;
 
-        // Validar campos vacíos
         if (!validarCamposVacios('form-reporte')) {
           mostrarError('Por favor complete todos los campos requeridos.');
           valido = false;
         }
 
+        const brigada = select('#brigada');
+        if (brigada && !validarBrigada(brigada.value, brigada)) valido = false;
+
+        const curso = select('#curso');
+        if (curso && !validarCurso(curso.value, curso)) valido = false;
+
+        const autor = select('#autor');
+        if (autor && !validarNombreAutor(autor.value, autor)) valido = false;
+
         if (!valido) return;
 
-        // Verificar si el código ya existe
         const codigo = select('#codigo');
         try {
           const existeCodigo = await verificarExistencia('/verificar-codigo', { codigo: codigo.value });
@@ -680,20 +840,17 @@
   const initFormularioRegistro = () => {
     const formRegistro = select('#form-registro');
     if (formRegistro) {
-      // Validación en tiempo real para el correo
       const correoInput = select('#correo');
       if (correoInput) {
         correoInput.addEventListener('input', function() {
           validarCorreo(this.value, this);
         });
         
-        // Validar al perder el foco
         correoInput.addEventListener('blur', function() {
           if (this.value) validarCorreo(this.value, this);
         });
       }
 
-      // Validación en tiempo real para el usuario
       const usuarioInput = select('#user');
       if (usuarioInput) {
         usuarioInput.addEventListener('input', function() {
@@ -705,13 +862,11 @@
         event.preventDefault();
         let valido = true;
 
-        // Validar campos vacíos
         if (!validarCamposVacios('form-registro')) {
           mostrarError('Por favor complete todos los campos requeridos.');
           valido = false;
         }
 
-        // Validar nombres y apellidos
         const nombre = select('#nombre');
         const primerApellido = select('#primer-apellido');
         const segundoApellido = select('#segundo-apellido');
@@ -720,25 +875,26 @@
         if (primerApellido && !validarNombreApellido(primerApellido.value, primerApellido)) valido = false;
         if (segundoApellido && segundoApellido.value && !validarNombreApellido(segundoApellido.value, segundoApellido)) valido = false;
 
-        // Validar usuario
+        const grupo = select('#grupo');
+        if (grupo && !validarGrupo(grupo.value, grupo)) valido = false;
+
+        const solapin = select('#solapin');
+        if (solapin && !validarSolapin(solapin.value, solapin)) valido = false;
+
         const usuario = select('#user');
         if (usuario && !validarUsuario(usuario.value, usuario)) valido = false;
 
-        // Validar contraseña
         const contraseña = select('#password');
         if (contraseña && !validarContraseña(contraseña.value, contraseña)) valido = false;
 
-        // Validar teléfono
         const telefono = select('#telefono');
         if (telefono && !validarTelefono(telefono.value, telefono)) valido = false;
 
-        // Validar correo
         const correo = select('#correo');
         if (correo && !validarCorreo(correo.value, correo)) valido = false;
 
         if (!valido) return;
 
-        // Verificar si el usuario ya existe
         try {
           const existeUsuario = await verificarExistencia('/verificar-usuario', { usuario: usuario.value });
           if (existeUsuario) {
@@ -764,21 +920,28 @@
         event.preventDefault();
         let valido = true;
 
-        // Validar campos vacíos
         if (!validarCamposVacios('form-estrategia')) {
           mostrarError('Por favor complete todos los campos requeridos.');
           valido = false;
         }
 
-        // Validar nombre de estrategia
         const tituloEstrategia = select('#titulo-estrategia');
         if (tituloEstrategia && !validarNombreApellido(tituloEstrategia.value, tituloEstrategia)) {
           valido = false;
         }
 
+        const autor = select('#autor-estrategia');
+        if (autor && !validarNombreAutor(autor.value, autor)) {
+          valido = false;
+        }
+
+        const descripcion = select('#descripcion-estrategia');
+        if (descripcion && !validarCampoGrande(descripcion.value, descripcion)) {
+          valido = false;
+        }
+
         if (!valido) return;
 
-        // Verificar si la estrategia ya existe
         try {
           const existeEstrategia = await verificarExistencia('/verificar-estrategia', { titulo: tituloEstrategia.value });
           if (existeEstrategia) {
@@ -803,5 +966,65 @@
     initFormularioReportes();
     initFormularioRegistro();
     initFormularioEstrategia();
+
+    // Configuración de validación en tiempo real para campos comunes
+    const correoInputs = document.querySelectorAll('input[type="email"]');
+    correoInputs.forEach(input => {
+      input.addEventListener('input', function() {
+        validarCorreo(this.value, this);
+      });
+      input.addEventListener('blur', function() {
+        if (this.value) validarCorreo(this.value, this);
+      });
+    });
+
+    const telefonoInputs = document.querySelectorAll('input[type="tel"]');
+    telefonoInputs.forEach(input => {
+      input.addEventListener('input', function() {
+        validarTelefono(this.value, this);
+      });
+      input.addEventListener('blur', function() {
+        if (this.value) validarTelefono(this.value, this);
+      });
+    });
+
+    const nombreInputs = document.querySelectorAll('.validar-nombre');
+    nombreInputs.forEach(input => {
+      input.addEventListener('input', function() {
+        validarNombreApellido(this.value, this);
+      });
+      input.addEventListener('blur', function() {
+        if (this.value) validarNombreApellido(this.value, this);
+      });
+    });
+
+    // Validación en tiempo real para otros campos
+    const grupoInputs = document.querySelectorAll('.validar-grupo');
+    grupoInputs.forEach(input => {
+      input.addEventListener('input', function() {
+        validarGrupo(this.value, this);
+      });
+    });
+
+    const solapinInputs = document.querySelectorAll('.validar-solapin');
+    solapinInputs.forEach(input => {
+      input.addEventListener('input', function() {
+        validarSolapin(this.value, this);
+      });
+    });
+
+    const usuarioInputs = document.querySelectorAll('.validar-usuario');
+    usuarioInputs.forEach(input => {
+      input.addEventListener('input', function() {
+        validarUsuario(this.value, this);
+      });
+    });
+
+    const passwordInputs = document.querySelectorAll('.validar-password');
+    passwordInputs.forEach(input => {
+      input.addEventListener('input', function() {
+        validarContraseña(this.value, this);
+      });
+    });
   });
 })();
