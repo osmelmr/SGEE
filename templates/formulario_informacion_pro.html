@@ -114,7 +114,8 @@
       <p>Complete los siguientes campos para registrar un nuevo profesor.</p>
     </div>
 
-    <form id="form-profesoral" class="php-email-form">
+    <form id="form-profesoral" class="php-email-form" method="post" action="{% url 'formulario_informacion_pro' %}">
+      {% csrf_token %}
       <!-- Fila 1: Nombre -->
       <div class="form-group mb-4">
         <label for="nombre-profesor">Nombre</label>

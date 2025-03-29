@@ -1,5 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from data_models.models import Estrategia, Evento
+from django.contrib import messages
+from data_models.models import Estrategia, Evento, Profesor
+from data_models.forms import ProfesorForm
 
 def estra_view(request):
     return render(request, 'estra.html')
@@ -149,6 +151,52 @@ def formulario_reporte_view(request):
     return render(request, 'formulario_reporte.html')
 
 def formulario_informacion_pro_view(request):
+    if request.method == 'POST':
+        # Recopilar datos del formulario
+        nombre = request.POST.get('nombre-profesor')
+        primer_apellido = request.POST.get('primer-apellido')
+        segundo_apellido = request.POST.get('segundo-apellido')
+        sexo = request.POST.get('sexo')
+        categoria_docente = request.POST.get('categoria-docente')
+        asignatura = request.POST.get('asignatura')
+        solapin = request.POST.get('solapin')
+        telefono = request.POST.get('telefono')
+        correo = request.POST.get('correo')
+        brigada_asignada = request.POST.get('brigada-asignada')
+        brigadas_impartir = request.POST.get('brigadas-impartir')
+        descripcion = request.POST.get('descripcion-profesor')
+
+        # Validar campos obligatorios
+        if not nombre or not primer_apellido or not sexo or not categoria_docente or not asignatura or not solapin or not telefono or not correo or not brigada_asignada or not brigadas_impartir or not descripcion:
+            messages.error(request, "Todos los campos obligatorios deben ser completados.")
+            return render(request, 'formulario_informacion_pro.html')
+
+        # Crear una instancia del modelo Profesor
+        profesor = Profesor(
+            nombre=nombre,
+            primer_apellido=primer_apellido,
+            segundo_apellido=segundo_apellido,
+            sexo=sexo,
+            categoria_docente=categoria_docente,
+            asignatura=asignatura,
+            solapin=solapin,
+            telefono=telefono,
+            correo=correo,
+            brigada_asignada=brigada_asignada,
+            brigadas_impartir=brigadas_impartir,
+            descripcion=descripcion
+        )
+
+        # Guardar el profesor en la base de datos
+        try:
+            profesor.save()
+            messages.success(request, "Profesor registrado correctamente.")
+            return redirect('informacion_profesoral')
+        except Exception as e:
+            messages.error(request, f"Hubo un error al registrar el profesor: {str(e)}")
+            return render(request, 'formulario_informacion_pro.html')
+
+    # Renderizar el formulario en caso de GET
     return render(request, 'formulario_informacion_pro.html')
 
 def eliminarEstrategia(request, estra_id):

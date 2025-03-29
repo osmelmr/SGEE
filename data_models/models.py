@@ -75,46 +75,21 @@ class Evento(models.Model):
         return self.nombre_evento
 
 class Profesor(models.Model):
-    # Nombre
     nombre = models.CharField(max_length=50)
-
-    # Apellidos
     primer_apellido = models.CharField(max_length=50)
     segundo_apellido = models.CharField(max_length=50, blank=True, null=True)
-
-    # Sexo y Categoría Docente
-    SEXO_CHOICES = [
-        ('masculino', 'Masculino'),
-        ('femenino', 'Femenino'),
-        ('otro', 'Otro'),
-    ]
-    sexo = models.CharField(max_length=10, choices=SEXO_CHOICES)
-
-    CATEGORIA_CHOICES = [
-        ('instructor', 'Instructor'),
-        ('asistente', 'Asistente'),
-        ('auxiliar', 'Auxiliar'),
-        ('titular', 'Titular'),
-    ]
-    categoria_docente = models.CharField(max_length=10, choices=CATEGORIA_CHOICES)
-
-    # Asignatura y Solapín
+    sexo = models.CharField(max_length=20, choices=[('masculino', 'Masculino'), ('femenino', 'Femenino'), ('otro', 'Otro')])
+    categoria_docente = models.CharField(max_length=20, choices=[('instructor', 'Instructor'), ('asistente', 'Asistente'), ('auxiliar', 'Auxiliar'), ('titular', 'Titular')])
     asignatura = models.CharField(max_length=50)
-    solapin = models.CharField(max_length=10)
-
-    # Teléfono y Correo
+    solapin = models.CharField(max_length=10, unique=True)
     telefono = models.CharField(max_length=15)
     correo = models.EmailField(max_length=50)
-
-    # Brigada Asignada y Brigadas a Impartir
     brigada_asignada = models.CharField(max_length=10)
-    brigadas_impartir = models.TextField()
-
-    # Descripción
+    brigadas_impartir = models.CharField(max_length=50)
     descripcion = models.TextField()
 
     def __str__(self):
-        return f"{self.nombre} {self.primer_apellido} ({self.categoria_docente})"
+        return f"{self.nombre} {self.primer_apellido} ({self.solapin})"
 
 class Reporte(models.Model):
     brigada = models.CharField(max_length=10)

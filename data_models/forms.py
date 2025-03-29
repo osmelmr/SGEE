@@ -17,7 +17,11 @@ class EventoForm(forms.ModelForm):
 class ProfesorForm(forms.ModelForm):
     class Meta:
         model = Profesor
-        fields = '__all__'
+        fields = [
+            'nombre', 'primer_apellido', 'segundo_apellido', 'sexo', 
+            'categoria_docente', 'asignatura', 'solapin', 'telefono', 
+            'correo', 'brigada_asignada', 'brigadas_impartir', 'descripcion'
+        ]
 
 # Formulario para el modelo Reporte
 class ReporteForm(forms.ModelForm):
