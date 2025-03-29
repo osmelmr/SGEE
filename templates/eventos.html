@@ -16,7 +16,7 @@
   <!--<<link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">-->
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
   <!-- Archivos CSS de Vendor -->
   <!--
@@ -147,14 +147,14 @@
             </tr>
           </thead>
           <tbody>
-            <!-- Fila de Ejemplo 1 -->
+            {% for evento in eventos %}
             <tr>
               <td>
-                <i class="bi bi-calendar-event"></i> Copa Pascal
+                <i class="bi bi-calendar-event"></i> {{ evento.nombre_evento }}
               </td>
-              <td>FTI</td>
-              <td>10-03-2024</td>
-              <td>Lianny</td>
+              <td>{{ evento.ubicacion_evento }}</td>
+              <td>{{ evento.fecha_inicio }}</td>
+              <td>{{ evento.profesor_cargo }}</td>
               <td>
                 <button class="btn btn-action btn-ver-detalles" title="Ver Detalles">
                   <i class="bi bi-eye"></i>
@@ -168,111 +168,11 @@
                 <input type="checkbox" class="form-check-input seleccionar-fila">
               </td>
             </tr>
-            <!-- Fila de Ejemplo 2 -->
+            {% empty %}
             <tr>
-              <td>
-                <i class="bi bi-calendar-event"></i> Copa de Base de Datos
-              </td>
-              <td>FTI</td>
-              <td>4-5-2024</td>
-              <td>Luis Manuel Valera</td>
-              <td>
-                <button class="btn btn-action btn-ver-detalles" title="Ver Detalles">
-                  <i class="bi bi-eye"></i>
-                </button>
-                <button class="btn btn-action btn-modificar" title="Modificar">
-                  <i class="bi bi-pencil"></i>
-                </button>
-                <button class="btn btn-action btn-eliminar" title="Eliminar">
-                  <i class="bi bi-trash"></i>
-                </button>
-                <input type="checkbox" class="form-check-input seleccionar-fila">
-              </td>
+              <td colspan="5" class="text-center">No hay eventos registrados.</td>
             </tr>
-            <!-- Fila de Ejemplo 3 -->
-            <tr>
-              <td>
-                <i class="bi bi-calendar-event"></i> Elecciones de la FEU
-              </td>
-              <td>FTI</td>
-              <td>2-2-2025</td>
-              <td>Yanetsi</td>
-              <td>
-                <button class="btn btn-action btn-ver-detalles" title="Ver Detalles">
-                  <i class="bi bi-eye"></i>
-                </button>
-                <button class="btn btn-action btn-modificar" title="Modificar">
-                  <i class="bi bi-pencil"></i>
-                </button>
-                <button class="btn btn-action btn-eliminar" title="Eliminar">
-                  <i class="bi bi-trash"></i>
-                </button>
-                <input type="checkbox" class="form-check-input seleccionar-fila">
-              </td>
-            </tr>
-            <!-- Fila de Ejemplo 4 -->
-            <tr>
-              <td>
-                <i class="bi bi-calendar-event"></i> Global Game JAN
-              </td>
-              <td>Complejo Comedor 2</td>
-              <td>16-1-2025</td>
-              <td>Omar Correa</td>
-              <td>
-                <button class="btn btn-action btn-ver-detalles" title="Ver Detalles">
-                  <i class="bi bi-eye"></i>
-                </button>
-                <button class="btn btn-action btn-modificar" title="Modificar">
-                  <i class="bi bi-pencil"></i>
-                </button>
-                <button class="btn btn-action btn-eliminar" title="Eliminar">
-                  <i class="bi bi-trash"></i>
-                </button>
-                <input type="checkbox" class="form-check-input seleccionar-fila">
-              </td>
-            </tr>
-            <!-- Fila de Ejemplo 5 -->
-            <tr>
-              <td>
-                <i class="bi bi-calendar-event"></i> Dominó 8 de Marzo
-              </td>
-              <td>Edificio 15</td>
-              <td>8-3-2025</td>
-              <td>Luis Manuel Valera</td>
-              <td>
-                <button class="btn btn-action btn-ver-detalles" title="Ver Detalles">
-                  <i class="bi bi-eye"></i>
-                </button>
-                <button class="btn btn-action btn-modificar" title="Modificar">
-                  <i class="bi bi-pencil"></i>
-                </button>
-                <button class="btn btn-action btn-eliminar" title="Eliminar">
-                  <i class="bi bi-trash"></i>
-                </button>
-                <input type="checkbox" class="form-check-input seleccionar-fila">
-              </td>
-            </tr>
-            <!-- Fila de Ejemplo 6 -->
-            <tr>
-              <td>
-                <i class="bi bi-calendar-event"></i> Mundialito
-              </td>
-              <td>Canchas de Futbol</td>
-              <td>17-2-2025</td>
-              <td>El Chino</td>
-              <td>
-                <button class="btn btn-action btn-ver-detalles" title="Ver Detalles">
-                  <i class="bi bi-eye"></i>
-                </button>
-                <button class="btn btn-action btn-modificar" title="Modificar">
-                  <i class="bi bi-pencil"></i>
-                </button>
-                <button class="btn btn-action btn-eliminar" title="Eliminar">
-                  <i class="bi bi-trash"></i>
-                </button>
-                <input type="checkbox" class="form-check-input seleccionar-fila">
-              </td>
-            </tr>
+            {% endfor %}
           </tbody>
         </table>
       </div>

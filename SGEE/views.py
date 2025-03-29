@@ -14,7 +14,10 @@ def estrategias_view(request):
     return render(request, 'estrategias.html',{'estrategias':estrat})
 
 def eventos_view(request):
-    return render(request, 'eventos.html')
+    # Obtener todos los eventos de la base de datos
+    eventos = Evento.objects.all()
+    # Pasar los eventos al contexto de la plantilla
+    return render(request, 'eventos.html', {'eventos': eventos})
 
 def reportes_view(request):
     return render(request, 'reportes.html')
