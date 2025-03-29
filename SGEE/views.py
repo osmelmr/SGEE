@@ -26,7 +26,9 @@ def usuarios_view(request):
     return render(request, 'usuarios.html')
 
 def informacion_profesoral_view(request):
-    return render(request, 'informacion_profesoral.html')
+    profesores = Profesor.objects.all()
+    # Pasar los profesores al contexto de la plantilla          
+    return render(request, 'informacion_profesoral.html', {'profesores': profesores})
 
 def encuestas_view(request):
     return render(request, 'encuestas.html')
@@ -212,3 +214,9 @@ def eliminar_evento(request, evento_id):
     evento.delete()
     messages.success(request, "Evento eliminado correctamente.")
     return redirect('eventos')
+
+def eliminar_profesor(request, profesor_id):
+    profesor = get_object_or_404(Profesor, id=profesor_id)
+    profesor.delete()
+    messages.success(request, "Profesor eliminado correctamente.")
+    return redirect('informacion_profesoral')

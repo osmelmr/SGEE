@@ -16,7 +16,7 @@
   <!--<<link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">-->
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
   <!-- Archivos CSS de Vendor -->
   <!--
@@ -145,121 +145,31 @@
               </tr>
             </thead>
             <tbody>
-              <!-- Fila de Ejemplo 1 -->
-              <tr>
-                <td>Bad</td>
-                <td>Bunny</td>
-                <td>Martínez</td>
-                <td>Matemáticas</td>
-                <td>
-                  <button class="btn btn-action btn-ver-detalles" title="Ver Detalles">
-                    <i class="bi bi-eye"></i>
-                  </button>
-                  <button class="btn btn-action btn-modificar" title="Modificar">
-                    <i class="bi bi-pencil"></i>
-                  </button>
-                  <button class="btn btn-action btn-eliminar" title="Eliminar">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                  <input type="checkbox" class="form-check-input seleccionar-fila">
-                </td>
-              </tr>
-              <!-- Fila de Ejemplo 2 -->
-              <tr>
-                <td>J</td>
-                <td>Balvin</td>
-                <td>Osorio</td>
-                <td>Física</td>
-                <td>
-                  <button class="btn btn-action btn-ver-detalles" title="Ver Detalles">
-                    <i class="bi bi-eye"></i>
-                  </button>
-                  <button class="btn btn-action btn-modificar" title="Modificar">
-                    <i class="bi bi-pencil"></i>
-                  </button>
-                  <button class="btn btn-action btn-eliminar" title="Eliminar">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                  <input type="checkbox" class="form-check-input seleccionar-fila">
-                </td>
-              </tr>
-              <!-- Fila de Ejemplo 3 -->
-              <tr>
-                <td>Karol</td>
-                <td>G</td>
-                <td>Vargas</td>
-                <td>Química</td>
-                <td>
-                  <button class="btn btn-action btn-ver-detalles" title="Ver Detalles">
-                    <i class="bi bi-eye"></i>
-                  </button>
-                  <button class="btn btn-action btn-modificar" title="Modificar">
-                    <i class="bi bi-pencil"></i>
-                  </button>
-                  <button class="btn btn-action btn-eliminar" title="Eliminar">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                  <input type="checkbox" class="form-check-input seleccionar-fila">
-                </td>
-              </tr>
-              <!-- Fila de Ejemplo 4 -->
-              <tr>
-                <td>Maluma</td>
-                <td>Baby</td>
-                <td>Londoño</td>
-                <td>Biología</td>
-                <td>
-                  <button class="btn btn-action btn-ver-detalles" title="Ver Detalles">
-                    <i class="bi bi-eye"></i>
-                  </button>
-                  <button class="btn btn-action btn-modificar" title="Modificar">
-                    <i class="bi bi-pencil"></i>
-                  </button>
-                  <button class="btn btn-action btn-eliminar" title="Eliminar">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                  <input type="checkbox" class="form-check-input seleccionar-fila">
-                </td>
-              </tr>
-              <!-- Fila de Ejemplo 5 -->
-              <tr>
-                <td>Anuel</td>
-                <td>AA</td>
-                <td>Gazmey</td>
-                <td>Literatura</td>
-                <td>
-                  <button class="btn btn-action btn-ver-detalles" title="Ver Detalles">
-                    <i class="bi bi-eye"></i>
-                  </button>
-                  <button class="btn btn-action btn-modificar" title="Modificar">
-                    <i class="bi bi-pencil"></i>
-                  </button>
-                  <button class="btn btn-action btn-eliminar" title="Eliminar">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                  <input type="checkbox" class="form-check-input seleccionar-fila">
-                </td>
-              </tr>
-              <!-- Fila de Ejemplo 6 -->
-              <tr>
-                <td>Ozuna</td>
-                <td>Juan</td>
-                <td>Rosado</td>
-                <td>Historia</td>
-                <td>
-                  <button class="btn btn-action btn-ver-detalles" title="Ver Detalles">
-                    <i class="bi bi-eye"></i>
-                  </button>
-                  <button class="btn btn-action btn-modificar" title="Modificar">
-                    <i class="bi bi-pencil"></i>
-                  </button>
-                  <button class="btn btn-action btn-eliminar" title="Eliminar">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                  <input type="checkbox" class="form-check-input seleccionar-fila">
-                </td>
-              </tr>
-            </tbody>
+  {% for profesor in profesores %}
+  <tr>
+    <td>{{ profesor.nombre }}</td>
+    <td>{{ profesor.primer_apellido }}</td>
+    <td>{{ profesor.segundo_apellido }}</td>
+    <td>{{ profesor.asignatura }}</td>
+    <td>
+      <button class="btn btn-action btn-ver-detalles" title="Ver Detalles">
+        <i class="bi bi-eye"></i>
+      </button>
+      <button class="btn btn-action btn-modificar" title="Modificar">
+        <i class="bi bi-pencil"></i>
+      </button>
+      <button class="btn btn-action btn-eliminar" data-id="{{ profesor.id }}" title="Eliminar">
+        <i class="bi bi-trash"></i>
+      </button>
+      <input type="checkbox" class="form-check-input seleccionar-fila">
+    </td>
+  </tr>
+  {% empty %}
+  <tr>
+    <td colspan="5" class="text-center">No hay profesores registrados.</td>
+  </tr>
+  {% endfor %}
+</tbody>
           </table>
         </div>
       </div>
@@ -355,5 +265,17 @@
 
   <!-- Archivo JS Principal -->
   <script src="{% static 'assets/js/main.js' %}"></script>
+  <script>
+  // Selecciona todos los botones con la clase "btn-eliminar"
+  document.querySelectorAll(".btn-eliminar").forEach(button => {
+    button.addEventListener("click", function () {
+      const profesorId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
+      if (confirm("¿Estás seguro de que quieres eliminar este profesor?")) {
+        // Redirige a la URL para eliminar el profesor
+        window.location.href = `/eliminar_profesor/${profesorId}/`;
+      }
+    });
+  });
+</script>
 </body>
 </html>
