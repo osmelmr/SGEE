@@ -206,3 +206,9 @@ def eliminarEstrategia(request, estra_id):
     estra=get_object_or_404(Estrategia, id=estra_id)
     estra.delete()
     return redirect('estrategias')
+
+def eliminar_evento(request, evento_id):
+    evento = get_object_or_404(Evento, id=evento_id)
+    evento.delete()
+    messages.success(request, "Evento eliminado correctamente.")
+    return redirect('eventos')

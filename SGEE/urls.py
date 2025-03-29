@@ -40,4 +40,5 @@ urlpatterns = [
     path('formulario_reporte/', views.formulario_reporte_view, name='formulario_reporte'),
     path('formulario_informacion_pro/', views.formulario_informacion_pro_view, name='formulario_informacion_pro'),
     path('eliminar_estrategia/<int:estra_id>/', views.eliminarEstrategia, name='eliminar_estrategia'),
+    path('eliminar_evento/<int:evento_id>/', views.eliminar_evento, name='eliminar_evento'),
 ]

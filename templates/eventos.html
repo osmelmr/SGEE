@@ -162,7 +162,7 @@
                 <button class="btn btn-action btn-modificar" title="Modificar">
                   <i class="bi bi-pencil"></i>
                 </button>
-                <button class="btn btn-action btn-eliminar" title="Eliminar">
+                <button class="btn btn-action btn-eliminar" data-id="{{ evento.id }}" title="Eliminar">
                   <i class="bi bi-trash"></i>
                 </button>
                 <input type="checkbox" class="form-check-input seleccionar-fila">
@@ -266,5 +266,17 @@
 
   <!-- Archivo JS Principal -->
   <script src="{% static 'assets/js/main.js' %}"></script>
+  <script>
+  // Selecciona todos los botones con la clase "btn-eliminar"
+  document.querySelectorAll(".btn-eliminar").forEach(button => {
+    button.addEventListener("click", function () {
+      const eventoId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
+      if (confirm("¿Estás seguro de que quieres eliminar este evento?")) {
+        // Redirige a la URL para eliminar el evento
+        window.location.href = `/eliminar_evento/${eventoId}/`;
+      }
+    });
+  });
+</script>
 </body>
 </html>
