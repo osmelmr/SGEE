@@ -127,64 +127,64 @@
       </div>
   
       <!-- Contenedor de la tabla con scroll -->
-      <div id="tabla-profesoral" class="table-container">
-        <div id="tabla-profesoral-responsive" class="table-responsive">
-          <table id="tablita-profesoral" class="table table-bordered table-hover custom-table">
-            <thead>
-              <tr>
-                <th>Nombre</th>
-                <th>Primer Apellido</th>
-                <th>Segundo Apellido</th>
-                <th>Asignatura</th>
-                <th>
-                  Acciones
-                  <button id="btn-seleccionar-todo" class="btn btn-link p-0 ms-2" title="Seleccionar Todo">
-                    <i class="bi bi-check-all"></i>
-                  </button>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-  {% for profesor in profesores %}
-  <tr>
-    <td>{{ profesor.nombre }}</td>
-    <td>{{ profesor.primer_apellido }}</td>
-    <td>{{ profesor.segundo_apellido }}</td>
-    <td>{{ profesor.asignatura }}</td>
-    <td>
-      <button class="btn btn-action btn-ver-detalles" title="Ver Detalles">
-        <i class="bi bi-eye"></i>
-      </button>
-      <button class="btn btn-action btn-modificar" title="Modificar">
-        <i class="bi bi-pencil"></i>
-      </button>
-      <button class="btn btn-action btn-eliminar" data-id="{{ profesor.id }}" title="Eliminar">
-        <i class="bi bi-trash"></i>
-      </button>
-      <input type="checkbox" class="form-check-input seleccionar-fila">
-    </td>
-  </tr>
-  {% empty %}
-  <tr>
-    <td colspan="5" class="text-center">No hay profesores registrados.</td>
-  </tr>
-  {% endfor %}
-</tbody>
-          </table>
-        </div>
-      </div>
-  
-      <!-- Botones independientes debajo de la tabla -->
-      <div id="botones-accion-profesoral" class="d-flex justify-content-between mt-4">
-        <a href="{% url 'formulario_informacion_pro'%}">
-          <div id="btn-registrar-profesoral" class="btn btn-success">
-            <i class="bi bi-plus-circle"></i> Registrar
+      <form id="form-eliminar-profesores" method="POST" action="{% url 'eliminar_profesores' %}">
+        {% csrf_token %}
+        <div id="tabla-profesoral" class="table-container">
+          <div id="tabla-profesoral-responsive" class="table-responsive">
+            <table id="tablita-profesoral" class="table table-bordered table-hover custom-table">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Primer Apellido</th>
+                  <th>Segundo Apellido</th>
+                  <th>Asignatura</th>
+                  <th>
+                    Acciones
+                    <button id="btn-seleccionar-todo" class="btn btn-link p-0 ms-2" title="Seleccionar Todo">
+                      <i class="bi bi-check-all"></i>
+                    </button>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for profesor in profesores %}
+                <tr>
+                  <td>{{ profesor.nombre }}</td>
+                  <td>{{ profesor.primer_apellido }}</td>
+                  <td>{{ profesor.segundo_apellido }}</td>
+                  <td>{{ profesor.asignatura }}</td>
+                  <td>
+                    <button class="btn btn-action btn-ver-detalles" title="Ver Detalles">
+                      <i class="bi bi-eye"></i>
+                    </button>
+                    <button class="btn btn-action btn-modificar" title="Modificar">
+                      <i class="bi bi-pencil"></i>
+                    </button>
+                    <input type="checkbox" class="form-check-input seleccionar-fila" name="profesores[]" value="{{ profesor.id }}">
+                  </td>
+                </tr>
+                {% empty %}
+                <tr>
+                  <td colspan="5" class="text-center">No hay profesores registrados.</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
           </div>
-        </a>
-        <div id="btn-eliminar-profesoral" class="btn btn-danger">
-          <i class="bi bi-trash"></i> Aceptar
         </div>
-      </div>
+      
+        <!-- Botones independientes debajo de la tabla -->
+        <div id="botones-accion-profesoral" class="d-flex justify-content-between mt-4">
+          <a href="{% url 'formulario_informacion_pro' %}">
+            <div id="btn-registrar-profesoral" class="btn btn-success">
+              <i class="bi bi-plus-circle"></i> Registrar
+            </div>
+          </a>
+          <button type="submit" id="btn-eliminar-profesoral" class="btn btn-danger">
+            <i class="bi bi-trash"></i> Aceptar
+          </button>
+        </div>
+      </form>
     </div>
   </section>
 

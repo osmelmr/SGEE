@@ -249,3 +249,17 @@ def eliminar_eventos(request):
         return redirect('eventos')
     else:
         return JsonResponse({'error': 'Método no permitido'}, status=405)
+
+def eliminar_profesores(request):
+    if request.method == 'POST':
+        # Obtener los IDs de los profesores seleccionados
+        profesores_ids = request.POST.getlist('profesores[]')
+        if profesores_ids:
+            # Eliminar los profesores seleccionados
+            Profesor.objects.filter(id__in=profesores_ids).delete()
+            messages.success(request, "Profesores eliminados correctamente.")
+        else:
+            messages.error(request, "No se seleccionaron profesores para eliminar.")
+        return redirect('informacion_profesoral')
+    else:
+        return JsonResponse({'error': 'Método no permitido'}, status=405)
