@@ -235,3 +235,17 @@ def eliminar_estrategias(request):
         return redirect('estrategias')
     else:
         return JsonResponse({'error': 'Método no permitido'}, status=405)
+
+def eliminar_eventos(request):
+    if request.method == 'POST':
+        # Obtener los IDs de los eventos seleccionados
+        eventos_ids = request.POST.getlist('eventos[]')
+        if eventos_ids:
+            # Eliminar los eventos seleccionados
+            Evento.objects.filter(id__in=eventos_ids).delete()
+            messages.success(request, "Eventos eliminados correctamente.")
+        else:
+            messages.error(request, "No se seleccionaron eventos para eliminar.")
+        return redirect('eventos')
+    else:
+        return JsonResponse({'error': 'Método no permitido'}, status=405)
