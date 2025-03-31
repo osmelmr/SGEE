@@ -16,7 +16,7 @@
   <!--<<link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">-->
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
   <!-- Archivos CSS de Vendor -->
   <!--
@@ -129,64 +129,65 @@
     </div>
 
     <!-- Contenedor de la tabla con scroll -->
-    <div class="table-container">
-      <div class="table-responsive">
-        <table class="table table-bordered table-hover custom-table">
-          <thead>
-            <tr>
-              <th>Estrategia</th>
-              <th>Brigada</th>
-              <th>Curso</th>
-              <th>Año Escolar</th>
-              <th>
-                Acciones
-                <button id="btn-seleccionar-todo" class="btn btn-link p-0 ms-2" title="Seleccionar Todo Para Eliminar">
-                  <i class="bi bi-check-all"></i>
-                </button>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            
-            {%for estrategia in estrategias%}
-            <tr data-id="{{estrategia.id}}">
-              <td>
-                <i class="bi bi-file-earmark"></i>{{estrategia.nombre}}
-              </td>
-              <td>{{estrategia.grupo}}</td>
-              <td>{{estrategia.curso}}</td>
-              <td>{{estrategia.anio_escolar}}</td>
-              <td>
-                <button class="btn btn-action btn-ver-detalles" data-id="{{estrategia.id}}" title="Ver Detalles">
-                  <i class="bi bi-eye"></i>
-                </button>
-                <button class="btn btn-action btn-modificar" data-id="{{estrategia.id}}" title="Modificar">
-                  <i class="bi bi-pencil"></i>
-                </button>
-                <button class="btn btn-action btn-eliminar " data-id="{{estrategia.id}}" title="Eliminar">
-                  <i class="bi bi-trash"></i>
-                </button>
-                <input type="checkbox" class="form-check-input seleccionar-fila">
-              </td>
-            </tr>
-            {%endfor%}
-
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- Botones independientes debajo de la tabla -->
-    <div id="botones-accion-estrategia-educativa" class="d-flex justify-content-between mt-4">
-      <!--<a href="formulario_estrategia.html">-->
-        <a href="{% url 'formulario_estrategia'%}">
-        <div id="btn-registrar-estrategia-educativa" class="btn btn-success">
-          <i class="bi bi-plus-circle"></i> Registrar
+    <form id="form-eliminar-estrategias" method="POST" action="{% url 'eliminar_estrategias' %}">
+      {% csrf_token %}
+      <div class="table-container">
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover custom-table">
+            <thead>
+              <tr>
+                <th>Estrategia</th>
+                <th>Brigada</th>
+                <th>Curso</th>
+                <th>Año Escolar</th>
+                <th>
+                  Acciones
+                  <button id="btn-seleccionar-todo" class="btn btn-link p-0 ms-2" title="Seleccionar Todo Para Eliminar">
+                    <i class="bi bi-check-all"></i>
+                  </button>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for estrategia in estrategias %}
+              <tr data-id="{{ estrategia.id }}">
+                <td>
+                  <i class="bi bi-file-earmark"></i>{{ estrategia.nombre }}
+                </td>
+                <td>{{ estrategia.grupo }}</td>
+                <td>{{ estrategia.curso }}</td>
+                <td>{{ estrategia.anio_escolar }}</td>
+                <td>
+                  <button class="btn btn-action btn-ver-detalles" data-id="{{ estrategia.id }}" title="Ver Detalles">
+                    <i class="bi bi-eye"></i>
+                  </button>
+                  <button class="btn btn-action btn-modificar" data-id="{{ estrategia.id }}" title="Modificar">
+                    <i class="bi bi-pencil"></i>
+                  </button>
+                  <button class="btn btn-action btn-eliminar" data-id="{{ estrategia.id }}" title="Eliminar">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                  <input type="checkbox" class="form-check-input seleccionar-fila" name="estrategias[]" value="{{ estrategia.id }}">
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
         </div>
-      </a>
-      <div id="btn-eliminar-estrategia-educativa" class="btn btn-danger"> Aceptar
       </div>
-    </div>
+
+      <!-- Botones independientes debajo de la tabla -->
+      <div id="botones-accion-estrategia-educativa" class="d-flex justify-content-between mt-4">
+        <a href="{% url 'formulario_estrategia' %}">
+          <div id="btn-registrar-estrategia-educativa" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Registrar
+          </div>
+        </a>
+        <button type="submit" id="btn-eliminar-estrategia-educativa" class="btn btn-danger">
+          Aceptar
+        </button>
+      </div>
+    </form>
   </div>
 </section>
   </main>
@@ -277,6 +278,13 @@
         });
     });
 
+  </script>
+  <script>
+    document.getElementById('btn-seleccionar-todo').addEventListener('click', function (e) {
+      e.preventDefault();
+      const checkboxes = document.querySelectorAll('.seleccionar-fila');
+      checkboxes.forEach(checkbox => checkbox.checked = !checkbox.checked);
+    });
   </script>
 </body>
 </html>

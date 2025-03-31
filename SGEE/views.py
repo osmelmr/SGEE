@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from data_models.models import Estrategia, Evento, Profesor
 from data_models.forms import ProfesorForm
+from django.http import JsonResponse
 
 def estra_view(request):
     return render(request, 'estra.html')
@@ -220,3 +221,17 @@ def eliminar_profesor(request, profesor_id):
     profesor.delete()
     messages.success(request, "Profesor eliminado correctamente.")
     return redirect('informacion_profesoral')
+
+def eliminar_estrategias(request):
+    if request.method == 'POST':
+        # Obtener los IDs de las estrategias seleccionadas
+        estrategias_ids = request.POST.getlist('estrategias[]')
+        if estrategias_ids:
+            # Eliminar las estrategias seleccionadas
+            Estrategia.objects.filter(id__in=estrategias_ids).delete()
+            messages.success(request, "Estrategias eliminadas correctamente.")
+        else:
+            messages.error(request, "No se seleccionaron estrategias para eliminar.")
+        return redirect('estrategias')
+    else:
+        return JsonResponse({'error': 'Método no permitido'}, status=405)
