@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
-from data_models.models import Estrategia, Evento, Profesor, Reporte
+from data_models.models import Estrategia, Evento, Profesor, Reporte, Encuesta
 from data_models.forms import ProfesorForm
 from django.http import JsonResponse
 
@@ -21,8 +21,9 @@ def eventos_view(request):
     return render(request, 'eventos.html', {'eventos': eventos})
 
 def reportes_view(request):
-    return render(request, 'reportes.html')
-
+    reportes = Reporte.objects.all()
+    return render(request, 'reportes.html', {'reportes': reportes})
+                  
 def usuarios_view(request):
     return render(request, 'usuarios.html')
 
@@ -32,7 +33,8 @@ def informacion_profesoral_view(request):
     return render(request, 'informacion_profesoral.html', {'profesores': profesores})
 
 def encuestas_view(request):
-    return render(request, 'encuestas.html')
+    encuestas = Encuesta.objects.all()
+    return render(request, 'encuestas.html', {'encuestas': encuestas})
 
 def sobrenos_view(request):
     return render(request, 'sobrenos.html')
@@ -113,9 +115,6 @@ def formulario_estrategia_view(request):
 def formulario_evento_view(request):
     if request.method == 'POST':
         # Obtener datos del formulario
-        estrategia_id = request.POST.get('estrategia')  # ID de la estrategia seleccionada
-        estrategia = get_object_or_404(Estrategia, id=estrategia_id)
-
         nombre_evento = request.POST.get('nombre-evento')
         fecha_inicio = request.POST.get('fecha-inicio')
         fecha_fin = request.POST.get('fecha-fin')
@@ -127,9 +126,13 @@ def formulario_evento_view(request):
         profesor_cargo = request.POST.get('profesor-cargo')
         telefono_contacto = request.POST.get('telefono-contacto')
 
-        # Crear y guardar el objeto Evento
+        # Validar campos obligatorios
+        if not (nombre_evento and fecha_inicio and fecha_fin and hora_inicio and hora_fin and ubicacion_evento and tipo_evento and descripcion_evento and profesor_cargo and telefono_contacto):
+            messages.error(request, "Todos los campos obligatorios deben ser completados.")
+            return render(request, 'formulario_evento.html')
+
+        # Crear y guardar el evento
         evento = Evento(
-            estrategia=estrategia,
             nombre_evento=nombre_evento,
             fecha_inicio=fecha_inicio,
             fecha_fin=fecha_fin,
@@ -137,18 +140,20 @@ def formulario_evento_view(request):
             hora_fin=hora_fin,
             ubicacion_evento=ubicacion_evento,
             tipo_evento=tipo_evento,
-            descripcion_evento=descripcion_evento,
+            descripcion=descripcion_evento,
             profesor_cargo=profesor_cargo,
             telefono_contacto=telefono_contacto
         )
-        evento.save()
-
-        # Redirigir a la página de eventos
-        return redirect('eventos')
+        try:
+            evento.save()
+            messages.success(request, "Evento registrado correctamente.")
+            return redirect('eventos')  # Redirigir a la lista de eventos
+        except Exception as e:
+            messages.error(request, f"Hubo un error al registrar el evento: {str(e)}")
+            return render(request, 'formulario_evento.html')
 
     # Renderizar el formulario en caso de GET
-    estrategias = Estrategia.objects.all()  # Obtener todas las estrategias para el dropdown
-    return render(request, 'formulario_evento.html', {'estrategias': estrategias})
+    return render(request, 'formulario_evento.html')
 
 def formulario_usuario_view(request):
     return render(request, 'formulario_usuario.html')

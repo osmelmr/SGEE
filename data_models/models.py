@@ -38,33 +38,22 @@ class Estrategia(models.Model):
         return f"Estrategia: {self.nombre or 'Sin nombre'} ({self.curso} - {self.anio_escolar} - {self.grupo})"
 
 class Evento(models.Model):
-    # Campo: Nombre del Evento
     nombre_evento = models.CharField(max_length=100)
-
-    # Campos: Fechas de Inicio y Fin
     fecha_inicio = models.DateField()
     fecha_fin = models.DateField()
-
-    # Campos: Horas de Inicio y Fin
     hora_inicio = models.TimeField()
     hora_fin = models.TimeField()
-
-    # Campo: Ubicación
     ubicacion_evento = models.CharField(max_length=100)
-
-    # Campo: Tipo de Evento
-    TIPOS_EVENTO = [
-        ('academico', 'Académico'),
-        ('cultural', 'Cultural'),
-        ('deportivo', 'Deportivo'),
-        ('social', 'Social')
-    ]
-    tipo_evento = models.CharField(max_length=20, choices=TIPOS_EVENTO)
-
-    # Campo: Descripción
-    descripcion_evento = models.TextField()
-
-    # Campos: Profesor a Cargo y Teléfono de Contacto
+    tipo_evento = models.CharField(
+        max_length=20,
+        choices=[
+            ('academico', 'Académico'),
+            ('cultural', 'Cultural'),
+            ('deportivo', 'Deportivo'),
+            ('social', 'Social'),
+        ]
+    )
+    descripcion = models.TextField()
     profesor_cargo = models.CharField(max_length=50)
     telefono_contacto = models.CharField(max_length=15)
 
