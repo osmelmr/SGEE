@@ -16,7 +16,7 @@
   <!--<<link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">-->
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
   <!-- Archivos CSS de Vendor -->
   <!--
@@ -129,165 +129,58 @@
       </div>
   
       <!-- Contenedor de la tabla con scroll -->
-      <div id="tabla-encuestas" class="table-container">
-        <div id="tabla-encuestas-responsive" class="table-responsive">
-          <table id="tablita-encuestas" class="table table-bordered table-hover custom-table">
-            <thead>
-              <tr>
-                <th>Nombre de Encuesta</th>
-                <th>Autor</th>
-                <th>Fecha de Creación</th>
-                <th>Estado</th>
-                <th>
-                  Acciones
-                  <button id="btn-seleccionar-todo" class="btn btn-link p-0 ms-2" title="Seleccionar Todo Para Eliminar">
-                    <i class="bi bi-check-all"></i>
-                  </button>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- Fila de Ejemplo 1 -->
-              <tr>
-                <td>
-                  <i class="bi bi-clipboard-check"></i> Satisfacción Estudiantil
-                </td>
-                <td>Lianny</td>
-                <td>10-03-2024</td>
-                <td>Activa</td>
-                <td>
-                  <button class="btn btn-action btn-ver-detalles" title="Ver Detalles">
-                    <i class="bi bi-eye"></i>
-                  </button>
-                  <button class="btn btn-action btn-modificar" title="Modificar">
-                    <i class="bi bi-pencil"></i>
-                  </button>
-                  <button class="btn btn-action btn-eliminar" title="Eliminar">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                  <input type="checkbox" class="form-check-input seleccionar-fila">
-                </td>
-              </tr>
-              <!-- Fila de Ejemplo 2 -->
-              <tr>
-                <td>
-                  <i class="bi bi-clipboard-check"></i> Evaluación Docente
-                </td>
-                <td>Luis Manuel Valera</td>
-                <td>4-5-2024</td>
-                <td>Inactiva</td>
-                <td>
-                  <button class="btn btn-action btn-ver-detalles" title="Ver Detalles">
-                    <i class="bi bi-eye"></i>
-                  </button>
-                  <button class="btn btn-action btn-modificar" title="Modificar">
-                    <i class="bi bi-pencil"></i>
-                  </button>
-                  <button class="btn btn-action btn-eliminar" title="Eliminar">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                  <input type="checkbox" class="form-check-input seleccionar-fila">
-                </td>
-              </tr>
-              <!-- Fila de Ejemplo 3 -->
-              <tr>
-                <td>
-                  <i class="bi bi-clipboard-check"></i> Opinión sobre Eventos
-                </td>
-                <td>Yanetsi</td>
-                <td>2-2-2025</td>
-                <td>Activa</td>
-                <td>
-                  <button class="btn btn-action btn-ver-detalles" title="Ver Detalles">
-                    <i class="bi bi-eye"></i>
-                  </button>
-                  <button class="btn btn-action btn-modificar" title="Modificar">
-                    <i class="bi bi-pencil"></i>
-                  </button>
-                  <button class="btn btn-action btn-eliminar" title="Eliminar">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                  <input type="checkbox" class="form-check-input seleccionar-fila">
-                </td>
-              </tr>
-              <!-- Fila de Ejemplo 4 -->
-              <tr>
-                <td>
-                  <i class="bi bi-clipboard-check"></i> Encuesta de Infraestructura
-                </td>
-                <td>Omar Correa</td>
-                <td>16-1-2025</td>
-                <td>Inactiva</td>
-                <td>
-                  <button class="btn btn-action btn-ver-detalles" title="Ver Detalles">
-                    <i class="bi bi-eye"></i>
-                  </button>
-                  <button class="btn btn-action btn-modificar" title="Modificar">
-                    <i class="bi bi-pencil"></i>
-                  </button>
-                  <button class="btn btn-action btn-eliminar" title="Eliminar">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                  <input type="checkbox" class="form-check-input seleccionar-fila">
-                </td>
-              </tr>
-              <!-- Fila de Ejemplo 5 -->
-              <tr>
-                <td>
-                  <i class="bi bi-clipboard-check"></i> Encuesta de Servicios
-                </td>
-                <td>Luis Manuel Valera</td>
-                <td>8-3-2025</td>
-                <td>Activa</td>
-                <td>
-                  <button class="btn btn-action btn-ver-detalles" title="Ver Detalles">
-                    <i class="bi bi-eye"></i>
-                  </button>
-                  <button class="btn btn-action btn-modificar" title="Modificar">
-                    <i class="bi bi-pencil"></i>
-                  </button>
-                  <button class="btn btn-action btn-eliminar" title="Eliminar">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                  <input type="checkbox" class="form-check-input seleccionar-fila">
-                </td>
-              </tr>
-              <!-- Fila de Ejemplo 6 -->
-              <tr>
-                <td>
-                  <i class="bi bi-clipboard-check"></i> Encuesta de Satisfacción General
-                </td>
-                <td>El Chino</td>
-                <td>17-2-2025</td>
-                <td>Inactiva</td>
-                <td>
-                  <button class="btn btn-action btn-ver-detalles" title="Ver Detalles">
-                    <i class="bi bi-eye"></i>
-                  </button>
-                  <button class="btn btn-action btn-modificar" title="Modificar">
-                    <i class="bi bi-pencil"></i>
-                  </button>
-                  <button class="btn btn-action btn-eliminar" title="Eliminar">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                  <input type="checkbox" class="form-check-input seleccionar-fila">
-                </td>
-              </tr>
-            </tbody>
-          </table>
+      <form id="form-eliminar-encuestas" method="POST" action="{% url 'eliminar_encuestas' %}">
+        {% csrf_token %}
+        <div id="tabla-encuestas" class="table-container">
+          <div id="tabla-encuestas-responsive" class="table-responsive">
+            <table id="tablita-encuestas" class="table table-bordered table-hover custom-table">
+              <thead>
+                <tr>
+                  <th>Nombre de Encuesta</th>
+                  <th>Autor</th>
+                  <th>Fecha de Creación</th>
+                  <th>Estado</th>
+                  <th>
+                    Acciones
+                    <button id="btn-seleccionar-todo" class="btn btn-link p-0 ms-2" title="Seleccionar Todo">
+                      <i class="bi bi-check-all"></i>
+                    </button>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for encuesta in encuestas %}
+                <tr>
+                  <td>{{ encuesta.nombre }}</td>
+                  <td>{{ encuesta.autor }}</td>
+                  <td>{{ encuesta.fecha_creacion }}</td>
+                  <td>{{ encuesta.estado }}</td>
+                  <td>
+                    <input type="checkbox" class="form-check-input seleccionar-fila" name="encuestas[]" value="{{ encuesta.id }}">
+                  </td>
+                </tr>
+                {% empty %}
+                <tr>
+                  <td colspan="5" class="text-center">No hay encuestas registradas.</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
-  
-      <!-- Botones independientes debajo de la tabla -->
+        <!-- Botones independientes debajo de la tabla -->
       <div id="botones-accion-encuestas" class="d-flex justify-content-between mt-4">
         <a href="{%url 'formulario_encuesta'%}">
           <div id="btn-registrar-encuesta" class="btn btn-success">
             <i class="bi bi-plus-circle"></i> Registrar
           </div>
         </a>
-        <div id="btn-eliminar-encuesta" class="btn btn-danger"> Aceptar
+        <button type="submit" id="btn-eliminar-encuesta" class="btn btn-danger"> <i class="bi bi-trash"></i> Aceptar
         </div>
       </div>
+      </form>
+  
+      
     </div>
   </section>
 

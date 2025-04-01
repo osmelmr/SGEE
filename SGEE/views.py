@@ -263,3 +263,39 @@ def eliminar_profesores(request):
         return redirect('informacion_profesoral')
     else:
         return JsonResponse({'error': 'Método no permitido'}, status=405)
+
+def eliminar_encuestas(request):
+    if request.method == 'POST':
+        encuestas_ids = request.POST.getlist('encuestas[]')
+        if encuestas_ids:
+            Encuesta.objects.filter(id__in=encuestas_ids).delete()
+            messages.success(request, "Encuestas eliminadas correctamente.")
+        else:
+            messages.error(request, "No se seleccionaron encuestas para eliminar.")
+        return redirect('encuestas')
+    else:
+        return JsonResponse({'error': 'Método no permitido'}, status=405)
+
+def eliminar_reportes(request):
+    if request.method == 'POST':
+        reportes_ids = request.POST.getlist('reportes[]')
+        if reportes_ids:
+            Reporte.objects.filter(id__in=reportes_ids).delete()
+            messages.success(request, "Reportes eliminados correctamente.")
+        else:
+            messages.error(request, "No se seleccionaron reportes para eliminar.")
+        return redirect('reportes')
+    else:
+        return JsonResponse({'error': 'Método no permitido'}, status=405)
+
+def eliminar_usuarios(request):
+    if request.method == 'POST':
+        usuarios_ids = request.POST.getlist('usuarios[]')
+        if usuarios_ids:
+            Usuario.objects.filter(id__in=usuarios_ids).delete()
+            messages.success(request, "Usuarios eliminados correctamente.")
+        else:
+            messages.error(request, "No se seleccionaron usuarios para eliminar.")
+        return redirect('usuarios')
+    else:
+        return JsonResponse({'error': 'Método no permitido'}, status=405)

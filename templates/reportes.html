@@ -16,7 +16,7 @@
   <!--<<link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">-->
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
   <!-- Archivos CSS de Vendor -->
   <!--
@@ -129,153 +129,56 @@
       </div>
   
       <!-- Contenedor de la tabla con scroll -->
-      <div id="tabla-reportes" class="table-container">
-        <div id="tabla-reportes-responsive" class="table-responsive">
-          <table id="tablita-reportes" class="table table-bordered table-hover custom-table">
-            <thead>
-              <tr>
-                <th>Código</th>
-                <th>Brigada</th>
-                <th>Curso</th>
-                <th>Año Escolar</th>
-                <th>
-                  Acciones
-                  <button id="btn-seleccionar-todo" class="btn btn-link p-0 ms-2" title="Seleccionar Todo Para Eliminar">
-                    <i class="bi bi-check-all"></i>
-                  </button>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- Fila de Ejemplo 1 -->
-              <tr>
-                <td>001</td>
-                <td>Brigada A</td>
-                <td>Matemáticas</td>
-                <td>2023</td>
-                <td>
-                  <button class="btn btn-action btn-ver-detalles" title="Ver Detalles">
-                    <i class="bi bi-eye"></i>
-                  </button>
-                  <button class="btn btn-action btn-modificar" title="Modificar">
-                    <i class="bi bi-pencil"></i>
-                  </button>
-                  <button class="btn btn-action btn-eliminar" title="Eliminar">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                  <input type="checkbox" class="form-check-input seleccionar-fila">
-                </td>
-              </tr>
-              <!-- Fila de Ejemplo 2 -->
-              <tr>
-                <td>002</td>
-                <td>Brigada B</td>
-                <td>Ciencias</td>
-                <td>2023</td>
-                <td>
-                  <button class="btn btn-action btn-ver-detalles" title="Ver Detalles">
-                    <i class="bi bi-eye"></i>
-                  </button>
-                  <button class="btn btn-action btn-modificar" title="Modificar">
-                    <i class="bi bi-pencil"></i>
-                  </button>
-                  <button class="btn btn-action btn-eliminar" title="Eliminar">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                  <input type="checkbox" class="form-check-input seleccionar-fila">
-                </td>
-              </tr>
-              <!-- Fila de Ejemplo 3 -->
-              <tr>
-                <td>003</td>
-                <td>Brigada C</td>
-                <td>Historia</td>
-                <td>2023</td>
-                <td>
-                  <button class="btn btn-action btn-ver-detalles" title="Ver Detalles">
-                    <i class="bi bi-eye"></i>
-                  </button>
-                  <button class="btn btn-action btn-modificar" title="Modificar">
-                    <i class="bi bi-pencil"></i>
-                  </button>
-                  <button class="btn btn-action btn-eliminar" title="Eliminar">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                  <input type="checkbox" class="form-check-input seleccionar-fila">
-                </td>
-              </tr>
-              <!-- Fila de Ejemplo 4 -->
-              <tr>
-                <td>004</td>
-                <td>Brigada D</td>
-                <td>Literatura</td>
-                <td>2023</td>
-                <td>
-                  <button class="btn btn-action btn-ver-detalles" title="Ver Detalles">
-                    <i class="bi bi-eye"></i>
-                  </button>
-                  <button class="btn btn-action btn-modificar" title="Modificar">
-                    <i class="bi bi-pencil"></i>
-                  </button>
-                  <button class="btn btn-action btn-eliminar" title="Eliminar">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                  <input type="checkbox" class="form-check-input seleccionar-fila">
-                </td>
-              </tr>
-              <!-- Fila de Ejemplo 5 -->
-              <tr>
-                <td>005</td>
-                <td>Brigada E</td>
-                <td>Geografía</td>
-                <td>2023</td>
-                <td>
-                  <button class="btn btn-action btn-ver-detalles" title="Ver Detalles">
-                    <i class="bi bi-eye"></i>
-                  </button>
-                  <button class="btn btn-action btn-modificar" title="Modificar">
-                    <i class="bi bi-pencil"></i>
-                  </button>
-                  <button class="btn btn-action btn-eliminar" title="Eliminar">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                  <input type="checkbox" class="form-check-input seleccionar-fila">
-                </td>
-              </tr>
-              <!-- Fila de Ejemplo 6 -->
-              <tr>
-                <td>006</td>
-                <td>Brigada F</td>
-                <td>Inglés</td>
-                <td>2023</td>
-                <td>
-                  <button class="btn btn-action btn-ver-detalles" title="Ver Detalles">
-                    <i class="bi bi-eye"></i>
-                  </button>
-                  <button class="btn btn-action btn-modificar" title="Modificar">
-                    <i class="bi bi-pencil"></i>
-                  </button>
-                  <button class="btn btn-action btn-eliminar" title="Eliminar">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                  <input type="checkbox" class="form-check-input seleccionar-fila">
-                </td>
-              </tr>
-            </tbody>
-          </table>
+      <form id="form-eliminar-reportes" method="POST" action="{% url 'eliminar_reportes' %}">
+        {% csrf_token %}
+        <div id="tabla-reportes" class="table-container">
+          <div id="tabla-reportes-responsive" class="table-responsive">
+            <table id="tablita-reportes" class="table table-bordered table-hover custom-table">
+              <thead>
+                <tr>
+                  <th>Código</th>
+                  <th>Brigada</th>
+                  <th>Curso</th>
+                  <th>Año Escolar</th>
+                  <th>
+                    Acciones
+                    <button id="btn-seleccionar-todo" class="btn btn-link p-0 ms-2" title="Seleccionar Todo">
+                      <i class="bi bi-check-all"></i>
+                    </button>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for reporte in reportes %}
+                <tr>
+                  <td>{{ reporte.codigo }}</td>
+                  <td>{{ reporte.brigada }}</td>
+                  <td>{{ reporte.curso }}</td>
+                  <td>{{ reporte.anio_escolar }}</td>
+                  <td>
+                    <input type="checkbox" class="form-check-input seleccionar-fila" name="reportes[]" value="{{ reporte.id }}">
+                  </td>
+                </tr>
+                {% empty %}
+                <tr>
+                  <td colspan="5" class="text-center">No hay reportes registrados.</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
-  
-      <!-- Botones independientes debajo de la tabla -->
+        <!-- Botones independientes debajo de la tabla -->
       <div id="botones-accion-reportes" class="d-flex justify-content-between mt-4">
         <a href="{% url 'formulario_reporte' %}">
           <div id="btn-registrar-reporte" class="btn btn-success">
             <i class="bi bi-plus-circle"></i> Registrar
           </div>
         </a>
-        <div id="btn-eliminar-reporte" class="btn btn-danger"> Aceptar
-        </div>
-      </div>
+        <button type="submit" id="btn-eliminar-reporte" class="btn btn-danger mt-3"><i class="bi bi-trash"></i> Aceptar</button>
+      </div></form>
+  
+      
     </div>
   </section>
 

@@ -45,4 +45,7 @@ urlpatterns = [
     path('eliminar_estrategias/', views.eliminar_estrategias, name='eliminar_estrategias'),
     path('eliminar_eventos/', views.eliminar_eventos, name='eliminar_eventos'),
     path('eliminar_profesores/', views.eliminar_profesores, name='eliminar_profesores'),
+    path('eliminar_encuestas/', views.eliminar_encuestas, name='eliminar_encuestas'),
+    path('eliminar_reportes/', views.eliminar_reportes, name='eliminar_reportes'),
+    path('eliminar_usuarios/', views.eliminar_usuarios, name='eliminar_usuarios'),
 ]

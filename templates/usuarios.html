@@ -16,7 +16,7 @@
   <!--<<link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">-->
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
   <!-- Archivos CSS de Vendor -->
   <!--
@@ -129,147 +129,55 @@
       </div>
   
       <!-- Contenedor de la tabla con scroll -->
-      <div id="tabla-usuarios" class="table-container">
-        <div id="tabla-usuarios-responsive" class="table-responsive">
+      <form id="form-eliminar-usuarios" method="POST" action="{% url 'eliminar_usuarios' %}">
+        {% csrf_token %}
+        <div id="tabla-usuarios" class="table-container">
+          <div id="tabla-usuarios-responsive" class="table-responsive">
             <table id="tablita-usuarios" class="table table-bordered table-hover custom-table">
-                <thead>
-                  <tr>
-                    <th>Nombre</th>
-                    <th>Primer Apellido</th>
-                    <th>Segundo Apellido</th>
-                    <th>Categoría Docente</th>
-                    <th>
-                      Acciones
-                      <button id="btn-seleccionar-todo" class="btn btn-link p-0 ms-2" title="Seleccionar Todo Para Eliminar">
-                        <i class="bi bi-check-all"></i>
-                      </button>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <!-- Fila de Ejemplo 1 -->
-                  <tr>
-                    <td>
-                      <i class="bi bi-person"></i> Leonardo
-                    </td>
-                    <td>DiCaprio</td>
-                    <td>-</td>
-                    <td>Instructor</td>
-                    <td>
-                      <button class="btn btn-action btn-modificar" title="Modificar">
-                        <i class="bi bi-pencil"></i>
-                      </button>
-                      <button class="btn btn-action btn-eliminar" title="Eliminar">
-                        <i class="bi bi-trash"></i>
-                      </button>
-                      <input type="checkbox" class="form-check-input seleccionar-fila">
-                    </td>
-                  </tr>
-                  <!-- Fila de Ejemplo 2 -->
-                  <tr>
-                    <td>
-                      <i class="bi bi-person"></i> Brad
-                    </td>
-                    <td>Pitt</td>
-                    <td>-</td>
-                    <td>Asistente</td>
-                    <td>
-                      <button class="btn btn-action btn-modificar" title="Modificar">
-                        <i class="bi bi-pencil"></i>
-                      </button>
-                      <button class="btn btn-action btn-eliminar" title="Eliminar">
-                        <i class="bi bi-trash"></i>
-                      </button>
-                      <input type="checkbox" class="form-check-input seleccionar-fila">
-                    </td>
-                  </tr>
-                  <!-- Fila de Ejemplo 3 -->
-                  <tr>
-                    <td>
-                      <i class="bi bi-person"></i> Angelina
-                    </td>
-                    <td>Jolie</td>
-                    <td>-</td>
-                    <td>Auxiliar</td>
-                    <td>
-                      <button class="btn btn-action btn-modificar" title="Modificar">
-                        <i class="bi bi-pencil"></i>
-                      </button>
-                      <button class="btn btn-action btn-eliminar" title="Eliminar">
-                        <i class="bi bi-trash"></i>
-                      </button>
-                      <input type="checkbox" class="form-check-input seleccionar-fila">
-                    </td>
-                  </tr>
-                  <!-- Fila de Ejemplo 4 -->
-                  <tr>
-                    <td>
-                      <i class="bi bi-person"></i> Tom
-                    </td>
-                    <td>Hanks</td>
-                    <td>-</td>
-                    <td>Titular</td>
-                    <td>
-                      <button class="btn btn-action btn-modificar" title="Modificar">
-                        <i class="bi bi-pencil"></i>
-                      </button>
-                      <button class="btn btn-action btn-eliminar" title="Eliminar">
-                        <i class="bi bi-trash"></i>
-                      </button>
-                      <input type="checkbox" class="form-check-input seleccionar-fila">
-                    </td>
-                  </tr>
-                  <!-- Fila de Ejemplo 5 -->
-                  <tr>
-                    <td>
-                      <i class="bi bi-person"></i> Scarlett
-                    </td>
-                    <td>Johansson</td>
-                    <td>-</td>
-                    <td>Instructor</td>
-                    <td>
-                      <button class="btn btn-action btn-modificar" title="Modificar">
-                        <i class="bi bi-pencil"></i>
-                      </button>
-                      <button class="btn btn-action btn-eliminar" title="Eliminar">
-                        <i class="bi bi-trash"></i>
-                      </button>
-                      <input type="checkbox" class="form-check-input seleccionar-fila">
-                    </td>
-                  </tr>
-                  <!-- Fila de Ejemplo 6 -->
-                  <tr>
-                    <td>
-                      <i class="bi bi-person"></i> Robert
-                    </td>
-                    <td>Downey</td>
-                    <td>Jr.</td>
-                    <td>Asistente</td>
-                    <td>
-                      <button class="btn btn-action btn-modificar" title="Modificar">
-                        <i class="bi bi-pencil"></i>
-                      </button>
-                      <button class="btn btn-action btn-eliminar" title="Eliminar">
-                        <i class="bi bi-trash"></i>
-                      </button>
-                      <input type="checkbox" class="form-check-input seleccionar-fila">
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Primer Apellido</th>
+                  <th>Segundo Apellido</th>
+                  <th>Categoría Docente</th>
+                  <th>
+                    Acciones
+                    <button id="btn-seleccionar-todo" class="btn btn-link p-0 ms-2" title="Seleccionar Todo">
+                      <i class="bi bi-check-all"></i>
+                    </button>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for usuario in usuarios %}
+                <tr>
+                  <td>{{ usuario.nombre }}</td>
+                  <td>{{ usuario.primer_apellido }}</td>
+                  <td>{{ usuario.segundo_apellido }}</td>
+                  <td>{{ usuario.categoria_docente }}</td>
+                  <td>
+                    <input type="checkbox" class="form-check-input seleccionar-fila" name="usuarios[]" value="{{ usuario.id }}">
+                  </td>
+                </tr>
+                {% empty %}
+                <tr>
+                  <td colspan="5" class="text-center">No hay usuarios registrados.</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
-  
-      <!-- Botones independientes debajo de la tabla -->
+        <!-- Botones independientes debajo de la tabla -->
       <div id="botones-accion-usuarios" class="d-flex justify-content-between mt-4">
         <a href="{% url 'formulario_usuario'%}">
           <div id="btn-registrar-usuario" class="btn btn-success">
             <i class="bi bi-plus-circle"></i> Registrar
           </div>
         </a>
-        <div id="btn-eliminar-usuario" class="btn btn-danger"> Aceptar
+        <div type="submit" id="btn-eliminar-usuario" class="btn btn-danger"> <i class="bi bi-trash"></i> Aceptar
         </div>
-      </div>
+      </div></form>
     </div>
   </section>
 
