@@ -38,9 +38,6 @@ class Estrategia(models.Model):
         return f"Estrategia: {self.nombre or 'Sin nombre'} ({self.curso} - {self.anio_escolar} - {self.grupo})"
 
 class Evento(models.Model):
-    # Relación con Estrategia
-    estrategia = models.ForeignKey('Estrategia', on_delete=models.CASCADE, related_name='eventos')
-
     # Campo: Nombre del Evento
     nombre_evento = models.CharField(max_length=100)
 
@@ -190,5 +187,35 @@ class Encuesta(models.Model):
             ('pesimo', 'Pésimo')
         ]
     )
+
+class Brigada(models.Model):
+    # Nombre de la brigada (ejemplo: IDFI4301)
+    nombre = models.CharField(max_length=50, unique=True)
+
+    # Dirección (nombre de la persona encargada de la brigada)
+    direccion = models.CharField(max_length=100)
+
+    # Caracterización (descripción general de la brigada)
+    caracterizacion = models.TextField()
+
+    # Relación con profesores a través del modelo intermedio Colectivo
+    profesores = models.ManyToManyField('Profesor', through='Colectivo', related_name='brigadas')
+
+    def __str__(self):
+        return self.nombre
+
+
+class Colectivo(models.Model):
+    # Relación con el modelo Profesor
+    profesor = models.ForeignKey('Profesor', on_delete=models.CASCADE)
+
+    # Relación con el modelo Brigada
+    brigada = models.ForeignKey('Brigada', on_delete=models.CASCADE)
+
+    # Campo adicional para describir el rol del profesor en la brigada (opcional)
+    rol = models.CharField(max_length=100, blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.profesor} - {self.brigada}"
 
 
