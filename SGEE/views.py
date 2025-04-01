@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
-from data_models.models import Estrategia, Evento, Profesor
+from data_models.models import Estrategia, Evento, Profesor, Reporte
 from data_models.forms import ProfesorForm
 from django.http import JsonResponse
 
@@ -154,6 +154,50 @@ def formulario_usuario_view(request):
     return render(request, 'formulario_usuario.html')
 
 def formulario_reporte_view(request):
+    if request.method == 'POST':
+        # Obtener datos del formulario
+        brigada = request.POST.get('brigada')
+        codigo = request.POST.get('codigo')
+        periodo = request.POST.get('periodo')
+        fecha = request.POST.get('fecha')
+        autor = request.POST.get('autor')
+        institucion = request.POST.get('institucion')
+        resumen = request.POST.get('resumen')
+        objetivos = request.POST.get('objetivos')
+        actividades = request.POST.get('actividades')
+        resultados = request.POST.get('resultados')
+        analisis = request.POST.get('analisis')
+        desafios = request.POST.get('desafios')
+        proximos_pasos = request.POST.get('proximos-pasos')
+        anexos = request.FILES.get('anexos')  # Manejo de archivos
+        print("llega")
+
+        # Crear y guardar el reporte
+        reporte = Reporte(
+            brigada=brigada,
+            codigo=codigo,
+            periodo=periodo,
+            fecha=fecha,
+            autor=autor,
+            institucion=institucion,
+            resumen=resumen,
+            objetivos=objetivos,
+            actividades=actividades,
+            resultados=resultados,
+            analisis=analisis,
+            desafios=desafios,
+            proximos_pasos=proximos_pasos,
+            anexos=anexos
+        )
+        try:
+            reporte.save()
+            messages.success(request, "Reporte registrado correctamente.")
+            return redirect('reportes')  # Redirigir a la lista de reportes
+        except Exception as e:
+            messages.error(request, f"Hubo un error al registrar el reporte: {str(e)}")
+            return render(request, 'formulario_reporte.html')
+
+    # Renderizar el formulario en caso de GET
     return render(request, 'formulario_reporte.html')
 
 def formulario_informacion_pro_view(request):

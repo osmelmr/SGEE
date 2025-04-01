@@ -434,46 +434,52 @@
   window.validarCorreo = function(correo, campo) {
     const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const valido = regex.test(correo);
-    
+
     if (campo) {
-      const helpText = campo.parentNode.querySelector('.email-help');
-      if (!helpText) {
-        const help = document.createElement('small');
-        help.className = 'form-text text-muted email-help';
-        help.textContent = 'Ejemplo válido: usuario@dominio.com';
-        campo.parentNode.appendChild(help);
-      }
-      
-      if (correo && !correo.endsWith('@') && !correo.endsWith('.') && !valido) {
-        campo.classList.add('is-validating');
-      } else {
-        campo.classList.remove('is-validating');
-      }
-      
-      if (!valido && correo) {
-        if (!correo.includes('@')) {
-          mostrarError('El correo debe contener un @', campo);
-        } else if (correo.indexOf('@') === 0 || correo.indexOf('@') === correo.length - 1) {
-          mostrarError('El @ no puede estar al inicio o final', campo);
-        } else if (!correo.includes('.')) {
-          mostrarError('Falta el dominio (ej: .com, .net)', campo);
-        } else if (correo.match(/@/g)?.length > 1) {
-          mostrarError('Solo puede contener un @', campo);
-        } else if (correo.includes('..')) {
-          mostrarError('No puede contener puntos consecutivos', campo);
-        } else {
-          mostrarError('Formato de correo inválido. Ejemplo válido: usuario@dominio.com', campo);
+        // Buscar o crear el mensaje de ayuda
+        let helpText = campo.parentNode.querySelector('.email-help');
+        if (!helpText) {
+            helpText = document.createElement('small');
+            helpText.className = 'form-text text-muted email-help';
+            helpText.textContent = 'Ejemplo válido: usuario@dominio.com';
+            campo.parentNode.appendChild(helpText);
         }
-      } else if (valido) {
-        campo.classList.remove('is-invalid');
-        const errorMsg = campo.nextElementSibling;
-        if (errorMsg && errorMsg.classList.contains('invalid-feedback')) {
-          errorMsg.remove();
+
+        // Validar el correo y mostrar errores si es necesario
+        if (!valido && correo) {
+            campo.classList.add('is-invalid');
+            campo.classList.remove('is-valid');
+            mostrarError('Formato de correo inválido. Ejemplo válido: usuario@dominio.com', campo);
+        } else if (valido) {
+            // Si el correo es válido, eliminar errores y marcar como válido
+            campo.classList.remove('is-invalid');
+            campo.classList.add('is-valid');
+
+            // Eliminar el mensaje de error si existe
+            const errorMsg = campo.nextElementSibling;
+            if (errorMsg && errorMsg.classList.contains('invalid-feedback')) {
+                errorMsg.remove();
+            }
         }
-      }
     }
+
     return valido;
-  };
+};
+
+// Función para mostrar un mensaje de error
+function mostrarError(mensaje, campo) {
+    // Eliminar mensajes de error previos
+    let errorMsg = campo.nextElementSibling;
+    if (errorMsg && errorMsg.classList.contains('invalid-feedback')) {
+        errorMsg.remove();
+    }
+
+    // Crear un nuevo mensaje de error
+    errorMsg = document.createElement('div');
+    errorMsg.className = 'invalid-feedback';
+    errorMsg.textContent = mensaje;
+    campo.parentNode.appendChild(errorMsg);
+};
 
   window.validarUsuario = function(usuario, campo) {
     const regex = /^[a-z][a-z0-9_]{3,}$/;

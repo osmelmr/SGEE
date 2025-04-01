@@ -89,21 +89,50 @@ class Profesor(models.Model):
         return f"{self.nombre} {self.primer_apellido} ({self.solapin})"
 
 class Reporte(models.Model):
-    brigada = models.CharField(max_length=10)
-    codigo = models.CharField(max_length=10)
-    periodo = models.CharField(max_length=10)
-    fecha = models.DateField()
-    autor = models.CharField(max_length=50)
-    institucion = models.CharField(max_length=50)
-    resumen = models.TextField()
-    objetivos = models.TextField()
-    actividades = models.TextField()
-    resultados = models.TextField()
-    analisis = models.TextField()
-    desafios = models.TextField()
-    proximos_pasos = models.TextField()
+    # Brigada asociada al reporte
+    brigada = models.CharField(max_length=10, blank=True, null=True)
+
+    # Código del reporte
+    codigo = models.CharField(max_length=10, blank=True, null=True)
+
+    # Periodo del reporte
+    periodo = models.CharField(max_length=10, blank=True, null=True)
+
+    # Fecha del reporte
+    fecha = models.DateField(blank=True, null=True)
+
+    # Autor del reporte
+    autor = models.CharField(max_length=50, blank=True, null=True)
+
+    # Institución asociada al reporte
+    institucion = models.CharField(max_length=50, blank=True, null=True)
+
+    # Resumen del reporte
+    resumen = models.TextField(blank=True, null=True)
+
+    # Objetivos del reporte
+    objetivos = models.TextField(blank=True, null=True)
+
+    # Actividades realizadas
+    actividades = models.TextField(blank=True, null=True)
+
+    # Resultados obtenidos
+    resultados = models.TextField(blank=True, null=True)
+
+    # Análisis de los resultados
+    analisis = models.TextField(blank=True, null=True)
+
+    # Desafíos y lecciones aprendidas
+    desafios = models.TextField(blank=True, null=True)
+
+    # Próximos pasos
+    proximos_pasos = models.TextField(blank=True, null=True)
+
+    # Anexos (opcional)
     anexos = models.FileField(upload_to='anexos/', blank=True, null=True)
 
+    def __str__(self):
+        return f"Reporte {self.codigo or 'Sin Código'} - {self.brigada or 'Sin Brigada'}"
 
 class RegistroUsuario(models.Model):
     nombre = models.CharField(max_length=50)
