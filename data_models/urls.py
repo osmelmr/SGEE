@@ -43,4 +43,5 @@ urlpatterns = [
     path('encuesta/create/', views.encuesta_create, name='encuesta_create'),
     path('encuesta/update/<int:pk>/', views.encuesta_update, name='encuesta_update'),
     path('encuesta/delete/<int:pk>/', views.encuesta_delete, name='encuesta_delete'),
+    path('encuestas/crear/', views.encuesta_create, name='encuesta_create'),
 ]

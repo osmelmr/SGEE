@@ -127,66 +127,38 @@ class RegistroUsuario(models.Model):
 
 
 class Encuesta(models.Model):
-    pregunta1 = models.CharField(
-        max_length=20,
-        choices=[
-            ('muy-bien', 'Muy bien'),
-            ('bien', 'Bien'),
-            ('normal', 'Normal'),
-            ('mal', 'Mal'),
-            ('pesimo', 'Pésimo')
-        ]
-    )
-    pregunta2 = models.CharField(
-        max_length=20,
-        choices=[
-            ('muy-bien', 'Muy bien'),
-            ('bien', 'Bien'),
-            ('normal', 'Normal'),
-            ('mal', 'Mal'),
-            ('pesimo', 'Pésimo')
-        ]
-    )
-    pregunta3 = models.CharField(
-        max_length=20,
-        choices=[
-            ('muy-bien', 'Muy bien'),
-            ('bien', 'Bien'),
-            ('normal', 'Normal'),
-            ('mal', 'Mal'),
-            ('pesimo', 'Pésimo')
-        ]
-    )
-    pregunta4 = models.CharField(
-        max_length=20,
-        choices=[
-            ('muy-bien', 'Muy bien'),
-            ('bien', 'Bien'),
-            ('normal', 'Normal'),
-            ('mal', 'Mal'),
-            ('pesimo', 'Pésimo')
-        ]
-    )
-    pregunta5 = models.CharField(
-        max_length=20,
-        choices=[
-            ('muy-bien', 'Muy bien'),
-            ('bien', 'Bien'),
-            ('normal', 'Normal'),
-            ('mal', 'Mal'),
-            ('pesimo', 'Pésimo')
-        ]
-    )
-    pregunta6 = models.CharField(
-        max_length=20,
-        choices=[
-            ('muy-bien', 'Muy bien'),
-            ('bien', 'Bien'),
-            ('normal', 'Normal'),
-            ('mal', 'Mal'),
-            ('pesimo', 'Pésimo')
-        ]
-    )
+    # Título de la encuesta
+    titulo = models.CharField(max_length=255)
+
+    # Descripción de la encuesta
+    descripcion = models.TextField()
+
+    # Fecha de creación de la encuesta
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+
+    # Autor de la encuesta (con valor predeterminado)
+    autor = models.CharField(max_length=100, default="Desconocido")
+
+    # Estado de la encuesta (activa o inactiva)
+    ESTADOS = [
+        ('activa', 'Activa'),
+        ('inactiva', 'Inactiva'),
+    ]
+    estado = models.CharField(max_length=10, choices=ESTADOS, default='activa')
+
+    def __str__(self):
+        return self.titulo
+
+
+class Pregunta(models.Model):
+    # Relación con la encuesta
+    encuesta = models.ForeignKey(Encuesta, on_delete=models.CASCADE, related_name='preguntas')
+
+    # Texto de la pregunta
+    texto = models.CharField(max_length=255)
+
+    def __str__(self):
+        return f"Pregunta: {self.texto} (Encuesta: {self.encuesta.titulo})"
 
 class Brigada(models.Model):
     # Nombre de la brigada (ejemplo: IDFI4301)

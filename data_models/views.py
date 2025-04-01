@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.contrib import messages  # Para retroalimentación al usuario
-from .models import Estrategia, Evento, Profesor, Reporte, RegistroUsuario, Encuesta
+from .models import Estrategia, Evento, Profesor, Reporte, RegistroUsuario, Encuesta, Pregunta
 from .forms import EstrategiaForm, EventoForm, ProfesorForm, ReporteForm, RegistroUsuarioForm, EncuestaForm
 
 # Create your views here.
@@ -270,17 +270,32 @@ def encuesta_detail(request, pk):
 
 def encuesta_create(request):
     if request.method == 'POST':
-        form = EncuestaForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Encuesta registrada correctamente.")
+        # Obtener los datos del formulario
+        titulo = request.POST.get('titulo')
+        descripcion = request.POST.get('descripcion')
+        autor = request.POST.get('autor')
+        estado = request.POST.get('estado')
+
+        if titulo and descripcion and autor and estado:
+            # Crear la encuesta
+            encuesta = Encuesta.objects.create(
+                titulo=titulo,
+                descripcion=descripcion,
+                autor=autor,
+                estado=estado
+            )
+
+            # Crear las preguntas asociadas
+            preguntas = request.POST.getlist('preguntas[]')
+            for texto_pregunta in preguntas:
+                if texto_pregunta.strip():  # Evitar preguntas vacías
+                    Pregunta.objects.create(encuesta=encuesta, texto=texto_pregunta)
+
+            messages.success(request, "Encuesta creada correctamente.")
             return redirect('encuesta_list')
         else:
-            messages.error(request, "Hubo un error al registrar la encuesta. Por favor revisa los datos ingresados.")
-    else:
-        form = EncuestaForm()
-    context = {'form': form}
-    return render(request, 'formulario_encuesta.html', context)
+            messages.error(request, "Todos los campos son obligatorios.")
+    return render(request, 'formulario_encuesta.html')
 
 def encuesta_update(request, pk):
     encuesta = get_object_or_404(Encuesta, pk=pk)
