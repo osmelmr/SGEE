@@ -150,12 +150,21 @@
               </thead>
               <tbody>
                 {% for encuesta in encuestas %}
-                <tr>
+                <tr data-id="{{ encuesta.id }}">
                   <td>{{ encuesta.titulo }}</td>
                   <td>{{ encuesta.autor }}</td>
                   <td>{{ encuesta.fecha_creacion }}</td>
                   <td>{{ encuesta.estado }}</td>
                   <td>
+                    <button class="btn btn-action btn-ver-detalles" data-id="{{ encuesta.id }}" title="Ver Detalles">
+                      <i class="bi bi-eye"></i>
+                    </button>
+                    <button class="btn btn-action btn-modificar" data-id="{{ encuesta.id }}" title="Modificar">
+                      <i class="bi bi-pencil"></i>
+                    </button>
+                    <button class="btn btn-action btn-eliminar" data-id="{{ encuesta.id }}" title="Eliminar">
+                      <i class="bi bi-trash"></i>
+                    </button>
                     <input type="checkbox" class="form-check-input seleccionar-fila" name="encuestas[]" value="{{ encuesta.id }}">
                   </td>
                 </tr>
@@ -265,5 +274,17 @@
 
   <!-- Archivo JS Principal -->
   <script src="{% static 'assets/js/main.js' %}"></script>
+  <script>
+    // Selecciona todos los botones con la clase "btn-eliminar"
+    document.querySelectorAll(".btn-eliminar").forEach(button => {
+      button.addEventListener("click", function () {
+        const encuestaId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
+        if (confirm("¿Estás seguro de que quieres eliminar esta encuesta?")) {
+          // Redirige a la URL para eliminar la encuesta
+          window.location.href = `/eliminar_encuesta/${encuestaId}/`;
+        }
+      });
+    });
+  </script>
 </body>
 </html>

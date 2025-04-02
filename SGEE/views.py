@@ -265,11 +265,23 @@ def eliminar_evento(request, evento_id):
     messages.success(request, "Evento eliminado correctamente.")
     return redirect('eventos')
 
+def eliminar_reporte(request, reporte_id):
+    reporte = get_object_or_404(Reporte, id=reporte_id)
+    reporte.delete()
+    messages.success(request, "reporte eliminado correctamente.")
+    return redirect('reportes')
+
 def eliminar_profesor(request, profesor_id):
     profesor = get_object_or_404(Profesor, id=profesor_id)
     profesor.delete()
     messages.success(request, "Profesor eliminado correctamente.")
     return redirect('informacion_profesoral')
+
+def eliminar_encuesta(request, encuesta_id):
+    encuesta = get_object_or_404(Encuesta, id=encuesta_id)
+    encuesta.delete()
+    messages.success(request, "encuesta eliminada correctamente.")
+    return redirect('encuestas')
 
 def eliminar_estrategias(request):
     if request.method == 'POST':

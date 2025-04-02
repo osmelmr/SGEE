@@ -148,17 +148,20 @@
               </thead>
               <tbody>
                 {% for profesor in profesores %}
-                <tr>
+                <tr data-id="{{ profesor.id }}">
                   <td>{{ profesor.nombre }}</td>
                   <td>{{ profesor.primer_apellido }}</td>
                   <td>{{ profesor.segundo_apellido }}</td>
                   <td>{{ profesor.asignatura }}</td>
                   <td>
-                    <button class="btn btn-action btn-ver-detalles" title="Ver Detalles">
+                    <button class="btn btn-action btn-ver-detalles" data-id="{{ profesor.id }}" title="Ver Detalles">
                       <i class="bi bi-eye"></i>
                     </button>
-                    <button class="btn btn-action btn-modificar" title="Modificar">
+                    <button class="btn btn-action btn-modificar" data-id="{{ profesor.id }}" title="Modificar">
                       <i class="bi bi-pencil"></i>
+                    </button>
+                    <button class="btn btn-action btn-eliminar" data-id="{{ profesor.id }}" title="Eliminar">
+                      <i class="bi bi-trash"></i>
                     </button>
                     <input type="checkbox" class="form-check-input seleccionar-fila" name="profesores[]" value="{{ profesor.id }}">
                   </td>
