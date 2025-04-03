@@ -150,12 +150,21 @@
               </thead>
               <tbody>
                 {% for reporte in reportes %}
-                <tr>
+                <tr data-id="{{ reporte.id }}">
                   <td>{{ reporte.codigo }}</td>
                   <td>{{ reporte.brigada }}</td>
                   <td>{{ reporte.curso }}</td>
                   <td>{{ reporte.anio_escolar }}</td>
                   <td>
+                    <button class="btn btn-action btn-ver-detalles" data-id="{{ reporte.id }}" title="Ver Detalles">
+                      <i class="bi bi-eye"></i>
+                    </button>
+                    <button class="btn btn-action btn-modificar" data-id="{{ reporte.id }}" title="Modificar">
+                      <i class="bi bi-pencil"></i>
+                    </button>
+                    <button class="btn btn-action btn-eliminar" data-id="{{ reporte.id }}" title="Eliminar">
+                      <i class="bi bi-trash"></i>
+                    </button>
                     <input type="checkbox" class="form-check-input seleccionar-fila" name="reportes[]" value="{{ reporte.id }}">
                   </td>
                 </tr>
@@ -259,5 +268,25 @@
 
   <!-- Archivo JS Principal -->
   <script src="{% static 'assets/js/main.js' %}"></script>
+  <script>
+    // Selecciona todos los botones con la clase "btn-eliminar"
+    document.querySelectorAll(".btn-eliminar").forEach(button => {
+        button.addEventListener("click", function () {
+            const reporteId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
+            if (confirm("¿Estás seguro de que quieres eliminar este reporte?")) {
+                // Redirige a la URL para eliminar la reporte
+                window.location.href = `/eliminar_reporte/${reporteId}/`;
+            }
+        });
+    });
+
+  </script>
+  <script>
+    document.getElementById('btn-seleccionar-todo').addEventListener('click', function (e) {
+      e.preventDefault();
+      const checkboxes = document.querySelectorAll('.seleccionar-fila');
+      checkboxes.forEach(checkbox => checkbox.checked = !checkbox.checked);
+    });
+  </script>
 </body>
 </html>

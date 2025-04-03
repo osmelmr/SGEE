@@ -258,5 +258,25 @@
 
   <!-- Archivo JS Principal -->
   <script src="{% static 'assets/js/main.js' %}"></script>
+  <script>
+    // Selecciona todos los botones con la clase "btn-eliminar"
+    document.querySelectorAll(".btn-eliminar").forEach(button => {
+        button.addEventListener("click", function () {
+            const usuarioId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
+            if (confirm("¿Estás seguro de que quieres eliminar este usuario?")) {
+                // Redirige a la URL para eliminar la usuario
+                window.location.href = `/eliminar_usuario/${usuarioId}/`;
+            }
+        });
+    });
+
+  </script>
+  <script>
+    document.getElementById('btn-seleccionar-todo').addEventListener('click', function (e) {
+      e.preventDefault();
+      const checkboxes = document.querySelectorAll('.seleccionar-fila');
+      checkboxes.forEach(checkbox => checkbox.checked = !checkbox.checked);
+    });
+  </script>
 </body>
 </html>
