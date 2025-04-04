@@ -1,7 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from data_models.models import Estrategia, Evento, Profesor, Reporte, Encuesta
-from data_models.forms import ProfesorForm
 from django.http import JsonResponse
 
 def estra_view(request):
