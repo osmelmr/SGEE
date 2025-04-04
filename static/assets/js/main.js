@@ -1,11 +1,13 @@
 (function () {
   "use strict";
 
+  // ==================== FUNCIONES DE UTILIDAD ====================
+
   /**
    * Selecciona un elemento del DOM.
    * @param {string} el - Selector del elemento.
    * @param {boolean} all - Si es true, selecciona todos los elementos que coincidan.
-   * @returns {Element|NodeList}
+   * @returns {Element|NodeList} El elemento o lista de elementos encontrados.
    */
   const select = (el, all = false) => {
     el = el.trim();
@@ -36,10 +38,96 @@
     el.addEventListener("scroll", listener);
   };
 
+  // ==================== VALIDACIÓN DE FORMULARIOS ====================
+
+  /**
+   * Valida si los campos requeridos de un formulario están vacíos
+   * @param {HTMLFormElement} form - Elemento del formulario a validar
+   * @returns {boolean} - True si todos los campos requeridos están llenos
+   */
+  function validarCamposVacios(form) {
+    let valido = true;
+    const camposRequeridos = form.querySelectorAll('[required]');
+    
+    camposRequeridos.forEach(campo => {
+      // Saltar campos disabled o readonly
+      if (campo.disabled || campo.readOnly) return;
+      
+      if (!campo.value.trim()) {
+        campo.classList.add('is-invalid');
+        valido = false;
+        
+        // Mostrar error si no existe
+        if (!campo.nextElementSibling || !campo.nextElementSibling.classList.contains('error-campo')) {
+          const errorElement = document.createElement('div');
+          errorElement.className = 'error-campo text-danger mt-1 small';
+          errorElement.textContent = 'Este campo es obligatorio';
+          campo.parentNode.insertBefore(errorElement, campo.nextSibling);
+        }
+      } else {
+        campo.classList.remove('is-invalid');
+        // Eliminar mensaje de error si existe
+        const errorElement = campo.parentNode.querySelector('.error-campo');
+        if (errorElement) errorElement.remove();
+      }
+    });
+    
+    return valido;
+  }
+
+  /**
+   * Configura la validación para todos los formularios de la página
+   */
+  function configurarValidacionFormularios() {
+    const forms = document.querySelectorAll('form');
+    
+    forms.forEach(form => {
+      // Validación al enviar
+      form.addEventListener('submit', function(e) {
+        if (!validarCamposVacios(this)) {
+          e.preventDefault();
+          
+          // Enfocar el primer campo inválido
+          const primerCampoInvalido = this.querySelector('.is-invalid');
+          if (primerCampoInvalido) {
+            primerCampoInvalido.focus();
+            
+            // Scroll suave al campo con error
+            primerCampoInvalido.scrollIntoView({
+              behavior: 'smooth',
+              block: 'center'
+            });
+          }
+        }
+      });
+      
+      // Validación al salir de cada campo (blur)
+      const camposRequeridos = form.querySelectorAll('[required]');
+      camposRequeridos.forEach(campo => {
+        campo.addEventListener('blur', () => {
+          if (!campo.value.trim()) {
+            campo.classList.add('is-invalid');
+            if (!campo.nextElementSibling || !campo.nextElementSibling.classList.contains('error-campo')) {
+              const errorElement = document.createElement('div');
+              errorElement.className = 'error-campo text-danger mt-1 small';
+              errorElement.textContent = 'Este campo es obligatorio';
+              campo.parentNode.insertBefore(errorElement, campo.nextSibling);
+            }
+          } else {
+            campo.classList.remove('is-invalid');
+            const errorElement = campo.parentNode.querySelector('.error-campo');
+            if (errorElement) errorElement.remove();
+          }
+        });
+      });
+    });
+  }
+
   // ==================== FUNCIONALIDADES GENERALES ====================
 
   /**
-   * Añade la clase 'header-scrolled' al header cuando se hace scroll.
+   * Cambia el estilo del header al hacer scroll.
+   * Añade la clase 'header-scrolled' cuando el scroll supera 100px.
    */
   const header = select("#header");
   if (header) {
@@ -52,6 +140,7 @@
 
   /**
    * Muestra u oculta el botón "Back to Top" según la posición del scroll.
+   * Se activa cuando el scroll supera 100px.
    */
   const backToTop = select(".back-to-top");
   if (backToTop) {
@@ -64,6 +153,7 @@
 
   /**
    * Alternar la navegación móvil.
+   * Cambia entre iconos de menú (bi-list) y cerrar (bi-x).
    */
   on("click", ".mobile-nav-toggle", function (e) {
     const navbar = select("#navbar");
@@ -76,6 +166,7 @@
 
   /**
    * Activar dropdowns en la navegación móvil.
+   * Solo funciona cuando la navegación está en modo móvil.
    */
   on(
     "click",
@@ -92,8 +183,11 @@
     true
   );
 
+  // ==================== COMPONENTES INTERACTIVOS ====================
+
   /**
-   * Indicadores del carrusel hero.
+   * Configura los indicadores del carrusel hero.
+   * Crea los puntos de navegación para cada slide del carrusel.
    */
   const heroCarouselIndicators = select("#hero-carousel-indicators");
   const heroCarouselItems = select('#heroCarousel .carousel-item', true);
@@ -107,7 +201,8 @@
   }
 
   /**
-   * Inicializar el slider de la galería.
+   * Inicializa el slider de la galería con Swiper.
+   * Configura autoplay, paginación y responsive breakpoints.
    */
   const gallerySlider = select(".gallery-slider");
   if (gallerySlider) {
@@ -142,8 +237,11 @@
     });
   }
 
+  // ==================== ANIMACIONES ====================
+
   /**
-   * Verificar visibilidad de elementos con animaciones al hacer scroll.
+   * Verifica la visibilidad de elementos con animaciones al hacer scroll.
+   * Añade la clase 'visible' cuando el elemento entra en la ventana visible.
    */
   const checkVisibility = () => {
     const elements = document.querySelectorAll(
@@ -160,12 +258,14 @@
     });
   };
 
+  // Configura listeners para verificar visibilidad
   window.addEventListener("load", checkVisibility);
   window.addEventListener("scroll", checkVisibility);
   window.addEventListener("resize", checkVisibility);
 
   /**
    * Animación de habilidades (skills).
+   * Usa Waypoint.js para activar la animación de barras de progreso cuando el elemento entra en vista.
    */
   const skillsContent = select(".skills-content");
   if (skillsContent) {
@@ -181,393 +281,11 @@
     });
   }
 
-  // ==================== FUNCIONALIDADES DE VALIDACIÓN MEJORADAS ====================
-
-  window.validarCamposVacios = function(formId) {
-    const form = select(`#${formId}`);
-    if (!form) return false;
-    
-    const campos = form.querySelectorAll('input[required], textarea[required], select[required]');
-    let todosLlenos = true;
-    
-    campos.forEach(campo => {
-      if (!campo.value.trim()) {
-        todosLlenos = false;
-        campo.classList.add('is-invalid');
-        
-        let errorMsg = campo.nextElementSibling;
-        if (!errorMsg || !errorMsg.classList.contains('invalid-feedback')) {
-          errorMsg = document.createElement('div');
-          errorMsg.className = 'invalid-feedback';
-          errorMsg.textContent = 'Este campo es obligatorio';
-          campo.parentNode.appendChild(errorMsg);
-        }
-      } else {
-        campo.classList.remove('is-invalid');
-        const errorMsg = campo.nextElementSibling;
-        if (errorMsg && errorMsg.classList.contains('invalid-feedback')) {
-          errorMsg.remove();
-        }
-      }
-    });
-    return todosLlenos;
-  };
-
-  window.mostrarError = function(mensaje, elemento = null) {
-    if (elemento) {
-      const existingErrors = elemento.parentNode.querySelectorAll('.invalid-feedback');
-      existingErrors.forEach(error => error.remove());
-      
-      elemento.classList.add('is-invalid');
-      const errorMsg = document.createElement('div');
-      errorMsg.className = 'invalid-feedback d-block';
-      errorMsg.textContent = mensaje;
-      elemento.parentNode.appendChild(errorMsg);
-      
-      if (!document.querySelector('.is-invalid:focus')) {
-        elemento.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        elemento.focus();
-      }
-    } else {
-      const errorContainer = select('#error-message');
-      if (errorContainer) {
-        errorContainer.textContent = mensaje;
-        errorContainer.style.display = 'block';
-        setTimeout(() => errorContainer.style.display = 'none', 5000);
-      } else {
-        alert(mensaje);
-      }
-    }
-  };
-
-  // =============== VALIDACIONES ESPECÍFICAS ===============
-
-  window.validarNombreApellido = function(valor, campo) {
-    const regex = /^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]{2,}$/;
-    const valido = regex.test(valor);
-    if (campo) {
-        if (!valido && valor) {
-            mostrarError('Solo se permiten letras y espacios (mínimo 2 caracteres)', campo);
-        } else if (valido) {
-            campo.classList.remove('is-invalid');
-            const errorMsg = campo.nextElementSibling;
-            if (errorMsg && errorMsg.classList.contains('invalid-feedback')) {
-                errorMsg.remove();
-            }
-        }
-    }
-    return valido;
-  };
-
-  window.validarGrupo = function(valor, campo) {
-    const regex = /^ID[A-Z0-9]{2,}$/;
-    const valido = regex.test(valor);
-    if (campo) {
-        if (!valido && valor) {
-            mostrarError('Debe comenzar con ID seguido de números (ej: ID123)', campo);
-        } else if (valido) {
-            campo.classList.remove('is-invalid');
-            const errorMsg = campo.nextElementSibling;
-            if (errorMsg && errorMsg.classList.contains('invalid-feedback')) {
-                errorMsg.remove();
-            }
-        }
-    }
-    return valido;
-  };
-
-  window.validarSolapin = function(valor, campo) {
-    const regex = /^#[A-Za-z0-9]{4,}$/;
-    const valido = regex.test(valor);
-    if (campo) {
-        if (!valido && valor) {
-            mostrarError('Debe comenzar con # seguido de letras/números (mínimo 4 caracteres)', campo);
-        } else if (valido) {
-            campo.classList.remove('is-invalid');
-            const errorMsg = campo.nextElementSibling;
-            if (errorMsg && errorMsg.classList.contains('invalid-feedback')) {
-                errorMsg.remove();
-            }
-        }
-    }
-    return valido;
-  };
-
-  window.validarNombreEvento = function(valor, campo) {
-    const regex = /^[A-Za-zÁÉÍÓÚáéíóúñÑ\s0-9]{5,}$/;
-    const valido = regex.test(valor);
-    if (campo) {
-        if (!valido && valor) {
-            mostrarError('No se permiten caracteres especiales (mínimo 5 caracteres)', campo);
-        } else if (valido) {
-            campo.classList.remove('is-invalid');
-            const errorMsg = campo.nextElementSibling;
-            if (errorMsg && errorMsg.classList.contains('invalid-feedback')) {
-                errorMsg.remove();
-            }
-        }
-    }
-    return valido;
-  };
-
-  window.validarProfesorCargo = function(valor, campo) {
-    const regex = /^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]{5,}$/;
-    const valido = regex.test(valor);
-    if (campo) {
-        if (!valido && valor) {
-            mostrarError('Solo se permiten letras y espacios (mínimo 5 caracteres)', campo);
-        } else if (valido) {
-            campo.classList.remove('is-invalid');
-            const errorMsg = campo.nextElementSibling;
-            if (errorMsg && errorMsg.classList.contains('invalid-feedback')) {
-                errorMsg.remove();
-            }
-        }
-    }
-    return valido;
-  };
-
-  window.validarFechasEvento = function(fechaInicio, fechaFin, campoFin) {
-    const inicio = new Date(fechaInicio);
-    const fin = new Date(fechaFin);
-    const valido = fin >= inicio;
-    
-    if (campoFin) {
-        if (!valido && fechaInicio && fechaFin) {
-            mostrarError('La fecha de finalización no puede ser anterior a la de inicio', campoFin);
-        } else if (valido) {
-            campoFin.classList.remove('is-invalid');
-            const errorMsg = campoFin.nextElementSibling;
-            if (errorMsg && errorMsg.classList.contains('invalid-feedback')) {
-                errorMsg.remove();
-            }
-        }
-    }
-    return valido;
-  };
-
-  window.validarTelefono = function(telefono, campo) {
-    const regex = /^[\d\s+-]{8,15}$/;
-    const valido = regex.test(telefono);
-    
-    if (campo) {
-        if (!valido && telefono) {
-            mostrarError('Formato inválido. Use solo números, +, - o espacios (8-15 caracteres)', campo);
-        } else if (valido) {
-            campo.classList.remove('is-invalid');
-            const errorMsg = campo.nextElementSibling;
-            if (errorMsg && errorMsg.classList.contains('invalid-feedback')) {
-                errorMsg.remove();
-            }
-        }
-    }
-    return valido;
-  };
-
-  window.validarBrigada = function(valor, campo) {
-    const regex = /^ID[A-Z0-9]{2,}$/;
-    const valido = regex.test(valor);
-    if (campo) {
-        if (!valido && valor) {
-            mostrarError('Debe comenzar con ID seguido de letras mayúsculas/números', campo);
-        } else if (valido) {
-            campo.classList.remove('is-invalid');
-            const errorMsg = campo.nextElementSibling;
-            if (errorMsg && errorMsg.classList.contains('invalid-feedback')) {
-                errorMsg.remove();
-            }
-        }
-    }
-    return valido;
-  };
-
-  window.validarCurso = function(valor, campo) {
-    const regex = /^\d{2}-\d{2}$/;
-    const valido = regex.test(valor);
-    if (campo) {
-        if (!valido && valor) {
-            mostrarError('Formato inválido. Use dos números, guión y dos números (ej: 01-05)', campo);
-        } else if (valido) {
-            campo.classList.remove('is-invalid');
-            const errorMsg = campo.nextElementSibling;
-            if (errorMsg && errorMsg.classList.contains('invalid-feedback')) {
-                errorMsg.remove();
-            }
-        }
-    }
-    return valido;
-  };
-
-  window.validarNombreAutor = function(valor, campo) {
-    const regex = /^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]{5,}$/;
-    const valido = regex.test(valor);
-    if (campo) {
-        if (!valido && valor) {
-            mostrarError('Solo se permiten letras y espacios (mínimo 5 caracteres)', campo);
-        } else if (valido) {
-            campo.classList.remove('is-invalid');
-            const errorMsg = campo.nextElementSibling;
-            if (errorMsg && errorMsg.classList.contains('invalid-feedback')) {
-                errorMsg.remove();
-            }
-        }
-    }
-    return valido;
-  };
-
-  window.validarCampoGrande = function(valor, campo) {
-    const valido = valor.length >= 50;
-    if (campo) {
-        if (!valido && valor) {
-            mostrarError('Este campo requiere al menos 50 caracteres', campo);
-        } else if (valido) {
-            campo.classList.remove('is-invalid');
-            const errorMsg = campo.nextElementSibling;
-            if (errorMsg && errorMsg.classList.contains('invalid-feedback')) {
-                errorMsg.remove();
-            }
-        }
-    }
-    return valido;
-  };
-
-  window.validarCorreo = function(correo, campo) {
-    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    const valido = regex.test(correo);
-
-    if (campo) {
-        // Buscar o crear el mensaje de ayuda
-        let helpText = campo.parentNode.querySelector('.email-help');
-        if (!helpText) {
-            helpText = document.createElement('small');
-            helpText.className = 'form-text text-muted email-help';
-            helpText.textContent = 'Ejemplo válido: usuario@dominio.com';
-            campo.parentNode.appendChild(helpText);
-        }
-
-        // Validar el correo y mostrar errores si es necesario
-        if (!valido && correo) {
-            campo.classList.add('is-invalid');
-            campo.classList.remove('is-valid');
-            mostrarError('Formato de correo inválido. Ejemplo válido: usuario@dominio.com', campo);
-        } else if (valido) {
-            // Si el correo es válido, eliminar errores y marcar como válido
-            campo.classList.remove('is-invalid');
-            campo.classList.add('is-valid');
-
-            // Eliminar el mensaje de error si existe
-            const errorMsg = campo.nextElementSibling;
-            if (errorMsg && errorMsg.classList.contains('invalid-feedback')) {
-                errorMsg.remove();
-            }
-        }
-    }
-
-    return valido;
-};
-
-// Función para mostrar un mensaje de error
-function mostrarError(mensaje, campo) {
-    // Eliminar mensajes de error previos
-    let errorMsg = campo.nextElementSibling;
-    if (errorMsg && errorMsg.classList.contains('invalid-feedback')) {
-        errorMsg.remove();
-    }
-
-    // Crear un nuevo mensaje de error
-    errorMsg = document.createElement('div');
-    errorMsg.className = 'invalid-feedback';
-    errorMsg.textContent = mensaje;
-    campo.parentNode.appendChild(errorMsg);
-};
-
-  window.validarUsuario = function(usuario, campo) {
-    const regex = /^[a-z][a-z0-9_]{3,}$/;
-    const valido = regex.test(usuario);
-    
-    if (campo) {
-      const helpText = campo.parentNode.querySelector('.username-help');
-      if (!helpText) {
-        const help = document.createElement('small');
-        help.className = 'form-text text-muted username-help';
-        help.textContent = 'Mínimo 4 caracteres (letras minúsculas, números o _)';
-        campo.parentNode.appendChild(help);
-      }
-      
-      if (!valido && usuario) {
-        if (usuario.length < 4) {
-          mostrarError('Mínimo 4 caracteres', campo);
-        } else if (!/^[a-z]/.test(usuario)) {
-          mostrarError('Debe comenzar con letra minúscula', campo);
-        } else if (/[^a-z0-9_]/.test(usuario)) {
-          mostrarError('Solo letras minúsculas, números y _', campo);
-        } else {
-          mostrarError('Formato de usuario inválido', campo);
-        }
-      } else if (valido) {
-        campo.classList.remove('is-invalid');
-        const errorMsg = campo.nextElementSibling;
-        if (errorMsg && errorMsg.classList.contains('invalid-feedback')) {
-          errorMsg.remove();
-        }
-      }
-    }
-    return valido;
-  };
-
-  window.validarContraseña = function(contraseña, campo) {
-    const regex = /^(?=.*\d)(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/;
-    const valido = regex.test(contraseña);
-    
-    if (campo) {
-      const helpText = campo.parentNode.querySelector('.password-help');
-      if (!helpText) {
-        const help = document.createElement('small');
-        help.className = 'form-text text-muted password-help';
-        help.innerHTML = 'Requisitos:<br>- Mínimo 8 caracteres<br>- Al menos 1 número<br>- Al menos 1 mayúscula<br>- Al menos 1 carácter especial (!@#$%^&*)';
-        campo.parentNode.appendChild(help);
-      }
-      
-      if (!valido && contraseña) {
-        let mensaje = 'La contraseña debe tener:';
-        if (contraseña.length < 8) mensaje += '\n- Mínimo 8 caracteres';
-        if (!/\d/.test(contraseña)) mensaje += '\n- Al menos 1 número';
-        if (!/[A-Z]/.test(contraseña)) mensaje += '\n- Al menos 1 mayúscula';
-        if (!/[!@#$%^&*]/.test(contraseña)) mensaje += '\n- Al menos 1 carácter especial (!@#$%^&*)';
-        
-        mostrarError(mensaje, campo);
-      } else if (valido) {
-        campo.classList.remove('is-invalid');
-        const errorMsg = campo.nextElementSibling;
-        if (errorMsg && errorMsg.classList.contains('invalid-feedback')) {
-          errorMsg.remove();
-        }
-      }
-    }
-    return valido;
-  };
-
-  window.verificarExistencia = async function(url, datos) {
-    try {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(datos),
-      });
-      const data = await response.json();
-      return data.existe;
-    } catch (error) {
-      console.error('Error al verificar existencia:', error);
-      return false;
-    }
-  };
-
   // ==================== FUNCIONALIDADES ESPECÍFICAS ====================
 
   /**
-   * Funcionalidad de seleccionar todo en tablas
+   * Funcionalidad de seleccionar todo en tablas.
+   * Permite seleccionar/deseleccionar todos los checkboxes de una tabla.
    */
   const initSeleccionarTodo = () => {
     const btnSeleccionarTodo = select("#btn-seleccionar-todo");
@@ -581,6 +299,7 @@ function mostrarError(mensaje, campo) {
         updateIcon();
       });
 
+      // Actualiza el icono del botón según el estado
       function updateIcon() {
         const icon = btnSeleccionarTodo.querySelector("i");
         if (btnSeleccionarTodo.classList.contains("active")) {
@@ -592,6 +311,7 @@ function mostrarError(mensaje, campo) {
         }
       }
 
+      // Actualiza el botón cuando se cambian checkboxes individuales
       checkboxes.forEach((checkbox) => {
         checkbox.addEventListener("change", function () {
           const allChecked = Array.from(checkboxes).every((cb) => cb.checked);
@@ -603,7 +323,8 @@ function mostrarError(mensaje, campo) {
   };
 
   /**
-   * Funcionalidad de formulario de encuestas
+   * Funcionalidad de formulario de encuestas.
+   * Permite agregar/eliminar preguntas y validar el formulario.
    */
   const initFormularioEncuestas = () => {
     const agregarPreguntaBtn = select("#agregar-pregunta");
@@ -612,6 +333,7 @@ function mostrarError(mensaje, campo) {
     if (agregarPreguntaBtn && formCrearEncuesta) {
       let contadorPreguntas = 1;
 
+      // Agrega una nueva pregunta al formulario
       agregarPreguntaBtn.addEventListener('click', function() {
         contadorPreguntas++;
         const preguntasContainer = select("#preguntas-encuesta");
@@ -631,11 +353,13 @@ function mostrarError(mensaje, campo) {
         `;
         preguntasContainer.appendChild(nuevaPregunta);
         
+        // Añade evento al botón de eliminar
         nuevaPregunta.querySelector('.btn-eliminar').addEventListener('click', function() {
           eliminarPregunta(this);
         });
       });
 
+      // Elimina una pregunta del formulario
       window.eliminarPregunta = function(boton) {
         const pregunta = boton.closest('.pregunta');
         if (confirm('¿Estás seguro de que deseas eliminar esta pregunta?')) {
@@ -644,6 +368,7 @@ function mostrarError(mensaje, campo) {
         }
       };
 
+      // Reorganiza las preguntas restantes después de eliminar una
       function reorganizarPreguntas() {
         const preguntas = document.querySelectorAll('.pregunta');
         preguntas.forEach((pregunta, index) => {
@@ -655,382 +380,18 @@ function mostrarError(mensaje, campo) {
         });
         contadorPreguntas = preguntas.length;
       }
-
-      formCrearEncuesta.addEventListener('submit', async function (event) {
-        event.preventDefault();
-        let valido = true;
-
-        if (!validarCamposVacios('form-crear-encuesta')) {
-          mostrarError('Por favor complete todos los campos requeridos.');
-          valido = false;
-        }
-
-        const tituloEncuesta = select('#titulo-encuesta');
-        if (tituloEncuesta && !validarNombreApellido(tituloEncuesta.value, tituloEncuesta)) {
-          valido = false;
-        }
-
-        if (!valido) return;
-
-        try {
-          const existeEncuesta = await verificarExistencia('/verificar-encuesta', { titulo: tituloEncuesta.value });
-          if (existeEncuesta) {
-            mostrarError('Ya existe una encuesta con ese título.', tituloEncuesta);
-            return;
-          }
-          this.submit();
-        } catch (error) {
-          console.error('Error al verificar encuesta:', error);
-          mostrarError('Error al verificar la encuesta. Intente nuevamente.');
-        }
-      });
     }
   };
+
+  // ==================== INICIALIZACIÓN ====================
 
   /**
-   * Formulario de eventos
+   * Inicializa todas las funcionalidades cuando el DOM está listo.
    */
-  const initFormularioEventos = () => {
-    const formEvento = select('#form-evento');
-    if (formEvento) {
-      formEvento.addEventListener('submit', async function (event) {
-        event.preventDefault();
-        let valido = true;
-
-        if (!validarCamposVacios('form-evento')) {
-          mostrarError('Por favor complete todos los campos requeridos.');
-          valido = false;
-        }
-
-        const nombreEvento = select('#nombre-evento');
-        if (nombreEvento && !validarNombreEvento(nombreEvento.value, nombreEvento)) {
-          valido = false;
-        }
-
-        const profesorCargo = select('#profesor-cargo');
-        if (profesorCargo && !validarProfesorCargo(profesorCargo.value, profesorCargo)) {
-          valido = false;
-        }
-
-        const telefonoContacto = select('#telefono-contacto');
-        if (telefonoContacto && !validarTelefono(telefonoContacto.value, telefonoContacto)) {
-          valido = false;
-        }
-
-        const fechaInicio = select('#fecha-inicio').value;
-        const fechaFin = select('#fecha-fin');
-        if (!validarFechasEvento(fechaInicio, fechaFin.value, fechaFin)) {
-          valido = false;
-        }
-
-        if (!valido) return;
-
-        try {
-          const existeEvento = await verificarExistencia('/verificar-evento', { nombre: nombreEvento.value });
-          if (existeEvento) {
-            mostrarError('Ya existe un evento con ese nombre.', nombreEvento);
-            return;
-          }
-          this.submit();
-        } catch (error) {
-          console.error('Error al verificar evento:', error);
-          mostrarError('Error al verificar el evento. Intente nuevamente.');
-        }
-      });
-    }
-  };
-
-  /**
-   * Formulario informacion profesoral
-   */
-  const initFormularioProfesoral = () => {
-    const formProfesoral = select('#form-profesoral');
-    if (formProfesoral) {
-      formProfesoral.addEventListener('submit', async function (event) {
-        event.preventDefault();
-        let valido = true;
-
-        if (!validarCamposVacios('form-profesoral')) {
-          mostrarError('Por favor complete todos los campos requeridos.');
-          valido = false;
-        }
-
-        const nombre = select('#nombre-profesor');
-        const primerApellido = select('#primer-apellido');
-        const segundoApellido = select('#segundo-apellido');
-
-        if (nombre && !validarNombreApellido(nombre.value, nombre)) valido = false;
-        if (primerApellido && !validarNombreApellido(primerApellido.value, primerApellido)) valido = false;
-        if (segundoApellido && segundoApellido.value && !validarNombreApellido(segundoApellido.value, segundoApellido)) valido = false;
-
-        const solapin = select('#solapin');
-        if (solapin && !validarSolapin(solapin.value, solapin)) valido = false;
-
-        const telefono = select('#telefono');
-        if (telefono && !validarTelefono(telefono.value, telefono)) valido = false;
-
-        const correo = select('#correo');
-        if (correo) {
-          correo.addEventListener('input', function() {
-            validarCorreo(this.value, this);
-          });
-          if (!validarCorreo(correo.value, correo)) valido = false;
-        }
-
-        if (!valido) return;
-
-        try {
-          const existeProfesor = await verificarExistencia('/verificar-profesor', {
-            nombre: nombre.value,
-            primerApellido: primerApellido.value,
-            segundoApellido: segundoApellido?.value || ''
-          });
-          if (existeProfesor) {
-            mostrarError('Ya existe un profesor con esos datos.');
-            return;
-          }
-          this.submit();
-        } catch (error) {
-          console.error('Error al verificar profesor:', error);
-          mostrarError('Error al verificar el profesor. Intente nuevamente.');
-        }
-      });
-    }
-  };
-
-  /**
-   * Formulario reporte de cumplimiento
-   */
-  const initFormularioReportes = () => {
-    const formReporte = select('#form-reporte');
-    if (formReporte) {
-      formReporte.addEventListener('submit', async function (event) {
-        event.preventDefault();
-        let valido = true;
-
-        if (!validarCamposVacios('form-reporte')) {
-          mostrarError('Por favor complete todos los campos requeridos.');
-          valido = false;
-        }
-
-        const brigada = select('#brigada');
-        if (brigada && !validarBrigada(brigada.value, brigada)) valido = false;
-
-        const curso = select('#curso');
-        if (curso && !validarCurso(curso.value, curso)) valido = false;
-
-        const autor = select('#autor');
-        if (autor && !validarNombreAutor(autor.value, autor)) valido = false;
-
-        if (!valido) return;
-
-        const codigo = select('#codigo');
-        try {
-          const existeCodigo = await verificarExistencia('/verificar-codigo', { codigo: codigo.value });
-          if (existeCodigo) {
-            mostrarError('Ya existe un reporte con ese código.', codigo);
-            return;
-          }
-          this.submit();
-        } catch (error) {
-          console.error('Error al verificar código:', error);
-          mostrarError('Error al verificar el código. Intente nuevamente.');
-        }
-      });
-    }
-  };
-
-  /**
-   * Formulario de registro
-   */
-  const initFormularioRegistro = () => {
-    const formRegistro = select('#form-registro');
-    if (formRegistro) {
-      const correoInput = select('#correo');
-      if (correoInput) {
-        correoInput.addEventListener('input', function() {
-          validarCorreo(this.value, this);
-        });
-        
-        correoInput.addEventListener('blur', function() {
-          if (this.value) validarCorreo(this.value, this);
-        });
-      }
-
-      const usuarioInput = select('#user');
-      if (usuarioInput) {
-        usuarioInput.addEventListener('input', function() {
-          validarUsuario(this.value, this);
-        });
-      }
-
-      formRegistro.addEventListener('submit', async function (event) {
-        event.preventDefault();
-        let valido = true;
-
-        if (!validarCamposVacios('form-registro')) {
-          mostrarError('Por favor complete todos los campos requeridos.');
-          valido = false;
-        }
-
-        const nombre = select('#nombre');
-        const primerApellido = select('#primer-apellido');
-        const segundoApellido = select('#segundo-apellido');
-
-        if (nombre && !validarNombreApellido(nombre.value, nombre)) valido = false;
-        if (primerApellido && !validarNombreApellido(primerApellido.value, primerApellido)) valido = false;
-        if (segundoApellido && segundoApellido.value && !validarNombreApellido(segundoApellido.value, segundoApellido)) valido = false;
-
-        const grupo = select('#grupo');
-        if (grupo && !validarGrupo(grupo.value, grupo)) valido = false;
-
-        const solapin = select('#solapin');
-        if (solapin && !validarSolapin(solapin.value, solapin)) valido = false;
-
-        const usuario = select('#user');
-        if (usuario && !validarUsuario(usuario.value, usuario)) valido = false;
-
-        const contraseña = select('#password');
-        if (contraseña && !validarContraseña(contraseña.value, contraseña)) valido = false;
-
-        const telefono = select('#telefono');
-        if (telefono && !validarTelefono(telefono.value, telefono)) valido = false;
-
-        const correo = select('#correo');
-        if (correo && !validarCorreo(correo.value, correo)) valido = false;
-
-        if (!valido) return;
-
-        try {
-          const existeUsuario = await verificarExistencia('/verificar-usuario', { usuario: usuario.value });
-          if (existeUsuario) {
-            mostrarError('El nombre de usuario ya está en uso.', usuario);
-            return;
-          }
-          this.submit();
-        } catch (error) {
-          console.error('Error al verificar usuario:', error);
-          mostrarError('Error al verificar el usuario. Intente nuevamente.');
-        }
-      });
-    }
-  };
-
-  /**
-   * Formulario de estrategia
-   */
-  const initFormularioEstrategia = () => {
-    const formEstrategia = select('#form-estrategia');
-    if (formEstrategia) {
-      formEstrategia.addEventListener('submit', async function (event) {
-        event.preventDefault();
-        let valido = true;
-
-        if (!validarCamposVacios('form-estrategia')) {
-          mostrarError('Por favor complete todos los campos requeridos.');
-          valido = false;
-        }
-
-        const tituloEstrategia = select('#titulo-estrategia');
-        if (tituloEstrategia && !validarNombreApellido(tituloEstrategia.value, tituloEstrategia)) {
-          valido = false;
-        }
-
-        const autor = select('#autor-estrategia');
-        if (autor && !validarNombreAutor(autor.value, autor)) {
-          valido = false;
-        }
-
-        const descripcion = select('#descripcion-estrategia');
-        if (descripcion && !validarCampoGrande(descripcion.value, descripcion)) {
-          valido = false;
-        }
-
-        if (!valido) return;
-
-        try {
-          const existeEstrategia = await verificarExistencia('/verificar-estrategia', { titulo: tituloEstrategia.value });
-          if (existeEstrategia) {
-            mostrarError('Ya existe una estrategia con ese título.', tituloEstrategia);
-            return;
-          }
-          this.submit();
-        } catch (error) {
-          console.error('Error al verificar estrategia:', error);
-          mostrarError('Error al verificar la estrategia. Intente nuevamente.');
-        }
-      });
-    }
-  };
-
-  // Inicializar todas las funcionalidades
   document.addEventListener("DOMContentLoaded", function() {
+    configurarValidacionFormularios();
     initSeleccionarTodo();
     initFormularioEncuestas();
-    initFormularioEventos();
-    initFormularioProfesoral();
-    initFormularioReportes();
-    initFormularioRegistro();
-    initFormularioEstrategia();
-
-    // Configuración de validación en tiempo real para campos comunes
-    const correoInputs = document.querySelectorAll('input[type="email"]');
-    correoInputs.forEach(input => {
-      input.addEventListener('input', function() {
-        validarCorreo(this.value, this);
-      });
-      input.addEventListener('blur', function() {
-        if (this.value) validarCorreo(this.value, this);
-      });
-    });
-
-    const telefonoInputs = document.querySelectorAll('input[type="tel"]');
-    telefonoInputs.forEach(input => {
-      input.addEventListener('input', function() {
-        validarTelefono(this.value, this);
-      });
-      input.addEventListener('blur', function() {
-        if (this.value) validarTelefono(this.value, this);
-      });
-    });
-
-    const nombreInputs = document.querySelectorAll('.validar-nombre');
-    nombreInputs.forEach(input => {
-      input.addEventListener('input', function() {
-        validarNombreApellido(this.value, this);
-      });
-      input.addEventListener('blur', function() {
-        if (this.value) validarNombreApellido(this.value, this);
-      });
-    });
-
-    // Validación en tiempo real para otros campos
-    const grupoInputs = document.querySelectorAll('.validar-grupo');
-    grupoInputs.forEach(input => {
-      input.addEventListener('input', function() {
-        validarGrupo(this.value, this);
-      });
-    });
-
-    const solapinInputs = document.querySelectorAll('.validar-solapin');
-    solapinInputs.forEach(input => {
-      input.addEventListener('input', function() {
-        validarSolapin(this.value, this);
-      });
-    });
-
-    const usuarioInputs = document.querySelectorAll('.validar-usuario');
-    usuarioInputs.forEach(input => {
-      input.addEventListener('input', function() {
-        validarUsuario(this.value, this);
-      });
-    });
-
-    const passwordInputs = document.querySelectorAll('.validar-password');
-    passwordInputs.forEach(input => {
-      input.addEventListener('input', function() {
-        validarContraseña(this.value, this);
-      });
-    });
   });
+
 })();
