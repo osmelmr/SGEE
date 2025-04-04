@@ -3577,29 +3577,13 @@ margin-left: 8.0rem;
 }
 
 
-.error {
-  border: 1px solid #ff4c4c !important; /* Borde rojo */
-  background-color: #fff5f5 !important; /* Fondo rojo claro */
+.is-invalid {
+  border-color: #dc3545 !important;
 }
 
-.mensaje-error {
-  color: #ff4c4c;
-  font-size: 14px;
-  margin-top: 5px;
-  display: none; 
-}
-.error + .mensaje-error {
+.error-campo {
+  font-size: 0.85rem;
+  color: #dc3545;
   display: block;
-}
-
-
-.error-icon {
-  color: #ff4c4c;
-  font-size: 16px;
-  margin-left: 5px;
-  display: none;
-}
-
-.error + .error-icon {
-  display: inline-block;
+  margin-top: 0.25rem;
 }
