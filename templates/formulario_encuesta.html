@@ -73,14 +73,14 @@
               <li><a href="eventos.html"> Eventos </a></li>
               <li><a href="reportes.html"> Reportes de Cumplimiento </a></li>
               <li><a href="usuarios.html"> Usuarios </a></li>
-              <li><a href="informacion_profesoral.html"> Información Profesoral</a></li>
+              <li><a href="profesores.html"> Información Profesoral</a></li>
               <li><a href="encuestas.html"> Encuestas</a></li>
               -->
               <li><a href="{% url 'estrategias'%}"> Estrategias Educativas </a></li>
               <li><a href="{% url 'eventos'%}"> Eventos </a></li>
               <li><a href="{% url 'reportes'%}"> Reportes de Cumplimiento </a></li>
               <li><a href="{% url 'usuarios'%}"> Usuarios </a></li>
-              <li><a href="{% url 'informacion_profesoral'%}"> Información Profesoral</a></li>
+              <li><a href="{% url 'profesores'%}"> Información Profesoral</a></li>
               <li><a href="{% url 'encuestas'%}"> Encuestas</a></li>
             </ul>
           </li>
@@ -113,7 +113,7 @@
             <p>Complete el siguiente formulario para crear una nueva encuesta.</p>
         </div>
 
-        <form id="form-crear-encuesta" method="POST" action="{% url 'encuesta_create' %}">
+        <form id="form-crear-encuesta" method="POST" action="{% url 'formulario_encuesta' %}">
             {% csrf_token %}
             <!-- Título de la Encuesta -->
             <div class="form-group mb-3">

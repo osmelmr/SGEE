@@ -72,14 +72,14 @@
               <li><a href="eventos.html"> Eventos </a></li>
               <li><a href="reportes.html"> Reportes de Cumplimiento </a></li>
               <li><a href="usuarios.html"> Usuarios </a></li>
-              <li><a href="informacion_profesoral.html"> Información Profesoral</a></li>
+              <li><a href="profesores.html"> Información Profesoral</a></li>
               <li><a href="encuestas.html"> Encuestas</a></li>
               -->
               <li><a href="{% url 'estrategias'%}"> Estrategias Educativas </a></li>
               <li><a href="{% url 'eventos'%}"> Eventos </a></li>
               <li><a href="{% url 'reportes'%}"> Reportes de Cumplimiento </a></li>
               <li><a href="{% url 'usuarios'%}"> Usuarios </a></li>
-              <li><a href="{% url 'informacion_profesoral'%}"> Información Profesoral</a></li>
+              <li><a href="{% url 'profesores'%}"> Información Profesoral</a></li>
               <li><a href="{% url 'encuestas'%}"> Encuestas</a></li>
             </ul>
           </li>
@@ -178,7 +178,7 @@
       
         <!-- Botones independientes debajo de la tabla -->
         <div id="botones-accion-profesoral" class="d-flex justify-content-between mt-4">
-          <a href="{% url 'formulario_informacion_pro' %}">
+          <a href="{% url 'formulario_profesor' %}">
             <div id="btn-registrar-profesoral" class="btn btn-success">
               <i class="bi bi-plus-circle"></i> Registrar
             </div>

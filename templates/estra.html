@@ -74,14 +74,14 @@
               <li><a href="eventos.html"> Eventos </a></li>
               <li><a href="reportes.html"> Reportes de Cumplimiento </a></li>
               <li><a href="usuarios.html"> Usuarios </a></li>
-              <li><a href="informacion_profesoral.html"> Información Profesoral</a></li>
+              <li><a href="profesores.html"> Información Profesoral</a></li>
               <li><a href="encuestas.html"> Encuestas</a></li>
               -->
               <li><a href="{% url 'estrategias'%}"> Estrategias Educativas </a></li>
               <li><a href="{% url 'eventos'%}"> Eventos </a></li>
               <li><a href="{% url 'reportes'%}"> Reportes de Cumplimiento </a></li>
               <li><a href="{% url 'usuarios'%}"> Usuarios </a></li>
-              <li><a href="{% url 'informacion_profesoral'%}"> Información Profesoral</a></li>
+              <li><a href="{% url 'profesores'%}"> Información Profesoral</a></li>
               <li><a href="{% url 'encuestas'%}"> Encuestas</a></li>
             </ul>
           </li>
@@ -127,7 +127,7 @@
         </div>
 
         <!-- Slide 2 -->
-        <div class="carousel-item" style="background-image: url(' {% static "./imagenes/hero2.jpg" %} ')">
+        <div class="carousel-item" style="background-image: url('{% static "./imagenes/hero2.jpg" %}')">
           <div class="carousel-container">
             <div class="container">
               <h2 class="animate__animated animate__fadeInDown">El futuro de la gestión educativa está aquí.</h2>

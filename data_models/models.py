@@ -1,48 +1,71 @@
 from django.db import models
 
-# Create your models here.
+# ============================================================================
+# Modelos de Gestión Académica
+# ============================================================================
+
+# ----------------------------------------
+# Modelo para la gestión de estrategias educativas
+# ----------------------------------------
 class Estrategia(models.Model):
     # Campos únicos
     curso = models.CharField(max_length=20)
     anio_escolar = models.CharField(max_length=10)
     grupo = models.CharField(max_length=20)
 
-    # Otros campos
+    # Información general
     nombre = models.CharField(max_length=255, blank=True, default="Estrategia_{id}")
+    autor = models.CharField(max_length=255, blank=True, default="autor_{id}")
     plan_estudios = models.TextField(blank=True, default="plan_estudios_{id}")
+    
+    # Objetivos y características
+    obj_general = models.TextField(blank=True, default="objetivo_general_{id}")
     obj_estrategia = models.TextField(blank=True, default="objetivos_estrategia_{id}")
     dir_brigada = models.CharField(max_length=255, blank=True, default="direccion_brigada_{id}")
     caract_brigada = models.TextField(blank=True, default="caracteristicas_brigada_{id}")
     colect_pedagogico = models.TextField(blank=True, default="colectivo_pedagogico_{id}")
-    otros_aspectos = models.TextField(blank=True, default="otros_aspectos_{id}")
+    
+    # Dimensiones
     dim_curricular = models.TextField(blank=True, default="dimension_curricular_{id}")
     dim_extensionista = models.TextField(blank=True, default="dimension_extensionista_{id}")
     dim_politica = models.TextField(blank=True, default="dimension_politico_ideologica_{id}")
-    conclusiones = models.TextField(blank=True, default="conclusiones_{id}")
-    obj_general = models.TextField(blank=True, default="objetivo_general_{id}")
+    
+    # Objetivos específicos y planes
     obj_dc = models.TextField(blank=True, default="obj_dc_{id}")
     plan_dc = models.TextField(blank=True, default="plan_dc_{id}")
     obj_de = models.TextField(blank=True, default="obj_de_{id}")
     plan_de = models.TextField(blank=True, default="plan_de_{id}")
     obj_dp = models.TextField(blank=True, default="obj_dp_{id}")
     plan_dp = models.TextField(blank=True, default="plan_dp_{id}")
+    
+    # Evaluación y otros aspectos
     evaluacion = models.TextField(blank=True, default="evaluacion_integral_{id}")
-    autor = models.CharField(max_length=255, blank=True, default="autor_{id}")
+    otros_aspectos = models.TextField(blank=True, default="otros_aspectos_{id}")
+    conclusiones = models.TextField(blank=True, default="conclusiones_{id}")
 
     # Restricción para evitar duplicación de curso, año escolar y grupo
     class Meta:
         unique_together = ('curso', 'anio_escolar', 'grupo')
 
-    # Representación de la estrategia
     def __str__(self):
         return f"Estrategia: {self.nombre or 'Sin nombre'} ({self.curso} - {self.anio_escolar} - {self.grupo})"
 
+
+# ----------------------------------------
+# Modelo para la gestión de eventos académicos y extracurriculares
+# ----------------------------------------
 class Evento(models.Model):
+    # Información básica
     nombre_evento = models.CharField(max_length=100)
+    descripcion = models.TextField()
+    
+    # Fecha y hora
     fecha_inicio = models.DateField()
     fecha_fin = models.DateField()
     hora_inicio = models.TimeField()
     hora_fin = models.TimeField()
+    
+    # Detalles del evento
     ubicacion_evento = models.CharField(max_length=100)
     tipo_evento = models.CharField(
         max_length=20,
@@ -53,77 +76,162 @@ class Evento(models.Model):
             ('social', 'Social'),
         ]
     )
-    descripcion = models.TextField()
+    
+    # Contacto
     profesor_cargo = models.CharField(max_length=50)
     telefono_contacto = models.CharField(max_length=15)
 
     def __str__(self):
         return self.nombre_evento
 
+
+# ============================================================================
+# Modelos de Gestión de Personal
+# ============================================================================
+
+# ----------------------------------------
+# Modelo para la gestión de información de profesores
+# ----------------------------------------
 class Profesor(models.Model):
+    # Datos personales
     nombre = models.CharField(max_length=50)
     primer_apellido = models.CharField(max_length=50)
     segundo_apellido = models.CharField(max_length=50, blank=True, null=True)
-    sexo = models.CharField(max_length=20, choices=[('masculino', 'Masculino'), ('femenino', 'Femenino'), ('otro', 'Otro')])
-    categoria_docente = models.CharField(max_length=20, choices=[('instructor', 'Instructor'), ('asistente', 'Asistente'), ('auxiliar', 'Auxiliar'), ('titular', 'Titular')])
+    sexo = models.CharField(
+        max_length=20, 
+        choices=[
+            ('masculino', 'Masculino'),
+            ('femenino', 'Femenino'),
+            ('otro', 'Otro')
+        ]
+    )
+    
+    # Datos académicos
+    categoria_docente = models.CharField(
+        max_length=20,
+        choices=[
+            ('instructor', 'Instructor'),
+            ('asistente', 'Asistente'),
+            ('auxiliar', 'Auxiliar'),
+            ('titular', 'Titular')
+        ]
+    )
     asignatura = models.CharField(max_length=50)
+    
+    # Datos institucionales
     solapin = models.CharField(max_length=10, unique=True)
-    telefono = models.CharField(max_length=15)
-    correo = models.EmailField(max_length=50)
     brigada_asignada = models.CharField(max_length=10)
     brigadas_impartir = models.CharField(max_length=50)
+    
+    # Contacto
+    telefono = models.CharField(max_length=15)
+    correo = models.EmailField(max_length=50)
     descripcion = models.TextField()
 
     def __str__(self):
         return f"{self.nombre} {self.primer_apellido} ({self.solapin})"
 
+
+# ----------------------------------------
+# Modelo para la gestión de brigadas estudiantiles
+# ----------------------------------------
+class Brigada(models.Model):
+    nombre = models.CharField(max_length=50, unique=True)
+    direccion = models.CharField(max_length=100)
+    caracterizacion = models.TextField()
+    profesores = models.ManyToManyField('Profesor', through='Colectivo', related_name='brigadas')
+
+    def __str__(self):
+        return self.nombre
+
+
+# ----------------------------------------
+# Modelo para la gestión de colectivos pedagógicos
+# ----------------------------------------
+class Colectivo(models.Model):
+    profesor = models.ForeignKey('Profesor', on_delete=models.CASCADE)
+    brigada = models.ForeignKey('Brigada', on_delete=models.CASCADE)
+    rol = models.CharField(max_length=100, blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.profesor} - {self.brigada}"
+
+
+# ============================================================================
+# Modelos de Gestión de Reportes
+# ============================================================================
+
+# ----------------------------------------
+# Modelo para la gestión de reportes institucionales
+# ----------------------------------------
 class Reporte(models.Model):
-    # Brigada asociada al reporte
+    # Identificación
     brigada = models.CharField(max_length=10, blank=True, null=True)
-
-    # Código del reporte
     codigo = models.CharField(max_length=10, blank=True, null=True)
-
-    # Periodo del reporte
     periodo = models.CharField(max_length=10, blank=True, null=True)
-
-    # Fecha del reporte
     fecha = models.DateField(blank=True, null=True)
-
-    # Autor del reporte
+    
+    # Responsables
     autor = models.CharField(max_length=50, blank=True, null=True)
-
-    # Institución asociada al reporte
     institucion = models.CharField(max_length=50, blank=True, null=True)
-
-    # Resumen del reporte
+    
+    # Contenido
     resumen = models.TextField(blank=True, null=True)
-
-    # Objetivos del reporte
     objetivos = models.TextField(blank=True, null=True)
-
-    # Actividades realizadas
     actividades = models.TextField(blank=True, null=True)
-
-    # Resultados obtenidos
     resultados = models.TextField(blank=True, null=True)
-
-    # Análisis de los resultados
     analisis = models.TextField(blank=True, null=True)
-
-    # Desafíos y lecciones aprendidas
+    
+    # Conclusiones
     desafios = models.TextField(blank=True, null=True)
-
-    # Próximos pasos
     proximos_pasos = models.TextField(blank=True, null=True)
-
-    # Anexos (opcional)
     anexos = models.FileField(upload_to='anexos/', blank=True, null=True)
 
     def __str__(self):
         return f"Reporte {self.codigo or 'Sin Código'} - {self.brigada or 'Sin Brigada'}"
 
+
+# ----------------------------------------
+# Modelo para la gestión de encuestas
+# ----------------------------------------
+class Encuesta(models.Model):
+    titulo = models.CharField(max_length=255)
+    descripcion = models.TextField()
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    autor = models.CharField(max_length=100, default="Desconocido")
+    estado = models.CharField(
+        max_length=10,
+        choices=[
+            ('activa', 'Activa'),
+            ('inactiva', 'Inactiva'),
+        ],
+        default='activa'
+    )
+
+    def __str__(self):
+        return self.titulo
+
+
+# ----------------------------------------
+# Modelo para la gestión de preguntas de encuestas
+# ----------------------------------------
+class Pregunta(models.Model):
+    encuesta = models.ForeignKey(Encuesta, on_delete=models.CASCADE, related_name='preguntas')
+    texto = models.CharField(max_length=255)
+
+    def __str__(self):
+        return f"Pregunta: {self.texto} (Encuesta: {self.encuesta.titulo})"
+
+
+# ============================================================================
+# Modelos de Gestión de Usuarios
+# ============================================================================
+
+# ----------------------------------------
+# Modelo para el registro y gestión de usuarios
+# ----------------------------------------
 class RegistroUsuario(models.Model):
+    # Datos personales
     nombre = models.CharField(max_length=50)
     primer_apellido = models.CharField(max_length=50)
     segundo_apellido = models.CharField(max_length=50, blank=True, null=True)
@@ -135,77 +243,18 @@ class RegistroUsuario(models.Model):
             ('otro', 'Otro')
         ]
     )
+    
+    # Datos institucionales
     grupo = models.CharField(max_length=50)
     solapin = models.CharField(max_length=10)
     cargo = models.CharField(max_length=50)
+    
+    # Contacto
     telefono = models.CharField(max_length=15)
     correo = models.EmailField(max_length=50)
+    
+    # Credenciales
     user = models.CharField(max_length=20)
     password = models.CharField(max_length=20)
-
-
-class Encuesta(models.Model):
-    # Título de la encuesta
-    titulo = models.CharField(max_length=255)
-
-    # Descripción de la encuesta
-    descripcion = models.TextField()
-
-    # Fecha de creación de la encuesta
-    fecha_creacion = models.DateTimeField(auto_now_add=True)
-
-    # Autor de la encuesta (con valor predeterminado)
-    autor = models.CharField(max_length=100, default="Desconocido")
-
-    # Estado de la encuesta (activa o inactiva)
-    ESTADOS = [
-        ('activa', 'Activa'),
-        ('inactiva', 'Inactiva'),
-    ]
-    estado = models.CharField(max_length=10, choices=ESTADOS, default='activa')
-
-    def __str__(self):
-        return self.titulo
-
-
-class Pregunta(models.Model):
-    # Relación con la encuesta
-    encuesta = models.ForeignKey(Encuesta, on_delete=models.CASCADE, related_name='preguntas')
-
-    # Texto de la pregunta
-    texto = models.CharField(max_length=255)
-
-    def __str__(self):
-        return f"Pregunta: {self.texto} (Encuesta: {self.encuesta.titulo})"
-
-class Brigada(models.Model):
-    # Nombre de la brigada (ejemplo: IDFI4301)
-    nombre = models.CharField(max_length=50, unique=True)
-
-    # Dirección (nombre de la persona encargada de la brigada)
-    direccion = models.CharField(max_length=100)
-
-    # Caracterización (descripción general de la brigada)
-    caracterizacion = models.TextField()
-
-    # Relación con profesores a través del modelo intermedio Colectivo
-    profesores = models.ManyToManyField('Profesor', through='Colectivo', related_name='brigadas')
-
-    def __str__(self):
-        return self.nombre
-
-
-class Colectivo(models.Model):
-    # Relación con el modelo Profesor
-    profesor = models.ForeignKey('Profesor', on_delete=models.CASCADE)
-
-    # Relación con el modelo Brigada
-    brigada = models.ForeignKey('Brigada', on_delete=models.CASCADE)
-
-    # Campo adicional para describir el rol del profesor en la brigada (opcional)
-    rol = models.CharField(max_length=100, blank=True, null=True)
-
-    def __str__(self):
-        return f"{self.profesor} - {self.brigada}"
 
 

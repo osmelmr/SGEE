@@ -73,14 +73,14 @@
               <li><a href="eventos.html"> Eventos </a></li>
               <li><a href="reportes.html"> Reportes de Cumplimiento </a></li>
               <li><a href="usuarios.html"> Usuarios </a></li>
-              <li><a href="informacion_profesoral.html"> Información Profesoral</a></li>
+              <li><a href="profesores.html"> Información Profesoral</a></li>
               <li><a href="encuestas.html"> Encuestas</a></li>
               -->
               <li><a href="{% url 'estrategias'%}"> Estrategias Educativas </a></li>
               <li><a href="{% url 'eventos'%}"> Eventos </a></li>
               <li><a href="{% url 'reportes'%}"> Reportes de Cumplimiento </a></li>
               <li><a href="{% url 'usuarios'%}"> Usuarios </a></li>
-              <li><a href="{% url 'informacion_profesoral'%}"> Información Profesoral</a></li>
+              <li><a href="{% url 'profesores'%}"> Información Profesoral</a></li>
               <li><a href="{% url 'encuestas'%}"> Encuestas</a></li>
             </ul>
           </li>
@@ -268,7 +268,7 @@
   <script src="{% static 'assets/js/main.js' %}"></script>
   <script>
     // Selecciona todos los botones con la clase "btn-eliminar"
-    document.querySelectorAll(".btn-eliminar-uno").forEach(button => {
+    document.querySelectorAll(".btn-eliminar").forEach(button => {
         button.addEventListener("click", function () {
             const estrategiaId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
             if (confirm("¿Estás seguro de que quieres eliminar esta estrategia ?"+estrategiaId)) {
