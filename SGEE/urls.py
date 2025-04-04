@@ -50,6 +50,7 @@ urlpatterns = [
     path('eliminar_encuestas/', views.eliminar_encuestas, name='eliminar_encuestas'),
     path('eliminar_reportes/', views.eliminar_reportes, name='eliminar_reportes'),
     path('eliminar_usuarios/', views.eliminar_usuarios, name='eliminar_usuarios'),
-    path('modificar_estrategia/<int:estra_id>/', views.modificarEstrategia, name='modificar_estrategia'),   
+    path('modificar_estrategia/<int:estra_id>/', views.modificarEstrategia, name='modificar_estrategia'), 
+    path('visualizar_estrategia/<int:estra_id>/', views.visualizarEstrategia, name='visualizar_estrategia'),  
 
 ]

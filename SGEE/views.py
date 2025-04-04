@@ -7,6 +7,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from data_models.models import Estrategia, Evento, Profesor, Reporte, Encuesta
 from django.http import JsonResponse
+from django.db.models import Q
 
 # Static Pages
 # ----------------------------------------------------------------------------
@@ -29,9 +30,24 @@ def testimonials_view(request):
 # List Views
 # ----------------------------------------------------------------------------
 def estrategias_view(request):
-    """Display all strategies."""
-    estrat = Estrategia.objects.all()
-    return render(request, 'estrategias.html', {'estrategias': estrat})
+    """Display all strategies with optional search functionality."""
+    query = request.GET.get('q', '')
+    if query:
+        # Search in multiple fields
+        estrategias = Estrategia.objects.filter(
+            Q(nombre__icontains=query) |
+            Q(curso__icontains=query) |
+            Q(anio_escolar__icontains=query) |
+            Q(grupo__icontains=query) |
+            Q(autor__icontains=query)
+        )
+    else:
+        estrategias = Estrategia.objects.all()
+    
+    return render(request, 'estrategias.html', {
+        'estrategias': estrategias,
+        'query': query
+    })
 
 def eventos_view(request):
     """Display all events."""
@@ -315,10 +331,16 @@ def eliminar_usuarios(request):
         return redirect('usuarios')
     return JsonResponse({'error': 'Método no permitido'}, status=405)
 
-# Delete Views - Multiple Items
+# Update Views - Unique Item
 # ----------------------------------------------------------------------------
 def modificarEstrategia(request, estra_id):
     """Modify a single strategy."""
     estra = get_object_or_404(Estrategia, id=estra_id)
     return render(request, 'modificar_estrategia.html', {'estrategia': estra})
 
+# Update Views - Unique Item
+# ----------------------------------------------------------------------------
+def visualizarEstrategia(request, estra_id):
+    """View a single strategy."""
+    estra = get_object_or_404(Estrategia, id=estra_id)
+    return render(request, 'visualizar_estrategia.html', {'estrategia': estra})

@@ -119,14 +119,14 @@
     </div>
 
     <!-- Barra de búsqueda -->
-    <div id="barra-busqueda-estrategia" class="search-bar">
+    <form method="GET" action="{% url 'estrategias' %}" class="search-bar mb-4">
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="Buscar estrategia..." aria-label="Buscar">
-        <button class="btn btn-primary" type="button">
+        <input type="text" name="q" class="form-control" placeholder="Buscar estrategia..." aria-label="Buscar" value="{{ request.GET.q }}">
+        <button class="btn btn-primary" type="submit">
           <i class="bi bi-search"></i> <!-- Ícono de lupa -->
         </button>
       </div>
-    </div>
+    </form>
 
     <!-- Contenedor de la tabla con scroll -->
     <form id="form-eliminar-estrategias" method="POST" action="{% url 'eliminar_estrategias' %}">
@@ -280,12 +280,23 @@
   </script>
 
   <script>
-    // Selecciona todos los botones con la clase "btn-eliminar"
+    // Selecciona todos los botones con la clase "btn-modificar"
     document.querySelectorAll(".btn-modificar").forEach(button => {
         button.addEventListener("click", function (e) {
             //e.stopPropagation();
             const estrategiaId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
             window.location.href = `/modificar_estrategia/${estrategiaId}/`;
+        });
+    });
+  </script>
+
+  <script>
+    // Selecciona todos los botones con la clase "btn-ver-detalles"
+    document.querySelectorAll(".btn-ver-detalles").forEach(button => {
+        button.addEventListener("click", function (e) {
+            //e.stopPropagation();
+            const estrategiaId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
+            window.location.href = `/visualizar_estrategia/${estrategiaId}/`;
         });
     });
   </script>
