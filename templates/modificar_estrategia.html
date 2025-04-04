@@ -1,0 +1,346 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Título y metadatos -->
+  <title> Formulario Estrategias Educativas </title>
+  <meta name="description" content="Sistema de Gestión de Estrategias Educativas para la Universidad de las Ciencias Informáticas (UCI).">
+  <meta name="keywords" content="ESTRA, educación, gestión, UCI, estrategias educativas">
+
+  <!-- Favicons -->
+  <!--<link href="assets/img/favicon.png" rel="icon"-->
+  <!--<<link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">-->
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Archivos CSS de Vendor -->
+  <!--
+  <link href="assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  -->
+  <link href="{% static 'assets/vendor/animate.css/animate.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+
+  <!-- Archivo CSS Principal -->
+  <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+</head>
+<body>
+  <!-- ======= Header ======= -->
+  <header id="header" class="d-flex align-items-center fixed-top">
+    <div class="container d-flex align-items-center">
+      <!-- Logo -->
+      <a href="{% url 'pagina_principal' %}" class="logo me-auto"><img src="{% static './imagenes/logo/logo.png'%}" alt="" class="img-fluid"></a>
+      <h1 class="logo me-auto"><a href="{% url 'pagina_principal' %}">ESTRA</a></h1>
+
+      <!-- Navegación -->
+      <nav id="navbar" class="navbar">
+        <ul>
+          <!--
+          <li><a href="{% url 'pagina_principal' %}" class="active">Inicio</a></li>
+          -->
+          <li><a href="{% url 'pagina_principal' %}" class="active">Inicio</a></li>
+          <li class="dropdown">
+            <a href="#"><span>Sobre Nosotros</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <!--
+              <li><a href="{% url 'sobrenos' %}">>Sobre Nosotros</a></li>
+              <li><a href="testimonials.html"> Reseñas </a></li>
+              -->
+              <li><a href="{% url 'sobrenos' %}">Sobre Nosotros</a></li>
+              <li><a href="{% url 'testimonials' %}"> Reseñas </a></li>
+            </ul>
+          </li>
+          <li class="dropdown"><a href="#"><span> Servicios </span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <!--
+              <li><a href="estrategias.html"> Estrategias Educativas </a></li>
+              <li><a href="eventos.html"> Eventos </a></li>
+              <li><a href="reportes.html"> Reportes de Cumplimiento </a></li>
+              <li><a href="usuarios.html"> Usuarios </a></li>
+              <li><a href="informacion_profesoral.html"> Información Profesoral</a></li>
+              <li><a href="encuestas.html"> Encuestas</a></li>
+              -->
+              <li><a href="{% url 'estrategias'%}"> Estrategias Educativas </a></li>
+              <li><a href="{% url 'eventos'%}"> Eventos </a></li>
+              <li><a href="{% url 'reportes'%}"> Reportes de Cumplimiento </a></li>
+              <li><a href="{% url 'usuarios'%}"> Usuarios </a></li>
+              <li><a href="{% url 'informacion_profesoral'%}"> Información Profesoral</a></li>
+              <li><a href="{% url 'encuestas'%}"> Encuestas</a></li>
+            </ul>
+          </li>
+          <!--
+          <li><a href="contactenos.html">Contáctenos</a></li>-->
+          <!--
+          <li><a href="contactenos.html">Contáctenos</a></li>-->
+          <li><a href="{% url 'contactar' %}">Contáctenos</a></li>
+          <li class="dropdown user-menu">
+            <a href="#"><i class="bi bi-person-circle"></i> Mi cuenta <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li class="user-info">
+                <span class="user-name"><i class="bi bi-person-fill"></i> Nombre del Usuario</span>
+                <span class="user-role"><i class="bi bi-briefcase-fill"></i> Cargo del Usuario</span>
+              </li>
+              <li class="divider"></li>
+              <li><a href="#">Salir</a></li>
+            </ul>
+          </li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- Fin de la navegación -->
+    </div>
+  </header><!-- Fin del Header -->
+
+  <section id="formulario-estrategia" class="estrategia-educativa">
+    <div class="container">
+      <div class="section-title">
+        <h2>Formulario de Estrategia Educativa</h2>
+        <p>Complete los siguientes campos para registrar una nueva estrategia educativa.</p>
+      </div>
+  
+      <form id="form-estrategia" class="php-email-form" action="" method="POST">
+        {% csrf_token %}
+        <!-- Campos adicionales: curso, año escolar y grupo -->
+        <div class="form-section mb-4 p-4 border rounded">
+          <h3 class="mb-4">Datos generales</h3>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="titulo-estrategia">Nombre</label>
+                <input type="text" id="titulo-estrategia" name="titulo-estrategia" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <label for="curso">Curso</label>
+                <input type="text" id="curso" name="curso" class="form-control" >
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <label for="ano-escolar">Año escolar</label>
+                <input type="text" id="ano-escolar" name="ano-escolar" class="form-control"  >
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <label for="grupo">Grupo</label>
+                <input type="text" id="grupo" name="grupo" class="form-control"  >
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <!-- Sección 1: Introducción -->
+        <div class="form-section mb-4 p-4 border rounded">
+          <h3 class="mb-4">1. Introducción</h3>
+          <div class="form-group">
+            <label for="plan-estudios">1.1 Plan de estudios</label>
+            <textarea id="plan-estudios" name="plan-estudios" class="form-control" rows="4"  ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="objetivos-estrategia">1.2 Objetivos de la Estrategia Educativa</label>
+            <textarea id="objetivos-estrategia" name="objetivos-estrategia" class="form-control" rows="4"  ></textarea>
+          </div>
+        </div>
+      
+        <!-- Sección 2: Caracterización de la brigada -->
+        <div class="form-section mb-4 p-4 border rounded">
+          <h3 class="mb-4">2. Caracterización de la brigada</h3>
+          <div class="form-group">
+            <label for="direccion-brigada">2.1 Dirección de la brigada</label>
+            <input type="text" id="direccion-brigada" name="direccion-brigada" class="form-control"  >
+          </div>
+          <div class="form-group">
+            <label for="caracteristicas-brigada">2.2 Características de la brigada</label>
+            <textarea id="caracteristicas-brigada" name="caracteristicas-brigada" class="form-control" rows="4"  ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="colectivo-pedagogico">2.3 Colectivo pedagógico</label>
+            <textarea id="colectivo-pedagogico" name="colectivo-pedagogico" class="form-control" rows="4"  ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="otros-aspectos">2.4 Otros aspectos</label>
+            <textarea id="otros-aspectos" name="otros-aspectos" class="form-control" rows="4"></textarea>
+          </div>
+        </div>
+      
+        <!-- Sección 3: Problemas detectados en la brigada -->
+        <div class="form-section mb-4 p-4 border rounded">
+          <h3 class="mb-4">3. Problemas detectados en la brigada</h3>
+          <div class="form-group">
+            <label for="dimension-curricular">3.1 Dimensión curricular</label>
+            <textarea id="dimension-curricular" name="dimension-curricular" class="form-control" rows="4"  ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="dimension-extensionista">3.2 Dimensión extensionista</label>
+            <textarea id="dimension-extensionista" name="dimension-extensionista" class="form-control" rows="4"  ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="dimension-politico-ideologica">3.3 Dimensión político-ideológica</label>
+            <textarea id="dimension-politico-ideologica" name="dimension-politico-ideologica" class="form-control" rows="4"  ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="conclusiones">3.4 Conclusiones</label>
+            <textarea id="conclusiones" name="conclusiones" class="form-control" rows="4"  ></textarea>
+          </div>
+        </div>
+      
+        <!-- Sección 4: Plan de acciones -->
+        <div class="form-section mb-4 p-4 border rounded">
+          <h3 class="mb-4">4. Plan de acciones</h3>
+          <div class="form-group">
+            <label for="objetivo-general">4.1 Objetivo General</label>
+            <textarea id="objetivo-general" name="objetivo-general" class="form-control" rows="4"  ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="objetivos-especificos-curricular">4.2.1 Objetivos específicos (Dimensión curricular)</label>
+            <textarea id="objetivos-especificos-curricular" name="objetivos-especificos-curricular" class="form-control" rows="4"  ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="plan-acciones-curricular">4.2.2 Plan de acciones (Dimensión curricular)</label>
+            <textarea id="plan-acciones-curricular" name="plan-acciones-curricular" class="form-control" rows="4"  ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="objetivos-especificos-extensionista">4.3.1 Objetivos específicos (Dimensión extensionista)</label>
+            <textarea id="objetivos-especificos-extensionista" name="objetivos-especificos-extensionista" class="form-control" rows="4"  ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="plan-acciones-extensionista">4.3.2 Plan de acciones (Dimensión extensionista)</label>
+            <textarea id="plan-acciones-extensionista" name="plan-acciones-extensionista" class="form-control" rows="4"  ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="objetivos-especificos-politico-ideologica">4.4.1 Objetivos específicos (Dimensión político-ideológica)</label>
+            <textarea id="objetivos-especificos-politico-ideologica" name="objetivos-especificos-politico-ideologica" class="form-control" rows="4"  ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="plan-acciones-politico-ideologica">4.4.2 Plan de acciones (Dimensión político-ideológica)</label>
+            <textarea id="plan-acciones-politico-ideologica" name="plan-acciones-politico-ideologica" class="form-control" rows="4"  ></textarea>
+          </div>
+        </div>
+      
+        <!-- Sección 5: Evaluación integral -->
+        <div class="form-section mb-4 p-4 border rounded">
+          <h3 class="mb-4">5. Evaluación integral</h3>
+          <div class="form-group">
+            <label for="evaluacion-integral">Evaluación integral</label>
+            <textarea id="evaluacion-integral" name="evaluacion-integral" class="form-control" rows="4"  ></textarea>
+          </div>
+        </div>
+      
+        <!-- Sección 6: Autor -->
+        <div class="form-section mb-4 p-4 border rounded">
+          <h3 class="mb-4">6. Autor</h3>
+          <div class="form-group">
+            <label for="autor">Nombre del autor</label>
+            <input type="text" id="autor" name="autor" class="form-control"  >
+          </div>
+        </div>
+        
+        <!-- Línea divisoria y botones -->
+        <div class="text-center mt-4 pt-4 border-top">
+          <div class="d-flex justify-content-between">
+            <button type="submit" id="boton-registrar-estrategia" class="btn btn-primary">
+              <i class="bi bi-save"></i> Registrar Estrategia
+            </button>
+            <button type="button" id="boton-cancelar-estrategias" class="btn btn-cancelar" onclick="window.history.back()">Cancelar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+</section>
+
+  
+    
+ <!-- ======= Footer ======= -->
+ <footer id="footer" class="footer">
+    <div class="container footer-top">
+      <div class="row gy-4">
+        <!-- Columna 1: Acerca de -->
+        <div class="col-lg-5 col-md-12 footer-about footer-fade-in">
+          <a href="{% url 'pagina_principal' %}" class="d-flex align-items-center logo">
+            <span>ESTRA</span>
+          </a>
+          <p>"Recuerda: una buena gestión educativa es la base del éxito. ¡Gracias por visitarnos!"</p>
+          <div class="d-flex mt-4 social-links">
+            <a href="#"><i class="bi bi-twitter"></i></a>
+            <a href="#"><i class="bi bi-facebook"></i></a>
+            <a href="#"><i class="bi bi-instagram"></i></a>
+            <a href="#"><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+
+        <!-- Columna 2: Enlaces útiles -->
+        <div class="col-6 col-lg-2 footer-fade-in footer-links" data-delay="100">
+          <h4>Enlaces Útiles</h4>
+          <ul>
+            <li><a href="{% url 'pagina_principal' %}">Inicio</a></li>
+            <li><a href="{% url 'sobrenos' %}">>Sobre Nosotros</a></li>
+            <li><a href="#">Términos de Servicios</a></li>
+            <li><a href="#">Política de Privacidad</a></li>
+          </ul>
+        </div>
+
+        <!-- Columna 3: Contáctenos -->
+        <div class="col-lg-3 col-md-12 text-center text-md-start footer-contact footer-fade-in" data-delay="200">
+          <h4>Contáctenos</h4>
+          <p>Carretera a San Antonio de los Baños Km 2 1/2, Reparto. Torrens</p>
+          <p>La Habana</p>
+          <p>Cuba</p>
+          <p class="mt-4"><strong>Teléfono:</strong> <span>+53 558-648-04</span></p>
+          <p><strong>Correo:</strong> <span>cFc@estudiantes.uci.cu</span></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Copyright -->
+    <div class="container text-center copyright footer-fade-in mt-4" data-delay="300">
+      <p>&copy; <span>Copyright</span> <strong class="px-1">ESTRA</strong> <span>Todos los derechos reservados.</span></p>
+      <div class="credits">
+        Diseñado por "CodeFusion Creators"
+      </div>
+    </div>
+  </footer><!-- Fin del Footer -->
+
+
+
+  <!-- Vendor JS Files -->
+  <!--
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  -->
+  <!-- Template Main JS File -->
+  <!--
+  <script src="assets/js/main.js"></script>
+  -->
+  <!-- Archivos JS de Vendor -->
+  <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/waypoints/noframework.waypoints.js' %}"></script>
+  <script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
+
+  <!-- Archivo JS Principal -->
+  <script src="{% static 'assets/js/main.js' %}"></script>
+</body>
+</html>

@@ -158,13 +158,13 @@
                 <td>{{ estrategia.curso }}</td>
                 <td>{{ estrategia.anio_escolar }}</td>
                 <td>
-                  <button class="btn btn-action btn-ver-detalles" data-id="{{ estrategia.id }}" title="Ver Detalles">
+                  <button type="button" class="btn btn-action btn-ver-detalles" data-id="{{ estrategia.id }}" title="Ver Detalles">
                     <i class="bi bi-eye"></i>
                   </button>
-                  <button class="btn btn-action btn-modificar" data-id="{{ estrategia.id }}" title="Modificar">
+                  <button type="button" class="btn btn-action btn-modificar" data-id="{{ estrategia.id }}" title="Modificar">
                     <i class="bi bi-pencil"></i>
                   </button>
-                  <button class="btn btn-action btn-eliminar" data-id="{{ estrategia.id }}" title="Eliminar">
+                  <button type="button" class="btn btn-action btn-eliminar" data-id="{{ estrategia.id }}" title="Eliminar">
                     <i class="bi bi-trash"></i>
                   </button>
                   <input type="checkbox" class="form-check-input seleccionar-fila" name="estrategias[]" value="{{ estrategia.id }}">
@@ -268,7 +268,7 @@
   <script src="{% static 'assets/js/main.js' %}"></script>
   <script>
     // Selecciona todos los botones con la clase "btn-eliminar"
-    document.querySelectorAll(".btn-eliminar").forEach(button => {
+    document.querySelectorAll(".btn-eliminar-uno").forEach(button => {
         button.addEventListener("click", function () {
             const estrategiaId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
             if (confirm("¿Estás seguro de que quieres eliminar esta estrategia ?"+estrategiaId)) {
@@ -277,7 +277,32 @@
             }
         });
     });
+  </script>
 
+  <script>
+    // Selecciona todos los botones con la clase "btn-eliminar"
+    document.querySelectorAll(".btn-modificar").forEach(button => {
+        button.addEventListener("click", function (e) {
+            //e.stopPropagation();
+            const estrategiaId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
+            window.location.href = `/modificar_estrategia/${estrategiaId}/`;
+        });
+    });
+  </script>
+
+  <script>
+    let formulario=document.getElementById("form-eliminar-estrategias");
+    formulario.addEventListener("submit", function(event){
+      event.preventDefault();
+      let estrategias=document.querySelectorAll(".seleccionar-fila:checked");
+      if(estrategias.length===0){
+        alert("No hay estrategias seleccionados");
+        return;
+      }
+      if(confirm("¿Estás seguro de que quieres eliminar los estrategias seleccionados?")){
+        formulario.submit();
+      }
+    });
   </script>
   <script>
     document.getElementById('btn-seleccionar-todo').addEventListener('click', function (e) {

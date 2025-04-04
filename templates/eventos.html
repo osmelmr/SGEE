@@ -280,5 +280,19 @@
     });
   });
 </script>
+<script>
+  let formulario=document.getElementById("form-eliminar-eventos");
+  formulario.addEventListener("submit", function(event){
+    event.preventDefault();
+    let eventos=document.querySelectorAll(".seleccionar-fila:checked");
+    if(eventos.length===0){
+      alert("No hay eventos seleccionados");
+      return;
+    }
+    if(confirm("¿Estás seguro de que quieres eliminar los eventos seleccionados?")){
+      formulario.submit();
+    }
+  });
+</script>
 </body>
 </html>

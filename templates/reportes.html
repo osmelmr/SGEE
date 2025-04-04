@@ -281,11 +281,27 @@
     });
 
   </script>
+
   <script>
     document.getElementById('btn-seleccionar-todo').addEventListener('click', function (e) {
       e.preventDefault();
       const checkboxes = document.querySelectorAll('.seleccionar-fila');
       checkboxes.forEach(checkbox => checkbox.checked = !checkbox.checked);
+    });
+  </script>
+  
+  <script>
+    let formulario=document.getElementById("form-eliminar-reportes");
+    formulario.addEventListener("submit", function(event){
+      event.preventDefault();
+      let reportes=document.querySelectorAll(".seleccionar-fila:checked");
+      if(reportes.length===0){
+        alert("No hay reportes seleccionados");
+        return;
+      }
+      if(confirm("¿Estás seguro de que quieres eliminar los reportes seleccionados?")){
+        formulario.submit();
+      }
     });
   </script>
 </body>

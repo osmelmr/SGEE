@@ -280,5 +280,19 @@
     });
   });
 </script>
+<script>
+  let formulario=document.getElementById("form-eliminar-profesores");
+  formulario.addEventListener("submit", function(event){
+    event.preventDefault();
+    let profesores=document.querySelectorAll(".seleccionar-fila:checked");
+    if(profesores.length===0){
+      alert("No hay profesores seleccionados");
+      return;
+    }
+    if(confirm("¿Estás seguro de que quieres eliminar los profesores seleccionados?")){
+      formulario.submit();
+    }
+  });
+</script>
 </body>
 </html>

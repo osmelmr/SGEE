@@ -286,5 +286,19 @@
       });
     });
   </script>
+  <script>
+    let formulario=document.getElementById("form-eliminar-encuestas");
+    formulario.addEventListener("submit", function(event){
+      event.preventDefault();
+      let encuestas=document.querySelectorAll(".seleccionar-fila:checked");
+      if(encuestas.length===0){
+        alert("No hay encuestas seleccionados");
+        return;
+      }
+      if(confirm("¿Estás seguro de que quieres eliminar los encuestas seleccionados?")){
+        formulario.submit();
+      }
+    });
+  </script>
 </body>
 </html>
