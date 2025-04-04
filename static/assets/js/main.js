@@ -1,11 +1,13 @@
 (function () {
   "use strict";
 
+  // ==================== FUNCIONES DE UTILIDAD ====================
+
   /**
    * Selecciona un elemento del DOM.
    * @param {string} el - Selector del elemento.
    * @param {boolean} all - Si es true, selecciona todos los elementos que coincidan.
-   * @returns {Element|NodeList}
+   * @returns {Element|NodeList} El elemento o lista de elementos encontrados.
    */
   const select = (el, all = false) => {
     el = el.trim();
@@ -36,10 +38,96 @@
     el.addEventListener("scroll", listener);
   };
 
+  // ==================== VALIDACIÓN DE FORMULARIOS ====================
+
+  /**
+   * Valida si los campos requeridos de un formulario están vacíos
+   * @param {HTMLFormElement} form - Elemento del formulario a validar
+   * @returns {boolean} - True si todos los campos requeridos están llenos
+   */
+  function validarCamposVacios(form) {
+    let valido = true;
+    const camposRequeridos = form.querySelectorAll('[required]');
+    
+    camposRequeridos.forEach(campo => {
+      // Saltar campos disabled o readonly
+      if (campo.disabled || campo.readOnly) return;
+      
+      if (!campo.value.trim()) {
+        campo.classList.add('is-invalid');
+        valido = false;
+        
+        // Mostrar error si no existe
+        if (!campo.nextElementSibling || !campo.nextElementSibling.classList.contains('error-campo')) {
+          const errorElement = document.createElement('div');
+          errorElement.className = 'error-campo text-danger mt-1 small';
+          errorElement.textContent = 'Este campo es obligatorio';
+          campo.parentNode.insertBefore(errorElement, campo.nextSibling);
+        }
+      } else {
+        campo.classList.remove('is-invalid');
+        // Eliminar mensaje de error si existe
+        const errorElement = campo.parentNode.querySelector('.error-campo');
+        if (errorElement) errorElement.remove();
+      }
+    });
+    
+    return valido;
+  }
+
+  /**
+   * Configura la validación para todos los formularios de la página
+   */
+  function configurarValidacionFormularios() {
+    const forms = document.querySelectorAll('form');
+    
+    forms.forEach(form => {
+      // Validación al enviar
+      form.addEventListener('submit', function(e) {
+        if (!validarCamposVacios(this)) {
+          e.preventDefault();
+          
+          // Enfocar el primer campo inválido
+          const primerCampoInvalido = this.querySelector('.is-invalid');
+          if (primerCampoInvalido) {
+            primerCampoInvalido.focus();
+            
+            // Scroll suave al campo con error
+            primerCampoInvalido.scrollIntoView({
+              behavior: 'smooth',
+              block: 'center'
+            });
+          }
+        }
+      });
+      
+      // Validación al salir de cada campo (blur)
+      const camposRequeridos = form.querySelectorAll('[required]');
+      camposRequeridos.forEach(campo => {
+        campo.addEventListener('blur', () => {
+          if (!campo.value.trim()) {
+            campo.classList.add('is-invalid');
+            if (!campo.nextElementSibling || !campo.nextElementSibling.classList.contains('error-campo')) {
+              const errorElement = document.createElement('div');
+              errorElement.className = 'error-campo text-danger mt-1 small';
+              errorElement.textContent = 'Este campo es obligatorio';
+              campo.parentNode.insertBefore(errorElement, campo.nextSibling);
+            }
+          } else {
+            campo.classList.remove('is-invalid');
+            const errorElement = campo.parentNode.querySelector('.error-campo');
+            if (errorElement) errorElement.remove();
+          }
+        });
+      });
+    });
+  }
+
   // ==================== FUNCIONALIDADES GENERALES ====================
 
   /**
-   * Añade la clase 'header-scrolled' al header cuando se hace scroll.
+   * Cambia el estilo del header al hacer scroll.
+   * Añade la clase 'header-scrolled' cuando el scroll supera 100px.
    */
   const header = select("#header");
   if (header) {
@@ -52,6 +140,7 @@
 
   /**
    * Muestra u oculta el botón "Back to Top" según la posición del scroll.
+   * Se activa cuando el scroll supera 100px.
    */
   const backToTop = select(".back-to-top");
   if (backToTop) {
@@ -64,6 +153,7 @@
 
   /**
    * Alternar la navegación móvil.
+   * Cambia entre iconos de menú (bi-list) y cerrar (bi-x).
    */
   on("click", ".mobile-nav-toggle", function (e) {
     const navbar = select("#navbar");
@@ -76,6 +166,7 @@
 
   /**
    * Activar dropdowns en la navegación móvil.
+   * Solo funciona cuando la navegación está en modo móvil.
    */
   on(
     "click",
@@ -92,8 +183,11 @@
     true
   );
 
+  // ==================== COMPONENTES INTERACTIVOS ====================
+
   /**
-   * Indicadores del carrusel hero.
+   * Configura los indicadores del carrusel hero.
+   * Crea los puntos de navegación para cada slide del carrusel.
    */
   const heroCarouselIndicators = select("#hero-carousel-indicators");
   const heroCarouselItems = select('#heroCarousel .carousel-item', true);
@@ -107,7 +201,8 @@
   }
 
   /**
-   * Inicializar el slider de la galería.
+   * Inicializa el slider de la galería con Swiper.
+   * Configura autoplay, paginación y responsive breakpoints.
    */
   const gallerySlider = select(".gallery-slider");
   if (gallerySlider) {
@@ -142,8 +237,11 @@
     });
   }
 
+  // ==================== ANIMACIONES ====================
+
   /**
-   * Verificar visibilidad de elementos con animaciones al hacer scroll.
+   * Verifica la visibilidad de elementos con animaciones al hacer scroll.
+   * Añade la clase 'visible' cuando el elemento entra en la ventana visible.
    */
   const checkVisibility = () => {
     const elements = document.querySelectorAll(
@@ -160,12 +258,14 @@
     });
   };
 
+  // Configura listeners para verificar visibilidad
   window.addEventListener("load", checkVisibility);
   window.addEventListener("scroll", checkVisibility);
   window.addEventListener("resize", checkVisibility);
 
   /**
    * Animación de habilidades (skills).
+   * Usa Waypoint.js para activar la animación de barras de progreso cuando el elemento entra en vista.
    */
   const skillsContent = select(".skills-content");
   if (skillsContent) {
@@ -180,8 +280,12 @@
       },
     });
   }
- /**
-   * Funcionalidad de seleccionar todo en tablas
+
+  // ==================== FUNCIONALIDADES ESPECÍFICAS ====================
+
+  /**
+   * Funcionalidad de seleccionar todo en tablas.
+   * Permite seleccionar/deseleccionar todos los checkboxes de una tabla.
    */
   const initSeleccionarTodo = () => {
     const btnSeleccionarTodo = select("#btn-seleccionar-todo");
@@ -195,6 +299,7 @@
         updateIcon();
       });
 
+      // Actualiza el icono del botón según el estado
       function updateIcon() {
         const icon = btnSeleccionarTodo.querySelector("i");
         if (btnSeleccionarTodo.classList.contains("active")) {
@@ -206,6 +311,7 @@
         }
       }
 
+      // Actualiza el botón cuando se cambian checkboxes individuales
       checkboxes.forEach((checkbox) => {
         checkbox.addEventListener("change", function () {
           const allChecked = Array.from(checkboxes).every((cb) => cb.checked);
@@ -217,7 +323,8 @@
   };
 
   /**
-   * Funcionalidad de formulario de encuestas
+   * Funcionalidad de formulario de encuestas.
+   * Permite agregar/eliminar preguntas y validar el formulario.
    */
   const initFormularioEncuestas = () => {
     const agregarPreguntaBtn = select("#agregar-pregunta");
@@ -226,6 +333,7 @@
     if (agregarPreguntaBtn && formCrearEncuesta) {
       let contadorPreguntas = 1;
 
+      // Agrega una nueva pregunta al formulario
       agregarPreguntaBtn.addEventListener('click', function() {
         contadorPreguntas++;
         const preguntasContainer = select("#preguntas-encuesta");
@@ -245,11 +353,13 @@
         `;
         preguntasContainer.appendChild(nuevaPregunta);
         
+        // Añade evento al botón de eliminar
         nuevaPregunta.querySelector('.btn-eliminar').addEventListener('click', function() {
           eliminarPregunta(this);
         });
       });
 
+      // Elimina una pregunta del formulario
       window.eliminarPregunta = function(boton) {
         const pregunta = boton.closest('.pregunta');
         if (confirm('¿Estás seguro de que deseas eliminar esta pregunta?')) {
@@ -258,6 +368,7 @@
         }
       };
 
+      // Reorganiza las preguntas restantes después de eliminar una
       function reorganizarPreguntas() {
         const preguntas = document.querySelectorAll('.pregunta');
         preguntas.forEach((pregunta, index) => {
@@ -269,39 +380,18 @@
         });
         contadorPreguntas = preguntas.length;
       }
-
-      formCrearEncuesta.addEventListener('submit', async function (event) {
-        event.preventDefault();
-        let valido = true;
-
-        if (!validarCamposVacios('form-crear-encuesta')) {
-          mostrarError('Por favor complete todos los campos requeridos.');
-          valido = false;
-        }
-
-        const tituloEncuesta = select('#titulo-encuesta');
-        if (tituloEncuesta && !validarNombreApellido(tituloEncuesta.value, tituloEncuesta)) {
-          valido = false;
-        }
-
-        if (!valido) return;
-
-        try {
-          const existeEncuesta = await verificarExistencia('/verificar-encuesta', { titulo: tituloEncuesta.value });
-          if (existeEncuesta) {
-            mostrarError('Ya existe una encuesta con ese título.', tituloEncuesta);
-            return;
-          }
-          this.submit();
-        } catch (error) {
-          console.error('Error al verificar encuesta:', error);
-          mostrarError('Error al verificar la encuesta. Intente nuevamente.');
-        }
-      });
     }
   };
-  // Inicializar todas las funcionalidades
+
+  // ==================== INICIALIZACIÓN ====================
+
+  /**
+   * Inicializa todas las funcionalidades cuando el DOM está listo.
+   */
   document.addEventListener("DOMContentLoaded", function() {
+    configurarValidacionFormularios();
     initSeleccionarTodo();
- });
+    initFormularioEncuestas();
+  });
+
 })();
