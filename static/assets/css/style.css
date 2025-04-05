@@ -2173,6 +2173,7 @@ margin-left: 8.0rem;
 #formulario-evento {
   background-color: #ffffff;
   padding: 60px 0;
+  margin-top: 60px;
 }
 
 #formulario-evento .section-title h2 {
@@ -2180,16 +2181,12 @@ margin-left: 8.0rem;
   color: #100380;
   font-size: 28px;
   font-weight: 700;
-  margin-top: 60px;
+  padding-top: 200px;
 }
 
 #formulario-evento .section-title p {
   color: #848484;
   font-size: 16px;
-}
-
-#formulario-evento .section-title {
-  padding-top: 60px;
 }
 
 #formulario-evento .form-section {
