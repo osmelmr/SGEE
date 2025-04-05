@@ -192,6 +192,118 @@
       }
     });
   }
+  // ==================== VALIDACIONES PARA FORMULARIO DE EVENTOS ====================
+
+/**
+ * Valida que la fecha de fin no sea anterior a la fecha de inicio
+ */
+function validarFechasEvento() {
+  const fechaInicio = document.getElementById('fecha-inicio');
+  const fechaFin = document.getElementById('fecha-fin');
+  
+  // Si los campos no existen en esta página, salir
+  if (!fechaInicio || !fechaFin) return true;
+
+  const valorInicio = fechaInicio.value;
+  const valorFin = fechaFin.value;
+
+  if (valorInicio && valorFin) {
+    const fechaInicioObj = new Date(valorInicio);
+    const fechaFinObj = new Date(valorFin);
+
+    if (fechaFinObj < fechaInicioObj) {
+      mostrarError(fechaFin, 'La fecha de fin no puede ser anterior a la fecha de inicio');
+      return false;
+    } else {
+      mostrarError(fechaFin, '');
+      return true;
+    }
+  }
+  return true;
+}
+
+/**
+ * Valida el campo Profesor a cargo (solo letras y espacios)
+ */
+function validarProfesor() {
+  const campo = document.getElementById('profesor-cargo');
+  if (!campo) return true; // No está en esta página
+  
+  const valor = campo.value;
+  const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/;
+  
+  if (valor && !regex.test(valor)) {
+    mostrarError(campo, 'El nombre no puede contener números ni caracteres especiales');
+    return false;
+  } else {
+    mostrarError(campo, '');
+    return true;
+  }
+}
+
+/**
+ * Valida el campo Teléfono (solo números y símbolo +)
+ */
+function validarTelefono() {
+  const campo = document.getElementById('telefono-contacto');
+  if (!campo) return true;
+  
+  const valor = campo.value;
+  const regex = /^[0-9+]*$/;
+  
+  if (valor && !regex.test(valor)) {
+    mostrarError(campo, 'Solo se permiten números y el símbolo +');
+    return false;
+  } else {
+    mostrarError(campo, '');
+    return true;
+  }
+}
+
+/**
+ * Configura las validaciones específicas para el formulario de eventos
+ */
+function configurarValidacionEventos() {
+  const formEvento = document.getElementById('form-evento');
+  if (!formEvento) return;
+
+  // Configurar eventos para campos específicos
+  const configurarValidacionCampo = (id, validacionFn) => {
+    const campo = document.getElementById(id);
+    if (campo) {
+      campo.addEventListener('input', validacionFn);
+      campo.addEventListener('blur', validacionFn);
+    }
+  };
+
+  // Validación cruzada de fechas
+  const fechaInicio = document.getElementById('fecha-inicio');
+  const fechaFin = document.getElementById('fecha-fin');
+  if (fechaInicio && fechaFin) {
+    fechaInicio.addEventListener('change', validarFechasEvento);
+    fechaFin.addEventListener('change', validarFechasEvento);
+  }
+
+  configurarValidacionCampo('profesor-cargo', validarProfesor);
+  configurarValidacionCampo('telefono-contacto', validarTelefono);
+
+  // Validación al enviar el formulario
+  formEvento.addEventListener('submit', function(e) {
+    const valido = validarCamposVacios(this) && 
+                  validarFechasEvento() && 
+                  validarProfesor() && 
+                  validarTelefono();
+    
+    if (!valido) {
+      e.preventDefault();
+      const primerError = this.querySelector('.is-invalid');
+      if (primerError) {
+        primerError.focus();
+        primerError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+  });
+}
 
   // ==================== FUNCIONALIDADES GENERALES ====================
 
@@ -461,6 +573,7 @@
   document.addEventListener("DOMContentLoaded", function() {
     // Funcionalidades generales
     configurarValidacionEstrategia();
+    configurarValidacionEventos();
     initSeleccionarTodo();
     initFormularioEncuestas();
 
