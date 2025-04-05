@@ -580,7 +580,6 @@ section {
 
 .section-title {
   padding-bottom: 40px;
-  padding-top: 60px;
 }
 
 .section-title h2 {
@@ -2181,6 +2180,7 @@ margin-left: 8.0rem;
   color: #100380;
   font-size: 28px;
   font-weight: 700;
+  margin-top: 60px;
 }
 
 #formulario-evento .section-title p {
