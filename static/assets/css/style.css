@@ -2173,15 +2173,13 @@ margin-left: 8.0rem;
 #formulario-evento {
   background-color: #ffffff;
   padding: 60px 0;
-  margin-top: 60px;
 }
 
 #formulario-evento .section-title h2 {
-  
+
   color: #100380;
   font-size: 28px;
   font-weight: 700;
-  margin-bottom: 20px;
 }
 
 #formulario-evento .section-title p {
@@ -2191,6 +2189,7 @@ margin-left: 8.0rem;
 
 #formulario-evento .form-section {
   margin-bottom: 40px;
+  padding-top: 60px;
 }
 
 #formulario-evento .form-section h3 {
