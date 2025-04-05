@@ -2170,17 +2170,19 @@ margin-left: 8.0rem;
 /*--------------------------------------------------------------
 # FORMULARIO DE EVENTO
 --------------------------------------------------------------*/
+/*--------------------------------------------------------------
+# FORMULARIO DE EVENTO (Actualizado para coincidir con Estrategia)
+--------------------------------------------------------------*/
 #formulario-evento {
   background-color: #ffffff;
   padding: 60px 0;
 }
 
 #formulario-evento .section-title h2 {
-
   color: #100380;
   font-size: 28px;
   font-weight: 700;
-  padding-top: 300rem;
+  margin-bottom: 20px;
 }
 
 #formulario-evento .section-title p {
@@ -2189,7 +2191,16 @@ margin-left: 8.0rem;
 }
 
 #formulario-evento .form-section {
+  background-color: #f8f9fa;
   margin-bottom: 40px;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid #dee2e6;
+  transition: all 0.3s ease;
+}
+
+#formulario-evento .form-section:hover {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
 }
 
 #formulario-evento .form-section h3 {
@@ -2197,6 +2208,8 @@ margin-left: 8.0rem;
   font-size: 22px;
   font-weight: 600;
   margin-bottom: 20px;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #dee2e6;
 }
 
 #formulario-evento .form-group {
@@ -2223,11 +2236,19 @@ margin-left: 8.0rem;
 #formulario-evento .form-control:focus {
   border-color: #100380;
   outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(16, 3, 128, 0.25);
 }
 
 #formulario-evento textarea.form-control {
   resize: vertical;
   min-height: 100px;
+}
+
+/* Botones */
+#formulario-evento .d-flex.justify-content-between {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #dee2e6;
 }
 
 #formulario-evento .btn-primary {
@@ -2238,26 +2259,30 @@ margin-left: 8.0rem;
   border-radius: 4px;
   font-size: 16px;
   font-weight: 500;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 #formulario-evento .btn-primary:hover {
   background-color: #08024e;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 #formulario-evento .btn-cancelar {
-  background-color: #6c757d; /* Color gris */
+  background-color: #6c757d;
   border: none;
   padding: 10px 24px;
   color: #fff;
   border-radius: 4px;
   font-size: 16px;
   font-weight: 500;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 #formulario-evento .btn-cancelar:hover {
-  background-color: #565d63; /* Color gris más oscuro al pasar el mouse */
+  background-color: #565d63;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 /*--------------------------------------------------------------
 # Responsive Design
