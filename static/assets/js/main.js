@@ -41,6 +41,31 @@
   // ==================== VALIDACIÓN DE FORMULARIOS ====================
 
   /**
+   * Muestra u oculta un mensaje de error para un campo
+   * @param {HTMLElement} campo - Elemento input/select/textarea
+   * @param {string} mensaje - Mensaje de error a mostrar (si está vacío, oculta el error)
+   */
+  function mostrarError(campo, mensaje) {
+    const contenedor = campo.closest('.form-group');
+    let errorElement = contenedor.querySelector('.error-validacion');
+    
+    if (mensaje) {
+      if (!errorElement) {
+        errorElement = document.createElement('div');
+        errorElement.className = 'error-validacion text-danger mt-1 small';
+        contenedor.appendChild(errorElement);
+      }
+      errorElement.textContent = mensaje;
+      campo.classList.add('is-invalid');
+      campo.classList.remove('is-valid');
+    } else {
+      if (errorElement) errorElement.remove();
+      campo.classList.remove('is-invalid');
+      campo.classList.add('is-valid');
+    }
+  }
+
+  /**
    * Valida si los campos requeridos de un formulario están vacíos
    * @param {HTMLFormElement} form - Elemento del formulario a validar
    * @returns {boolean} - True si todos los campos requeridos están llenos
@@ -50,76 +75,121 @@
     const camposRequeridos = form.querySelectorAll('[required]');
     
     camposRequeridos.forEach(campo => {
-      // Saltar campos disabled o readonly
       if (campo.disabled || campo.readOnly) return;
       
       if (!campo.value.trim()) {
-        campo.classList.add('is-invalid');
+        mostrarError(campo, 'Este campo es obligatorio');
         valido = false;
-        
-        // Mostrar error si no existe
-        if (!campo.nextElementSibling || !campo.nextElementSibling.classList.contains('error-campo')) {
-          const errorElement = document.createElement('div');
-          errorElement.className = 'error-campo text-danger mt-1 small';
-          errorElement.textContent = 'Este campo es obligatorio';
-          campo.parentNode.insertBefore(errorElement, campo.nextSibling);
-        }
       } else {
-        campo.classList.remove('is-invalid');
-        // Eliminar mensaje de error si existe
-        const errorElement = campo.parentNode.querySelector('.error-campo');
-        if (errorElement) errorElement.remove();
+        mostrarError(campo, '');
       }
     });
     
     return valido;
   }
 
-  /**
-   * Configura la validación para todos los formularios de la página
-   */
-  function configurarValidacionFormularios() {
-    const forms = document.querySelectorAll('form');
+  // ==================== VALIDACIONES ESPECÍFICAS PARA ESTRATEGIA EDUCATIVA ====================
+
+  function validarCurso() {
+    const campo = document.getElementById('curso');
+    if (!campo) return true; // No está en esta página
     
-    forms.forEach(form => {
-      // Validación al enviar
-      form.addEventListener('submit', function(e) {
-        if (!validarCamposVacios(this)) {
-          e.preventDefault();
-          
-          // Enfocar el primer campo inválido
-          const primerCampoInvalido = this.querySelector('.is-invalid');
-          if (primerCampoInvalido) {
-            primerCampoInvalido.focus();
-            
-            // Scroll suave al campo con error
-            primerCampoInvalido.scrollIntoView({
-              behavior: 'smooth',
-              block: 'center'
-            });
-          }
-        }
-      });
+    const valor = campo.value;
+    const regex = /^[0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
+    
+    if (valor && !regex.test(valor)) {
+      mostrarError(campo, 'El curso solo puede contener números y caracteres especiales');
+      return false;
+    } else {
+      mostrarError(campo, '');
+      return true;
+    }
+  }
+
+  function validarAnoEscolar() {
+    const campo = document.getElementById('ano-escolar');
+    if (!campo) return true;
+    
+    const valor = campo.value;
+    const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/;
+    
+    if (valor && !regex.test(valor)) {
+      mostrarError(campo, 'El año escolar solo puede contener letras');
+      return false;
+    } else {
+      mostrarError(campo, '');
+      return true;
+    }
+  }
+
+  function validarGrupo() {
+    const campo = document.getElementById('grupo');
+    if (!campo) return true;
+    
+    const valor = campo.value;
+    const regex = /^ID[A-Z]{2,}\d{3}$/;
+    
+    if (valor && !regex.test(valor)) {
+      mostrarError(campo, 'Debe comenzar con "ID" en mayúsculas, seguido de 2+ letras y 3 números');
+      return false;
+    } else {
+      mostrarError(campo, '');
+      return true;
+    }
+  }
+
+  function validarAutor() {
+    const campo = document.getElementById('autor');
+    if (!campo) return true;
+    
+    const valor = campo.value;
+    const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/;
+    
+    if (valor && !regex.test(valor)) {
+      mostrarError(campo, 'No puede contener números ni caracteres especiales');
+      return false;
+    } else {
+      mostrarError(campo, '');
+      return true;
+    }
+  }
+
+  // ==================== CONFIGURACIÓN DE VALIDACIONES ====================
+
+  function configurarValidacionEstrategia() {
+    const formEstrategia = document.getElementById('form-estrategia');
+    if (!formEstrategia) return;
+
+    // Configurar eventos para validaciones específicas
+    const configurarValidacionCampo = (id, validacionFn) => {
+      const campo = document.getElementById(id);
+      if (campo) {
+        campo.addEventListener('input', validacionFn);
+        campo.addEventListener('blur', validacionFn);
+      }
+    };
+
+    configurarValidacionCampo('curso', validarCurso);
+    configurarValidacionCampo('ano-escolar', validarAnoEscolar);
+    configurarValidacionCampo('grupo', validarGrupo);
+    configurarValidacionCampo('autor', validarAutor);
+
+    // Validación al enviar el formulario
+    formEstrategia.addEventListener('submit', function(e) {
+      const valido = validarCamposVacios(this) && 
+                    validarCurso() && 
+                    validarAnoEscolar() && 
+                    validarGrupo() && 
+                    validarAutor();
       
-      // Validación al salir de cada campo (blur)
-      const camposRequeridos = form.querySelectorAll('[required]');
-      camposRequeridos.forEach(campo => {
-        campo.addEventListener('blur', () => {
-          if (!campo.value.trim()) {
-            campo.classList.add('is-invalid');
-            if (!campo.nextElementSibling || !campo.nextElementSibling.classList.contains('error-campo')) {
-              const errorElement = document.createElement('div');
-              errorElement.className = 'error-campo text-danger mt-1 small';
-              errorElement.textContent = 'Este campo es obligatorio';
-              campo.parentNode.insertBefore(errorElement, campo.nextSibling);
-            }
-          } else {
-            campo.classList.remove('is-invalid');
-            const errorElement = campo.parentNode.querySelector('.error-campo');
-            if (errorElement) errorElement.remove();
-          }
-        });
-      });
+      if (!valido) {
+        e.preventDefault();
+        const primerError = this.querySelector('.is-invalid');
+        if (primerError) {
+          primerError.focus();
+          primerError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
     });
   }
 
@@ -389,9 +459,25 @@
    * Inicializa todas las funcionalidades cuando el DOM está listo.
    */
   document.addEventListener("DOMContentLoaded", function() {
-    configurarValidacionFormularios();
+    // Funcionalidades generales
+    configurarValidacionEstrategia();
     initSeleccionarTodo();
     initFormularioEncuestas();
+
+    // Configuración de eventos para campos requeridos en todos los formularios
+    const forms = document.querySelectorAll('form');
+    forms.forEach(form => {
+      const camposRequeridos = form.querySelectorAll('[required]');
+      camposRequeridos.forEach(campo => {
+        campo.addEventListener('blur', () => {
+          if (!campo.value.trim()) {
+            mostrarError(campo, 'Este campo es obligatorio');
+          } else {
+            mostrarError(campo, '');
+          }
+        });
+      });
+    });
   });
 
 })();
