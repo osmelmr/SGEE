@@ -52,7 +52,7 @@
     if (mensaje) {
       if (!errorElement) {
         errorElement = document.createElement('div');
-        errorElement.className = 'error-validacion text-danger mt-1 small';
+        errorElement.className = 'error-validacion';
         contenedor.appendChild(errorElement);
       }
       errorElement.textContent = mensaje;
@@ -60,8 +60,24 @@
       campo.classList.remove('is-valid');
     } else {
       if (errorElement) errorElement.remove();
+      
+      // Solo mostrar como válido si tiene contenido y pasa todas las validaciones
+      if (campo.value.trim() !== '') {
+        // Verificar si el campo tiene validaciones específicas
+        let esValido = true;
+        if (campo.id === 'solapin') esValido = validarSolapin();
+        else if (campo.id === 'correo') esValido = validarCorreo();
+        else if (campo.id === 'telefono') esValido = validarTelefonoProfesor();
+        else if (campo.id === 'asignatura') esValido = validarAsignatura();
+        else if (campo.id === 'nombre-profesor') esValido = validarNombreProfesor();
+        else if (campo.id === 'primer-apellido') esValido = validarPrimerApellido();
+        else if (campo.id === 'segundo-apellido') esValido = validarSegundoApellido();
+        
+        if (esValido) {
+          campo.classList.add('is-valid');
+        }
+      }
       campo.classList.remove('is-invalid');
-      campo.classList.add('is-valid');
     }
   }
 
@@ -81,7 +97,11 @@
         mostrarError(campo, 'Este campo es obligatorio');
         valido = false;
       } else {
-        mostrarError(campo, '');
+        // Solo quitar el error si el campo no está vacío
+        // La validación específica se hará en sus propias funciones
+        if (!campo.classList.contains('is-invalid')) {
+          mostrarError(campo, '');
+        }
       }
     });
     
@@ -100,6 +120,9 @@
     if (valor && !regex.test(valor)) {
       mostrarError(campo, 'El curso solo puede contener números y caracteres especiales');
       return false;
+    } else if (!valor && campo.required) {
+      mostrarError(campo, 'Este campo es obligatorio');
+      return false;
     } else {
       mostrarError(campo, '');
       return true;
@@ -115,6 +138,9 @@
     
     if (valor && !regex.test(valor)) {
       mostrarError(campo, 'El año escolar solo puede contener letras');
+      return false;
+    } else if (!valor && campo.required) {
+      mostrarError(campo, 'Este campo es obligatorio');
       return false;
     } else {
       mostrarError(campo, '');
@@ -132,6 +158,9 @@
     if (valor && !regex.test(valor)) {
       mostrarError(campo, 'Debe comenzar con "ID" en mayúsculas, seguido de 2+ letras y 3 números');
       return false;
+    } else if (!valor && campo.required) {
+      mostrarError(campo, 'Este campo es obligatorio');
+      return false;
     } else {
       mostrarError(campo, '');
       return true;
@@ -147,6 +176,9 @@
     
     if (valor && !regex.test(valor)) {
       mostrarError(campo, 'No puede contener números ni caracteres especiales');
+      return false;
+    } else if (!valor && campo.required) {
+      mostrarError(campo, 'Este campo es obligatorio');
       return false;
     } else {
       mostrarError(campo, '');
@@ -189,13 +221,16 @@
     if (valor && !regex.test(valor)) {
       mostrarError(campo, 'El nombre no puede contener números ni caracteres especiales');
       return false;
+    } else if (!valor && campo.required) {
+      mostrarError(campo, 'Este campo es obligatorio');
+      return false;
     } else {
       mostrarError(campo, '');
       return true;
     }
   }
 
-  function validarTelefono() {
+  function validarTelefonoContacto() {
     const campo = document.getElementById('telefono-contacto');
     if (!campo) return true;
     
@@ -204,6 +239,9 @@
     
     if (valor && !regex.test(valor)) {
       mostrarError(campo, 'Solo se permiten números y el símbolo +');
+      return false;
+    } else if (!valor && campo.required) {
+      mostrarError(campo, 'Este campo es obligatorio');
       return false;
     } else {
       mostrarError(campo, '');
@@ -329,7 +367,13 @@
     if (!campo) return true;
     
     const valor = campo.value.trim();
-    // Expresión regular mejorada para correos electrónicos
+    
+    // Si está vacío y no es requerido, es válido
+    if (valor === '' && !campo.required) {
+      mostrarError(campo, '');
+      return true;
+    }
+    
     const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     
     if (valor && !regex.test(valor)) {
@@ -338,12 +382,10 @@
     } else if (!valor && campo.required) {
       mostrarError(campo, 'Este campo es obligatorio');
       return false;
+    } else if (valor.length > 50) {
+      mostrarError(campo, 'El correo no puede exceder los 50 caracteres');
+      return false;
     } else {
-      // Validación adicional de longitud máxima
-      if (valor.length > 50) {
-        mostrarError(campo, 'El correo no puede exceder los 50 caracteres');
-        return false;
-      }
       mostrarError(campo, '');
       return true;
     }
@@ -462,14 +504,14 @@
     };
 
     configurarValidacionCampo('profesor-cargo', validarProfesor);
-    configurarValidacionCampo('telefono-contacto', validarTelefono);
+    configurarValidacionCampo('telefono-contacto', validarTelefonoContacto);
 
     // Validación solo al enviar el formulario (no en blur)
     formEvento.addEventListener('submit', function(e) {
       const valido = validarCamposVacios(this) && 
                     validarFechasEvento() && 
                     validarProfesor() && 
-                    validarTelefono();
+                    validarTelefonoContacto();
       
       if (!valido) {
         e.preventDefault();
