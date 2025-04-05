@@ -211,6 +211,198 @@
     }
   }
 
+  // ==================== VALIDACIONES PARA FORMULARIO PROFESORAL ====================
+
+  function validarNombreProfesor() {
+    const campo = document.getElementById('nombre-profesor');
+    if (!campo) return true;
+    
+    const valor = campo.value.trim();
+    const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{2,50}$/;
+    
+    if (valor && !regex.test(valor)) {
+      mostrarError(campo, 'El nombre no puede contener números ni caracteres especiales (2-50 caracteres)');
+      return false;
+    } else if (!valor && campo.required) {
+      mostrarError(campo, 'Este campo es obligatorio');
+      return false;
+    } else {
+      mostrarError(campo, '');
+      return true;
+    }
+  }
+
+  function validarPrimerApellido() {
+    const campo = document.getElementById('primer-apellido');
+    if (!campo) return true;
+    
+    const valor = campo.value.trim();
+    const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{2,50}$/;
+    
+    if (valor && !regex.test(valor)) {
+      mostrarError(campo, 'El apellido no puede contener números ni caracteres especiales (2-50 caracteres)');
+      return false;
+    } else if (!valor && campo.required) {
+      mostrarError(campo, 'Este campo es obligatorio');
+      return false;
+    } else {
+      mostrarError(campo, '');
+      return true;
+    }
+  }
+
+  function validarSegundoApellido() {
+    const campo = document.getElementById('segundo-apellido');
+    if (!campo) return true;
+    
+    const valor = campo.value.trim();
+    const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{0,50}$/;
+    
+    if (valor && !regex.test(valor)) {
+      mostrarError(campo, 'El apellido no puede contener números ni caracteres especiales (máx. 50 caracteres)');
+      return false;
+    } else {
+      mostrarError(campo, '');
+      return true;
+    }
+  }
+
+  function validarAsignatura() {
+    const campo = document.getElementById('asignatura');
+    if (!campo) return true;
+    
+    const valor = campo.value.trim();
+    const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s]{5,50}$/;
+    
+    if (valor && !regex.test(valor)) {
+      mostrarError(campo, 'No se permiten caracteres especiales (5-50 caracteres)');
+      return false;
+    } else if (!valor && campo.required) {
+      mostrarError(campo, 'Este campo es obligatorio');
+      return false;
+    } else {
+      mostrarError(campo, '');
+      return true;
+    }
+  }
+
+  function validarSolapin() {
+    const campo = document.getElementById('solapin');
+    if (!campo) return true;
+    
+    const valor = campo.value.trim();
+    const regex = /^[A-Za-z]\d{6}$/;
+    
+    if (valor && !regex.test(valor)) {
+      mostrarError(campo, 'Debe comenzar con una letra seguida de exactamente 6 números');
+      return false;
+    } else if (!valor && campo.required) {
+      mostrarError(campo, 'Este campo es obligatorio');
+      return false;
+    } else {
+      mostrarError(campo, '');
+      return true;
+    }
+  }
+
+  function validarTelefonoProfesor() {
+    const campo = document.getElementById('telefono');
+    if (!campo) return true;
+    
+    const valor = campo.value.trim();
+    const regex = /^\+?\d{7,15}$/;
+    
+    if (valor && !regex.test(valor)) {
+      mostrarError(campo, 'Solo se permiten números (7-15 dígitos) y el símbolo + opcional al inicio');
+      return false;
+    } else if (!valor && campo.required) {
+      mostrarError(campo, 'Este campo es obligatorio');
+      return false;
+    } else {
+      mostrarError(campo, '');
+      return true;
+    }
+  }
+
+  function validarCorreo() {
+    const campo = document.getElementById('correo');
+    if (!campo) return true;
+    
+    const valor = campo.value.trim();
+    // Expresión regular mejorada para correos electrónicos
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    
+    if (valor && !regex.test(valor)) {
+      mostrarError(campo, 'Por favor ingrese un correo electrónico válido (ej: usuario@dominio.com)');
+      return false;
+    } else if (!valor && campo.required) {
+      mostrarError(campo, 'Este campo es obligatorio');
+      return false;
+    } else {
+      // Validación adicional de longitud máxima
+      if (valor.length > 50) {
+        mostrarError(campo, 'El correo no puede exceder los 50 caracteres');
+        return false;
+      }
+      mostrarError(campo, '');
+      return true;
+    }
+  }
+
+  function validarBrigadaAsignada() {
+    const campo = document.getElementById('brigada-asignada');
+    if (!campo) return true;
+    
+    const valor = campo.value.trim();
+    
+    if (!valor && campo.required) {
+      mostrarError(campo, 'Este campo es obligatorio');
+      return false;
+    } else if (valor.length > 10) {
+      mostrarError(campo, 'Máximo 10 caracteres permitidos');
+      return false;
+    } else {
+      mostrarError(campo, '');
+      return true;
+    }
+  }
+
+  function validarBrigadasImpartir() {
+    const campo = document.getElementById('brigadas-impartir');
+    if (!campo) return true;
+    
+    const valor = campo.value.trim();
+    
+    if (!valor && campo.required) {
+      mostrarError(campo, 'Este campo es obligatorio');
+      return false;
+    } else if (valor.length > 50) {
+      mostrarError(campo, 'Máximo 50 caracteres permitidos');
+      return false;
+    } else {
+      mostrarError(campo, '');
+      return true;
+    }
+  }
+
+  function validarDescripcion() {
+    const campo = document.getElementById('descripcion-profesor');
+    if (!campo) return true;
+    
+    const valor = campo.value.trim();
+    
+    if (!valor && campo.required) {
+      mostrarError(campo, 'Este campo es obligatorio');
+      return false;
+    } else if (valor.length > 500) {
+      mostrarError(campo, 'Máximo 500 caracteres permitidos');
+      return false;
+    } else {
+      mostrarError(campo, '');
+      return true;
+    }
+  }
+
   // ==================== CONFIGURACIÓN DE VALIDACIONES ====================
 
   function configurarValidacionEstrategia() {
@@ -278,6 +470,56 @@
                     validarFechasEvento() && 
                     validarProfesor() && 
                     validarTelefono();
+      
+      if (!valido) {
+        e.preventDefault();
+        const primerError = this.querySelector('.is-invalid');
+        if (primerError) {
+          primerError.focus();
+          primerError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+    });
+  }
+
+  function configurarValidacionProfesoral() {
+    const formProfesoral = document.getElementById('form-profesoral');
+    if (!formProfesoral) return;
+
+    // Configurar validación para cada campo
+    const configurarValidacionCampo = (id, validacionFn) => {
+      const campo = document.getElementById(id);
+      if (campo) {
+        campo.addEventListener('input', validacionFn);
+        campo.addEventListener('blur', validacionFn);
+      }
+    };
+
+    // Configurar validaciones individuales
+    configurarValidacionCampo('nombre-profesor', validarNombreProfesor);
+    configurarValidacionCampo('primer-apellido', validarPrimerApellido);
+    configurarValidacionCampo('segundo-apellido', validarSegundoApellido);
+    configurarValidacionCampo('asignatura', validarAsignatura);
+    configurarValidacionCampo('solapin', validarSolapin);
+    configurarValidacionCampo('telefono', validarTelefonoProfesor);
+    configurarValidacionCampo('correo', validarCorreo);
+    configurarValidacionCampo('brigada-asignada', validarBrigadaAsignada);
+    configurarValidacionCampo('brigadas-impartir', validarBrigadasImpartir);
+    configurarValidacionCampo('descripcion-profesor', validarDescripcion);
+
+    // Validación al enviar el formulario
+    formProfesoral.addEventListener('submit', function(e) {
+      const valido = validarCamposVacios(this) && 
+                    validarNombreProfesor() && 
+                    validarPrimerApellido() && 
+                    validarSegundoApellido() && 
+                    validarAsignatura() && 
+                    validarSolapin() && 
+                    validarTelefonoProfesor() && 
+                    validarCorreo() && 
+                    validarBrigadaAsignada() && 
+                    validarBrigadasImpartir() && 
+                    validarDescripcion();
       
       if (!valido) {
         e.preventDefault();
@@ -508,6 +750,7 @@
   document.addEventListener("DOMContentLoaded", function() {
     configurarValidacionEstrategia();
     configurarValidacionEventos();
+    configurarValidacionProfesoral();
     initSeleccionarTodo();
     initFormularioEncuestas();
   });
