@@ -88,11 +88,11 @@
     return valido;
   }
 
-  // ==================== VALIDACIONES ESPECÍFICAS PARA ESTRATEGIA EDUCATIVA ====================
+  // ==================== VALIDACIONES PARA ESTRATEGIA EDUCATIVA ====================
 
   function validarCurso() {
     const campo = document.getElementById('curso');
-    if (!campo) return true; // No está en esta página
+    if (!campo) return true;
     
     const valor = campo.value;
     const regex = /^[0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
@@ -154,13 +154,69 @@
     }
   }
 
+  // ==================== VALIDACIONES PARA FORMULARIO DE EVENTOS ====================
+
+  function validarFechasEvento() {
+    const fechaInicio = document.getElementById('fecha-inicio');
+    const fechaFin = document.getElementById('fecha-fin');
+    if (!fechaInicio || !fechaFin) return true;
+
+    const valorInicio = fechaInicio.value;
+    const valorFin = fechaFin.value;
+
+    if (valorInicio && valorFin) {
+      const fechaInicioObj = new Date(valorInicio);
+      const fechaFinObj = new Date(valorFin);
+
+      if (fechaFinObj < fechaInicioObj) {
+        mostrarError(fechaFin, 'La fecha de fin no puede ser anterior a la fecha de inicio');
+        return false;
+      } else {
+        mostrarError(fechaFin, '');
+        return true;
+      }
+    }
+    return true;
+  }
+
+  function validarProfesor() {
+    const campo = document.getElementById('profesor-cargo');
+    if (!campo) return true;
+    
+    const valor = campo.value;
+    const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/;
+    
+    if (valor && !regex.test(valor)) {
+      mostrarError(campo, 'El nombre no puede contener números ni caracteres especiales');
+      return false;
+    } else {
+      mostrarError(campo, '');
+      return true;
+    }
+  }
+
+  function validarTelefono() {
+    const campo = document.getElementById('telefono-contacto');
+    if (!campo) return true;
+    
+    const valor = campo.value;
+    const regex = /^[0-9+]*$/;
+    
+    if (valor && !regex.test(valor)) {
+      mostrarError(campo, 'Solo se permiten números y el símbolo +');
+      return false;
+    } else {
+      mostrarError(campo, '');
+      return true;
+    }
+  }
+
   // ==================== CONFIGURACIÓN DE VALIDACIONES ====================
 
   function configurarValidacionEstrategia() {
     const formEstrategia = document.getElementById('form-estrategia');
     if (!formEstrategia) return;
 
-    // Configurar eventos para validaciones específicas
     const configurarValidacionCampo = (id, validacionFn) => {
       const campo = document.getElementById(id);
       if (campo) {
@@ -174,7 +230,6 @@
     configurarValidacionCampo('grupo', validarGrupo);
     configurarValidacionCampo('autor', validarAutor);
 
-    // Validación al enviar el formulario
     formEstrategia.addEventListener('submit', function(e) {
       const valido = validarCamposVacios(this) && 
                     validarCurso() && 
@@ -192,125 +247,51 @@
       }
     });
   }
-  // ==================== VALIDACIONES PARA FORMULARIO DE EVENTOS ====================
 
-/**
- * Valida que la fecha de fin no sea anterior a la fecha de inicio
- */
-function validarFechasEvento() {
-  const fechaInicio = document.getElementById('fecha-inicio');
-  const fechaFin = document.getElementById('fecha-fin');
-  
-  // Si los campos no existen en esta página, salir
-  if (!fechaInicio || !fechaFin) return true;
+  function configurarValidacionEventos() {
+    const formEvento = document.getElementById('form-evento');
+    if (!formEvento) return;
 
-  const valorInicio = fechaInicio.value;
-  const valorFin = fechaFin.value;
-
-  if (valorInicio && valorFin) {
-    const fechaInicioObj = new Date(valorInicio);
-    const fechaFinObj = new Date(valorFin);
-
-    if (fechaFinObj < fechaInicioObj) {
-      mostrarError(fechaFin, 'La fecha de fin no puede ser anterior a la fecha de inicio');
-      return false;
-    } else {
-      mostrarError(fechaFin, '');
-      return true;
+    // Configurar validación cruzada de fechas
+    const fechaInicio = document.getElementById('fecha-inicio');
+    const fechaFin = document.getElementById('fecha-fin');
+    if (fechaInicio && fechaFin) {
+      fechaInicio.addEventListener('change', validarFechasEvento);
+      fechaFin.addEventListener('change', validarFechasEvento);
     }
-  }
-  return true;
-}
 
-/**
- * Valida el campo Profesor a cargo (solo letras y espacios)
- */
-function validarProfesor() {
-  const campo = document.getElementById('profesor-cargo');
-  if (!campo) return true; // No está en esta página
-  
-  const valor = campo.value;
-  const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/;
-  
-  if (valor && !regex.test(valor)) {
-    mostrarError(campo, 'El nombre no puede contener números ni caracteres especiales');
-    return false;
-  } else {
-    mostrarError(campo, '');
-    return true;
-  }
-}
-
-/**
- * Valida el campo Teléfono (solo números y símbolo +)
- */
-function validarTelefono() {
-  const campo = document.getElementById('telefono-contacto');
-  if (!campo) return true;
-  
-  const valor = campo.value;
-  const regex = /^[0-9+]*$/;
-  
-  if (valor && !regex.test(valor)) {
-    mostrarError(campo, 'Solo se permiten números y el símbolo +');
-    return false;
-  } else {
-    mostrarError(campo, '');
-    return true;
-  }
-}
-
-/**
- * Configura las validaciones específicas para el formulario de eventos
- */
-function configurarValidacionEventos() {
-  const formEvento = document.getElementById('form-evento');
-  if (!formEvento) return;
-
-  // Configurar eventos para campos específicos
-  const configurarValidacionCampo = (id, validacionFn) => {
-    const campo = document.getElementById(id);
-    if (campo) {
-      campo.addEventListener('input', validacionFn);
-      campo.addEventListener('blur', validacionFn);
-    }
-  };
-
-  // Validación cruzada de fechas
-  const fechaInicio = document.getElementById('fecha-inicio');
-  const fechaFin = document.getElementById('fecha-fin');
-  if (fechaInicio && fechaFin) {
-    fechaInicio.addEventListener('change', validarFechasEvento);
-    fechaFin.addEventListener('change', validarFechasEvento);
-  }
-
-  configurarValidacionCampo('profesor-cargo', validarProfesor);
-  configurarValidacionCampo('telefono-contacto', validarTelefono);
-
-  // Validación al enviar el formulario
-  formEvento.addEventListener('submit', function(e) {
-    const valido = validarCamposVacios(this) && 
-                  validarFechasEvento() && 
-                  validarProfesor() && 
-                  validarTelefono();
-    
-    if (!valido) {
-      e.preventDefault();
-      const primerError = this.querySelector('.is-invalid');
-      if (primerError) {
-        primerError.focus();
-        primerError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // Configurar validaciones específicas
+    const configurarValidacionCampo = (id, validacionFn) => {
+      const campo = document.getElementById(id);
+      if (campo) {
+        campo.addEventListener('input', validacionFn);
+        campo.addEventListener('blur', validacionFn);
       }
-    }
-  });
-}
+    };
+
+    configurarValidacionCampo('profesor-cargo', validarProfesor);
+    configurarValidacionCampo('telefono-contacto', validarTelefono);
+
+    // Validación solo al enviar el formulario (no en blur)
+    formEvento.addEventListener('submit', function(e) {
+      const valido = validarCamposVacios(this) && 
+                    validarFechasEvento() && 
+                    validarProfesor() && 
+                    validarTelefono();
+      
+      if (!valido) {
+        e.preventDefault();
+        const primerError = this.querySelector('.is-invalid');
+        if (primerError) {
+          primerError.focus();
+          primerError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+    });
+  }
 
   // ==================== FUNCIONALIDADES GENERALES ====================
 
-  /**
-   * Cambia el estilo del header al hacer scroll.
-   * Añade la clase 'header-scrolled' cuando el scroll supera 100px.
-   */
   const header = select("#header");
   if (header) {
     const headerScrolled = () => {
@@ -320,10 +301,6 @@ function configurarValidacionEventos() {
     onscroll(document, headerScrolled);
   }
 
-  /**
-   * Muestra u oculta el botón "Back to Top" según la posición del scroll.
-   * Se activa cuando el scroll supera 100px.
-   */
   const backToTop = select(".back-to-top");
   if (backToTop) {
     const toggleBackToTop = () => {
@@ -333,10 +310,6 @@ function configurarValidacionEventos() {
     onscroll(document, toggleBackToTop);
   }
 
-  /**
-   * Alternar la navegación móvil.
-   * Cambia entre iconos de menú (bi-list) y cerrar (bi-x).
-   */
   on("click", ".mobile-nav-toggle", function (e) {
     const navbar = select("#navbar");
     if (navbar) {
@@ -346,10 +319,6 @@ function configurarValidacionEventos() {
     }
   });
 
-  /**
-   * Activar dropdowns en la navegación móvil.
-   * Solo funciona cuando la navegación está en modo móvil.
-   */
   on(
     "click",
     ".navbar .dropdown > a",
@@ -367,10 +336,6 @@ function configurarValidacionEventos() {
 
   // ==================== COMPONENTES INTERACTIVOS ====================
 
-  /**
-   * Configura los indicadores del carrusel hero.
-   * Crea los puntos de navegación para cada slide del carrusel.
-   */
   const heroCarouselIndicators = select("#hero-carousel-indicators");
   const heroCarouselItems = select('#heroCarousel .carousel-item', true);
 
@@ -382,10 +347,6 @@ function configurarValidacionEventos() {
     });
   }
 
-  /**
-   * Inicializa el slider de la galería con Swiper.
-   * Configura autoplay, paginación y responsive breakpoints.
-   */
   const gallerySlider = select(".gallery-slider");
   if (gallerySlider) {
     new Swiper(gallerySlider, {
@@ -421,10 +382,6 @@ function configurarValidacionEventos() {
 
   // ==================== ANIMACIONES ====================
 
-  /**
-   * Verifica la visibilidad de elementos con animaciones al hacer scroll.
-   * Añade la clase 'visible' cuando el elemento entra en la ventana visible.
-   */
   const checkVisibility = () => {
     const elements = document.querySelectorAll(
       ".fade-in, .slide-in-left, .slide-in-right, .fade-in-up, .rotate-in, .scale-in, .gallery-slide-in, .gallery-scale-in, .footer-fade-in"
@@ -440,15 +397,10 @@ function configurarValidacionEventos() {
     });
   };
 
-  // Configura listeners para verificar visibilidad
   window.addEventListener("load", checkVisibility);
   window.addEventListener("scroll", checkVisibility);
   window.addEventListener("resize", checkVisibility);
 
-  /**
-   * Animación de habilidades (skills).
-   * Usa Waypoint.js para activar la animación de barras de progreso cuando el elemento entra en vista.
-   */
   const skillsContent = select(".skills-content");
   if (skillsContent) {
     new Waypoint({
@@ -465,10 +417,6 @@ function configurarValidacionEventos() {
 
   // ==================== FUNCIONALIDADES ESPECÍFICAS ====================
 
-  /**
-   * Funcionalidad de seleccionar todo en tablas.
-   * Permite seleccionar/deseleccionar todos los checkboxes de una tabla.
-   */
   const initSeleccionarTodo = () => {
     const btnSeleccionarTodo = select("#btn-seleccionar-todo");
     const checkboxes = document.querySelectorAll(".seleccionar-fila");
@@ -481,7 +429,6 @@ function configurarValidacionEventos() {
         updateIcon();
       });
 
-      // Actualiza el icono del botón según el estado
       function updateIcon() {
         const icon = btnSeleccionarTodo.querySelector("i");
         if (btnSeleccionarTodo.classList.contains("active")) {
@@ -493,7 +440,6 @@ function configurarValidacionEventos() {
         }
       }
 
-      // Actualiza el botón cuando se cambian checkboxes individuales
       checkboxes.forEach((checkbox) => {
         checkbox.addEventListener("change", function () {
           const allChecked = Array.from(checkboxes).every((cb) => cb.checked);
@@ -504,10 +450,6 @@ function configurarValidacionEventos() {
     }
   };
 
-  /**
-   * Funcionalidad de formulario de encuestas.
-   * Permite agregar/eliminar preguntas y validar el formulario.
-   */
   const initFormularioEncuestas = () => {
     const agregarPreguntaBtn = select("#agregar-pregunta");
     const formCrearEncuesta = select("#form-crear-encuesta");
@@ -515,7 +457,6 @@ function configurarValidacionEventos() {
     if (agregarPreguntaBtn && formCrearEncuesta) {
       let contadorPreguntas = 1;
 
-      // Agrega una nueva pregunta al formulario
       agregarPreguntaBtn.addEventListener('click', function() {
         contadorPreguntas++;
         const preguntasContainer = select("#preguntas-encuesta");
@@ -535,13 +476,11 @@ function configurarValidacionEventos() {
         `;
         preguntasContainer.appendChild(nuevaPregunta);
         
-        // Añade evento al botón de eliminar
         nuevaPregunta.querySelector('.btn-eliminar').addEventListener('click', function() {
           eliminarPregunta(this);
         });
       });
 
-      // Elimina una pregunta del formulario
       window.eliminarPregunta = function(boton) {
         const pregunta = boton.closest('.pregunta');
         if (confirm('¿Estás seguro de que deseas eliminar esta pregunta?')) {
@@ -550,7 +489,6 @@ function configurarValidacionEventos() {
         }
       };
 
-      // Reorganiza las preguntas restantes después de eliminar una
       function reorganizarPreguntas() {
         const preguntas = document.querySelectorAll('.pregunta');
         preguntas.forEach((pregunta, index) => {
@@ -567,30 +505,11 @@ function configurarValidacionEventos() {
 
   // ==================== INICIALIZACIÓN ====================
 
-  /**
-   * Inicializa todas las funcionalidades cuando el DOM está listo.
-   */
   document.addEventListener("DOMContentLoaded", function() {
-    // Funcionalidades generales
     configurarValidacionEstrategia();
     configurarValidacionEventos();
     initSeleccionarTodo();
     initFormularioEncuestas();
-
-    // Configuración de eventos para campos requeridos en todos los formularios
-    const forms = document.querySelectorAll('form');
-    forms.forEach(form => {
-      const camposRequeridos = form.querySelectorAll('[required]');
-      camposRequeridos.forEach(campo => {
-        campo.addEventListener('blur', () => {
-          if (!campo.value.trim()) {
-            mostrarError(campo, 'Este campo es obligatorio');
-          } else {
-            mostrarError(campo, '');
-          }
-        });
-      });
-    });
   });
 
 })();
