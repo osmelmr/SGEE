@@ -38,14 +38,14 @@
     el.addEventListener("scroll", listener);
   };
 
-  // ==================== VALIDACIÓN DE FORMULARIOS ====================
+  // ==================== NÚCLEO DE VALIDACIÓN ====================
 
   /**
    * Muestra u oculta un mensaje de error para un campo
    * @param {HTMLElement} campo - Elemento input/select/textarea
-   * @param {string} mensaje - Mensaje de error a mostrar (si está vacío, oculta el error)
+   * @param {string} mensaje - Mensaje de error a mostrar (vacío para limpiar)
    */
-  function mostrarError(campo, mensaje) {
+  function mostrarError(campo, mensaje = '') {
     const contenedor = campo.closest('.form-group');
     let errorElement = contenedor.querySelector('.error-validacion');
 
@@ -53,7 +53,7 @@
     if (errorElement) errorElement.remove();
     campo.classList.remove('is-invalid', 'is-valid');
 
-    // Solo mostrar error si hay un mensaje definido
+    // Mostrar nuevo error si existe mensaje
     if (mensaje) {
       errorElement = document.createElement('div');
       errorElement.className = 'error-validacion';
@@ -67,8 +67,8 @@
   }
 
   /**
-   * Valida si los campos requeridos de un formulario están vacíos
-   * @param {HTMLFormElement} form - Elemento del formulario a validar
+   * Valida si los campos requeridos están vacíos
+   * @param {HTMLFormElement} form - Formulario a validar
    * @returns {boolean} - True si todos los campos requeridos están llenos
    */
   function validarCamposVacios(form) {
@@ -87,12 +87,10 @@
     return valido;
   }
 
-  // ==================== VALIDACIONES PARA ESTRATEGIA EDUCATIVA ====================
+  // ==================== VALIDACIONES ESPECÍFICAS ====================
 
-  function validarCurso() {
-    const campo = document.getElementById('curso');
-    if (!campo) return true;
-    
+  // Plantilla base para todas las validaciones
+  function validarCampoGenerico(campo, regex, mensajeError) {
     const valor = campo.value.trim();
     
     if (!valor) {
@@ -100,565 +98,244 @@
         mostrarError(campo, 'Este campo es obligatorio');
         return false;
       }
-      mostrarError(campo, '');
+      mostrarError(campo);
       return true;
     }
     
-    const regex = /^[0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
-    if (!regex.test(valor)) {
-      mostrarError(campo, 'El curso solo puede contener números y caracteres especiales');
+    if (regex && !regex.test(valor)) {
+      mostrarError(campo, mensajeError);
       return false;
     }
     
-    mostrarError(campo, '');
+    mostrarError(campo);
     return true;
+  }
+
+  // Estrategia Educativa
+  function validarCurso() {
+    const campo = document.getElementById('curso');
+    if (!campo) return true;
+    return validarCampoGenerico(
+      campo,
+      /^[0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/,
+      'El curso solo puede contener números y caracteres especiales'
+    );
   }
 
   function validarAnoEscolar() {
     const campo = document.getElementById('ano-escolar');
     if (!campo) return true;
-    
-    const valor = campo.value.trim();
-    
-    if (!valor) {
-      if (campo.required) {
-        mostrarError(campo, 'Este campo es obligatorio');
-        return false;
-      }
-      mostrarError(campo, '');
-      return true;
-    }
-    
-    const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/;
-    if (!regex.test(valor)) {
-      mostrarError(campo, 'El año escolar solo puede contener letras');
-      return false;
-    }
-    
-    mostrarError(campo, '');
-    return true;
+    return validarCampoGenerico(
+      campo,
+      /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/,
+      'El año escolar solo puede contener letras'
+    );
   }
 
   function validarGrupo() {
     const campo = document.getElementById('grupo');
     if (!campo) return true;
-    
-    const valor = campo.value.trim();
-    
-    if (!valor) {
-      if (campo.required) {
-        mostrarError(campo, 'Este campo es obligatorio');
-        return false;
-      }
-      mostrarError(campo, '');
-      return true;
-    }
-    
-    const regex = /^ID[A-Z]{2,}\d{3}$/;
-    if (!regex.test(valor)) {
-      mostrarError(campo, 'Debe comenzar con "ID" en mayúsculas, seguido de 2+ letras y 3 números');
-      return false;
-    }
-    
-    mostrarError(campo, '');
-    return true;
+    return validarCampoGenerico(
+      campo,
+      /^ID[A-Z]{2,}\d{3}$/,
+      'Debe comenzar con "ID" en mayúsculas, seguido de 2+ letras y 3 números'
+    );
   }
 
   function validarAutor() {
     const campo = document.getElementById('autor');
     if (!campo) return true;
-    
-    const valor = campo.value.trim();
-    
-    if (!valor) {
-      if (campo.required) {
-        mostrarError(campo, 'Este campo es obligatorio');
-        return false;
-      }
-      mostrarError(campo, '');
-      return true;
-    }
-    
-    const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/;
-    if (!regex.test(valor)) {
-      mostrarError(campo, 'No puede contener números ni caracteres especiales');
-      return false;
-    }
-    
-    mostrarError(campo, '');
-    return true;
+    return validarCampoGenerico(
+      campo,
+      /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/,
+      'No puede contener números ni caracteres especiales'
+    );
   }
 
-  // ==================== VALIDACIONES PARA FORMULARIO DE EVENTOS ====================
-
+  // Eventos
   function validarFechasEvento() {
     const fechaInicio = document.getElementById('fecha-inicio');
     const fechaFin = document.getElementById('fecha-fin');
     if (!fechaInicio || !fechaFin) return true;
-
-    const valorInicio = fechaInicio.value;
-    const valorFin = fechaFin.value;
-
-    if (!valorInicio || !valorFin) {
-      if ((fechaInicio.required && !valorInicio) || (fechaFin.required && !valorFin)) {
-        mostrarError(fechaInicio, !valorInicio ? 'Este campo es obligatorio' : '');
-        mostrarError(fechaFin, !valorFin ? 'Este campo es obligatorio' : '');
-        return false;
-      }
-      return true;
-    }
-
-    const fechaInicioObj = new Date(valorInicio);
-    const fechaFinObj = new Date(valorFin);
-
-    if (fechaFinObj < fechaInicioObj) {
+    
+    // Validar campos vacíos primero
+    const validoInicio = validarCampoGenerico(fechaInicio);
+    const validoFin = validarCampoGenerico(fechaFin);
+    
+    if (!validoInicio || !validoFin) return false;
+    
+    // Validar relación entre fechas
+    if (new Date(fechaFin.value) < new Date(fechaInicio.value)) {
       mostrarError(fechaFin, 'La fecha de fin no puede ser anterior a la fecha de inicio');
       return false;
     }
     
-    mostrarError(fechaInicio, '');
-    mostrarError(fechaFin, '');
     return true;
   }
 
   function validarProfesor() {
     const campo = document.getElementById('profesor-cargo');
     if (!campo) return true;
-    
-    const valor = campo.value.trim();
-    
-    if (!valor) {
-      if (campo.required) {
-        mostrarError(campo, 'Este campo es obligatorio');
-        return false;
-      }
-      mostrarError(campo, '');
-      return true;
-    }
-    
-    const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/;
-    if (!regex.test(valor)) {
-      mostrarError(campo, 'El nombre no puede contener números ni caracteres especiales');
-      return false;
-    }
-    
-    mostrarError(campo, '');
-    return true;
+    return validarCampoGenerico(
+      campo,
+      /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/,
+      'El nombre no puede contener números ni caracteres especiales'
+    );
   }
 
   function validarTelefonoContacto() {
     const campo = document.getElementById('telefono-contacto');
     if (!campo) return true;
-    
-    const valor = campo.value.trim();
-    
-    if (!valor) {
-      if (campo.required) {
-        mostrarError(campo, 'Este campo es obligatorio');
-        return false;
-      }
-      mostrarError(campo, '');
-      return true;
-    }
-    
-    const regex = /^[0-9+]*$/;
-    if (!regex.test(valor)) {
-      mostrarError(campo, 'Solo se permiten números y el símbolo +');
-      return false;
-    }
-    
-    mostrarError(campo, '');
-    return true;
+    return validarCampoGenerico(
+      campo,
+      /^[0-9+]*$/,
+      'Solo se permiten números y el símbolo +'
+    );
   }
 
-  // ==================== VALIDACIONES PARA FORMULARIO PROFESORAL ====================
-
+  // Profesoral
   function validarNombreProfesor() {
     const campo = document.getElementById('nombre-profesor');
     if (!campo) return true;
-    
-    const valor = campo.value.trim();
-    
-    if (!valor) {
-      if (campo.required) {
-        mostrarError(campo, 'Este campo es obligatorio');
-        return false;
-      }
-      mostrarError(campo, '');
-      return true;
-    }
-    
-    const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{2,50}$/;
-    if (!regex.test(valor)) {
-      mostrarError(campo, 'Solo letras y espacios (2-50 caracteres)');
-      return false;
-    }
-    
-    mostrarError(campo, '');
-    return true;
+    return validarCampoGenerico(
+      campo,
+      /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{2,50}$/,
+      'Solo letras y espacios (2-50 caracteres)'
+    );
   }
 
   function validarPrimerApellido() {
     const campo = document.getElementById('primer-apellido');
     if (!campo) return true;
-    
-    const valor = campo.value.trim();
-    
-    if (!valor) {
-      if (campo.required) {
-        mostrarError(campo, 'Este campo es obligatorio');
-        return false;
-      }
-      mostrarError(campo, '');
-      return true;
-    }
-    
-    const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{2,50}$/;
-    if (!regex.test(valor)) {
-      mostrarError(campo, 'Solo letras y espacios (2-50 caracteres)');
-      return false;
-    }
-    
-    mostrarError(campo, '');
-    return true;
+    return validarCampoGenerico(
+      campo,
+      /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{2,50}$/,
+      'Solo letras y espacios (2-50 caracteres)'
+    );
   }
 
   function validarSegundoApellido() {
     const campo = document.getElementById('segundo-apellido');
     if (!campo) return true;
-    
-    const valor = campo.value.trim();
-    
-    if (valor) {
-      const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{0,50}$/;
-      if (!regex.test(valor)) {
-        mostrarError(campo, 'Solo letras y espacios (máx. 50 caracteres)');
-        return false;
-      }
-    }
-    
-    mostrarError(campo, '');
-    return true;
+    return validarCampoGenerico(
+      campo,
+      /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{0,50}$/,
+      'Solo letras y espacios (máx. 50 caracteres)'
+    );
   }
 
   function validarAsignatura() {
     const campo = document.getElementById('asignatura');
     if (!campo) return true;
-    
-    const valor = campo.value.trim();
-    
-    if (!valor) {
-      if (campo.required) {
-        mostrarError(campo, 'Este campo es obligatorio');
-        return false;
-      }
-      mostrarError(campo, '');
-      return true;
-    }
-    
-    const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s]{5,50}$/;
-    if (!regex.test(valor)) {
-      mostrarError(campo, 'Solo letras, números y espacios (5-50 caracteres)');
-      return false;
-    }
-    
-    mostrarError(campo, '');
-    return true;
+    return validarCampoGenerico(
+      campo,
+      /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s]{5,50}$/,
+      'Solo letras, números y espacios (5-50 caracteres)'
+    );
   }
 
   function validarSolapin() {
     const campo = document.getElementById('solapin');
     if (!campo) return true;
-    
-    const valor = campo.value.trim();
-    
-    if (!valor) {
-      if (campo.required) {
-        mostrarError(campo, 'Este campo es obligatorio');
-        return false;
-      }
-      mostrarError(campo, '');
-      return true;
-    }
-    
-    const regex = /^[A-Za-z]\d{6}$/;
-    if (!regex.test(valor)) {
-      mostrarError(campo, 'Formato: Letra seguida de 6 números');
-      return false;
-    }
-    
-    mostrarError(campo, '');
-    return true;
+    return validarCampoGenerico(
+      campo,
+      /^[A-Za-z]\d{6}$/,
+      'Formato: Letra seguida de 6 números'
+    );
   }
 
   function validarTelefonoProfesor() {
     const campo = document.getElementById('telefono');
     if (!campo) return true;
-    
-    const valor = campo.value.trim();
-    
-    if (!valor) {
-      if (campo.required) {
-        mostrarError(campo, 'Este campo es obligatorio');
-        return false;
-      }
-      mostrarError(campo, '');
-      return true;
-    }
-    
-    const regex = /^\+?\d{7,15}$/;
-    if (!regex.test(valor)) {
-      mostrarError(campo, '7-15 dígitos, puede comenzar con +');
-      return false;
-    }
-    
-    mostrarError(campo, '');
-    return true;
+    return validarCampoGenerico(
+      campo,
+      /^\+?\d{7,15}$/,
+      '7-15 dígitos, puede comenzar con +'
+    );
   }
 
   function validarCorreo() {
     const campo = document.getElementById('correo');
     if (!campo) return true;
+    const valido = validarCampoGenerico(
+      campo,
+      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+      'Ingrese un correo válido (ej: usuario@dominio.com)'
+    );
     
-    const valor = campo.value.trim();
-    
-    if (!valor) {
-      if (campo.required) {
-        mostrarError(campo, 'Este campo es obligatorio');
-        return false;
-      }
-      mostrarError(campo, '');
-      return true;
-    }
-    
-    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!regex.test(valor)) {
-      mostrarError(campo, 'Ingrese un correo válido (ej: usuario@dominio.com)');
-      return false;
-    }
-    
-    if (valor.length > 50) {
+    if (valido && campo.value.length > 50) {
       mostrarError(campo, 'Máximo 50 caracteres');
       return false;
     }
     
-    mostrarError(campo, '');
-    return true;
+    return valido;
   }
 
   function validarBrigadaAsignada() {
     const campo = document.getElementById('brigada-asignada');
     if (!campo) return true;
+    const valido = validarCampoGenerico(campo);
     
-    const valor = campo.value.trim();
-    
-    if (!valor) {
-      if (campo.required) {
-        mostrarError(campo, 'Este campo es obligatorio');
-        return false;
-      }
-      mostrarError(campo, '');
-      return true;
-    }
-    
-    if (valor.length > 10) {
+    if (valido && campo.value.length > 10) {
       mostrarError(campo, 'Máximo 10 caracteres');
       return false;
     }
     
-    mostrarError(campo, '');
-    return true;
+    return valido;
   }
 
   function validarBrigadasImpartir() {
     const campo = document.getElementById('brigadas-impartir');
     if (!campo) return true;
+    const valido = validarCampoGenerico(campo);
     
-    const valor = campo.value.trim();
-    
-    if (!valor) {
-      if (campo.required) {
-        mostrarError(campo, 'Este campo es obligatorio');
-        return false;
-      }
-      mostrarError(campo, '');
-      return true;
-    }
-    
-    if (valor.length > 50) {
+    if (valido && campo.value.length > 50) {
       mostrarError(campo, 'Máximo 50 caracteres');
       return false;
     }
     
-    mostrarError(campo, '');
-    return true;
+    return valido;
   }
 
   function validarDescripcion() {
     const campo = document.getElementById('descripcion-profesor');
     if (!campo) return true;
+    const valido = validarCampoGenerico(campo);
     
-    const valor = campo.value.trim();
-    
-    if (!valor) {
-      if (campo.required) {
-        mostrarError(campo, 'Este campo es obligatorio');
-        return false;
-      }
-      mostrarError(campo, '');
-      return true;
-    }
-    
-    if (valor.length > 500) {
+    if (valido && campo.value.length > 500) {
       mostrarError(campo, 'Máximo 500 caracteres');
       return false;
     }
     
-    mostrarError(campo, '');
-    return true;
+    return valido;
   }
 
-  // ==================== CONFIGURACIÓN DE VALIDACIONES ====================
+  // ==================== CONFIGURACIÓN DE FORMULARIOS ====================
 
-  function configurarValidacionEstrategia() {
-    const formEstrategia = document.getElementById('form-estrategia');
-    if (!formEstrategia) return;
-  
-    const configurarValidacionCampo = (id, validacionFn) => {
+  function configurarValidacionFormulario(formId, validaciones) {
+    const form = document.getElementById(formId);
+    if (!form) return;
+
+    const configurarCampo = (id, validacionFn) => {
       const campo = document.getElementById(id);
-      if (campo) {
-        campo.addEventListener('input', function() {
-          // 1. Limpiar estados previos (igual que en Profesoral)
-          campo.classList.remove('is-invalid', 'is-valid');
-          const contenedor = campo.closest('.form-group');
-          const errorElement = contenedor.querySelector('.error-validacion');
-          if (errorElement) errorElement.remove();
-          
-          // 2. Validar solo si hay contenido o perdió foco (key fix!)
-          if (campo.value.trim() !== '' || document.activeElement !== campo) {
-            validacionFn();
-          }
-        });
-        
-        // 3. Mantener la validación al salir del campo
-        campo.addEventListener('blur', validacionFn);
-      }
-    };
-  
-    // Aplicar a todos los campos (mismo patrón que Profesoral)
-    configurarValidacionCampo('curso', validarCurso);
-    configurarValidacionCampo('ano-escolar', validarAnoEscolar);
-    configurarValidacionCampo('grupo', validarGrupo);
-    configurarValidacionCampo('autor', validarAutor);
+      if (!campo) return;
 
-    formEstrategia.addEventListener('submit', function(e) {
-      const valido = validarCamposVacios(this) && 
-                    validarCurso() && 
-                    validarAnoEscolar() && 
-                    validarGrupo() && 
-                    validarAutor();
-      
-      if (!valido) {
-        e.preventDefault();
-        const primerError = this.querySelector('.is-invalid');
-        if (primerError) {
-          primerError.focus();
-          primerError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-      }
-    });
-  }
+      // Configurar eventos
+      campo.addEventListener('input', () => {
+        mostrarError(campo); // Limpiar error al escribir
+        if (campo.value.trim() !== '') validacionFn();
+      });
 
-  function configurarValidacionEventos() {
-    const formEvento = document.getElementById('form-evento');
-    if (!formEvento) return;
-
-    // Configurar validación cruzada de fechas
-    const fechaInicio = document.getElementById('fecha-inicio');
-    const fechaFin = document.getElementById('fecha-fin');
-    if (fechaInicio && fechaFin) {
-      fechaInicio.addEventListener('change', validarFechasEvento);
-      fechaFin.addEventListener('change', validarFechasEvento);
-    }
-
-    // Configurar validaciones específicas
-    const configurarValidacionCampo = (id, validacionFn) => {
-      const campo = document.getElementById(id);
-      if (campo) {
-        campo.addEventListener('input', function() {
-          campo.classList.remove('is-invalid', 'is-valid');
-          const contenedor = campo.closest('.form-group');
-          const errorElement = contenedor.querySelector('.error-validacion');
-          if (errorElement) errorElement.remove();
-          
-          validacionFn();
-        });
-        campo.addEventListener('blur', validacionFn);
-      }
+      campo.addEventListener('blur', validacionFn);
     };
 
-    configurarValidacionCampo('profesor-cargo', validarProfesor);
-    configurarValidacionCampo('telefono-contacto', validarTelefonoContacto);
+    // Aplicar a todos los campos
+    Object.entries(validaciones).forEach(([id, fn]) => configurarCampo(id, fn));
 
-    formEvento.addEventListener('submit', function(e) {
+    // Configurar submit
+    form.addEventListener('submit', function(e) {
       const valido = validarCamposVacios(this) && 
-                    validarFechasEvento() && 
-                    validarProfesor() && 
-                    validarTelefonoContacto();
-      
-      if (!valido) {
-        e.preventDefault();
-        const primerError = this.querySelector('.is-invalid');
-        if (primerError) {
-          primerError.focus();
-          primerError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-      }
-    });
-  }
-
-  function configurarValidacionProfesoral() {
-    const formProfesoral = document.getElementById('form-profesoral');
-    if (!formProfesoral) return;
-
-    const configurarValidacionCampo = (id, validacionFn) => {
-      const campo = document.getElementById(id);
-      if (campo) {
-        campo.addEventListener('input', function() {
-          campo.classList.remove('is-invalid', 'is-valid');
-          const contenedor = campo.closest('.form-group');
-          const errorElement = contenedor.querySelector('.error-validacion');
-          if (errorElement) errorElement.remove();
-          
-          validacionFn();
-        });
-        campo.addEventListener('blur', validacionFn);
-      }
-    };
-
-    configurarValidacionCampo('nombre-profesor', validarNombreProfesor);
-    configurarValidacionCampo('primer-apellido', validarPrimerApellido);
-    configurarValidacionCampo('segundo-apellido', validarSegundoApellido);
-    configurarValidacionCampo('asignatura', validarAsignatura);
-    configurarValidacionCampo('solapin', validarSolapin);
-    configurarValidacionCampo('telefono', validarTelefonoProfesor);
-    configurarValidacionCampo('correo', validarCorreo);
-    configurarValidacionCampo('brigada-asignada', validarBrigadaAsignada);
-    configurarValidacionCampo('brigadas-impartir', validarBrigadasImpartir);
-    configurarValidacionCampo('descripcion-profesor', validarDescripcion);
-
-    formProfesoral.addEventListener('submit', function(e) {
-      const valido = validarCamposVacios(this) && 
-                    validarNombreProfesor() && 
-                    validarPrimerApellido() && 
-                    validarSegundoApellido() && 
-                    validarAsignatura() && 
-                    validarSolapin() && 
-                    validarTelefonoProfesor() && 
-                    validarCorreo() && 
-                    validarBrigadaAsignada() && 
-                    validarBrigadasImpartir() && 
-                    validarDescripcion();
+                    Object.values(validaciones).every(fn => fn());
       
       if (!valido) {
         e.preventDefault();
@@ -887,6 +564,35 @@
   // ==================== INICIALIZACIÓN ====================
 
   document.addEventListener("DOMContentLoaded", function() {
+    // Configurar todos los formularios con el nuevo sistema
+    configurarValidacionFormulario('form-estrategia', {
+      'curso': validarCurso,
+      'ano-escolar': validarAnoEscolar,
+      'grupo': validarGrupo,
+      'autor': validarAutor
+    });
+
+    configurarValidacionFormulario('form-evento', {
+      'fecha-inicio': () => validarFechasEvento(),
+      'fecha-fin': () => validarFechasEvento(),
+      'profesor-cargo': validarProfesor,
+      'telefono-contacto': validarTelefonoContacto
+    });
+
+    configurarValidacionFormulario('form-profesoral', {
+      'nombre-profesor': validarNombreProfesor,
+      'primer-apellido': validarPrimerApellido,
+      'segundo-apellido': validarSegundoApellido,
+      'asignatura': validarAsignatura,
+      'solapin': validarSolapin,
+      'telefono': validarTelefonoProfesor,
+      'correo': validarCorreo,
+      'brigada-asignada': validarBrigadaAsignada,
+      'brigadas-impartir': validarBrigadasImpartir,
+      'descripcion-profesor': validarDescripcion
+    });
+
+    // Resto de inicializaciones...
     configurarValidacionEstrategia();
     configurarValidacionEventos();
     configurarValidacionProfesoral();
