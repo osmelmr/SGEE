@@ -60,24 +60,14 @@
       campo.classList.remove('is-valid');
     } else {
       if (errorElement) errorElement.remove();
-      
-      // Solo mostrar como válido si tiene contenido y pasa todas las validaciones
-      if (campo.value.trim() !== '') {
-        // Verificar si el campo tiene validaciones específicas
-        let esValido = true;
-        if (campo.id === 'solapin') esValido = validarSolapin();
-        else if (campo.id === 'correo') esValido = validarCorreo();
-        else if (campo.id === 'telefono') esValido = validarTelefonoProfesor();
-        else if (campo.id === 'asignatura') esValido = validarAsignatura();
-        else if (campo.id === 'nombre-profesor') esValido = validarNombreProfesor();
-        else if (campo.id === 'primer-apellido') esValido = validarPrimerApellido();
-        else if (campo.id === 'segundo-apellido') esValido = validarSegundoApellido();
-        
-        if (esValido) {
-          campo.classList.add('is-valid');
-        }
-      }
       campo.classList.remove('is-invalid');
+      
+      // Solo mostrar como válido si tiene contenido
+      if (campo.value.trim() !== '') {
+        campo.classList.add('is-valid');
+      } else {
+        campo.classList.remove('is-valid');
+      }
     }
   }
 
@@ -97,11 +87,7 @@
         mostrarError(campo, 'Este campo es obligatorio');
         valido = false;
       } else {
-        // Solo quitar el error si el campo no está vacío
-        // La validación específica se hará en sus propias funciones
-        if (!campo.classList.contains('is-invalid')) {
-          mostrarError(campo, '');
-        }
+        mostrarError(campo, '');
       }
     });
     
@@ -117,11 +103,11 @@
     const valor = campo.value;
     const regex = /^[0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
     
-    if (valor && !regex.test(valor)) {
-      mostrarError(campo, 'El curso solo puede contener números y caracteres especiales');
-      return false;
-    } else if (!valor && campo.required) {
+    if (!valor && campo.required) {
       mostrarError(campo, 'Este campo es obligatorio');
+      return false;
+    } else if (valor && !regex.test(valor)) {
+      mostrarError(campo, 'El curso solo puede contener números y caracteres especiales');
       return false;
     } else {
       mostrarError(campo, '');
@@ -136,11 +122,11 @@
     const valor = campo.value;
     const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/;
     
-    if (valor && !regex.test(valor)) {
-      mostrarError(campo, 'El año escolar solo puede contener letras');
-      return false;
-    } else if (!valor && campo.required) {
+    if (!valor && campo.required) {
       mostrarError(campo, 'Este campo es obligatorio');
+      return false;
+    } else if (valor && !regex.test(valor)) {
+      mostrarError(campo, 'El año escolar solo puede contener letras');
       return false;
     } else {
       mostrarError(campo, '');
@@ -155,11 +141,11 @@
     const valor = campo.value;
     const regex = /^ID[A-Z]{2,}\d{3}$/;
     
-    if (valor && !regex.test(valor)) {
-      mostrarError(campo, 'Debe comenzar con "ID" en mayúsculas, seguido de 2+ letras y 3 números');
-      return false;
-    } else if (!valor && campo.required) {
+    if (!valor && campo.required) {
       mostrarError(campo, 'Este campo es obligatorio');
+      return false;
+    } else if (valor && !regex.test(valor)) {
+      mostrarError(campo, 'Debe comenzar con "ID" en mayúsculas, seguido de 2+ letras y 3 números');
       return false;
     } else {
       mostrarError(campo, '');
@@ -174,11 +160,11 @@
     const valor = campo.value;
     const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/;
     
-    if (valor && !regex.test(valor)) {
-      mostrarError(campo, 'No puede contener números ni caracteres especiales');
-      return false;
-    } else if (!valor && campo.required) {
+    if (!valor && campo.required) {
       mostrarError(campo, 'Este campo es obligatorio');
+      return false;
+    } else if (valor && !regex.test(valor)) {
+      mostrarError(campo, 'No puede contener números ni caracteres especiales');
       return false;
     } else {
       mostrarError(campo, '');
@@ -218,11 +204,11 @@
     const valor = campo.value;
     const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/;
     
-    if (valor && !regex.test(valor)) {
-      mostrarError(campo, 'El nombre no puede contener números ni caracteres especiales');
-      return false;
-    } else if (!valor && campo.required) {
+    if (!valor && campo.required) {
       mostrarError(campo, 'Este campo es obligatorio');
+      return false;
+    } else if (valor && !regex.test(valor)) {
+      mostrarError(campo, 'El nombre no puede contener números ni caracteres especiales');
       return false;
     } else {
       mostrarError(campo, '');
@@ -237,11 +223,11 @@
     const valor = campo.value;
     const regex = /^[0-9+]*$/;
     
-    if (valor && !regex.test(valor)) {
-      mostrarError(campo, 'Solo se permiten números y el símbolo +');
-      return false;
-    } else if (!valor && campo.required) {
+    if (!valor && campo.required) {
       mostrarError(campo, 'Este campo es obligatorio');
+      return false;
+    } else if (valor && !regex.test(valor)) {
+      mostrarError(campo, 'Solo se permiten números y el símbolo +');
       return false;
     } else {
       mostrarError(campo, '');
@@ -258,11 +244,11 @@
     const valor = campo.value.trim();
     const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{2,50}$/;
     
-    if (valor && !regex.test(valor)) {
-      mostrarError(campo, 'El nombre no puede contener números ni caracteres especiales (2-50 caracteres)');
-      return false;
-    } else if (!valor && campo.required) {
+    if (!valor && campo.required) {
       mostrarError(campo, 'Este campo es obligatorio');
+      return false;
+    } else if (valor && !regex.test(valor)) {
+      mostrarError(campo, 'El nombre no puede contener números ni caracteres especiales (2-50 caracteres)');
       return false;
     } else {
       mostrarError(campo, '');
@@ -277,11 +263,11 @@
     const valor = campo.value.trim();
     const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{2,50}$/;
     
-    if (valor && !regex.test(valor)) {
-      mostrarError(campo, 'El apellido no puede contener números ni caracteres especiales (2-50 caracteres)');
-      return false;
-    } else if (!valor && campo.required) {
+    if (!valor && campo.required) {
       mostrarError(campo, 'Este campo es obligatorio');
+      return false;
+    } else if (valor && !regex.test(valor)) {
+      mostrarError(campo, 'El apellido no puede contener números ni caracteres especiales (2-50 caracteres)');
       return false;
     } else {
       mostrarError(campo, '');
@@ -312,11 +298,11 @@
     const valor = campo.value.trim();
     const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s]{5,50}$/;
     
-    if (valor && !regex.test(valor)) {
-      mostrarError(campo, 'No se permiten caracteres especiales (5-50 caracteres)');
-      return false;
-    } else if (!valor && campo.required) {
+    if (!valor && campo.required) {
       mostrarError(campo, 'Este campo es obligatorio');
+      return false;
+    } else if (valor && !regex.test(valor)) {
+      mostrarError(campo, 'No se permiten caracteres especiales (5-50 caracteres)');
       return false;
     } else {
       mostrarError(campo, '');
@@ -331,11 +317,11 @@
     const valor = campo.value.trim();
     const regex = /^[A-Za-z]\d{6}$/;
     
-    if (valor && !regex.test(valor)) {
-      mostrarError(campo, 'Debe comenzar con una letra seguida de exactamente 6 números');
-      return false;
-    } else if (!valor && campo.required) {
+    if (!valor && campo.required) {
       mostrarError(campo, 'Este campo es obligatorio');
+      return false;
+    } else if (valor && !regex.test(valor)) {
+      mostrarError(campo, 'Debe comenzar con una letra seguida de exactamente 6 números');
       return false;
     } else {
       mostrarError(campo, '');
@@ -350,11 +336,11 @@
     const valor = campo.value.trim();
     const regex = /^\+?\d{7,15}$/;
     
-    if (valor && !regex.test(valor)) {
-      mostrarError(campo, 'Solo se permiten números (7-15 dígitos) y el símbolo + opcional al inicio');
-      return false;
-    } else if (!valor && campo.required) {
+    if (!valor && campo.required) {
       mostrarError(campo, 'Este campo es obligatorio');
+      return false;
+    } else if (valor && !regex.test(valor)) {
+      mostrarError(campo, 'Solo se permiten números (7-15 dígitos) y el símbolo + opcional al inicio');
       return false;
     } else {
       mostrarError(campo, '');
@@ -367,20 +353,13 @@
     if (!campo) return true;
     
     const valor = campo.value.trim();
-    
-    // Si está vacío y no es requerido, es válido
-    if (valor === '' && !campo.required) {
-      mostrarError(campo, '');
-      return true;
-    }
-    
     const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     
-    if (valor && !regex.test(valor)) {
-      mostrarError(campo, 'Por favor ingrese un correo electrónico válido (ej: usuario@dominio.com)');
-      return false;
-    } else if (!valor && campo.required) {
+    if (!valor && campo.required) {
       mostrarError(campo, 'Este campo es obligatorio');
+      return false;
+    } else if (valor && !regex.test(valor)) {
+      mostrarError(campo, 'Por favor ingrese un correo electrónico válido (ej: usuario@dominio.com)');
       return false;
     } else if (valor.length > 50) {
       mostrarError(campo, 'El correo no puede exceder los 50 caracteres');
@@ -454,7 +433,10 @@
     const configurarValidacionCampo = (id, validacionFn) => {
       const campo = document.getElementById(id);
       if (campo) {
-        campo.addEventListener('input', validacionFn);
+        campo.addEventListener('input', function() {
+          campo.classList.remove('is-invalid', 'is-valid');
+          validacionFn();
+        });
         campo.addEventListener('blur', validacionFn);
       }
     };
@@ -498,7 +480,10 @@
     const configurarValidacionCampo = (id, validacionFn) => {
       const campo = document.getElementById(id);
       if (campo) {
-        campo.addEventListener('input', validacionFn);
+        campo.addEventListener('input', function() {
+          campo.classList.remove('is-invalid', 'is-valid');
+          validacionFn();
+        });
         campo.addEventListener('blur', validacionFn);
       }
     };
@@ -532,7 +517,10 @@
     const configurarValidacionCampo = (id, validacionFn) => {
       const campo = document.getElementById(id);
       if (campo) {
-        campo.addEventListener('input', validacionFn);
+        campo.addEventListener('input', function() {
+          campo.classList.remove('is-invalid', 'is-valid');
+          validacionFn();
+        });
         campo.addEventListener('blur', validacionFn);
       }
     };
