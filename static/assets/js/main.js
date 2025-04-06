@@ -49,29 +49,20 @@
     const contenedor = campo.closest('.form-group');
     let errorElement = contenedor.querySelector('.error-validacion');
 
-    // Limpiar siempre que no haya mensaje o el campo esté vacío
-    if (!mensaje || campo.value.trim() === '') {
-      if (errorElement) errorElement.remove();
-      campo.classList.remove('is-invalid', 'is-valid');
-      
-      // Si el campo está vacío y es requerido, mostrar error
-      if (campo.required && campo.value.trim() === '') {
-        errorElement = document.createElement('div');
-        errorElement.className = 'error-validacion';
-        errorElement.textContent = 'Este campo es obligatorio';
-        contenedor.appendChild(errorElement);
-        campo.classList.add('is-invalid');
-      }
-    } else {
-      // Mostrar mensaje de error personalizado
-      if (!errorElement) {
-        errorElement = document.createElement('div');
-        errorElement.className = 'error-validacion';
-        contenedor.appendChild(errorElement);
-      }
+    // Limpiar siempre el estado previo
+    if (errorElement) errorElement.remove();
+    campo.classList.remove('is-invalid', 'is-valid');
+
+    // Solo mostrar error si hay un mensaje definido
+    if (mensaje) {
+      errorElement = document.createElement('div');
+      errorElement.className = 'error-validacion';
       errorElement.textContent = mensaje;
+      contenedor.appendChild(errorElement);
       campo.classList.add('is-invalid');
-      campo.classList.remove('is-valid');
+    } else if (campo.value.trim() !== '') {
+      // Mostrar como válido solo si tiene contenido
+      campo.classList.add('is-valid');
     }
   }
 
@@ -104,12 +95,11 @@
     
     const valor = campo.value.trim();
     
-    if (campo.required && !valor) {
-      mostrarError(campo, 'Este campo es obligatorio');
-      return false;
-    }
-    
     if (!valor) {
+      if (campo.required) {
+        mostrarError(campo, 'Este campo es obligatorio');
+        return false;
+      }
       mostrarError(campo, '');
       return true;
     }
@@ -130,12 +120,11 @@
     
     const valor = campo.value.trim();
     
-    if (campo.required && !valor) {
-      mostrarError(campo, 'Este campo es obligatorio');
-      return false;
-    }
-    
     if (!valor) {
+      if (campo.required) {
+        mostrarError(campo, 'Este campo es obligatorio');
+        return false;
+      }
       mostrarError(campo, '');
       return true;
     }
@@ -156,12 +145,11 @@
     
     const valor = campo.value.trim();
     
-    if (campo.required && !valor) {
-      mostrarError(campo, 'Este campo es obligatorio');
-      return false;
-    }
-    
     if (!valor) {
+      if (campo.required) {
+        mostrarError(campo, 'Este campo es obligatorio');
+        return false;
+      }
       mostrarError(campo, '');
       return true;
     }
@@ -182,12 +170,11 @@
     
     const valor = campo.value.trim();
     
-    if (campo.required && !valor) {
-      mostrarError(campo, 'Este campo es obligatorio');
-      return false;
-    }
-    
     if (!valor) {
+      if (campo.required) {
+        mostrarError(campo, 'Este campo es obligatorio');
+        return false;
+      }
       mostrarError(campo, '');
       return true;
     }
@@ -213,6 +200,11 @@
     const valorFin = fechaFin.value;
 
     if (!valorInicio || !valorFin) {
+      if ((fechaInicio.required && !valorInicio) || (fechaFin.required && !valorFin)) {
+        mostrarError(fechaInicio, !valorInicio ? 'Este campo es obligatorio' : '');
+        mostrarError(fechaFin, !valorFin ? 'Este campo es obligatorio' : '');
+        return false;
+      }
       return true;
     }
 
@@ -224,6 +216,7 @@
       return false;
     }
     
+    mostrarError(fechaInicio, '');
     mostrarError(fechaFin, '');
     return true;
   }
@@ -234,12 +227,11 @@
     
     const valor = campo.value.trim();
     
-    if (campo.required && !valor) {
-      mostrarError(campo, 'Este campo es obligatorio');
-      return false;
-    }
-    
     if (!valor) {
+      if (campo.required) {
+        mostrarError(campo, 'Este campo es obligatorio');
+        return false;
+      }
       mostrarError(campo, '');
       return true;
     }
@@ -260,12 +252,11 @@
     
     const valor = campo.value.trim();
     
-    if (campo.required && !valor) {
-      mostrarError(campo, 'Este campo es obligatorio');
-      return false;
-    }
-    
     if (!valor) {
+      if (campo.required) {
+        mostrarError(campo, 'Este campo es obligatorio');
+        return false;
+      }
       mostrarError(campo, '');
       return true;
     }
@@ -288,12 +279,11 @@
     
     const valor = campo.value.trim();
     
-    if (campo.required && !valor) {
-      mostrarError(campo, 'Este campo es obligatorio');
-      return false;
-    }
-    
     if (!valor) {
+      if (campo.required) {
+        mostrarError(campo, 'Este campo es obligatorio');
+        return false;
+      }
       mostrarError(campo, '');
       return true;
     }
@@ -314,12 +304,11 @@
     
     const valor = campo.value.trim();
     
-    if (campo.required && !valor) {
-      mostrarError(campo, 'Este campo es obligatorio');
-      return false;
-    }
-    
     if (!valor) {
+      if (campo.required) {
+        mostrarError(campo, 'Este campo es obligatorio');
+        return false;
+      }
       mostrarError(campo, '');
       return true;
     }
@@ -358,12 +347,11 @@
     
     const valor = campo.value.trim();
     
-    if (campo.required && !valor) {
-      mostrarError(campo, 'Este campo es obligatorio');
-      return false;
-    }
-    
     if (!valor) {
+      if (campo.required) {
+        mostrarError(campo, 'Este campo es obligatorio');
+        return false;
+      }
       mostrarError(campo, '');
       return true;
     }
@@ -384,12 +372,11 @@
     
     const valor = campo.value.trim();
     
-    if (campo.required && !valor) {
-      mostrarError(campo, 'Este campo es obligatorio');
-      return false;
-    }
-    
     if (!valor) {
+      if (campo.required) {
+        mostrarError(campo, 'Este campo es obligatorio');
+        return false;
+      }
       mostrarError(campo, '');
       return true;
     }
@@ -410,12 +397,11 @@
     
     const valor = campo.value.trim();
     
-    if (campo.required && !valor) {
-      mostrarError(campo, 'Este campo es obligatorio');
-      return false;
-    }
-    
     if (!valor) {
+      if (campo.required) {
+        mostrarError(campo, 'Este campo es obligatorio');
+        return false;
+      }
       mostrarError(campo, '');
       return true;
     }
@@ -436,12 +422,11 @@
     
     const valor = campo.value.trim();
     
-    if (campo.required && !valor) {
-      mostrarError(campo, 'Este campo es obligatorio');
-      return false;
-    }
-    
     if (!valor) {
+      if (campo.required) {
+        mostrarError(campo, 'Este campo es obligatorio');
+        return false;
+      }
       mostrarError(campo, '');
       return true;
     }
@@ -467,12 +452,11 @@
     
     const valor = campo.value.trim();
     
-    if (campo.required && !valor) {
-      mostrarError(campo, 'Este campo es obligatorio');
-      return false;
-    }
-    
     if (!valor) {
+      if (campo.required) {
+        mostrarError(campo, 'Este campo es obligatorio');
+        return false;
+      }
       mostrarError(campo, '');
       return true;
     }
@@ -492,12 +476,11 @@
     
     const valor = campo.value.trim();
     
-    if (campo.required && !valor) {
-      mostrarError(campo, 'Este campo es obligatorio');
-      return false;
-    }
-    
     if (!valor) {
+      if (campo.required) {
+        mostrarError(campo, 'Este campo es obligatorio');
+        return false;
+      }
       mostrarError(campo, '');
       return true;
     }
@@ -517,12 +500,11 @@
     
     const valor = campo.value.trim();
     
-    if (campo.required && !valor) {
-      mostrarError(campo, 'Este campo es obligatorio');
-      return false;
-    }
-    
     if (!valor) {
+      if (campo.required) {
+        mostrarError(campo, 'Este campo es obligatorio');
+        return false;
+      }
       mostrarError(campo, '');
       return true;
     }
@@ -552,9 +534,15 @@
           const errorElement = contenedor.querySelector('.error-validacion');
           if (errorElement) errorElement.remove();
           
+          // Validar solo si hay contenido o es blur
+          if (campo.value.trim() !== '' || document.activeElement !== campo) {
+            validacionFn();
+          }
+        });
+        
+        campo.addEventListener('blur', function() {
           validacionFn();
         });
-        campo.addEventListener('blur', validacionFn);
       }
     };
 
