@@ -581,17 +581,13 @@
     const formProfesoral = document.getElementById('form-profesoral');
     if (!formProfesoral) return;
 
-    // Configurar validación para cada campo
-    const configurarValidacionCampo = (id, validacionFn) => {
-      const campo = document.getElementById(id);
-      if (campo) {
-        campo.addEventListener('input', function() {
-          campo.classList.remove('is-invalid', 'is-valid');
-          validacionFn();
-        });
-        campo.addEventListener('blur', validacionFn);
-      }
-    };
+  // Configurar validación solo en blur (no en input)
+  const configurarValidacionCampo = (id, validacionFn) => {
+    const campo = document.getElementById(id);
+    if (campo) {
+      campo.addEventListener('blur', validacionFn); // Solo validar al salir del campo
+    }
+  };
 
     // Configurar validaciones individuales
     configurarValidacionCampo('nombre-profesor', validarNombreProfesor);
