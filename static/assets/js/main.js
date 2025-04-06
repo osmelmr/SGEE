@@ -523,29 +523,29 @@
   function configurarValidacionEstrategia() {
     const formEstrategia = document.getElementById('form-estrategia');
     if (!formEstrategia) return;
-
+  
     const configurarValidacionCampo = (id, validacionFn) => {
       const campo = document.getElementById(id);
       if (campo) {
         campo.addEventListener('input', function() {
-          // Limpiar estados previos al escribir
+          // 1. Limpiar estados previos (igual que en Profesoral)
           campo.classList.remove('is-invalid', 'is-valid');
           const contenedor = campo.closest('.form-group');
           const errorElement = contenedor.querySelector('.error-validacion');
           if (errorElement) errorElement.remove();
           
-          // Validar solo si hay contenido o es blur
+          // 2. Validar solo si hay contenido o perdió foco (key fix!)
           if (campo.value.trim() !== '' || document.activeElement !== campo) {
             validacionFn();
           }
         });
         
-        campo.addEventListener('blur', function() {
-          validacionFn();
-        });
+        // 3. Mantener la validación al salir del campo
+        campo.addEventListener('blur', validacionFn);
       }
     };
-
+  
+    // Aplicar a todos los campos (mismo patrón que Profesoral)
     configurarValidacionCampo('curso', validarCurso);
     configurarValidacionCampo('ano-escolar', validarAnoEscolar);
     configurarValidacionCampo('grupo', validarGrupo);
