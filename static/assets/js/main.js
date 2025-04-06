@@ -598,9 +598,7 @@
     });
 
     // Resto de inicializaciones...
-    configurarValidacionEstrategia();
-    configurarValidacionEventos();
-    configurarValidacionProfesoral();
+    configurarValidacionFormulario();
     initSeleccionarTodo();
     initFormularioEncuestas();
   });
