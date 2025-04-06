@@ -48,8 +48,22 @@
   function mostrarError(campo, mensaje) {
     const contenedor = campo.closest('.form-group');
     let errorElement = contenedor.querySelector('.error-validacion');
-    
-    if (mensaje) {
+
+    // Limpiar siempre que no haya mensaje o el campo esté vacío
+    if (!mensaje || campo.value.trim() === '') {
+      if (errorElement) errorElement.remove();
+      campo.classList.remove('is-invalid', 'is-valid');
+      
+      // Si el campo está vacío y es requerido, mostrar error
+      if (campo.required && campo.value.trim() === '') {
+        errorElement = document.createElement('div');
+        errorElement.className = 'error-validacion';
+        errorElement.textContent = 'Este campo es obligatorio';
+        contenedor.appendChild(errorElement);
+        campo.classList.add('is-invalid');
+      }
+    } else {
+      // Mostrar mensaje de error personalizado
       if (!errorElement) {
         errorElement = document.createElement('div');
         errorElement.className = 'error-validacion';
@@ -58,18 +72,8 @@
       errorElement.textContent = mensaje;
       campo.classList.add('is-invalid');
       campo.classList.remove('is-valid');
-    } else {
-      if (errorElement) errorElement.remove();
-      campo.classList.remove('is-invalid');
-      
-      // Solo mostrar como válido si tiene contenido y es válido
-      if (campo.value.trim() !== '') {
-        campo.classList.add('is-valid');
-      } else {
-        campo.classList.remove('is-valid');
-      }
     }
-  }  
+  }
 
   /**
    * Valida si los campos requeridos de un formulario están vacíos
@@ -99,16 +103,18 @@
     if (!campo) return true;
     
     const valor = campo.value.trim();
-    const regex = /^[0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
+    
+    if (campo.required && !valor) {
+      mostrarError(campo, 'Este campo es obligatorio');
+      return false;
+    }
     
     if (!valor) {
-      if (campo.required) {
-        mostrarError(campo, 'Este campo es obligatorio');
-        return false;
-      }
+      mostrarError(campo, '');
       return true;
     }
     
+    const regex = /^[0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
     if (!regex.test(valor)) {
       mostrarError(campo, 'El curso solo puede contener números y caracteres especiales');
       return false;
@@ -123,16 +129,18 @@
     if (!campo) return true;
     
     const valor = campo.value.trim();
-    const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/;
+    
+    if (campo.required && !valor) {
+      mostrarError(campo, 'Este campo es obligatorio');
+      return false;
+    }
     
     if (!valor) {
-      if (campo.required) {
-        mostrarError(campo, 'Este campo es obligatorio');
-        return false;
-      }
+      mostrarError(campo, '');
       return true;
     }
     
+    const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/;
     if (!regex.test(valor)) {
       mostrarError(campo, 'El año escolar solo puede contener letras');
       return false;
@@ -147,16 +155,18 @@
     if (!campo) return true;
     
     const valor = campo.value.trim();
-    const regex = /^ID[A-Z]{2,}\d{3}$/;
+    
+    if (campo.required && !valor) {
+      mostrarError(campo, 'Este campo es obligatorio');
+      return false;
+    }
     
     if (!valor) {
-      if (campo.required) {
-        mostrarError(campo, 'Este campo es obligatorio');
-        return false;
-      }
+      mostrarError(campo, '');
       return true;
     }
     
+    const regex = /^ID[A-Z]{2,}\d{3}$/;
     if (!regex.test(valor)) {
       mostrarError(campo, 'Debe comenzar con "ID" en mayúsculas, seguido de 2+ letras y 3 números');
       return false;
@@ -171,16 +181,18 @@
     if (!campo) return true;
     
     const valor = campo.value.trim();
-    const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/;
+    
+    if (campo.required && !valor) {
+      mostrarError(campo, 'Este campo es obligatorio');
+      return false;
+    }
     
     if (!valor) {
-      if (campo.required) {
-        mostrarError(campo, 'Este campo es obligatorio');
-        return false;
-      }
+      mostrarError(campo, '');
       return true;
     }
     
+    const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/;
     if (!regex.test(valor)) {
       mostrarError(campo, 'No puede contener números ni caracteres especiales');
       return false;
@@ -221,16 +233,18 @@
     if (!campo) return true;
     
     const valor = campo.value.trim();
-    const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/;
+    
+    if (campo.required && !valor) {
+      mostrarError(campo, 'Este campo es obligatorio');
+      return false;
+    }
     
     if (!valor) {
-      if (campo.required) {
-        mostrarError(campo, 'Este campo es obligatorio');
-        return false;
-      }
+      mostrarError(campo, '');
       return true;
     }
     
+    const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/;
     if (!regex.test(valor)) {
       mostrarError(campo, 'El nombre no puede contener números ni caracteres especiales');
       return false;
@@ -245,16 +259,18 @@
     if (!campo) return true;
     
     const valor = campo.value.trim();
-    const regex = /^[0-9+]*$/;
+    
+    if (campo.required && !valor) {
+      mostrarError(campo, 'Este campo es obligatorio');
+      return false;
+    }
     
     if (!valor) {
-      if (campo.required) {
-        mostrarError(campo, 'Este campo es obligatorio');
-        return false;
-      }
+      mostrarError(campo, '');
       return true;
     }
     
+    const regex = /^[0-9+]*$/;
     if (!regex.test(valor)) {
       mostrarError(campo, 'Solo se permiten números y el símbolo +');
       return false;
@@ -271,16 +287,18 @@
     if (!campo) return true;
     
     const valor = campo.value.trim();
-    const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{2,50}$/;
+    
+    if (campo.required && !valor) {
+      mostrarError(campo, 'Este campo es obligatorio');
+      return false;
+    }
     
     if (!valor) {
-      if (campo.required) {
-        mostrarError(campo, 'Este campo es obligatorio');
-        return false;
-      }
+      mostrarError(campo, '');
       return true;
     }
     
+    const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{2,50}$/;
     if (!regex.test(valor)) {
       mostrarError(campo, 'Solo letras y espacios (2-50 caracteres)');
       return false;
@@ -295,16 +313,18 @@
     if (!campo) return true;
     
     const valor = campo.value.trim();
-    const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{2,50}$/;
+    
+    if (campo.required && !valor) {
+      mostrarError(campo, 'Este campo es obligatorio');
+      return false;
+    }
     
     if (!valor) {
-      if (campo.required) {
-        mostrarError(campo, 'Este campo es obligatorio');
-        return false;
-      }
+      mostrarError(campo, '');
       return true;
     }
     
+    const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{2,50}$/;
     if (!regex.test(valor)) {
       mostrarError(campo, 'Solo letras y espacios (2-50 caracteres)');
       return false;
@@ -319,11 +339,13 @@
     if (!campo) return true;
     
     const valor = campo.value.trim();
-    const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{0,50}$/;
     
-    if (valor && !regex.test(valor)) {
-      mostrarError(campo, 'Solo letras y espacios (máx. 50 caracteres)');
-      return false;
+    if (valor) {
+      const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{0,50}$/;
+      if (!regex.test(valor)) {
+        mostrarError(campo, 'Solo letras y espacios (máx. 50 caracteres)');
+        return false;
+      }
     }
     
     mostrarError(campo, '');
@@ -335,16 +357,18 @@
     if (!campo) return true;
     
     const valor = campo.value.trim();
-    const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s]{5,50}$/;
+    
+    if (campo.required && !valor) {
+      mostrarError(campo, 'Este campo es obligatorio');
+      return false;
+    }
     
     if (!valor) {
-      if (campo.required) {
-        mostrarError(campo, 'Este campo es obligatorio');
-        return false;
-      }
+      mostrarError(campo, '');
       return true;
     }
     
+    const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s]{5,50}$/;
     if (!regex.test(valor)) {
       mostrarError(campo, 'Solo letras, números y espacios (5-50 caracteres)');
       return false;
@@ -359,16 +383,18 @@
     if (!campo) return true;
     
     const valor = campo.value.trim();
-    const regex = /^[A-Za-z]\d{6}$/;
+    
+    if (campo.required && !valor) {
+      mostrarError(campo, 'Este campo es obligatorio');
+      return false;
+    }
     
     if (!valor) {
-      if (campo.required) {
-        mostrarError(campo, 'Este campo es obligatorio');
-        return false;
-      }
+      mostrarError(campo, '');
       return true;
     }
     
+    const regex = /^[A-Za-z]\d{6}$/;
     if (!regex.test(valor)) {
       mostrarError(campo, 'Formato: Letra seguida de 6 números');
       return false;
@@ -383,16 +409,18 @@
     if (!campo) return true;
     
     const valor = campo.value.trim();
-    const regex = /^\+?\d{7,15}$/;
+    
+    if (campo.required && !valor) {
+      mostrarError(campo, 'Este campo es obligatorio');
+      return false;
+    }
     
     if (!valor) {
-      if (campo.required) {
-        mostrarError(campo, 'Este campo es obligatorio');
-        return false;
-      }
+      mostrarError(campo, '');
       return true;
     }
     
+    const regex = /^\+?\d{7,15}$/;
     if (!regex.test(valor)) {
       mostrarError(campo, '7-15 dígitos, puede comenzar con +');
       return false;
@@ -407,16 +435,18 @@
     if (!campo) return true;
     
     const valor = campo.value.trim();
-    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    
+    if (campo.required && !valor) {
+      mostrarError(campo, 'Este campo es obligatorio');
+      return false;
+    }
     
     if (!valor) {
-      if (campo.required) {
-        mostrarError(campo, 'Este campo es obligatorio');
-        return false;
-      }
+      mostrarError(campo, '');
       return true;
     }
     
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!regex.test(valor)) {
       mostrarError(campo, 'Ingrese un correo válido (ej: usuario@dominio.com)');
       return false;
@@ -437,11 +467,13 @@
     
     const valor = campo.value.trim();
     
+    if (campo.required && !valor) {
+      mostrarError(campo, 'Este campo es obligatorio');
+      return false;
+    }
+    
     if (!valor) {
-      if (campo.required) {
-        mostrarError(campo, 'Este campo es obligatorio');
-        return false;
-      }
+      mostrarError(campo, '');
       return true;
     }
     
@@ -460,11 +492,13 @@
     
     const valor = campo.value.trim();
     
+    if (campo.required && !valor) {
+      mostrarError(campo, 'Este campo es obligatorio');
+      return false;
+    }
+    
     if (!valor) {
-      if (campo.required) {
-        mostrarError(campo, 'Este campo es obligatorio');
-        return false;
-      }
+      mostrarError(campo, '');
       return true;
     }
     
@@ -483,11 +517,13 @@
     
     const valor = campo.value.trim();
     
+    if (campo.required && !valor) {
+      mostrarError(campo, 'Este campo es obligatorio');
+      return false;
+    }
+    
     if (!valor) {
-      if (campo.required) {
-        mostrarError(campo, 'Este campo es obligatorio');
-        return false;
-      }
+      mostrarError(campo, '');
       return true;
     }
     
@@ -510,7 +546,12 @@
       const campo = document.getElementById(id);
       if (campo) {
         campo.addEventListener('input', function() {
+          // Limpiar estados previos al escribir
           campo.classList.remove('is-invalid', 'is-valid');
+          const contenedor = campo.closest('.form-group');
+          const errorElement = contenedor.querySelector('.error-validacion');
+          if (errorElement) errorElement.remove();
+          
           validacionFn();
         });
         campo.addEventListener('blur', validacionFn);
@@ -558,6 +599,10 @@
       if (campo) {
         campo.addEventListener('input', function() {
           campo.classList.remove('is-invalid', 'is-valid');
+          const contenedor = campo.closest('.form-group');
+          const errorElement = contenedor.querySelector('.error-validacion');
+          if (errorElement) errorElement.remove();
+          
           validacionFn();
         });
         campo.addEventListener('blur', validacionFn);
@@ -593,6 +638,10 @@
       if (campo) {
         campo.addEventListener('input', function() {
           campo.classList.remove('is-invalid', 'is-valid');
+          const contenedor = campo.closest('.form-group');
+          const errorElement = contenedor.querySelector('.error-validacion');
+          if (errorElement) errorElement.remove();
+          
           validacionFn();
         });
         campo.addEventListener('blur', validacionFn);
