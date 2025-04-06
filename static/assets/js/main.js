@@ -93,23 +93,28 @@
   function validarCampoGenerico(campo, regex, mensajeError) {
     const valor = campo.value.trim();
     
-    if (!valor) {
-      if (campo.required) {
+    // Primero validar si es requerido y está vacío
+    if (campo.required && !valor) {
         mostrarError(campo, 'Este campo es obligatorio');
         return false;
-      }
-      mostrarError(campo);
-      return true;
     }
     
+    // Si no es requerido y está vacío, no hay error pero tampoco marca como válido
+    if (!valor) {
+        mostrarError(campo);
+        return true;
+    }
+    
+    // Validar contra la expresión regular si hay valor
     if (regex && !regex.test(valor)) {
-      mostrarError(campo, mensajeError);
-      return false;
+        mostrarError(campo, mensajeError);
+        return false;
     }
     
+    // Si pasa todas las validaciones
     mostrarError(campo);
     return true;
-  }
+}
 
   // Estrategia Educativa
   function validarCurso() {
@@ -323,8 +328,8 @@
       // Configurar eventos
       campo.addEventListener('input', () => {
         mostrarError(campo); // Limpiar error al escribir
-        if (campo.value.trim() !== '') validacionFn();
-      });
+        validacionFn(); // Validar siempre, no solo cuando hay contenido
+    });
 
       campo.addEventListener('blur', validacionFn);
     };
