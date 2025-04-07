@@ -1,13 +1,13 @@
 (function () {
   "use strict";
 
-  // ==================== FUNCIONES DE UTILIDAD ====================
+  // ==================== FUNCIONES UTILITARIAS ====================
 
   /**
-   * Selecciona un elemento del DOM.
-   * @param {string} el - Selector del elemento.
-   * @param {boolean} all - Si es true, selecciona todos los elementos que coincidan.
-   * @returns {Element|NodeList} El elemento o lista de elementos encontrados.
+   * Selecciona un elemento del DOM
+   * @param {string} el - Selector CSS
+   * @param {boolean} all - Si es true, selecciona todos los elementos coincidentes
+   * @returns {Element|NodeList} El elemento o lista de elementos
    */
   const select = (el, all = false) => {
     el = el.trim();
@@ -15,11 +15,11 @@
   };
 
   /**
-   * Añade un event listener a un elemento.
-   * @param {string} type - Tipo de evento (ej: 'click', 'scroll').
-   * @param {string} el - Selector del elemento.
-   * @param {Function} listener - Función a ejecutar en el evento.
-   * @param {boolean} all - Si es true, añade el listener a todos los elementos que coincidan.
+   * Añade un event listener a un elemento
+   * @param {string} type - Tipo de evento ('click', 'scroll', etc.)
+   * @param {string} el - Selector CSS
+   * @param {Function} listener - Función callback
+   * @param {boolean} all - Si es true, añade el listener a todos los elementos coincidentes
    */
   const on = (type, el, listener, all = false) => {
     const selectEl = select(el, all);
@@ -30,9 +30,9 @@
   };
 
   /**
-   * Añade un event listener para el evento scroll.
-   * @param {Element} el - Elemento al que se añade el listener.
-   * @param {Function} listener - Función a ejecutar en el evento scroll.
+   * Añade un event listener de scroll a un elemento
+   * @param {Element} el - Elemento objetivo
+   * @param {Function} listener - Función callback
    */
   const onscroll = (el, listener) => {
     el.addEventListener("scroll", listener);
@@ -41,15 +41,15 @@
   // ==================== NÚCLEO DE VALIDACIÓN ====================
 
   /**
-   * Muestra u oculta un mensaje de error para un campo
+   * Muestra u oculta un mensaje de error de validación
    * @param {HTMLElement} campo - Elemento input/select/textarea
-   * @param {string} mensaje - Mensaje de error a mostrar (vacío para limpiar)
+   * @param {string} mensaje - Mensaje de error (vacío para limpiar)
    */
   function mostrarError(campo, mensaje = '') {
     const contenedor = campo.closest('.form-group');
     let errorElement = contenedor.querySelector('.error-validacion');
 
-    // Limpiar siempre el estado previo
+    // Limpiar estado previo
     if (errorElement) errorElement.remove();
     campo.classList.remove('is-invalid', 'is-valid');
 
@@ -61,15 +61,15 @@
       contenedor.appendChild(errorElement);
       campo.classList.add('is-invalid');
     } else if (campo.value.trim() !== '') {
-      // Mostrar como válido solo si tiene contenido
+      // Marcar como válido si tiene contenido
       campo.classList.add('is-valid');
     }
   }
 
   /**
-   * Valida si los campos requeridos están vacíos
+   * Valida que los campos requeridos no estén vacíos
    * @param {HTMLFormElement} form - Formulario a validar
-   * @returns {boolean} - True si todos los campos requeridos están llenos
+   * @returns {boolean} True si todos los campos requeridos están llenos
    */
   function validarCamposVacios(form) {
     let valido = true;
@@ -90,11 +90,11 @@
   // ==================== VALIDACIONES ESPECÍFICAS ====================
 
   /**
-   * Función base para validaciones genéricas de campos
-   * @param {HTMLElement} campo - Elemento a validar
-   * @param {RegExp} regex - Expresión regular para validación
-   * @param {string} mensajeError - Mensaje de error a mostrar
-   * @returns {boolean} - True si la validación es exitosa
+   * Función base de validación para campos de formulario
+   * @param {HTMLElement} campo - Campo a validar
+   * @param {RegExp} regex - Patrón de validación
+   * @param {string} mensajeError - Mensaje de error
+   * @returns {boolean} True si la validación pasa
    */
   function validarCampoGenerico(campo, regex, mensajeError) {
     const valor = campo.value.trim();
@@ -105,19 +105,19 @@
       return false;
     }
     
-    // Si no es requerido y está vacío, no hay error pero tampoco marca como válido
+    // Si no es requerido y está vacío, no mostrar error pero no marcar como válido
     if (!valor) {
       mostrarError(campo);
       return true;
     }
     
-    // Validar contra la expresión regular si hay valor
+    // Validar contra regex si existe valor
     if (regex && !regex.test(valor)) {
       mostrarError(campo, mensajeError);
       return false;
     }
     
-    // Si pasa todas las validaciones
+    // Si pasan todas las validaciones
     mostrarError(campo);
     return true;
   }
@@ -169,13 +169,13 @@
     const fechaFin = document.getElementById('fecha-fin');
     if (!fechaInicio || !fechaFin) return true;
     
-    // Validar campos vacíos primero
+    // Primero validar campos vacíos
     const validoInicio = validarCampoGenerico(fechaInicio);
     const validoFin = validarCampoGenerico(fechaFin);
     
     if (!validoInicio || !validoFin) return false;
     
-    // Validar relación entre fechas
+    // Validar relación de fechas
     if (new Date(fechaFin.value) < new Date(fechaInicio.value)) {
       mostrarError(fechaFin, 'La fecha de fin no puede ser anterior a la fecha de inicio');
       return false;
@@ -204,7 +204,7 @@
     );
   }
 
-  // ------------------- Profesoral -------------------
+  // ------------------- Información de Facultad -------------------
   function validarNombreProfesor() {
     const campo = document.getElementById('nombre-profesor');
     if (!campo) return true;
@@ -355,7 +355,7 @@
   function validarFecha() {
     const campo = document.getElementById('fecha');
     if (!campo) return true;
-    // La validación de fecha ya está cubierta por el type="date" del input
+    // La validación de fecha es manejada por el input type="date"
     return validarCampoGenerico(campo);
   }
 
@@ -381,9 +381,9 @@
 
   /**
    * Valida campos de texto largo con límite de caracteres
-   * @param {string} campoId - ID del campo a validar
+   * @param {string} campoId - ID del campo
    * @param {number} maxCaracteres - Máximo de caracteres permitidos
-   * @returns {boolean} - True si la validación es exitosa
+   * @returns {boolean} True si la validación pasa
    */
   function validarTextoLargo(campoId, maxCaracteres) {
     const campo = document.getElementById(campoId);
@@ -399,7 +399,7 @@
     return valido;
   }
 
-  // ------------------- Formulario de Registro -------------------
+  // ------------------- Registro de Usuario -------------------
   function validarNombreUsuario() {
     const campo = document.getElementById('nombre');
     if (!campo) return true;
@@ -488,35 +488,35 @@
   }
 
   /**
-   * Valida que la contraseña cumpla con los requisitos de seguridad
+   * Valida que la contraseña cumpla con los requisitos de seguridad:
    * - Mínimo 8 caracteres
-   * - Al menos una mayúscula
+   * - Al menos una letra mayúscula
    * - Al menos un número
-   * - Al menos un caracter especial
+   * - Al menos un carácter especial
    */
   function validarPassword() {
     const campo = document.getElementById('password');
     if (!campo) return true;
     
-    // Validar que tenga al menos 8 caracteres
+    // Validar longitud mínima
     if (campo.value.length < 8) {
       mostrarError(campo, 'Mínimo 8 caracteres');
       return false;
     }
     
-    // Validar que tenga al menos una mayúscula
+    // Validar al menos una mayúscula
     if (!/[A-Z]/.test(campo.value)) {
       mostrarError(campo, 'Debe contener al menos una mayúscula');
       return false;
     }
     
-    // Validar que tenga al menos un número
+    // Validar al menos un número
     if (!/\d/.test(campo.value)) {
       mostrarError(campo, 'Debe contener al menos un número');
       return false;
     }
     
-    // Validar que tenga al menos un caracter especial
+    // Validar al menos un carácter especial
     if (!/[!@#$%^&*(),.?":{}|<>]/.test(campo.value)) {
       mostrarError(campo, 'Debe contener al menos un caracter especial');
       return false;
@@ -526,19 +526,46 @@
     return true;
   }
 
+  // ------------------- Formulario de Encuesta -------------------
+  function validarTituloEncuesta() {
+    const campo = document.getElementById('titulo-encuesta');
+    if (!campo) return true;
+    return validarCampoGenerico(
+      campo,
+      /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s]*$/,
+      'El título no puede contener caracteres especiales'
+    );
+  }
+
+  function validarAutorEncuesta() {
+    const campo = document.getElementById('autor-encuesta');
+    if (!campo) return true;
+    return validarCampoGenerico(
+      campo,
+      /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/,
+      'No puede contener números ni caracteres especiales'
+    );
+  }
+
+  function validarDescripcionEncuesta() {
+    const campo = document.getElementById('descripcion-encuesta');
+    if (!campo) return true;
+    return validarTextoLargo('descripcion-encuesta', 500);
+  }
+
   // ==================== CONFIGURACIÓN DE FORMULARIOS ====================
 
   /**
    * Configura la validación para un formulario específico
    * @param {string} formId - ID del formulario
-   * @param {Object} validaciones - Objeto con las funciones de validación para cada campo
+   * @param {Object} validaciones - Objeto con funciones de validación para cada campo
    */
   function configurarValidacionFormulario(formId, validaciones) {
     const form = document.getElementById(formId);
     if (!form) return;
 
     /**
-     * Configura los eventos de validación para un campo específico
+     * Configura eventos de validación para un campo específico
      * @param {string} id - ID del campo
      * @param {Function} validacionFn - Función de validación
      */
@@ -549,7 +576,7 @@
       // Configurar eventos
       campo.addEventListener('input', () => {
         mostrarError(campo); // Limpiar error al escribir
-        validacionFn(); // Validar siempre, no solo cuando hay contenido
+        validacionFn(); // Validar incluso cuando está vacío
       });
 
       campo.addEventListener('blur', validacionFn);
@@ -558,7 +585,7 @@
     // Aplicar a todos los campos
     Object.entries(validaciones).forEach(([id, fn]) => configurarCampo(id, fn));
 
-    // Configurar submit
+    // Configurar envío del formulario
     form.addEventListener('submit', function(e) {
       const valido = validarCamposVacios(this) && 
                     Object.values(validaciones).every(fn => fn());
@@ -576,7 +603,7 @@
 
   // ==================== FUNCIONALIDADES GENERALES ====================
 
-  // Configuración del header que cambia al hacer scroll
+  // Configuración del scroll del encabezado
   const header = select("#header");
   if (header) {
     const headerScrolled = () => {
@@ -586,7 +613,7 @@
     onscroll(document, headerScrolled);
   }
 
-  // Configuración del botón "back to top"
+  // Configuración del botón "volver arriba"
   const backToTop = select(".back-to-top");
   if (backToTop) {
     const toggleBackToTop = () => {
@@ -606,7 +633,7 @@
     }
   });
 
-  // Configuración de los dropdowns en móvil
+  // Configuración del dropdown móvil
   on(
     "click",
     ".navbar .dropdown > a",
@@ -636,7 +663,7 @@
     });
   }
 
-  // Configuración del slider de la galería
+  // Configuración del slider de galería
   const gallerySlider = select(".gallery-slider");
   if (gallerySlider) {
     new Swiper(gallerySlider, {
@@ -690,12 +717,12 @@
     });
   };
 
-  // Configurar eventos para las animaciones
+  // Event listeners de animación
   window.addEventListener("load", checkVisibility);
   window.addEventListener("scroll", checkVisibility);
   window.addEventListener("resize", checkVisibility);
 
-  // Configuración de la animación de las barras de habilidades
+  // Configuración de animación de habilidades
   const skillsContent = select(".skills-content");
   if (skillsContent) {
     new Waypoint({
@@ -749,7 +776,7 @@
   };
 
   /**
-   * Inicializa el formulario dinámico de encuestas
+   * Inicializa la funcionalidad dinámica del formulario de encuestas
    */
   const initFormularioEncuestas = () => {
     const agregarPreguntaBtn = select("#agregar-pregunta");
@@ -864,6 +891,13 @@
       'correo': validarCorreoUsuario,
       'user': validarUsuario,
       'password': validarPassword
+    });
+
+    // Configurar validaciones del formulario de encuestas
+    configurarValidacionFormulario('form-crear-encuesta', {
+      'titulo-encuesta': validarTituloEncuesta,
+      'autor-encuesta': validarAutorEncuesta,
+      'descripcion-encuesta': validarDescripcionEncuesta
     });
 
     // Inicializar otras funcionalidades
