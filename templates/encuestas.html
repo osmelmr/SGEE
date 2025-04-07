@@ -232,6 +232,8 @@
 
   <!-- Archivo JS Principal -->
   <script src="{% static 'assets/js/main.js' %}"></script>
+
+  <!-- SCRIPTS DE BOTÓN DE ELIMINAR -->
   <script>
     // Selecciona todos los botones con la clase "btn-eliminar"
     document.querySelectorAll(".btn-eliminar").forEach(button => {
@@ -243,7 +245,8 @@
         }
       });
     });
-  </script>
+ </script>
+  <!-- SCRIPTS DE BOTÓN DE ELIMINAR TODAS -->
   <script>
     let formulario=document.getElementById("form-eliminar-encuestas");
     formulario.addEventListener("submit", function(event){
