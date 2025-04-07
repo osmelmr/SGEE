@@ -94,6 +94,49 @@ def eliminarEstrategias(request):
 def modificarEstrategia(request, estra_id):
     """Modify a single strategy."""
     estra = get_object_or_404(Estrategia, id=estra_id)
+    
+    if request.method == 'POST':
+        # Extraer datos del formulario
+        form_data = {
+            'nombre': request.POST.get('titulo-estrategia'),
+            'curso': request.POST.get('curso'),
+            'anio_escolar': request.POST.get('ano-escolar'),
+            'grupo': request.POST.get('grupo'),
+            'plan_estudios': request.POST.get('plan-estudios'),
+            'obj_estrategia': request.POST.get('objetivos-estrategia'),
+            'dir_brigada': request.POST.get('direccion-brigada'),
+            'caract_brigada': request.POST.get('caracteristicas-brigada'),
+            'colect_pedagogico': request.POST.get('colectivo-pedagogico'),
+            'otros_aspectos': request.POST.get('otros-aspectos'),
+            'dim_curricular': request.POST.get('dimension-curricular'),
+            'dim_extensionista': request.POST.get('dimension-extensionista'),
+            'dim_politica': request.POST.get('dimension-politico-ideologica'),
+            'conclusiones': request.POST.get('conclusiones'),
+            'obj_general': request.POST.get('objetivo-general'),
+            'obj_dc': request.POST.get('objetivos-especificos-curricular'),
+            'plan_dc': request.POST.get('plan-acciones-curricular'),
+            'obj_de': request.POST.get('objetivos-especificos-extensionista'),
+            'plan_de': request.POST.get('plan-acciones-extensionista'),
+            'obj_dp': request.POST.get('objetivos-especificos-politico-ideologica'),
+            'plan_dp': request.POST.get('plan-acciones-politico-ideologica'),
+            'evaluacion': request.POST.get('evaluacion-integral'),
+            'autor': request.POST.get('autor'),
+        }
+        
+        try:
+            # Actualizar cada campo de la estrategia
+            for field, value in form_data.items():
+                setattr(estra, field, value)
+            
+            # Guardar los cambios
+            estra.save()
+            messages.success(request, "Estrategia modificada correctamente.")
+            return redirect('estrategias')
+        except Exception as e:
+            messages.error(request, f"Error al modificar la estrategia: {str(e)}")
+            return render(request, 'modificar_estrategia.html', {'estrategia': estra})
+    
+    # Si es GET, mostrar el formulario con los datos actuales
     return render(request, 'modificar_estrategia.html', {'estrategia': estra})
 
 # Update Views - Unique Item

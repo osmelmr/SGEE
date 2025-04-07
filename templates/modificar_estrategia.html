@@ -89,7 +89,7 @@
         <p>Complete los siguientes campos para registrar una nueva estrategia educativa.</p>
       </div>
   
-      <form id="form-estrategia" class="php-email-form" action="" method="POST">
+      <form id="form-estrategia" class="php-email-form" action="{% url 'modificar_estrategia' estrategia.id %}" method="POST">
         {% csrf_token %}
         <!-- Campos adicionales: curso, año escolar y grupo -->
         <div class="form-section mb-4 p-4 border rounded">
