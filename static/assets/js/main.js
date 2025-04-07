@@ -315,6 +315,79 @@
     return valido;
   }
 
+  // Reporte de Cumplimiento 
+
+  function validarBrigada() {
+   const campo = document.getElementById('brigada');
+   if (!campo) return true;
+   return validarCampoGenerico(
+      campo,
+      /^ID[A-Z]{2,}\d{3}$/,
+      'Debe comenzar con "ID" en mayúsculas, seguido de 2+ letras y 3 números'
+  );
+  }
+
+   function validarCodigo() {
+  const campo = document.getElementById('codigo');
+  if (!campo) return true;
+  return validarCampoGenerico(
+      campo,
+      /^[A-Za-z0-9]{1,10}$/,
+      'Solo letras y números (máx. 10 caracteres)'
+  );
+  }
+
+function validarPeriodo() {
+  const campo = document.getElementById('periodo');
+  if (!campo) return true;
+  return validarCampoGenerico(
+      campo,
+      /^[0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/,
+      'El periodo solo puede contener números y caracteres especiales'
+  );
+}
+
+function validarFecha() {
+  const campo = document.getElementById('fecha');
+  if (!campo) return true;
+  // La validación de fecha ya está cubierta por el type="date" del input
+  return validarCampoGenerico(campo);
+}
+
+function validarAutorReporte() {
+  const campo = document.getElementById('autor');
+  if (!campo) return true;
+  return validarCampoGenerico(
+      campo,
+      /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/,
+      'No puede contener números ni caracteres especiales'
+  );
+}
+
+function validarInstitucion() {
+  const campo = document.getElementById('institucion');
+  if (!campo) return true;
+  return validarCampoGenerico(
+      campo,
+      /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s.,-]*$/,
+      'Solo letras, números, espacios y algunos caracteres especiales (.,-)'
+  );
+}
+
+function validarTextoLargo(campoId, maxCaracteres) {
+  const campo = document.getElementById(campoId);
+  if (!campo) return true;
+  
+  const valido = validarCampoGenerico(campo);
+  
+  if (valido && campo.value.length > maxCaracteres) {
+      mostrarError(campo, `Máximo ${maxCaracteres} caracteres`);
+      return false;
+  }
+  
+  return valido;
+}
+
   // ==================== CONFIGURACIÓN DE FORMULARIOS ====================
 
   function configurarValidacionFormulario(formId, validaciones) {
@@ -596,6 +669,22 @@
       'brigadas-impartir': validarBrigadasImpartir,
       'descripcion-profesor': validarDescripcion
     });
+
+    configurarValidacionFormulario('form-reporte', {
+      'brigada': validarBrigada,
+      'codigo': validarCodigo,
+      'periodo': validarPeriodo,
+      'fecha': validarFecha,
+      'autor': validarAutorReporte,
+      'institucion': validarInstitucion,
+      'resumen': () => validarTextoLargo('resumen', 500),
+      'objetivos': () => validarTextoLargo('objetivos', 1000),
+      'actividades': () => validarTextoLargo('actividades', 1500),
+      'resultados': () => validarTextoLargo('resultados', 1500),
+      'analisis': () => validarTextoLargo('analisis', 2000),
+      'desafios': () => validarTextoLargo('desafios', 1500),
+      'proximos-pasos': () => validarTextoLargo('proximos-pasos', 1500)
+  });
 
     // Resto de inicializaciones...
     configurarValidacionFormulario();
