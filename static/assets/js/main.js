@@ -388,6 +388,127 @@ function validarTextoLargo(campoId, maxCaracteres) {
   return valido;
 }
 
+// ==================== VALIDACIONES PARA FORMULARIO DE REGISTRO ====================
+
+function validarNombreUsuario() {
+  const campo = document.getElementById('nombre');
+  if (!campo) return true;
+  return validarCampoGenerico(
+      campo,
+      /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{2,50}$/,
+      'Solo letras y espacios (2-50 caracteres)'
+  );
+}
+
+function validarPrimerApellidoUsuario() {
+  const campo = document.getElementById('primer-apellido');
+  if (!campo) return true;
+  return validarCampoGenerico(
+      campo,
+      /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{2,50}$/,
+      'Solo letras y espacios (2-50 caracteres)'
+  );
+}
+
+function validarSegundoApellidoUsuario() {
+  const campo = document.getElementById('segundo-apellido');
+  if (!campo) return true;
+  return validarCampoGenerico(
+      campo,
+      /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{0,50}$/,
+      'Solo letras y espacios (máx. 50 caracteres)'
+  );
+}
+
+function validarGrupoUsuario() {
+  const campo = document.getElementById('grupo');
+  if (!campo) return true;
+  return validarCampoGenerico(
+      campo,
+      /^ID[A-Z]{2,}\d{3}$/,
+      'Debe comenzar con "ID" en mayúsculas, seguido de 2+ letras y 3 números'
+  );
+}
+
+function validarSolapinUsuario() {
+  const campo = document.getElementById('solapin');
+  if (!campo) return true;
+  return validarCampoGenerico(
+      campo,
+      /^[A-Za-z]\d{6}$/,
+      'Formato: Letra seguida de 6 números'
+  );
+}
+
+function validarTelefonoUsuario() {
+  const campo = document.getElementById('telefono');
+  if (!campo) return true;
+  return validarCampoGenerico(
+      campo,
+      /^\+?\d{7,15}$/,
+      '7-15 dígitos, puede comenzar con +'
+  );
+}
+
+function validarCorreoUsuario() {
+  const campo = document.getElementById('correo');
+  if (!campo) return true;
+  const valido = validarCampoGenerico(
+      campo,
+      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+      'Ingrese un correo válido (ej: usuario@dominio.com)'
+  );
+  
+  if (valido && campo.value.length > 50) {
+      mostrarError(campo, 'Máximo 50 caracteres');
+      return false;
+  }
+  
+  return valido;
+}
+
+function validarUsuario() {
+  const campo = document.getElementById('user');
+  if (!campo) return true;
+  return validarCampoGenerico(
+      campo,
+      /^[a-z]{5,20}$/,
+      'Solo letras minúsculas (5-20 caracteres)'
+  );
+}
+
+function validarPassword() {
+  const campo = document.getElementById('password');
+  if (!campo) return true;
+  
+  // Validar que tenga al menos 8 caracteres
+  if (campo.value.length < 8) {
+      mostrarError(campo, 'Mínimo 8 caracteres');
+      return false;
+  }
+  
+  // Validar que tenga al menos una mayúscula
+  if (!/[A-Z]/.test(campo.value)) {
+      mostrarError(campo, 'Debe contener al menos una mayúscula');
+      return false;
+  }
+  
+  // Validar que tenga al menos un número
+  if (!/\d/.test(campo.value)) {
+      mostrarError(campo, 'Debe contener al menos un número');
+      return false;
+  }
+  
+  // Validar que tenga al menos un caracter especial
+  if (!/[!@#$%^&*(),.?":{}|<>]/.test(campo.value)) {
+      mostrarError(campo, 'Debe contener al menos un caracter especial');
+      return false;
+  }
+  
+  mostrarError(campo);
+  return true;
+}
+
   // ==================== CONFIGURACIÓN DE FORMULARIOS ====================
 
   function configurarValidacionFormulario(formId, validaciones) {
@@ -685,6 +806,18 @@ function validarTextoLargo(campoId, maxCaracteres) {
       'desafios': () => validarTextoLargo('desafios', 1500),
       'proximos-pasos': () => validarTextoLargo('proximos-pasos', 1500)
   });
+
+    configurarValidacionFormulario('form-registro', {
+    'nombre': validarNombreUsuario,
+    'primer-apellido': validarPrimerApellidoUsuario,
+    'segundo-apellido': validarSegundoApellidoUsuario,
+    'grupo': validarGrupoUsuario,
+    'solapin': validarSolapinUsuario,
+    'telefono': validarTelefonoUsuario,
+    'correo': validarCorreoUsuario,
+    'user': validarUsuario,
+    'password': validarPassword
+});
 
     // Resto de inicializaciones...
     configurarValidacionFormulario();
