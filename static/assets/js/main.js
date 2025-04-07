@@ -89,34 +89,40 @@
 
   // ==================== VALIDACIONES ESPECÍFICAS ====================
 
-  // Plantilla base para todas las validaciones
+  /**
+   * Función base para validaciones genéricas de campos
+   * @param {HTMLElement} campo - Elemento a validar
+   * @param {RegExp} regex - Expresión regular para validación
+   * @param {string} mensajeError - Mensaje de error a mostrar
+   * @returns {boolean} - True si la validación es exitosa
+   */
   function validarCampoGenerico(campo, regex, mensajeError) {
     const valor = campo.value.trim();
     
     // Primero validar si es requerido y está vacío
     if (campo.required && !valor) {
-        mostrarError(campo, 'Este campo es obligatorio');
-        return false;
+      mostrarError(campo, 'Este campo es obligatorio');
+      return false;
     }
     
     // Si no es requerido y está vacío, no hay error pero tampoco marca como válido
     if (!valor) {
-        mostrarError(campo);
-        return true;
+      mostrarError(campo);
+      return true;
     }
     
     // Validar contra la expresión regular si hay valor
     if (regex && !regex.test(valor)) {
-        mostrarError(campo, mensajeError);
-        return false;
+      mostrarError(campo, mensajeError);
+      return false;
     }
     
     // Si pasa todas las validaciones
     mostrarError(campo);
     return true;
-}
+  }
 
-  // Estrategia Educativa
+  // ------------------- Estrategia Educativa -------------------
   function validarCurso() {
     const campo = document.getElementById('curso');
     if (!campo) return true;
@@ -157,7 +163,7 @@
     );
   }
 
-  // Eventos
+  // ------------------- Eventos -------------------
   function validarFechasEvento() {
     const fechaInicio = document.getElementById('fecha-inicio');
     const fechaFin = document.getElementById('fecha-fin');
@@ -198,7 +204,7 @@
     );
   }
 
-  // Profesoral
+  // ------------------- Profesoral -------------------
   function validarNombreProfesor() {
     const campo = document.getElementById('nombre-profesor');
     if (!campo) return true;
@@ -315,206 +321,227 @@
     return valido;
   }
 
-  // Reporte de Cumplimiento 
-
+  // ------------------- Reporte de Cumplimiento -------------------
   function validarBrigada() {
-   const campo = document.getElementById('brigada');
-   if (!campo) return true;
-   return validarCampoGenerico(
+    const campo = document.getElementById('brigada');
+    if (!campo) return true;
+    return validarCampoGenerico(
       campo,
       /^ID[A-Z]{2,}\d{3}$/,
       'Debe comenzar con "ID" en mayúsculas, seguido de 2+ letras y 3 números'
-  );
+    );
   }
 
-   function validarCodigo() {
-  const campo = document.getElementById('codigo');
-  if (!campo) return true;
-  return validarCampoGenerico(
+  function validarCodigo() {
+    const campo = document.getElementById('codigo');
+    if (!campo) return true;
+    return validarCampoGenerico(
       campo,
       /^[A-Za-z0-9]{1,10}$/,
       'Solo letras y números (máx. 10 caracteres)'
-  );
+    );
   }
 
-function validarPeriodo() {
-  const campo = document.getElementById('periodo');
-  if (!campo) return true;
-  return validarCampoGenerico(
+  function validarPeriodo() {
+    const campo = document.getElementById('periodo');
+    if (!campo) return true;
+    return validarCampoGenerico(
       campo,
       /^[0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/,
       'El periodo solo puede contener números y caracteres especiales'
-  );
-}
+    );
+  }
 
-function validarFecha() {
-  const campo = document.getElementById('fecha');
-  if (!campo) return true;
-  // La validación de fecha ya está cubierta por el type="date" del input
-  return validarCampoGenerico(campo);
-}
+  function validarFecha() {
+    const campo = document.getElementById('fecha');
+    if (!campo) return true;
+    // La validación de fecha ya está cubierta por el type="date" del input
+    return validarCampoGenerico(campo);
+  }
 
-function validarAutorReporte() {
-  const campo = document.getElementById('autor');
-  if (!campo) return true;
-  return validarCampoGenerico(
+  function validarAutorReporte() {
+    const campo = document.getElementById('autor');
+    if (!campo) return true;
+    return validarCampoGenerico(
       campo,
       /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/,
       'No puede contener números ni caracteres especiales'
-  );
-}
+    );
+  }
 
-function validarInstitucion() {
-  const campo = document.getElementById('institucion');
-  if (!campo) return true;
-  return validarCampoGenerico(
+  function validarInstitucion() {
+    const campo = document.getElementById('institucion');
+    if (!campo) return true;
+    return validarCampoGenerico(
       campo,
       /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s.,-]*$/,
       'Solo letras, números, espacios y algunos caracteres especiales (.,-)'
-  );
-}
+    );
+  }
 
-function validarTextoLargo(campoId, maxCaracteres) {
-  const campo = document.getElementById(campoId);
-  if (!campo) return true;
-  
-  const valido = validarCampoGenerico(campo);
-  
-  if (valido && campo.value.length > maxCaracteres) {
+  /**
+   * Valida campos de texto largo con límite de caracteres
+   * @param {string} campoId - ID del campo a validar
+   * @param {number} maxCaracteres - Máximo de caracteres permitidos
+   * @returns {boolean} - True si la validación es exitosa
+   */
+  function validarTextoLargo(campoId, maxCaracteres) {
+    const campo = document.getElementById(campoId);
+    if (!campo) return true;
+    
+    const valido = validarCampoGenerico(campo);
+    
+    if (valido && campo.value.length > maxCaracteres) {
       mostrarError(campo, `Máximo ${maxCaracteres} caracteres`);
       return false;
+    }
+    
+    return valido;
   }
-  
-  return valido;
-}
 
-// ==================== VALIDACIONES PARA FORMULARIO DE REGISTRO ====================
-
-function validarNombreUsuario() {
-  const campo = document.getElementById('nombre');
-  if (!campo) return true;
-  return validarCampoGenerico(
+  // ------------------- Formulario de Registro -------------------
+  function validarNombreUsuario() {
+    const campo = document.getElementById('nombre');
+    if (!campo) return true;
+    return validarCampoGenerico(
       campo,
       /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{2,50}$/,
       'Solo letras y espacios (2-50 caracteres)'
-  );
-}
+    );
+  }
 
-function validarPrimerApellidoUsuario() {
-  const campo = document.getElementById('primer-apellido');
-  if (!campo) return true;
-  return validarCampoGenerico(
+  function validarPrimerApellidoUsuario() {
+    const campo = document.getElementById('primer-apellido');
+    if (!campo) return true;
+    return validarCampoGenerico(
       campo,
       /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{2,50}$/,
       'Solo letras y espacios (2-50 caracteres)'
-  );
-}
+    );
+  }
 
-function validarSegundoApellidoUsuario() {
-  const campo = document.getElementById('segundo-apellido');
-  if (!campo) return true;
-  return validarCampoGenerico(
+  function validarSegundoApellidoUsuario() {
+    const campo = document.getElementById('segundo-apellido');
+    if (!campo) return true;
+    return validarCampoGenerico(
       campo,
       /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{0,50}$/,
       'Solo letras y espacios (máx. 50 caracteres)'
-  );
-}
+    );
+  }
 
-function validarGrupoUsuario() {
-  const campo = document.getElementById('grupo');
-  if (!campo) return true;
-  return validarCampoGenerico(
+  function validarGrupoUsuario() {
+    const campo = document.getElementById('grupo');
+    if (!campo) return true;
+    return validarCampoGenerico(
       campo,
       /^ID[A-Z]{2,}\d{3}$/,
       'Debe comenzar con "ID" en mayúsculas, seguido de 2+ letras y 3 números'
-  );
-}
+    );
+  }
 
-function validarSolapinUsuario() {
-  const campo = document.getElementById('solapin');
-  if (!campo) return true;
-  return validarCampoGenerico(
+  function validarSolapinUsuario() {
+    const campo = document.getElementById('solapin');
+    if (!campo) return true;
+    return validarCampoGenerico(
       campo,
       /^[A-Za-z]\d{6}$/,
       'Formato: Letra seguida de 6 números'
-  );
-}
+    );
+  }
 
-function validarTelefonoUsuario() {
-  const campo = document.getElementById('telefono');
-  if (!campo) return true;
-  return validarCampoGenerico(
+  function validarTelefonoUsuario() {
+    const campo = document.getElementById('telefono');
+    if (!campo) return true;
+    return validarCampoGenerico(
       campo,
       /^\+?\d{7,15}$/,
       '7-15 dígitos, puede comenzar con +'
-  );
-}
+    );
+  }
 
-function validarCorreoUsuario() {
-  const campo = document.getElementById('correo');
-  if (!campo) return true;
-  const valido = validarCampoGenerico(
+  function validarCorreoUsuario() {
+    const campo = document.getElementById('correo');
+    if (!campo) return true;
+    const valido = validarCampoGenerico(
       campo,
       /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
       'Ingrese un correo válido (ej: usuario@dominio.com)'
-  );
-  
-  if (valido && campo.value.length > 50) {
+    );
+    
+    if (valido && campo.value.length > 50) {
       mostrarError(campo, 'Máximo 50 caracteres');
       return false;
+    }
+    
+    return valido;
   }
-  
-  return valido;
-}
 
-function validarUsuario() {
-  const campo = document.getElementById('user');
-  if (!campo) return true;
-  return validarCampoGenerico(
+  function validarUsuario() {
+    const campo = document.getElementById('user');
+    if (!campo) return true;
+    return validarCampoGenerico(
       campo,
       /^[a-z]{5,20}$/,
       'Solo letras minúsculas (5-20 caracteres)'
-  );
-}
+    );
+  }
 
-function validarPassword() {
-  const campo = document.getElementById('password');
-  if (!campo) return true;
-  
-  // Validar que tenga al menos 8 caracteres
-  if (campo.value.length < 8) {
+  /**
+   * Valida que la contraseña cumpla con los requisitos de seguridad
+   * - Mínimo 8 caracteres
+   * - Al menos una mayúscula
+   * - Al menos un número
+   * - Al menos un caracter especial
+   */
+  function validarPassword() {
+    const campo = document.getElementById('password');
+    if (!campo) return true;
+    
+    // Validar que tenga al menos 8 caracteres
+    if (campo.value.length < 8) {
       mostrarError(campo, 'Mínimo 8 caracteres');
       return false;
-  }
-  
-  // Validar que tenga al menos una mayúscula
-  if (!/[A-Z]/.test(campo.value)) {
+    }
+    
+    // Validar que tenga al menos una mayúscula
+    if (!/[A-Z]/.test(campo.value)) {
       mostrarError(campo, 'Debe contener al menos una mayúscula');
       return false;
-  }
-  
-  // Validar que tenga al menos un número
-  if (!/\d/.test(campo.value)) {
+    }
+    
+    // Validar que tenga al menos un número
+    if (!/\d/.test(campo.value)) {
       mostrarError(campo, 'Debe contener al menos un número');
       return false;
-  }
-  
-  // Validar que tenga al menos un caracter especial
-  if (!/[!@#$%^&*(),.?":{}|<>]/.test(campo.value)) {
+    }
+    
+    // Validar que tenga al menos un caracter especial
+    if (!/[!@#$%^&*(),.?":{}|<>]/.test(campo.value)) {
       mostrarError(campo, 'Debe contener al menos un caracter especial');
       return false;
+    }
+    
+    mostrarError(campo);
+    return true;
   }
-  
-  mostrarError(campo);
-  return true;
-}
 
   // ==================== CONFIGURACIÓN DE FORMULARIOS ====================
 
+  /**
+   * Configura la validación para un formulario específico
+   * @param {string} formId - ID del formulario
+   * @param {Object} validaciones - Objeto con las funciones de validación para cada campo
+   */
   function configurarValidacionFormulario(formId, validaciones) {
     const form = document.getElementById(formId);
     if (!form) return;
 
+    /**
+     * Configura los eventos de validación para un campo específico
+     * @param {string} id - ID del campo
+     * @param {Function} validacionFn - Función de validación
+     */
     const configurarCampo = (id, validacionFn) => {
       const campo = document.getElementById(id);
       if (!campo) return;
@@ -523,7 +550,7 @@ function validarPassword() {
       campo.addEventListener('input', () => {
         mostrarError(campo); // Limpiar error al escribir
         validacionFn(); // Validar siempre, no solo cuando hay contenido
-    });
+      });
 
       campo.addEventListener('blur', validacionFn);
     };
@@ -549,6 +576,7 @@ function validarPassword() {
 
   // ==================== FUNCIONALIDADES GENERALES ====================
 
+  // Configuración del header que cambia al hacer scroll
   const header = select("#header");
   if (header) {
     const headerScrolled = () => {
@@ -558,6 +586,7 @@ function validarPassword() {
     onscroll(document, headerScrolled);
   }
 
+  // Configuración del botón "back to top"
   const backToTop = select(".back-to-top");
   if (backToTop) {
     const toggleBackToTop = () => {
@@ -567,6 +596,7 @@ function validarPassword() {
     onscroll(document, toggleBackToTop);
   }
 
+  // Configuración del menú móvil
   on("click", ".mobile-nav-toggle", function (e) {
     const navbar = select("#navbar");
     if (navbar) {
@@ -576,6 +606,7 @@ function validarPassword() {
     }
   });
 
+  // Configuración de los dropdowns en móvil
   on(
     "click",
     ".navbar .dropdown > a",
@@ -593,6 +624,7 @@ function validarPassword() {
 
   // ==================== COMPONENTES INTERACTIVOS ====================
 
+  // Configuración del carrusel hero
   const heroCarouselIndicators = select("#hero-carousel-indicators");
   const heroCarouselItems = select('#heroCarousel .carousel-item', true);
 
@@ -604,6 +636,7 @@ function validarPassword() {
     });
   }
 
+  // Configuración del slider de la galería
   const gallerySlider = select(".gallery-slider");
   if (gallerySlider) {
     new Swiper(gallerySlider, {
@@ -639,6 +672,9 @@ function validarPassword() {
 
   // ==================== ANIMACIONES ====================
 
+  /**
+   * Verifica la visibilidad de los elementos y aplica animaciones
+   */
   const checkVisibility = () => {
     const elements = document.querySelectorAll(
       ".fade-in, .slide-in-left, .slide-in-right, .fade-in-up, .rotate-in, .scale-in, .gallery-slide-in, .gallery-scale-in, .footer-fade-in"
@@ -654,10 +690,12 @@ function validarPassword() {
     });
   };
 
+  // Configurar eventos para las animaciones
   window.addEventListener("load", checkVisibility);
   window.addEventListener("scroll", checkVisibility);
   window.addEventListener("resize", checkVisibility);
 
+  // Configuración de la animación de las barras de habilidades
   const skillsContent = select(".skills-content");
   if (skillsContent) {
     new Waypoint({
@@ -674,6 +712,9 @@ function validarPassword() {
 
   // ==================== FUNCIONALIDADES ESPECÍFICAS ====================
 
+  /**
+   * Inicializa la funcionalidad de "seleccionar todo" para checkboxes
+   */
   const initSeleccionarTodo = () => {
     const btnSeleccionarTodo = select("#btn-seleccionar-todo");
     const checkboxes = document.querySelectorAll(".seleccionar-fila");
@@ -707,6 +748,9 @@ function validarPassword() {
     }
   };
 
+  /**
+   * Inicializa el formulario dinámico de encuestas
+   */
   const initFormularioEncuestas = () => {
     const agregarPreguntaBtn = select("#agregar-pregunta");
     const formCrearEncuesta = select("#form-crear-encuesta");
@@ -762,8 +806,11 @@ function validarPassword() {
 
   // ==================== INICIALIZACIÓN ====================
 
+  /**
+   * Inicializa toda la aplicación cuando el DOM está listo
+   */
   document.addEventListener("DOMContentLoaded", function() {
-    // Configurar todos los formularios con el nuevo sistema
+    // Configurar validaciones para todos los formularios
     configurarValidacionFormulario('form-estrategia', {
       'curso': validarCurso,
       'ano-escolar': validarAnoEscolar,
@@ -805,22 +852,21 @@ function validarPassword() {
       'analisis': () => validarTextoLargo('analisis', 2000),
       'desafios': () => validarTextoLargo('desafios', 1500),
       'proximos-pasos': () => validarTextoLargo('proximos-pasos', 1500)
-  });
+    });
 
     configurarValidacionFormulario('form-registro', {
-    'nombre': validarNombreUsuario,
-    'primer-apellido': validarPrimerApellidoUsuario,
-    'segundo-apellido': validarSegundoApellidoUsuario,
-    'grupo': validarGrupoUsuario,
-    'solapin': validarSolapinUsuario,
-    'telefono': validarTelefonoUsuario,
-    'correo': validarCorreoUsuario,
-    'user': validarUsuario,
-    'password': validarPassword
-});
+      'nombre': validarNombreUsuario,
+      'primer-apellido': validarPrimerApellidoUsuario,
+      'segundo-apellido': validarSegundoApellidoUsuario,
+      'grupo': validarGrupoUsuario,
+      'solapin': validarSolapinUsuario,
+      'telefono': validarTelefonoUsuario,
+      'correo': validarCorreoUsuario,
+      'user': validarUsuario,
+      'password': validarPassword
+    });
 
-    // Resto de inicializaciones...
-    configurarValidacionFormulario();
+    // Inicializar otras funcionalidades
     initSeleccionarTodo();
     initFormularioEncuestas();
   });
