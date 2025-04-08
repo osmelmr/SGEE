@@ -2849,14 +2849,6 @@ section {
   outline: none;
 }
 
-#formulario-registro .input-small {
-  max-width: 200px; /* Para campos pequeños como Solapín, Teléfono, etc. */
-}
-
-#formulario-registro .input-medium {
-  max-width: 400px; /* Para campos medianos como Nombre, Correo, etc. */
-}
-
 #formulario-registro .form-row {
   display: flex;
   gap: 20px;
@@ -3151,18 +3143,6 @@ section {
 
 #formulario-reporte textarea.form-control {
   resize: vertical;
-}
-
-#formulario-reporte .input-small {
-  max-width: 200px; /* Para campos pequeños como Brigada, Código, etc. */
-}
-
-#formulario-reporte .input-medium {
-  max-width: 400px; /* Para campos medianos como Autor, Institución, etc. */
-}
-
-#formulario-reporte .input-large {
-  max-width: 100%; /* Para campos grandes como Resumen, Objetivos, etc. */
 }
 
 #formulario-reporte .form-row {
