@@ -92,8 +92,39 @@ def eliminarEncuestas(request):
 # Update Views - Unique Item
 # ----------------------------------------------------------------------------
 def modificarEncuesta(request, encuesta_id):
-    """Modify a single strategy."""
+    """Modify a single survey."""
     encuesta = get_object_or_404(Encuesta, id=encuesta_id)
+    
+    if request.method == 'POST':
+        # Extract form data
+        form_data = {
+            'titulo': request.POST.get('titulo'),
+            'descripcion': request.POST.get('descripcion'),
+            'autor': request.POST.get('autor'),
+            'estado': request.POST.get('estado')
+        }
+
+        try:
+            # Update survey with new data
+            for key, value in form_data.items():
+                setattr(encuesta, key, value)
+            encuesta.save()
+
+            # Handle questions
+            preguntas = request.POST.getlist('preguntas[]')
+            # Delete existing questions
+            encuesta.preguntas.all().delete()
+            # Add new questions
+            for texto in preguntas:
+                if texto.strip():  # Only add non-empty questions
+                    encuesta.preguntas.create(texto=texto)
+
+            messages.success(request, "Encuesta actualizada correctamente.")
+            return redirect('encuestas')
+        except Exception as e:
+            messages.error(request, f"Error al actualizar la encuesta: {str(e)}")
+            return render(request, 'modificar_encuesta.html', {'encuesta': encuesta})
+
     return render(request, 'modificar_encuesta.html', {'encuesta': encuesta})
 
 # Update Views - Unique Item

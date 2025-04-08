@@ -83,8 +83,42 @@ def eliminarReportes(request):
 # Update Views - Unique Item
 # ----------------------------------------------------------------------------
 def modificarReporte(request, reporte_id):
-    """Modify a single strategy."""
+    """Modify a single report."""
     reporte = get_object_or_404(Reporte, id=reporte_id)
+    
+    if request.method == 'POST':
+        # Extract form data
+        form_data = {
+            'brigada': request.POST.get('brigada'),
+            'codigo': request.POST.get('codigo'),
+            'periodo': request.POST.get('periodo'),
+            'fecha': request.POST.get('fecha'),
+            'autor': request.POST.get('autor'),
+            'institucion': request.POST.get('institucion'),
+            'resumen': request.POST.get('resumen'),
+            'objetivos': request.POST.get('objetivos'),
+            'actividades_realizadas': request.POST.get('actividades'),
+            'resultados_obtenidos': request.POST.get('resultados'),
+            'analisis_resultados': request.POST.get('analisis'),
+            'desafios_lecciones': request.POST.get('desafios'),
+            'proximos_pasos': request.POST.get('proximos-pasos')
+        }
+
+        # Handle file upload if present
+        if 'anexos' in request.FILES:
+            form_data['anexos'] = request.FILES['anexos']
+
+        try:
+            # Update report with new data
+            for key, value in form_data.items():
+                setattr(reporte, key, value)
+            reporte.save()
+            messages.success(request, "Reporte actualizado correctamente.")
+            return redirect('reportes')
+        except Exception as e:
+            messages.error(request, f"Error al actualizar el reporte: {str(e)}")
+            return render(request, 'modificar_reporte.html', {'reporte': reporte})
+
     return render(request, 'modificar_reporte.html', {'reporte': reporte})
 
 # Update Views - Unique Item

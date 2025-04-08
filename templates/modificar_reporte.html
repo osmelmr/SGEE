@@ -78,17 +78,17 @@
       <p>Complete los siguientes campos para registrar un nuevo reporte.</p>
     </div>
 
-    <form id="form-reporte" class="php-email-form" method="POST" action="{% url 'modificar_reporte' %}">
+    <form id="form-reporte" class="php-email-form" method="POST" action="{% url 'modificar_reporte' reporte.id %}">
       {% csrf_token %}
       <!-- Fila 1: Brigada y Código -->
       <div class="row mb-4">
         <div class="form-group col-md-6">
           <label for="brigada">Brigada</label>
-          <input type="text" id="brigada" name="brigada" class="form-control" maxlength="10" required>
+          <input type="text" id="brigada" name="brigada" class="form-control" maxlength="10" required value="{{reporte.brigada}}">
         </div>
         <div class="form-group col-md-6">
           <label for="codigo">Código</label>
-          <input type="text" id="codigo" name="codigo" class="form-control" maxlength="10" required>
+          <input type="text" id="codigo" name="codigo" class="form-control" maxlength="10" required value="{{reporte.codigo}}">
         </div>
       </div>
 
@@ -96,11 +96,11 @@
       <div class="row mb-4">
         <div class="form-group col-md-6">
           <label for="periodo">Periodo</label>
-          <input type="text" id="periodo" name="periodo" class="form-control" maxlength="10" required>
+          <input type="text" id="periodo" name="periodo" class="form-control" maxlength="10" required value="{{reporte.periodo}}">
         </div>
         <div class="form-group col-md-6">
           <label for="fecha">Fecha</label>
-          <input type="date" id="fecha" name="fecha" class="form-control" required>
+          <input type="date" id="fecha" name="fecha" class="form-control" required value="{{reporte.fecha|date:'Y-m-d'}}">
         </div>
       </div>
 
@@ -108,72 +108,75 @@
       <div class="row mb-4">
         <div class="form-group col-md-6">
           <label for="autor">Autor</label>
-          <input type="text" id="autor" name="autor" class="form-control" maxlength="50" required>
+          <input type="text" id="autor" name="autor" class="form-control" maxlength="50" required value="{{reporte.autor}}">
         </div>
         <div class="form-group col-md-6">
           <label for="institucion">Institución</label>
-          <input type="text" id="institucion" name="institucion" class="form-control" maxlength="50" required>
+          <input type="text" id="institucion" name="institucion" class="form-control" maxlength="50" required value="{{reporte.institucion}}">
         </div>
       </div>
 
       <!-- Campo: Resumen -->
       <div class="form-group mb-4">
         <label for="resumen">Resumen</label>
-        <textarea id="resumen" name="resumen" class="form-control" rows="3" required></textarea>
+        <textarea id="resumen" name="resumen" class="form-control" rows="3" required>{{reporte.resumen}}</textarea>
       </div>
 
       <!-- Campo: Objetivos -->
       <div class="form-group mb-4">
         <label for="objetivos">Objetivos</label>
-        <textarea id="objetivos" name="objetivos" class="form-control" rows="5" required></textarea>
+        <textarea id="objetivos" name="objetivos" class="form-control" rows="5" required>{{reporte.objetivos}}</textarea>
       </div>
 
       <!-- Campo: Actividades Realizadas -->
       <div class="form-group mb-4">
         <label for="actividades">Actividades Realizadas</label>
-        <textarea id="actividades" name="actividades" class="form-control" rows="5" required></textarea>
+        <textarea id="actividades" name="actividades" class="form-control" rows="5" required>{{reporte.actividades_realizadas}}</textarea>
       </div>
 
       <!-- Campo: Resultados Obtenidos -->
       <div class="form-group mb-4">
         <label for="resultados">Resultados Obtenidos</label>
-        <textarea id="resultados" name="resultados" class="form-control" rows="5" required></textarea>
+        <textarea id="resultados" name="resultados" class="form-control" rows="5" required>{{reporte.resultados_obtenidos}}</textarea>
       </div>
 
       <!-- Campo: Análisis de los Resultados -->
       <div class="form-group mb-4">
         <label for="analisis">Análisis de los Resultados</label>
-        <textarea id="analisis" name="analisis" class="form-control" rows="5" required></textarea>
+        <textarea id="analisis" name="analisis" class="form-control" rows="5" required>{{reporte.analisis_resultados}}</textarea>
       </div>
 
       <!-- Campo: Desafíos y Lecciones Aprendidas -->
       <div class="form-group mb-4">
         <label for="desafios">Desafíos y Lecciones Aprendidas</label>
-        <textarea id="desafios" name="desafios" class="form-control" rows="5" required></textarea>
+        <textarea id="desafios" name="desafios" class="form-control" rows="5" required>{{reporte.desafios_lecciones}}</textarea>
       </div>
 
       <!-- Campo: Próximos Pasos -->
       <div class="form-group mb-4">
         <label for="proximos-pasos">Próximos Pasos</label>
-        <textarea id="proximos-pasos" name="proximos-pasos" class="form-control" rows="5" required></textarea>
+        <textarea id="proximos-pasos" name="proximos-pasos" class="form-control" rows="5" required>{{reporte.proximos_pasos}}</textarea>
       </div>
 
       <!-- Campo: Anexos -->
       <div class="form-group mb-4">
         <label for="anexos">Anexos</label>
         <input type="file" id="anexos" name="anexos" class="form-control" multiple>
+        {% if reporte.anexos %}
+          <div class="mt-2">
+            <small class="text-muted">Anexos actuales: {{reporte.anexos}}</small>
+          </div>
+        {% endif %}
       </div>
 
-      <!-- Línea divisoria y botones -->
-      <div class="text-center mt-4 pt-4 border-top">
-        <div style="display: flex; justify-content: space-between;">
-          <button type="submit" id="boton-registrar-reporte" class="btn btn-primary">
-            <i class="bi bi-file-earmark-text"></i> Registrar Reporte
-          </button>
-          <button type="button" id="boton-cancelar-reporte" class="btn btn-cancelar" onclick="window.history.back()">
-            <i class="bi bi-x-circle"></i> Cancelar
-          </button>
-        </div>
+      <!-- Botones -->
+      <div class="d-flex justify-content-between mt-4 pt-4 border-top">
+        <button type="submit" id="boton-registrar-reporte" class="btn btn-primary">
+          <i class="bi bi-file-earmark-text"></i> Actualizar Reporte
+        </button>
+        <button type="button" id="boton-cancelar-reporte" class="btn btn-cancelar" onclick="window.history.back()">
+          <i class="bi bi-x-circle"></i> Cancelar
+        </button>
       </div>
     </form>
   </div>

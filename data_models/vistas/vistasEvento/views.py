@@ -86,6 +86,38 @@ def eliminarEventos(request):
 def modificarEvento(request, evento_id):
     """Modify a single event."""
     evento = get_object_or_404(Evento, id=evento_id)
+    
+    if request.method == 'POST':
+        # Extract form data
+        form_data = {
+            'nombre_evento': request.POST.get('nombre-evento'),
+            'fecha_inicio': request.POST.get('fecha-inicio'),
+            'fecha_fin': request.POST.get('fecha-fin'),
+            'hora_inicio': request.POST.get('hora-inicio'),
+            'hora_fin': request.POST.get('hora-fin'),
+            'ubicacion_evento': request.POST.get('ubicacion-evento'),
+            'tipo_evento': request.POST.get('tipo-evento'),
+            'descripcion': request.POST.get('descripcion-evento'),
+            'profesor_cargo': request.POST.get('profesor-cargo'),
+            'telefono_contacto': request.POST.get('telefono-contacto')
+        }
+        
+        # Validate required fields
+        if not all(form_data.values()):
+            messages.error(request, "Todos los campos obligatorios deben ser completados.")
+            return render(request, 'modificar_evento.html', {'evento': evento})
+
+        try:
+            # Update event with new data
+            for key, value in form_data.items():
+                setattr(evento, key, value)
+            evento.save()
+            messages.success(request, "Evento actualizado correctamente.")
+            return redirect('eventos')
+        except Exception as e:
+            messages.error(request, f"Error al actualizar el evento: {str(e)}")
+            return render(request, 'modificar_evento.html', {'evento': evento})
+
     return render(request, 'modificar_evento.html', {'evento': evento})
 
 # Update Views - Unique Item

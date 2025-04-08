@@ -86,8 +86,42 @@ def eliminarProfesores(request):
 # Update Views - Unique Item
 # ----------------------------------------------------------------------------
 def modificarProfesor(request, profesor_id):
-    """Modify a single strategy."""
+    """Modify a single professor."""
     profesor = get_object_or_404(Profesor, id=profesor_id)
+    
+    if request.method == 'POST':
+        # Extract form data
+        form_data = {
+            'nombre': request.POST.get('nombre'),
+            'primer_apellido': request.POST.get('primer-apellido'),
+            'segundo_apellido': request.POST.get('segundo-apellido'),
+            'sexo': request.POST.get('sexo'),
+            'categoria_docente': request.POST.get('categoria-docente'),
+            'asignatura': request.POST.get('asignatura'),
+            'solapin': request.POST.get('solapin'),
+            'telefono': request.POST.get('telefono'),
+            'correo': request.POST.get('correo'),
+            'brigada_asignada': request.POST.get('brigada-asignada'),
+            'brigadas_impartir': request.POST.get('brigadas-impartir'),
+            'descripcion': request.POST.get('descripcion')
+        }
+
+        # Validate required fields
+        if not all(form_data.values()):
+            messages.error(request, "Todos los campos obligatorios deben ser completados.")
+            return render(request, 'modificar_profesor.html', {'profesor': profesor})
+
+        try:
+            # Update professor with new data
+            for key, value in form_data.items():
+                setattr(profesor, key, value)
+            profesor.save()
+            messages.success(request, "Profesor actualizado correctamente.")
+            return redirect('profesores')
+        except Exception as e:
+            messages.error(request, f"Error al actualizar el profesor: {str(e)}")
+            return render(request, 'modificar_profesor.html', {'profesor': profesor})
+
     return render(request, 'modificar_profesor.html', {'profesor': profesor})
 
 # Update Views - Unique Item
