@@ -204,7 +204,7 @@
     );
   }
 
-  // ------------------- Información de Facultad -------------------
+  // ------------------- Información Profesoral -------------------
   function validarNombreProfesor() {
     const campo = document.getElementById('nombre-profesor');
     if (!campo) return true;
