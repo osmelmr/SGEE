@@ -71,111 +71,105 @@
   </header><!-- Fin del Header -->
 
 <!-- Sección del Formulario de Reporte de Cumplimiento -->
-<section id="formulario-reporte" class="formulario-reporte">
+<section id="visualizar-reporte" class="visualizar-reporte">
   <div class="container">
     <div class="section-title">
-      <h2>Formulario de Reporte de Cumplimiento</h2>
-      <p>Complete los siguientes campos para registrar un nuevo reporte.</p>
+      <h2>Visualizar Reporte de Cumplimiento</h2>
+      <p>Detalles del reporte seleccionado.</p>
     </div>
 
-    <form id="form-reporte" class="php-email-form" method="POST" action="{% url 'formulario_reporte' %}">
-      {% csrf_token %}
+    <div class="reporte-details">
       <!-- Fila 1: Brigada y Código -->
       <div class="row mb-4">
-        <div class="form-group col-md-6">
-          <label for="brigada">Brigada</label>
-          <input type="text" id="brigada" name="brigada" class="form-control" maxlength="10" required>
+        <div class="detail-group col-md-6">
+          <h4>Brigada</h4>
+          <p>{{reporte.brigada}}</p>
         </div>
-        <div class="form-group col-md-6">
-          <label for="codigo">Código</label>
-          <input type="text" id="codigo" name="codigo" class="form-control" maxlength="10" required>
+        <div class="detail-group col-md-6">
+          <h4>Código</h4>
+          <p>{{reporte.codigo}}</p>
         </div>
       </div>
 
       <!-- Fila 2: Periodo y Fecha -->
       <div class="row mb-4">
-        <div class="form-group col-md-6">
-          <label for="periodo">Periodo</label>
-          <input type="text" id="periodo" name="periodo" class="form-control" maxlength="10" required>
+        <div class="detail-group col-md-6">
+          <h4>Periodo</h4>
+          <p>{{reporte.periodo}}</p>
         </div>
-        <div class="form-group col-md-6">
-          <label for="fecha">Fecha</label>
-          <input type="date" id="fecha" name="fecha" class="form-control" required>
+        <div class="detail-group col-md-6">
+          <h4>Fecha</h4>
+          <p>{{reporte.fecha}}</p>
         </div>
       </div>
 
       <!-- Fila 3: Autor e Institución -->
       <div class="row mb-4">
-        <div class="form-group col-md-6">
-          <label for="autor">Autor</label>
-          <input type="text" id="autor" name="autor" class="form-control" maxlength="50" required>
+        <div class="detail-group col-md-6">
+          <h4>Autor</h4>
+          <p>{{reporte.autor}}</p>
         </div>
-        <div class="form-group col-md-6">
-          <label for="institucion">Institución</label>
-          <input type="text" id="institucion" name="institucion" class="form-control" maxlength="50" required>
+        <div class="detail-group col-md-6">
+          <h4>Institución</h4>
+          <p>{{reporte.institucion}}</p>
         </div>
       </div>
 
       <!-- Campo: Resumen -->
-      <div class="form-group mb-4">
-        <label for="resumen">Resumen</label>
-        <textarea id="resumen" name="resumen" class="form-control" rows="3" required></textarea>
+      <div class="detail-group mb-4">
+        <h4>Resumen</h4>
+        <p>{{reporte.resumen}}</p>
       </div>
 
       <!-- Campo: Objetivos -->
-      <div class="form-group mb-4">
-        <label for="objetivos">Objetivos</label>
-        <textarea id="objetivos" name="objetivos" class="form-control" rows="5" required></textarea>
+      <div class="detail-group mb-4">
+        <h4>Objetivos</h4>
+        <p>{{reporte.objetivos}}</p>
       </div>
 
       <!-- Campo: Actividades Realizadas -->
-      <div class="form-group mb-4">
-        <label for="actividades">Actividades Realizadas</label>
-        <textarea id="actividades" name="actividades" class="form-control" rows="5" required></textarea>
+      <div class="detail-group mb-4">
+        <h4>Actividades Realizadas</h4>
+        <p>{{reporte.actividades}}</p>
       </div>
 
       <!-- Campo: Resultados Obtenidos -->
-      <div class="form-group mb-4">
-        <label for="resultados">Resultados Obtenidos</label>
-        <textarea id="resultados" name="resultados" class="form-control" rows="5" required></textarea>
+      <div class="detail-group mb-4">
+        <h4>Resultados Obtenidos</h4>
+        <p>{{reporte.resultados}}</p>
       </div>
 
       <!-- Campo: Análisis de los Resultados -->
-      <div class="form-group mb-4">
-        <label for="analisis">Análisis de los Resultados</label>
-        <textarea id="analisis" name="analisis" class="form-control" rows="5" required></textarea>
+      <div class="detail-group mb-4">
+        <h4>Análisis de los Resultados</h4>
+        <p>{{reporte.analisis}}</p>
       </div>
 
       <!-- Campo: Desafíos y Lecciones Aprendidas -->
-      <div class="form-group mb-4">
-        <label for="desafios">Desafíos y Lecciones Aprendidas</label>
-        <textarea id="desafios" name="desafios" class="form-control" rows="5" required></textarea>
+      <div class="detail-group mb-4">
+        <h4>Desafíos y Lecciones Aprendidas</h4>
+        <p>{{reporte.desafios}}</p>
       </div>
 
       <!-- Campo: Próximos Pasos -->
-      <div class="form-group mb-4">
-        <label for="proximos-pasos">Próximos Pasos</label>
-        <textarea id="proximos-pasos" name="proximos-pasos" class="form-control" rows="5" required></textarea>
+      <div class="detail-group mb-4">
+        <h4>Próximos Pasos</h4>
+        <p>{{reporte.proximos_pasos}}</p>
       </div>
 
       <!-- Campo: Anexos -->
-      <div class="form-group mb-4">
-        <label for="anexos">Anexos</label>
-        <input type="file" id="anexos" name="anexos" class="form-control" multiple>
+      <div class="detail-group mb-4">
+        <h4>Anexos</h4>
+        <p>{{reporte.anexos}}</p>
       </div>
 
-      <!-- Línea divisoria y botones -->
+      <!-- Botón de Cancelar -->
       <div class="text-center mt-4 pt-4 border-top">
-        <div style="display: flex; justify-content: space-between;">
-          <button type="submit" id="boton-registrar-reporte" class="btn btn-primary">
-            <i class="bi bi-file-earmark-text"></i> Registrar Reporte
-          </button>
-          <button type="button" id="boton-cancelar-reporte" class="btn btn-cancelar" onclick="window.history.back()">
-            <i class="bi bi-x-circle"></i> Cancelar
-          </button>
-        </div>
+        <button type="button" id="boton-cancelar-reporte" class="btn btn-cancelar" onclick="window.history.back()">
+          <i class="bi bi-x-circle"></i> Cancelar
+        </button>
       </div>
-    </form>
+    </div>
   </div>
 </section>
     

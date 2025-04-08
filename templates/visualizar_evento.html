@@ -80,91 +80,81 @@
   </header><!-- Fin del Header -->
 
   <!-- Sección del Formulario de Evento -->
-  <section id="formulario-evento" class="estrategia-educativa">
+  <section id="visualizar-evento" class="visualizar-evento">
     <div class="container">
       <div class="section-title">
-        <h2>Formulario de Evento</h2>
-        <p>Complete los siguientes campos para registrar un nuevo evento.</p>
+        <h2>Visualizar Evento</h2>
+        <p>Detalles del evento seleccionado.</p>
       </div>
 
-      <form id="form-evento" method="POST" class="php-email-form" action="{% url 'formulario_evento' %}">
-        {% csrf_token %}
+      <div class="evento-details">
         <!-- Campo: Nombre del Evento -->
-        <div class="form-group mb-4">
-          <label for="nombre-evento">Nombre del Evento</label>
-          <input type="text" id="nombre-evento" name="nombre-evento" class="form-control" maxlength="100" required>
+        <div class="detail-group mb-4">
+          <h4>Nombre del Evento</h4>
+          <p>{{evento.nombre_evento}}</p>
         </div>
 
         <!-- Fila 1: Fechas de Inicio y Fin -->
         <div class="row mb-4">
-          <div class="form-group col-md-6">
-            <label for="fecha-inicio">Fecha de Inicio</label>
-            <input type="date" id="fecha-inicio" name="fecha-inicio" class="form-control" required>
+          <div class="detail-group col-md-6">
+            <h4>Fecha de Inicio</h4>
+            <p>{{evento.fecha_inicio}}</p>
           </div>
-          <div class="form-group col-md-6">
-            <label for="fecha-fin">Fecha de Fin</label>
-            <input type="date" id="fecha-fin" name="fecha-fin" class="form-control" required>
+          <div class="detail-group col-md-6">
+            <h4>Fecha de Fin</h4>
+            <p>{{evento.fecha_fin}}</p>
           </div>
         </div>
 
         <!-- Fila 2: Horas de Inicio y Fin -->
         <div class="row mb-4">
-          <div class="form-group col-md-6">
-            <label for="hora-inicio">Hora de Inicio</label>
-            <input type="time" id="hora-inicio" name="hora-inicio" class="form-control" required>
+          <div class="detail-group col-md-6">
+            <h4>Hora de Inicio</h4>
+            <p>{{evento.hora_inicio}}</p>
           </div>
-          <div class="form-group col-md-6">
-            <label for="hora-fin">Hora de Fin</label>
-            <input type="time" id="hora-fin" name="hora-fin" class="form-control" required>
+          <div class="detail-group col-md-6">
+            <h4>Hora de Fin</h4>
+            <p>{{evento.hora_fin}}</p>
           </div>
         </div>
 
         <!-- Campo: Ubicación -->
-        <div class="form-group mb-4">
-          <label for="ubicacion-evento">Ubicación</label>
-          <input type="text" id="ubicacion-evento" name="ubicacion-evento" class="form-control" maxlength="100" required>
+        <div class="detail-group mb-4">
+          <h4>Ubicación</h4>
+          <p>{{evento.ubicacion_evento}}</p>
         </div>
 
         <!-- Campo: Tipo de Evento -->
-        <div class="form-group mb-4">
-          <label for="tipo-evento">Tipo de Evento</label>
-          <select id="tipo-evento" name="tipo-evento" class="form-control" required>
-            <option value="">Seleccione un tipo</option>
-            <option value="academico">Académico</option>
-            <option value="cultural">Cultural</option>
-            <option value="deportivo">Deportivo</option>
-            <option value="social">Social</option>
-          </select>
+        <div class="detail-group mb-4">
+          <h4>Tipo de Evento</h4>
+          <p>{{evento.tipo_evento}}</p>
         </div>
 
         <!-- Campo: Descripción -->
-        <div class="form-group mb-4">
-          <label for="descripcion-evento">Descripción</label>
-          <textarea id="descripcion-evento" name="descripcion-evento" class="form-control" rows="4" required></textarea>
+        <div class="detail-group mb-4">
+          <h4>Descripción</h4>
+          <p>{{evento.descripcion}}</p>
         </div>
 
         <!-- Fila 3: Profesor a Cargo y Teléfono de Contacto -->
         <div class="row mb-4">
-          <div class="form-group col-md-6">
-            <label for="profesor-cargo">Profesor a Cargo</label>
-            <input type="text" id="profesor-cargo" name="profesor-cargo" class="form-control" maxlength="50" required>
+          <div class="detail-group col-md-6">
+            <h4>Profesor a Cargo</h4>
+            <p>{{evento.profesor_cargo}}</p>
           </div>
-          <div class="form-group col-md-6">
-            <label for="telefono-contacto">Teléfono de Contacto</label>
-            <input type="tel" id="telefono-contacto" name="telefono-contacto" class="form-control" maxlength="15" required>
+          <div class="detail-group col-md-6">
+            <h4>Teléfono de Contacto</h4>
+            <p>{{evento.telefono_contacto}}</p>
           </div>
         </div>
 
-        <!-- Botones -->
-        <div class="d-flex justify-content-between mt-4 pt-4 border-top">
-          <button type="submit" id="boton-registrar-evento" class="btn btn-primary">
-            <i class="bi bi-calendar-plus"></i> Registrar Evento
-          </button>
+        <!-- Botón de Cancelar -->
+        <div class="text-center mt-4 pt-4 border-top">
           <button type="button" id="boton-cancelar-evento" class="btn btn-cancelar" onclick="window.history.back()">
             <i class="bi bi-x-circle-fill"></i> Cancelar
           </button>
         </div>
-      </form>
+      </div>
     </div>
   </section>
 
