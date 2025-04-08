@@ -78,7 +78,7 @@
       <p>Complete los siguientes campos para registrar un nuevo reporte.</p>
     </div>
 
-    <form id="form-reporte" class="php-email-form" method="POST" action="{% url 'formulario_reporte' %}">
+    <form id="form-reporte" class="php-email-form" method="POST" action="{% url 'modificar_reporte' %}">
       {% csrf_token %}
       <!-- Fila 1: Brigada y Código -->
       <div class="row mb-4">

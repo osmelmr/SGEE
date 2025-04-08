@@ -82,14 +82,14 @@ def eliminarReportes(request):
 
 # Update Views - Unique Item
 # ----------------------------------------------------------------------------
-def modificarReporte(request, estra_id):
+def modificarReporte(request, reporte_id):
     """Modify a single strategy."""
-    estra = get_object_or_404(Reporte, id=estra_id)
-    return render(request, 'modificar_reporte.html', {'reporte': estra})
+    reporte = get_object_or_404(Reporte, id=reporte_id)
+    return render(request, 'modificar_reporte.html', {'reporte': reporte})
 
 # Update Views - Unique Item
 # ----------------------------------------------------------------------------
-def visualizarReporte(request, estra_id):
+def visualizarReporte(request, reporte_id):
     """View a single strategy."""
-    estra = get_object_or_404(Reporte, id=estra_id)
-    return render(request, 'visualizar_reporte.html', {'reporte': estra})
+    reporte = get_object_or_404(Reporte, id=reporte_id)
+    return render(request, 'visualizar_reporte.html', {'reporte': reporte})

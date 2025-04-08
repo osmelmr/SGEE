@@ -85,14 +85,14 @@ def eliminarProfesores(request):
 
 # Update Views - Unique Item
 # ----------------------------------------------------------------------------
-def modificarProfesor(request, estra_id):
+def modificarProfesor(request, profesor_id):
     """Modify a single strategy."""
-    estra = get_object_or_404(Profesor, id=estra_id)
-    return render(request, 'modificar_profesor.html', {'profesor': estra})
+    profesor = get_object_or_404(Profesor, id=profesor_id)
+    return render(request, 'modificar_profesor.html', {'profesor': profesor})
 
 # Update Views - Unique Item
 # ----------------------------------------------------------------------------
-def visualizarProfesor(request, estra_id):
+def visualizarProfesor(request, profesor_id):
     """View a single strategy."""
-    estra = get_object_or_404(Profesor, id=estra_id)
-    return render(request, 'visualizar_profesor.html', {'profesor': estra})
+    profesor = get_object_or_404(Profesor, id=profesor_id)
+    return render(request, 'visualizar_profesor.html', {'profesor': profesor})

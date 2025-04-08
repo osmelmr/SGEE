@@ -154,13 +154,13 @@
                   <td>{{ profesor.segundo_apellido }}</td>
                   <td>{{ profesor.asignatura }}</td>
                   <td>
-                    <button class="btn btn-action btn-ver-detalles" data-id="{{ profesor.id }}" title="Ver Detalles">
+                    <button type="button" class="btn btn-action btn-ver-detalles" data-id="{{ profesor.id }}" title="Ver Detalles">
                       <i class="bi bi-eye"></i>
                     </button>
-                    <button class="btn btn-action btn-modificar" data-id="{{ profesor.id }}" title="Modificar">
+                    <button type="button" class="btn btn-action btn-modificar" data-id="{{ profesor.id }}" title="Modificar">
                       <i class="bi bi-pencil"></i>
                     </button>
-                    <button class="btn btn-action btn-eliminar" data-id="{{ profesor.id }}" title="Eliminar">
+                    <button type="button" class="btn btn-action btn-eliminar" data-id="{{ profesor.id }}" title="Eliminar">
                       <i class="bi bi-trash"></i>
                     </button>
                     <input type="checkbox" class="form-check-input seleccionar-fila" name="profesores[]" value="{{ profesor.id }}">
@@ -264,7 +264,7 @@
   <script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
   <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
   <script src="{% static 'assets/vendor/waypoints/noframework.waypoints.js' %}"></script>
-  <script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
+  
 
   <!-- Archivo JS Principal -->
   <script src="{% static 'assets/js/main.js' %}"></script>
@@ -278,6 +278,27 @@
         window.location.href = `/eliminar_profesor/${profesorId}/`;
       }
     });
+  });
+</script>
+<script>
+  // Selecciona todos los botones con la clase "btn-modificar"
+  document.querySelectorAll(".btn-modificar").forEach(button => {
+      button.addEventListener("click", function (e) {
+          //e.stopPropagation();
+          const profesorId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
+          window.location.href = `/modificar_profesor/${profesorId}/`;
+      });
+  });
+</script>
+
+<script>
+  // Selecciona todos los botones con la clase "btn-ver-detalles"
+  document.querySelectorAll(".btn-ver-detalles").forEach(button => {
+      button.addEventListener("click", function (e) {
+          //e.stopPropagation();
+          const profesorId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
+          window.location.href = `/visualizar_profesor/${profesorId}/`;
+      });
   });
 </script>
 <script>

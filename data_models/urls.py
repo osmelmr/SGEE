@@ -32,11 +32,11 @@ urlpatterns = [
     #Ver multiples Eventos
     path('eventos/', visualizarEventos, name='eventos'),
     #Ver una unica Evento
-    path('visualizar_evento/<int:estra_id>/', visualizarEvento, name='visualizar_evento'),
+    path('visualizar_evento/<int:evento_id>/', visualizarEvento, name='visualizar_evento'),
     #Modificar muliples Eventos
-    path('modificar_evento/<int:estra_id>/', modificarEvento, name='modificar_evento'), 
+    path('modificar_evento/<int:evento_id>/', modificarEvento, name='modificar_evento'), 
     #Eliminar una unica Evento
-    path('eliminar_evento/<int:estra_id>/', eliminarEvento, name='eliminar_evento'),
+    path('eliminar_evento/<int:evento_id>/', eliminarEvento, name='eliminar_evento'),
     #Eliminar multiples Eventos
     path('eliminar_eventos/', eliminarEventos, name='eliminar_eventos'),
     
@@ -48,11 +48,11 @@ urlpatterns = [
     #Ver multiples Profesores
     path('profesores/', visualizarProfesores, name='profesores'),
     #Ver una unica Profesor
-    path('visualizar_profesor/<int:estra_id>/', visualizarProfesor, name='visualizar_profesor'),
+    path('visualizar_profesor/<int:profesor_id>/', visualizarProfesor, name='visualizar_profesor'),
     #Modificar muliples Profesores
-    path('modificar_profesor/<int:estra_id>/', modificarProfesor, name='modificar_profesor'), 
+    path('modificar_profesor/<int:profesor_id>/', modificarProfesor, name='modificar_profesor'), 
     #Eliminar una unica Profesor
-    path('eliminar_profesor/<int:estra_id>/', eliminarProfesor, name='eliminar_profesor'),
+    path('eliminar_profesor/<int:profesor_id>/', eliminarProfesor, name='eliminar_profesor'),
     #Eliminar multiples Profesores
     path('eliminar_profesores/', eliminarProfesores, name='eliminar_profesores'),
     
@@ -64,11 +64,11 @@ urlpatterns = [
     #Ver multiples Reportes
     path('reportes/', visualizarReportes, name='reportes'),
     #Ver una unica Reporte
-    path('visualizar_reporte/<int:estra_id>/', visualizarReporte, name='visualizar_reporte'),
+    path('visualizar_reporte/<int:reporte_id>/', visualizarReporte, name='visualizar_reporte'),
     #Modificar muliples Reportes
-    path('modificar_reporte/<int:estra_id>/', modificarReporte, name='modificar_reporte'), 
+    path('modificar_reporte/<int:reporte_id>/', modificarReporte, name='modificar_reporte'), 
     #Eliminar una unica Reporte
-    path('eliminar_reporte/<int:estra_id>/', eliminarReporte, name='eliminar_reporte'),
+    path('eliminar_reporte/<int:reporte_id>/', eliminarReporte, name='eliminar_reporte'),
     #Eliminar multiples Reportes
     path('eliminar_reportes/', eliminarReportes, name='eliminar_reportes'),
     
@@ -80,11 +80,11 @@ urlpatterns = [
     #Ver multiples Encuestas
     path('encuestas/', visualizarEncuestas, name='encuestas'),
     #Ver una unica Encuesta
-    path('visualizar_encuesta/<int:estra_id>/', visualizarEncuesta, name='visualizar_encuesta'),
+    path('visualizar_encuesta/<int:encuesta_id>/', visualizarEncuesta, name='visualizar_encuesta'),
     #Modificar muliples Encuestas
-    path('modificar_encuesta/<int:estra_id>/', modificarEncuesta, name='modificar_encuesta'), 
+    path('modificar_encuesta/<int:encuesta_id>/', modificarEncuesta, name='modificar_encuesta'), 
     #Eliminar una unica Encuesta
-    path('eliminar_encuesta/<int:estra_id>/', eliminarEncuesta, name='eliminar_encuesta'),
+    path('eliminar_encuesta/<int:encuesta_id>/', eliminarEncuesta, name='eliminar_encuesta'),
     #Eliminar multiples Encuestas
     path('eliminar_encuestas/', eliminarEncuestas, name='eliminar_encuestas'),
     
@@ -96,11 +96,11 @@ urlpatterns = [
     #Ver multiples Usuarios
     path('usuarios/', visualizarUsuarios, name='usuarios'),
     #Ver una unica Usuario
-    # path('visualizar_usuario/<int:estra_id>/', visualizarUsuario, name='visualizar_usuario'),
+    # path('visualizar_usuario/<int:usuario_id>/', visualizarUsuario, name='visualizar_usuario'),
     # #Modificar muliples Usuarios
-    # path('modificar_usuario/<int:estra_id>/', modificarUsuario, name='modificar_usuario'), 
+    # path('modificar_usuario/<int:usuario_id>/', modificarUsuario, name='modificar_usuario'), 
     # #Eliminar una unica Usuario
-    # path('eliminar_usuario/<int:estra_id>/', eliminarUsuario, name='eliminar_usuario'),
+    # path('eliminar_usuario/<int:usuario_id>/', eliminarUsuario, name='eliminar_usuario'),
     #Eliminar multiples Usuarios
     path('eliminar_usuarios/', eliminarUsuarios, name='eliminar_usuarios'),
     

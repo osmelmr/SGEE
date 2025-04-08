@@ -7,9 +7,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Título y metadatos -->
-  <title> Formulario reporte </title>
+  <title> Formulario Información Profesoral </title>
   <meta name="description" content="Sistema de Gestión de Estrategias Educativas para la Universidad de las Ciencias Informáticas (UCI).">
   <meta name="keywords" content="ESTRA, educación, gestión, UCI, estrategias educativas">
+
+  <!-- Favicons -->
+  <!--<link href="assets/img/favicon.png" rel="icon"-->
+  <!--<<link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">-->
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
   <!-- Archivos CSS de Vendor -->
   <link href="{% static 'assets/vendor/animate.css/animate.min.css' %}" rel="stylesheet">
@@ -19,6 +26,7 @@
   <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
   <link href="{% static 'assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
   <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
 
   <!-- Archivo CSS Principal -->
   <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
@@ -34,6 +42,9 @@
       <!-- Navegación -->
       <nav id="navbar" class="navbar">
         <ul>
+          <!--
+          <li><a href="{% url 'pagina_principal' %}" class="active">Inicio</a></li>
+          -->
           <li><a href="{% url 'pagina_principal' %}" class="active">Inicio</a></li>
           <li class="dropdown">
             <a href="#"><span>Sobre Nosotros</span> <i class="bi bi-chevron-down"></i></a>
@@ -70,107 +81,106 @@
     </div>
   </header><!-- Fin del Header -->
 
-<!-- Sección del Formulario de Reporte de Cumplimiento -->
-<section id="formulario-reporte" class="formulario-reporte">
+ <!-- Sección del Formulario de Información Profesoral -->
+ <section id="formulario-profesoral" class="formulario-profesoral">
   <div class="container">
     <div class="section-title">
-      <h2>Formulario de Reporte de Cumplimiento</h2>
-      <p>Complete los siguientes campos para registrar un nuevo reporte.</p>
+      <h2>Formulario de Información Profesoral</h2>
+      <p>Complete los siguientes campos para registrar un nuevo profesor.</p>
     </div>
 
-    <form id="form-reporte" class="php-email-form" method="POST" action="{% url 'formulario_reporte' %}">
+    <form id="form-profesoral" class="php-email-form" method="post" action="{% url 'modificar_profesor' profesor.id %}">
       {% csrf_token %}
-      <!-- Fila 1: Brigada y Código -->
+      <!-- Fila 1: Nombre -->
+      <div class="form-group mb-4">
+        <label for="nombre-profesor">Nombre</label>
+        <input type="text" id="nombre-profesor" name="nombre-profesor" class="form-control" maxlength="50" required>
+      </div>
+
+      <!-- Fila 2: Apellidos -->
       <div class="row mb-4">
         <div class="form-group col-md-6">
-          <label for="brigada">Brigada</label>
-          <input type="text" id="brigada" name="brigada" class="form-control" maxlength="10" required>
+          <label for="primer-apellido">Primer Apellido</label>
+          <input type="text" id="primer-apellido" name="primer-apellido" class="form-control" maxlength="50" required>
         </div>
         <div class="form-group col-md-6">
-          <label for="codigo">Código</label>
-          <input type="text" id="codigo" name="codigo" class="form-control" maxlength="10" required>
+          <label for="segundo-apellido">Segundo Apellido</label>
+          <input type="text" id="segundo-apellido" name="segundo-apellido" class="form-control" maxlength="50">
         </div>
       </div>
 
-      <!-- Fila 2: Periodo y Fecha -->
+      <!-- Fila 3: Sexo y Categoría Docente -->
       <div class="row mb-4">
         <div class="form-group col-md-6">
-          <label for="periodo">Periodo</label>
-          <input type="text" id="periodo" name="periodo" class="form-control" maxlength="10" required>
+          <label for="sexo">Sexo</label>
+          <select id="sexo" name="sexo" class="form-control" required>
+            <option value="">Seleccione un sexo</option>
+            <option value="masculino">Masculino</option>
+            <option value="femenino">Femenino</option>
+            <option value="otro">Otro</option>
+          </select>
         </div>
         <div class="form-group col-md-6">
-          <label for="fecha">Fecha</label>
-          <input type="date" id="fecha" name="fecha" class="form-control" required>
+          <label for="categoria-docente">Categoría Docente</label>
+          <select id="categoria-docente" name="categoria-docente" class="form-control" required>
+            <option value="">Seleccione una categoría</option>
+            <option value="instructor">Instructor</option>
+            <option value="asistente">Asistente</option>
+            <option value="auxiliar">Auxiliar</option>
+            <option value="titular">Titular</option>
+          </select>
         </div>
       </div>
 
-      <!-- Fila 3: Autor e Institución -->
+      <!-- Fila 4: Asignatura y Solapín -->
       <div class="row mb-4">
         <div class="form-group col-md-6">
-          <label for="autor">Autor</label>
-          <input type="text" id="autor" name="autor" class="form-control" maxlength="50" required>
+          <label for="asignatura">Asignatura</label>
+          <input type="text" id="asignatura" name="asignatura" class="form-control" maxlength="50" required>
         </div>
         <div class="form-group col-md-6">
-          <label for="institucion">Institución</label>
-          <input type="text" id="institucion" name="institucion" class="form-control" maxlength="50" required>
+          <label for="solapin">Solapín</label>
+          <input type="text" id="solapin" name="solapin" class="form-control" maxlength="10" required>
         </div>
       </div>
 
-      <!-- Campo: Resumen -->
-      <div class="form-group mb-4">
-        <label for="resumen">Resumen</label>
-        <textarea id="resumen" name="resumen" class="form-control" rows="3" required></textarea>
+      <!-- Fila 5: Teléfono y Correo -->
+      <div class="row mb-4">
+        <div class="form-group col-md-6">
+          <label for="telefono">Teléfono</label>
+          <input type="tel" id="telefono" name="telefono" class="form-control" maxlength="15" required>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="correo">Correo</label>
+          <input type="email" id="correo" name="correo" class="form-control" maxlength="50" required>
+        </div>
       </div>
 
-      <!-- Campo: Objetivos -->
-      <div class="form-group mb-4">
-        <label for="objetivos">Objetivos</label>
-        <textarea id="objetivos" name="objetivos" class="form-control" rows="5" required></textarea>
+      <!-- Fila combinada: Brigada Asignada y Brigadas a Impartir -->
+      <div class="row mb-4">
+       <div class="form-group col-md-6">
+        <label for="brigada-asignada">Brigada Asignada</label>
+        <input type="text" id="brigada-asignada" name="brigada-asignada" class="form-control" maxlength="10" required>
+      </div>
+     <div class="form-group col-md-6">
+       <label for="brigadas-impartir">Brigadas a Impartir</label>
+       <input type="text" id="brigadas-impartir" name="brigadas-impartir" class="form-control" maxlength="50" required>
+       </div>
       </div>
 
-      <!-- Campo: Actividades Realizadas -->
+      <!-- Fila 8: Descripción -->
       <div class="form-group mb-4">
-        <label for="actividades">Actividades Realizadas</label>
-        <textarea id="actividades" name="actividades" class="form-control" rows="5" required></textarea>
-      </div>
-
-      <!-- Campo: Resultados Obtenidos -->
-      <div class="form-group mb-4">
-        <label for="resultados">Resultados Obtenidos</label>
-        <textarea id="resultados" name="resultados" class="form-control" rows="5" required></textarea>
-      </div>
-
-      <!-- Campo: Análisis de los Resultados -->
-      <div class="form-group mb-4">
-        <label for="analisis">Análisis de los Resultados</label>
-        <textarea id="analisis" name="analisis" class="form-control" rows="5" required></textarea>
-      </div>
-
-      <!-- Campo: Desafíos y Lecciones Aprendidas -->
-      <div class="form-group mb-4">
-        <label for="desafios">Desafíos y Lecciones Aprendidas</label>
-        <textarea id="desafios" name="desafios" class="form-control" rows="5" required></textarea>
-      </div>
-
-      <!-- Campo: Próximos Pasos -->
-      <div class="form-group mb-4">
-        <label for="proximos-pasos">Próximos Pasos</label>
-        <textarea id="proximos-pasos" name="proximos-pasos" class="form-control" rows="5" required></textarea>
-      </div>
-
-      <!-- Campo: Anexos -->
-      <div class="form-group mb-4">
-        <label for="anexos">Anexos</label>
-        <input type="file" id="anexos" name="anexos" class="form-control" multiple>
+        <label for="descripcion-profesor">Descripción</label>
+        <textarea id="descripcion-profesor" name="descripcion-profesor" class="form-control" rows="4" required></textarea>
       </div>
 
       <!-- Línea divisoria y botones -->
       <div class="text-center mt-4 pt-4 border-top">
         <div style="display: flex; justify-content: space-between;">
-          <button type="submit" id="boton-registrar-reporte" class="btn btn-primary">
-            <i class="bi bi-file-earmark-text"></i> Registrar Reporte
+          <button type="submit" id="boton-registrar-profesor" class="btn btn-primary">
+            <i class="bi bi-person-plus"></i> Registrar Profesor
           </button>
-          <button type="button" id="boton-cancelar-reporte" class="btn btn-cancelar" onclick="window.history.back()">
+          <button type="button" id="boton-cancelar-profesor" class="btn btn-cancelar" onclick="window.history.back()">
             <i class="bi bi-x-circle"></i> Cancelar
           </button>
         </div>
@@ -232,6 +242,19 @@
 
 
   <!-- Vendor JS Files -->
+  <!--
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  -->
+  <!-- Template Main JS File -->
+  <!--
+  <script src="assets/js/main.js"></script>
+  -->
+  <!-- Archivos JS de Vendor -->
   <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
   <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
   <script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>

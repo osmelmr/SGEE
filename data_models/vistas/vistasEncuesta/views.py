@@ -91,14 +91,14 @@ def eliminarEncuestas(request):
 
 # Update Views - Unique Item
 # ----------------------------------------------------------------------------
-def modificarEncuesta(request, estra_id):
+def modificarEncuesta(request, encuesta_id):
     """Modify a single strategy."""
-    estra = get_object_or_404(Encuesta, id=estra_id)
-    return render(request, 'modificar_encuesta.html', {'encuesta': estra})
+    encuesta = get_object_or_404(Encuesta, id=encuesta_id)
+    return render(request, 'modificar_encuesta.html', {'encuesta': encuesta})
 
 # Update Views - Unique Item
 # ----------------------------------------------------------------------------
-def visualizarEncuesta(request, estra_id):
+def visualizarEncuesta(request, encuesta_id):
     """View a single strategy."""
-    estra = get_object_or_404(Encuesta, id=estra_id)
-    return render(request, 'visualizar_encuesta.html', {'encuesta': estra})
+    encuesta = get_object_or_404(Encuesta, id=encuesta_id)
+    return render(request, 'visualizar_encuesta.html', {'encuesta': encuesta})
