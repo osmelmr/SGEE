@@ -792,16 +792,16 @@
         const nuevaPregunta = document.createElement('div');
         nuevaPregunta.classList.add('pregunta', 'mb-3', 'p-3', 'border', 'rounded');
         nuevaPregunta.innerHTML = `
-          <div class="form-group">
-              <label for="pregunta${contadorPreguntas}">Pregunta ${contadorPreguntas}</label>
-              <input type="text" id="pregunta${contadorPreguntas}" name="pregunta${contadorPreguntas}" class="form-control" required>
-          </div>
-          <div class="text-right">
-              <button type="button" class="btn btn-danger btn-sm btn-eliminar">
-                  <i class="bi bi-trash"></i> Eliminar
-              </button>
-          </div>
-        `;
+        <div class="form-group">
+            <label for="pregunta${contadorPreguntas}">Pregunta ${contadorPreguntas}</label>
+            <input type="text" id="pregunta${contadorPreguntas}" name="preguntas[]" class="form-control" required>
+        </div>
+        <div class="text-right">
+            <button type="button" class="btn btn-danger btn-sm btn-eliminar">
+                <i class="bi bi-trash"></i> Eliminar
+            </button>
+        </div>
+      `;
         preguntasContainer.appendChild(nuevaPregunta);
         
         nuevaPregunta.querySelector('.btn-eliminar').addEventListener('click', function() {
@@ -824,7 +824,7 @@
           pregunta.querySelector('label').textContent = `Pregunta ${numeroPregunta}`;
           const input = pregunta.querySelector('input');
           input.id = `pregunta${numeroPregunta}`;
-          input.name = `pregunta${numeroPregunta}`;
+          input.name = `preguntas[]`;
         });
         contadorPreguntas = preguntas.length;
       }

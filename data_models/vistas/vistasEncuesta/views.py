@@ -27,38 +27,24 @@ def visualizarEncuestas(request):
 # Form Views
 # ----------------------------------------------------------------------------
 def crearEncuesta(request):
-    """Handle strategy form submission and display."""
+    """Handle survey form submission and display."""
     if request.method == 'POST':
-        # Extract form data
+        # Extraer datos del formulario
         form_data = {
-            'nombre': request.POST.get('titulo-encuesta'),
-            'curso': request.POST.get('curso'),
-            'anio_escolar': request.POST.get('ano-escolar'),
-            'grupo': request.POST.get('grupo'),
-            'plan_estudios': request.POST.get('plan-estudios'),
-            'obj_encuesta': request.POST.get('objetivos-encuesta'),
-            'dir_brigada': request.POST.get('direccion-brigada'),
-            'caract_brigada': request.POST.get('caracteristicas-brigada'),
-            'colect_pedagogico': request.POST.get('colectivo-pedagogico'),
-            'otros_aspectos': request.POST.get('otros-aspectos', 'otros_aspectos'),
-            'dim_curricular': request.POST.get('dimension-curricular'),
-            'dim_extensionista': request.POST.get('dimension-extensionista'),
-            'dim_politica': request.POST.get('dimension-politico-ideologica'),
-            'conclusiones': request.POST.get('conclusiones'),
-            'obj_general': request.POST.get('objetivo-general'),
-            'obj_dc': request.POST.get('objetivos-especificos-curricular'),
-            'plan_dc': request.POST.get('plan-acciones-curricular'),
-            'obj_de': request.POST.get('objetivos-especificos-extensionista'),
-            'plan_de': request.POST.get('plan-acciones-extensionista'),
-            'obj_dp': request.POST.get('objetivos-especificos-politico-ideologica'),
-            'plan_dp': request.POST.get('plan-acciones-politico-ideologica'),
-            'evaluacion': request.POST.get('evaluacion-integral'),
+            'titulo': request.POST.get('titulo'),
+            'descripcion': request.POST.get('descripcion'),
             'autor': request.POST.get('autor'),
+            'estado': request.POST.get('estado')
         }
         
         try:
-            encuesta = Encuesta(**form_data)
-            encuesta.save()
+            encuesta = Encuesta.objects.create(**form_data)
+            # Guardar preguntas asociadas
+            preguntas = request.POST.getlist('preguntas[]')
+            print(preguntas)
+            for texto in preguntas:
+                if texto.strip():
+                    encuesta.preguntas.create(texto=texto)
             messages.success(request, "Encuesta registrada correctamente.")
             return redirect('encuestas')
         except Exception as e:
