@@ -138,6 +138,8 @@ class Profesor(models.Model):
 class Brigada(models.Model):
     nombre = models.CharField(max_length=50, unique=True)
     direccion = models.CharField(max_length=100)
+    curso = models.CharField(max_length=20)
+    anio_escolar = models.CharField(max_length=10)
     caracterizacion = models.TextField()
     profesores = models.ManyToManyField('Profesor', through='Colectivo', related_name='brigadas')
 

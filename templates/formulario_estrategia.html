@@ -120,9 +120,14 @@
             </div>
             <div class="col-md-2">
               <div class="form-group">
-                <label for="grupo"> Brigada </label>
-                <input type="text" id="grupo" name="grupo" class="form-control" required>
-              </div>
+                <label for="grupo">Brigada</label>
+                <select id="grupo" name="grupo" class="form-control" required>
+                    <option value="" disabled selected>Seleccione una brigada</option>
+                    {% for brigada in brigadas %}
+                        <option value="{{ brigada.id }}">{{ brigada.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
             </div>
           </div>
         </div>
@@ -145,11 +150,11 @@
           <h3 class="mb-4">2. Caracterización de la brigada</h3>
           <div class="form-group">
             <label for="direccion-brigada">2.1 Dirección de la brigada</label>
-            <input type="text" id="direccion-brigada" name="direccion-brigada" class="form-control"  >
+            <input type="text" id="direccion-brigada" name="direccion-brigada" class="form-control">
           </div>
           <div class="form-group">
             <label for="caracteristicas-brigada">2.2 Características de la brigada</label>
-            <textarea id="caracteristicas-brigada" name="caracteristicas-brigada" class="form-control" rows="4"  ></textarea>
+            <textarea id="caracteristicas-brigada" name="caracteristicas-brigada" class="form-control" rows="4"></textarea>
           </div>
           <div class="form-group">
             <label for="colectivo-pedagogico">2.3 Colectivo pedagógico</label>
@@ -308,5 +313,26 @@
 
   <!-- Archivo JS Principal -->
   <script src="{% static 'assets/js/main.js' %}"></script>
+
+
+
+  <script>
+    // Inserta el JSON serializado desde la vista aquí
+    const brigadasData = {{ brigadas_json|safe }};
+
+    document.getElementById('grupo').addEventListener('change', function() {
+        const selectedId = this.value;
+        const brigada = brigadasData.find(b => b.id == selectedId || b.id == parseInt(selectedId));
+        if (brigada) {
+            document.getElementById('direccion-brigada').value = brigada.direccion;
+            document.getElementById('caracteristicas-brigada').value = brigada.caracterizacion;
+            document.getElementById('curso').value = brigada.curso;
+            document.getElementById('ano-escolar').value = brigada.anio_escolar;
+        } else {
+            document.getElementById('direccion-brigada').value = '';
+            document.getElementById('caracteristicas-brigada').value = '';
+        }
+    });
+  </script>
 </body>
 </html>

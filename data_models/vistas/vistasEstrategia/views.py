@@ -1,8 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from data_models.models import Estrategia
+from data_models.models import Estrategia, Brigada
 from django.contrib import messages
 from django.http import JsonResponse
 from django.db.models import Q
+import json
 
 def visualizarEstrategias(request):
     """Display all strategies with optional search functionality."""
@@ -28,6 +29,21 @@ def visualizarEstrategias(request):
 # ----------------------------------------------------------------------------
 def crearEstrategia(request):
     """Handle strategy form submission and display."""
+    from data_models.models import Brigada  # Asegúrate de importar Brigada
+
+    brigadas = Brigada.objects.all()  # Obtén todas las brigadas
+    brigadas_json = json.dumps([
+        {
+            'id': brigada.id,
+            'nombre': brigada.nombre,
+            'direccion': brigada.direccion,
+            'curso': brigada.curso,
+            'anio_escolar':brigada.anio_escolar,
+            'caracterizacion': brigada.caracterizacion
+        }
+        for brigada in brigadas
+    ])
+
     if request.method == 'POST':
         # Extract form data
         form_data = {
@@ -63,8 +79,17 @@ def crearEstrategia(request):
             return redirect('estrategias')
         except Exception as e:
             messages.error(request, f"Error al registrar la estrategia: {str(e)}")
+            # Si hay error, vuelve a mostrar el formulario con las brigadas
+            return render(request, 'formulario_estrategia.html', {
+                'brigadas': brigadas,
+                'brigadas_json': brigadas_json
+            })
     
-    return render(request, 'formulario_estrategia.html')
+    # GET: mostrar formulario con las brigadas y datos para autocompletar
+    return render(request, 'formulario_estrategia.html', {
+        'brigadas': brigadas,
+        'brigadas_json': brigadas_json
+    })
 
 # Delete Views - Single Item
 # ----------------------------------------------------------------------------
