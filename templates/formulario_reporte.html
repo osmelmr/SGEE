@@ -85,6 +85,12 @@
         <div class="form-group col-md-6">
           <label for="brigada">Brigada</label>
           <input type="text" id="brigada" name="brigada" class="form-control" maxlength="10" required>
+          <select name="grupo" id="select_grupo" style="border: none;">
+            {% for brigada in brigadas %}
+              <option value="{{ brigada.nombre }}">{{ brigada.nombre }}</option>
+            {% endfor %}
+          </select>
+          
         </div>
         <div class="form-group col-md-6">
           <label for="codigo">Código</label>
@@ -240,5 +246,21 @@
 
   <!-- Archivo JS Principal -->
   <script src="{% static 'assets/js/main.js' %}"></script>
+
+  <script>
+    // Cuando la página termine de cargar
+  window.addEventListener('DOMContentLoaded', function() {
+    var select = document.getElementById('select_grupo');
+    var input = document.getElementById('brigada');
+    // Si hay una opción seleccionada, copia su valor al input
+    if (select.value) {
+      input.value = select.value;
+    }
+  });
+    document.getElementById('select_grupo').addEventListener('change', function() {
+      var selectedValue = this.value;
+      document.getElementById('brigada').value = selectedValue;
+    });
+  </script>
 </body>
 </html>

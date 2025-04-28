@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from data_models.models import Reporte
+from data_models.models import Brigada
 from django.contrib import messages
 from django.http import JsonResponse
 from django.db.models import Q
@@ -28,6 +29,7 @@ def visualizarReportes(request):
 # ----------------------------------------------------------------------------
 def crearReporte(request):
     """Handle report form submission and display."""
+    brigadas=Brigada.objects.all()
     if request.method == 'POST':
         # Extract form data
         form_data = {
@@ -55,7 +57,7 @@ def crearReporte(request):
         except Exception as e:
             messages.error(request, f"Error al registrar el reporte: {str(e)}")
 
-    return render(request, 'formulario_reporte.html')
+    return render(request, 'formulario_reporte.html', {"brigadas":brigadas})
 
 # Delete Views - Single Item
 # ----------------------------------------------------------------------------
