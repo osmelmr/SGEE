@@ -19,6 +19,7 @@ from django.urls import path, include
 from .views import estra_view, contact_view, login_view
 from .views import sobrenos_view,visualizarTestimonios
 from . import views
+from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,6 +27,8 @@ urlpatterns = [
     path('', include('data_models.urls')),
 
     path('', login_view, name='login'),
+
+    path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
 
     path('pagina_principal/', estra_view, name='pagina_principal'),
 
