@@ -5,7 +5,7 @@ from data_models.vistas.vistasProfesor.views import visualizarProfesor, eliminar
 from data_models.vistas.vistasReporte.views import visualizarReporte, eliminarReportes,eliminarReporte,modificarReporte,visualizarReportes,crearReporte
 from data_models.vistas.vistasEncuesta.views import visualizarEncuesta, eliminarEncuestas,eliminarEncuesta,modificarEncuesta,visualizarEncuestas,crearEncuesta
 from data_models.vistas.vistasUsuario.views import visualizarUsuario, eliminarUsuarios,eliminarUsuario,modificarUsuario,visualizarUsuarios,crearUsuario
-
+from data_models.vistas.vistasRolEstudiante.views import visualizarEstrategiasE
 
 urlpatterns = [
     #----------------------------------------
@@ -47,6 +47,7 @@ urlpatterns = [
     path('formulario_profesor/', crearProfesor, name='formulario_profesor'),
     #Ver multiples Profesores
     path('profesores/', visualizarProfesores, name='profesores'),
+
     #Ver una unica Profesor
     path('visualizar_profesor/<int:profesor_id>/', visualizarProfesor, name='visualizar_profesor'),
     #Modificar muliples Profesores
@@ -105,4 +106,30 @@ urlpatterns = [
     path('eliminar_usuarios/', eliminarUsuarios, name='eliminar_usuarios'),
     
     #----------------------------------------
+    #ESTUDIANTES URLS
+    #View Multiple Estrategys
+    path('estrategias_e/', visualizarEstrategiasE, name='estrategias_e'),
+    # #View Unique Estrategy
+    # path('visualizar_estrategia_e/<int:estra_id>/', visualizarEstrategiaE, name='visualizar_estrategia_e'),
+    
+    # #Ver multiples Profesores
+    # path('profesores_e/', visualizarProfesoresE, name='profesores_e'),
+    # #Ver una unica Profesor
+    # path('visualizar_profesor_e/<int:profesor_id>/', visualizarProfesorE, name='visualizar_profesor_e'),
+
+    # #Ver multiples Eventos
+    # path('eventos_e/', visualizarEventosE, name='eventos_e'),
+    # #Ver una unica Evento
+    # path('visualizar_evento_e/<int:evento_id>/', visualizarEventoE, name='visualizar_evento_e'),
+    
+    # #Ver multiples Reportes
+    # path('reportes_e/', visualizarReportesE, name='reportes_e'),
+    # #Ver una unica Reporte
+    # path('visualizar_reporte_e/<int:reporte_id>/', visualizarReporteE, name='visualizar_reporte_e'),
+    
+    # #Ver multiples Encuestas
+    # path('encuestas_e/', visualizarEncuestasE, name='encuestas_e'),
+    # #Ver una unica Encuesta
+    # path('visualizar_encuesta_e/<int:encuesta_id>/', visualizarEncuestaE, name='visualizar_encuesta_e'),
+    # #----------------------------------------
 ]

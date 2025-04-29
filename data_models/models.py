@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import AbstractUser
 # ============================================================================
 # Modelos de Gestión Académica
 # ============================================================================
@@ -232,31 +232,30 @@ class Pregunta(models.Model):
 # ----------------------------------------
 # Modelo para el registro y gestión de usuarios
 # ----------------------------------------
-class RegistroUsuario(models.Model):
-    # Datos personales
-    nombre = models.CharField(max_length=50)
-    primer_apellido = models.CharField(max_length=50)
-    segundo_apellido = models.CharField(max_length=50, blank=True, null=True)
-    sexo = models.CharField(
-        max_length=10,
-        choices=[
-            ('masculino', 'Masculino'),
-            ('femenino', 'Femenino'),
-            ('otro', 'Otro')
-        ]
-    )
-    
-    # Datos institucionales
-    grupo = models.CharField(max_length=50)
-    solapin = models.CharField(max_length=10)
-    cargo = models.CharField(max_length=50)
-    
-    # Contacto
-    telefono = models.CharField(max_length=15)
-    correo = models.EmailField(max_length=50)
-    
-    # Credenciales
-    user = models.CharField(max_length=20)
-    password = models.CharField(max_length=20)
+
+class Usuario(AbstractUser):
+    # Campos adicionales
+    CARGO_CHOICES = [
+        ('profesor', 'Profesor'),
+        ('estudiante', 'Estudiante'),
+    ]
+    SEXO_CHOICES = [
+        ('masculino', 'Masculino'),
+        ('femenino', 'Femenino'),
+        ('otro', 'Otro'),
+    ]
+
+    cargo = models.CharField(max_length=10, choices=CARGO_CHOICES)
+    sexo = models.CharField(max_length=10, choices=SEXO_CHOICES)
+    grupo = models.CharField(max_length=50, blank=True, null=True)
+    solapin = models.CharField(max_length=10, unique=True)
+    telefono = models.CharField(max_length=15, blank=True, null=True)
+
+    # Método para devolver el cargo
+    def obtener_cargo(self):
+        return self.cargo
+
+    def __str__(self):
+        return f"{self.username} ({self.cargo})"
 
 

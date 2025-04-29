@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block content %}
+<main id="main">
+
+    <!-- Sección de Estrategia Educativa -->
+    <section id="estrategia-educativa" class="estrategia-educativa section-bg">
+      <div class="container-fluid">
+        <div class="section-title">
+          <h2>Repositorio de Estrategias Educativas</h2>
+          <br>
+          <p>Gestión de estrategias.</p>
+          <br>
+        </div>
+    
+        <!-- Barra de búsqueda -->
+        <form method="GET" action="{% url 'estrategias' %}" class="search-bar mb-4">
+          <div class="input-group">
+            <input type="text" name="q" class="form-control" placeholder="Buscar estrategia..." aria-label="Buscar" value="{{ request.GET.q }}">
+            <button class="btn btn-primary" type="submit">
+              <i class="bi bi-search"></i> <!-- Ícono de lupa -->
+            </button>
+          </div>
+        </form>
+    
+        <!-- Contenedor de la tabla con scroll -->
+        <form id="form-eliminar-estrategias" method="POST" action="{% url 'eliminar_estrategias' %}">
+          {% csrf_token %}
+          <div class="table-container">
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover custom-table">
+                <thead>
+                  <tr>
+                    <th>Estrategia</th>
+                    <th>Brigada</th>
+                    <th>Curso</th>
+                    <th>Año Escolar</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for estrategia in estrategias %}
+                  <tr data-id="{{ estrategia.id }}">
+                    <td>
+                      <i class="bi bi-file-earmark"></i>{{ estrategia.nombre }}
+                    </td>
+                    <td>{{ estrategia.grupo }}</td>
+                    <td>{{ estrategia.curso }}</td>
+                    <td>{{ estrategia.anio_escolar }}</td>
+                    <td>
+                      <button type="button" class="btn btn-action btn-ver-detalles" data-id="{{ estrategia.id }}" title="Ver Detalles">
+                        <i class="bi bi-eye"></i>
+                      </button>
+                      </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+      </main>
+{% endblock %}
