@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from .views import estra_view, contact_view
+from .views import estra_view, contact_view, login_view
 from .views import sobrenos_view,visualizarTestimonios
 from . import views
 
@@ -25,7 +25,9 @@ urlpatterns = [
 
     path('', include('data_models.urls')),
 
-    path('', estra_view, name='pagina_principal'),
+    path('', login_view, name='login'),
+
+    path('pagina_principal/', estra_view, name='pagina_principal'),
 
     path('contactenos/',contact_view,name='contactar'),
 

@@ -97,11 +97,11 @@ urlpatterns = [
     #Ver multiples Usuarios
     path('usuarios/', visualizarUsuarios, name='usuarios'),
     #Ver una unica Usuario
-    # path('visualizar_usuario/<int:usuario_id>/', visualizarUsuario, name='visualizar_usuario'),
-    # #Modificar muliples Usuarios
-    # path('modificar_usuario/<int:usuario_id>/', modificarUsuario, name='modificar_usuario'), 
-    # #Eliminar una unica Usuario
-    # path('eliminar_usuario/<int:usuario_id>/', eliminarUsuario, name='eliminar_usuario'),
+    path('visualizar_usuario/<int:usuario_id>/', visualizarUsuario, name='visualizar_usuario'),
+    #Modificar muliples Usuarios
+    path('modificar_usuario/<int:usuario_id>/', modificarUsuario, name='modificar_usuario'), 
+    #Eliminar una unica Usuario
+    path('eliminar_usuario/<int:usuario_id>/', eliminarUsuario, name='eliminar_usuario'),
     #Eliminar multiples Usuarios
     path('eliminar_usuarios/', eliminarUsuarios, name='eliminar_usuarios'),
     

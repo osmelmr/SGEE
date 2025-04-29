@@ -139,10 +139,10 @@
               <tbody>
                 {% for usuario in usuarios %}
                 <tr>
-                  <td>{{ usuario.nombre }}</td>
-                  <td>{{ usuario.primer_apellido }}</td>
-                  <td>{{ usuario.segundo_apellido }}</td>
-                  <td>{{ usuario.categoria_docente }}</td>
+                  <td>{{ usuario.first_name }}</td>
+                  <td>{{ usuario.last_name.split|first }}</td>
+                  <td>{{ usuario.last_name.split|last }}</td>
+                  <td>{{ usuario.cargo }}</td>
                   <td>
                     <input type="checkbox" class="form-check-input seleccionar-fila" name="usuarios[]" value="{{ usuario.id }}">
                   </td>
