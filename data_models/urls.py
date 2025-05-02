@@ -6,6 +6,7 @@ from data_models.vistas.vistasReporte.views import visualizarReporte, eliminarRe
 from data_models.vistas.vistasEncuesta.views import visualizarEncuesta, eliminarEncuestas,eliminarEncuesta,modificarEncuesta,visualizarEncuestas,crearEncuesta
 from data_models.vistas.vistasUsuario.views import visualizarUsuario, eliminarUsuarios,eliminarUsuario,modificarUsuario,visualizarUsuarios,crearUsuario
 from data_models.vistas.vistasRolEstudiante.views import visualizarEstrategiasE
+from data_models.vistas.vistasBrigada.views import crearBrigada, listarBrigadas, visualizarBrigada
 
 urlpatterns = [
     #----------------------------------------
@@ -105,6 +106,12 @@ urlpatterns = [
     #Eliminar multiples Usuarios
     path('eliminar_usuarios/', eliminarUsuarios, name='eliminar_usuarios'),
     
+    #----------------------------------------
+    #BRIGADAS URLS
+    path('crear_brigada/', crearBrigada, name='crear_brigada'),  
+    path('brigadas/', listarBrigadas, name='listar_brigadas'),
+    path('brigadas/<int:brigada_id>/', visualizarBrigada, name='visualizar_brigada'),
+
     #----------------------------------------
     #ESTUDIANTES URLS
     #View Multiple Estrategys

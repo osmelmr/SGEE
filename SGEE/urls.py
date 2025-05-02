@@ -18,7 +18,6 @@ from django.contrib import admin
 from django.urls import path, include
 from .views import estra_view, contact_view, login_view
 from .views import sobrenos_view,visualizarTestimonios
-from . import views
 from django.contrib.auth.views import LogoutView
 
 urlpatterns = [

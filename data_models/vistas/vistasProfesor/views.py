@@ -29,7 +29,7 @@ def visualizarProfesores(request):
 def crearProfesor(request):
     """Handle professor information form submission and display."""
     if request.method == 'POST':
-        # Extract form data
+        
         form_data = {
             'nombre': request.POST.get('nombre-profesor'),
             'primer_apellido': request.POST.get('primer-apellido'),
@@ -41,10 +41,8 @@ def crearProfesor(request):
             'telefono': request.POST.get('telefono'),
             'correo': request.POST.get('correo'),
             'brigada_asignada': request.POST.get('brigada-asignada'),
-            'brigadas_impartir': request.POST.get('brigadas-impartir'),
             'descripcion': request.POST.get('descripcion-profesor')
         }
-
         # Validate required fields
         if not all(form_data.values()):
             messages.error(request, "Todos los campos obligatorios deben ser completados.")
@@ -52,6 +50,7 @@ def crearProfesor(request):
 
         try:
             profesor = Profesor(**form_data)
+            print(profesor)
             profesor.save()
             messages.success(request, "Profesor registrado correctamente.")
             return redirect('profesores')
@@ -90,7 +89,7 @@ def modificarProfesor(request, profesor_id):
     profesor = get_object_or_404(Profesor, id=profesor_id)
     
     if request.method == 'POST':
-        # Extract form data
+        # Eliminar 'brigadas_impartir' del diccionario form_data
         form_data = {
             'nombre': request.POST.get('nombre'),
             'primer_apellido': request.POST.get('primer-apellido'),
@@ -102,7 +101,6 @@ def modificarProfesor(request, profesor_id):
             'telefono': request.POST.get('telefono'),
             'correo': request.POST.get('correo'),
             'brigada_asignada': request.POST.get('brigada-asignada'),
-            'brigadas_impartir': request.POST.get('brigadas-impartir'),
             'descripcion': request.POST.get('descripcion')
         }
 

@@ -120,8 +120,6 @@ class Profesor(models.Model):
     
     # Datos institucionales
     solapin = models.CharField(max_length=10, unique=True)
-    brigada_asignada = models.CharField(max_length=10)
-    brigadas_impartir = models.CharField(max_length=50)
     
     # Contacto
     telefono = models.CharField(max_length=15)
@@ -141,23 +139,28 @@ class Brigada(models.Model):
     curso = models.CharField(max_length=20)
     anio_escolar = models.CharField(max_length=10)
     caracterizacion = models.TextField()
-    profesores = models.ManyToManyField('Profesor', through='Colectivo', related_name='brigadas')
+
+    # Relación uno a uno con Profesor (por ejemplo, un jefe de brigada)
+    guia = models.OneToOneField(
+        'Profesor',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='brigada_asignada'
+    )
+
+    # Relación muchos a muchos con Profesor (otros profesores asignados a la brigada)
+    profesores = models.ManyToManyField(
+        'Profesor',
+        related_name='brigadas',
+        blank=True
+    )
 
     def __str__(self):
         return self.nombre
 
 
 # ----------------------------------------
-# Modelo para la gestión de colectivos pedagógicos
-# ----------------------------------------
-class Colectivo(models.Model):
-    profesor = models.ForeignKey('Profesor', on_delete=models.CASCADE)
-    brigada = models.ForeignKey('Brigada', on_delete=models.CASCADE)
-    rol = models.CharField(max_length=100, blank=True, null=True)
-
-    def __str__(self):
-        return f"{self.profesor} - {self.brigada}"
-
 
 # ============================================================================
 # Modelos de Gestión de Reportes
