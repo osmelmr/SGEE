@@ -12,13 +12,13 @@ def crearGrupo(request):
             return redirect('profesor_principal/listar_grupos')
     else:
         form = GrupoForm()
-    return render(request, 'grupo_form.html', {'form': form})
+    return render(request, 'profesor_principal/formular_grupo.html', {'form': form})
 
 def visualizarGrupo(request, grupo_id):
     
     grupo = Grupo.objects.get(id=grupo_id)
-    return render(request, 'grupo_detail.html', {'grupo': grupo})
+    return render(request, 'profesor_principal/visualizar_grupo.html', {'grupo': grupo})
 
 def listarGrupos(request):
     grupos = Grupo.objects.all()
-    return render(request, 'grupo_list.html', {'grupos': grupos})
+    return render(request, 'profesor_principal/listar_grupos.html', {'grupos': grupos})

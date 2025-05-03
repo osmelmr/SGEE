@@ -85,8 +85,8 @@
     </form>
   </div>
 </section>
-
-  {% block scripts %}
+{% endblock %}
+{% block scripts %}
   <script>
     // Selecciona todos los botones con la clase "btn-eliminar"
     document.querySelectorAll(".btn-eliminar").forEach(button => {
@@ -143,5 +143,4 @@
       checkboxes.forEach(checkbox => checkbox.checked = !checkbox.checked);
     });
   </script>
-  {% endblock %}
 {% endblock %}

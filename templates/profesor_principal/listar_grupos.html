@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% block title %} Lista de Grupos {% endblock %}
 {% block content %}
 <div class="container mt-4">
     <h1>Lista de Grupos</h1>
@@ -27,5 +27,9 @@
             {% endfor %}
         </tbody>
     </table>
+    <div class="botones">
+        <button type="button" class="btn btn-primary" onclick="location.href='{% url 'formular_grupo' %}'">Crear Nuevo Grupo</button>
+        
+    </div>
 </div>
 {% endblock %}

@@ -146,10 +146,11 @@
   function validarGrupo() {
     const campo = document.getElementById('grupo');
     if (!campo) return true;
+    const valor = campo.value.trim(); // Eliminar espacios en blanco
     return validarCampoGenerico(
       campo,
-      /^ID[A-Z]{2,}\d{3}$/,
-      'Debe comenzar con "ID" en mayúsculas, seguido de 2+ letras y 3 números'
+      /^ID[A-Z]{2}\d{3}$/,
+      'Debe comenzar con "ID" en mayúsculas, seguido de 2 letras y 3 números'
     );
   }
 
@@ -325,10 +326,11 @@
   function validarGrupo() {
     const campo = document.getElementById('grupo');
     if (!campo) return true;
+    const valor = campo.value.trim(); // Eliminar espacios en blanco
     return validarCampoGenerico(
       campo,
-      /^ID[A-Z]{2,}\d{3}$/,
-      'Debe comenzar con "ID" en mayúsculas, seguido de 2+ letras y 3 números'
+      /^ID[A-Z]{2}\d{3}$/,
+      'Debe comenzar con "ID" en mayúsculas, seguido de 2 letras y 3 números'
     );
   }
 
@@ -435,7 +437,7 @@
     if (!campo) return true;
     return validarCampoGenerico(
       campo,
-      /^ID[A-Z]{2,}\d{3}$/,
+      /^ID[A-Z]{2}\d{3}$/,
       'Debe comenzar con "ID" en mayúsculas, seguido de 2+ letras y 3 números'
     );
   }

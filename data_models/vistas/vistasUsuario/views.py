@@ -23,41 +23,44 @@ def crearUsuario(request):
     """Crea un nuevo usuario."""
     if request.method == 'POST':
         # Obtener los datos del formulario
-        nombre = request.POST.get('nombre')
-        primer_apellido = request.POST.get('primer-apellido')
-        segundo_apellido = request.POST.get('segundo-apellido')
-        sexo = request.POST.get('sexo')
-        grupo = request.POST.get('grupo')
-        solapin = request.POST.get('solapin')
-        cargo = request.POST.get('cargo')
-        telefono = request.POST.get('telefono')
-        correo = request.POST.get('correo')
-        username = request.POST.get('user')
-        password = request.POST.get('password')
+        form_data = {
+            'first_name': request.POST.get('first_name'),
+            'last_name': request.POST.get('last_name'),
+            'second_last_name': request.POST.get('second_last_name'),
+            'sexo': request.POST.get('sexo'),
+            'grupo': request.POST.get('grupo'),
+            'solapin': request.POST.get('solapin'),
+            'cargo': request.POST.get('cargo'),
+            'telefono': request.POST.get('telefono'),
+            'email': request.POST.get('email'),
+            'username': request.POST.get('username'),
+            'password': request.POST.get('password')
+        }
 
         # Validar si el usuario ya existe
-        if Usuario.objects.filter(username=username).exists():
+        if Usuario.objects.filter(username=form_data['username']).exists():
             messages.error(request, 'El nombre de usuario ya existe.')
-        elif Usuario.objects.filter(solapin=solapin).exists():
+        elif Usuario.objects.filter(solapin=form_data['solapin']).exists():
             messages.error(request, 'El solapín ya está registrado.')
-        elif Usuario.objects.filter(email=correo).exists():
+        elif Usuario.objects.filter(email=form_data['email']).exists():
             messages.error(request, 'El correo ya está registrado.')
         else:
             # Crear el usuario
             usuario = Usuario.objects.create_user(
-                username=username,
-                password=password,
-                first_name=nombre,
-                last_name=primer_apellido,
-                email=correo,
-                cargo=cargo,
-                sexo=sexo,
-                grupo=grupo,
-                solapin=solapin,
-                telefono=telefono
+                username=form_data['username'],
+                password=form_data['password'],
+                first_name=form_data['first_name'],
+                last_name=form_data['last_name'],
+                email=form_data['email'],
+                cargo=form_data['cargo'],
+                sexo=form_data['sexo'],
+                grupo=form_data['grupo'],
+                solapin=form_data['solapin'],
+                telefono=form_data['telefono']
             )
             # Guardar el segundo apellido si se proporciona
-            usuario.last_name = f"{primer_apellido} {segundo_apellido}" if segundo_apellido else primer_apellido
+            if form_data['second_last_name']:
+                usuario.last_name = f"{form_data['last_name']} {form_data['second_last_name']}"
             usuario.save()
 
             messages.success(request, f'Usuario {usuario.username} creado exitosamente.')
@@ -71,7 +74,7 @@ def eliminarUsuario(request, usuario_id):
     usuario = get_object_or_404(Usuario, id=usuario_id)
     usuario.delete()
     messages.success(request, f'Usuario {usuario.username} eliminado exitosamente.')
-    return redirect('profesor_principal/visualizar__usuarios')
+    return redirect('usuarios')
 
 # Eliminar múltiples usuarios
 def eliminarUsuarios(request):
@@ -88,15 +91,23 @@ def modificarUsuario(request, usuario_id):
     """Modifica un usuario existente."""
     usuario = get_object_or_404(Usuario, id=usuario_id)
     if request.method == 'POST':
-        usuario.username = request.POST.get('username', usuario.username)
-        usuario.cargo = request.POST.get('cargo', usuario.cargo)
-        usuario.sexo = request.POST.get('sexo', usuario.sexo)
-        usuario.grupo = request.POST.get('grupo', usuario.grupo)
-        usuario.solapin = request.POST.get('solapin', usuario.solapin)
-        usuario.telefono = request.POST.get('telefono', usuario.telefono)
-        usuario.save()
-        messages.success(request, f'Usuario {usuario.username} modificado exitosamente.')
-        return redirect('profesor_principal/visualizar__usuarios')
+        form_data = {
+            'username': request.POST.get('username', usuario.username),
+            'cargo': request.POST.get('cargo', usuario.cargo),
+            'sexo': request.POST.get('sexo', usuario.sexo),
+            'grupo': request.POST.get('grupo', usuario.grupo),
+            'solapin': request.POST.get('solapin', usuario.solapin),
+            'telefono': request.POST.get('telefono', usuario.telefono)
+        }
+
+        try:
+            for key, value in form_data.items():
+                setattr(usuario, key, value)
+            usuario.save()
+            messages.success(request, f'Usuario {usuario.username} modificado exitosamente.')
+            return redirect('usuarios')
+        except Exception as e:
+            messages.error(request, f'Error al modificar el usuario: {str(e)}')
 
     return render(request, 'modificar_usuario.html', {'usuario': usuario})
 

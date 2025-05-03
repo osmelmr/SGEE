@@ -1,91 +1,7 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Título y metadatos -->
-  <title> Formulario Estrategias Educativas </title>
-  <meta name="description" content="Sistema de Gestión de Estrategias Educativas para la Universidad de las Ciencias Informáticas (UCI).">
-  <meta name="keywords" content="ESTRA, educación, gestión, UCI, estrategias educativas">
-
-  <!-- Favicons -->
-  <!--<link href="assets/img/favicon.png" rel="icon"-->
-  <!--<<link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">-->
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-
-  <!-- Archivos CSS de Vendor -->
-  <!--
-  <link href="assets/vendor/animate.css/animate.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-  -->
-  <link href="{% static 'assets/vendor/animate.css/animate.min.css' %}" rel="stylesheet">
-  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
-  <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
-  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
-  <link href="{% static 'assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
-  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
-
-
-  <!-- Archivo CSS Principal -->
-  <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
-</head>
-<body>
-  <!-- ======= Header ======= -->
-  <header id="header" class="d-flex align-items-center fixed-top">
-    <div class="container d-flex align-items-center">
-      <!-- Logo -->
-      <!--<a href="{% url 'pagina_principal' %}" class="logo me-auto"><img src="{% static './imagenes/logo/logo.png'%}" alt="" class="img-fluid"></a>-->
-      <h1 class="logo me-auto"><a href="{% url 'pagina_principal' %}">ESTRA</a></h1>
-
-      <!-- Navegación -->
-      <nav id="navbar" class="navbar">
-        <ul>
-          <li><a href="{% url 'pagina_principal' %}" class="active">Inicio</a></li>
-          <li class="dropdown">
-            <a href="#"><span>Sobre Nosotros</span> <i class="bi bi-chevron-down"></i></a>
-            <ul>
-              <li><a href="{% url 'sobrenos' %}">Sobre Nosotros</a></li>
-              <li><a href="{% url 'testimonials' %}"> Reseñas </a></li>
-            </ul>
-          </li>
-          <li class="dropdown"><a href="#"><span> Servicios </span> <i class="bi bi-chevron-down"></i></a>
-            <ul>
-              <li><a href="{% url 'estrategias'%}"> Estrategias Educativas </a></li>
-              <li><a href="{% url 'eventos'%}"> Eventos </a></li>
-              <li><a href="{% url 'reportes'%}"> Reportes de Cumplimiento </a></li>
-              <li><a href="{% url 'usuarios'%}"> Usuarios </a></li>
-              <li><a href="{% url 'profesores'%}"> Información Profesoral</a></li>
-              <li><a href="{% url 'encuestas'%}"> Encuestas</a></li>
-            </ul>
-          </li>
-          <li><a href="{% url 'contactar' %}">Contáctenos</a></li>
-          <li class="dropdown user-menu">
-            <a href="#"><i class="bi bi-person-circle"></i> Mi cuenta <i class="bi bi-chevron-down"></i></a>
-            <ul>
-              <li class="user-info">
-                <span class="user-name"><i class="bi bi-person-fill"></i> Nombre del Usuario</span>
-                <span class="user-role"><i class="bi bi-briefcase-fill"></i> Cargo del Usuario</span>
-              </li>
-              <li class="divider"></li>
-              <li><a href="#">Salir</a></li>
-            </ul>
-          </li>
-        </ul>
-        <i class="bi bi-list mobile-nav-toggle"></i>
-      </nav><!-- Fin de la navegación -->
-    </div>
-  </header><!-- Fin del Header -->
+{% block title %} Contáctenos {% endblock %}
+{% block content %}
 
   <section id="formulario-estrategia" class="estrategia-educativa">
     <div class="container">
@@ -103,7 +19,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="titulo-estrategia">Nombre de Estrategia </label>
-                <input type="text" id="titulo-estrategia" name="titulo-estrategia" class="form-control" required>
+                <input type="text" id="titulo-estrategia" name="nombre" class="form-control" required>
               </div>
             </div>
             <div class="col-md-2">
@@ -115,7 +31,7 @@
             <div class="col-md-2">
               <div class="form-group">
                 <label for="ano-escolar">Año escolar</label>
-                <input type="text" id="ano-escolar" name="ano-escolar" class="form-control" required>
+                <input type="text" id="ano-escolar" name="anio_escolar" class="form-control" required>
               </div>
             </div>
             <div class="col-md-2">
@@ -124,7 +40,7 @@
                 <select id="grupo" name="grupo" class="form-control" required>
                     <option value="" disabled selected>Seleccione una grupo</option>
                     {% for grupo in grupos %}
-                        <option value="{{ grupo.id }}">{{ grupo.nombre }}</option>
+                        <option value="{{ grupo.nombre }}">{{ grupo.nombre }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -137,11 +53,11 @@
           <h3 class="mb-4">1. Introducción</h3>
           <div class="form-group">
             <label for="plan-estudios">1.1 Plan de estudios</label>
-            <textarea id="plan-estudios" name="plan-estudios" class="form-control" rows="4"  ></textarea>
+            <textarea id="plan-estudios" name="plan_estudios" class="form-control" rows="4"></textarea>
           </div>
           <div class="form-group">
             <label for="objetivos-estrategia">1.2 Objetivos de la Estrategia Educativa</label>
-            <textarea id="objetivos-estrategia" name="objetivos-estrategia" class="form-control" rows="4"  ></textarea>
+            <textarea id="objetivos-estrategia" name="obj_estrategia" class="form-control" rows="4"></textarea>
           </div>
         </div>
       
@@ -150,19 +66,19 @@
           <h3 class="mb-4">2. Caracterización de la grupo</h3>
           <div class="form-group">
             <label for="direccion-grupo">2.1 Dirección de la grupo</label>
-            <input type="text" id="direccion-grupo" name="direccion-grupo" class="form-control">
+            <input type="text" id="direccion-grupo" name="dir_grupo" class="form-control">
           </div>
           <div class="form-group">
             <label for="caracteristicas-grupo">2.2 Características de la grupo</label>
-            <textarea id="caracteristicas-grupo" name="caracteristicas-grupo" class="form-control" rows="4"></textarea>
+            <textarea id="caracteristicas-grupo" name="caract_grupo" class="form-control" rows="4"></textarea>
           </div>
           <div class="form-group">
             <label for="colectivo-pedagogico">2.3 Colectivo pedagógico</label>
-            <textarea id="colectivo-pedagogico" name="colectivo-pedagogico" class="form-control" rows="4"  ></textarea>
+            <textarea id="colectivo-pedagogico" name="colect_pedagogico" class="form-control" rows="4"></textarea>
           </div>
           <div class="form-group">
             <label for="otros-aspectos">2.4 Otros aspectos</label>
-            <textarea id="otros-aspectos" name="otros-aspectos" class="form-control" rows="4"></textarea>
+            <textarea id="otros-aspectos" name="otros_aspectos" class="form-control" rows="4"></textarea>
           </div>
         </div>
       
@@ -171,19 +87,19 @@
           <h3 class="mb-4">3. Problemas detectados en la grupo</h3>
           <div class="form-group">
             <label for="dimension-curricular">3.1 Dimensión curricular</label>
-            <textarea id="dimension-curricular" name="dimension-curricular" class="form-control" rows="4"  ></textarea>
+            <textarea id="dimension-curricular" name="dim_curricular" class="form-control" rows="4"></textarea>
           </div>
           <div class="form-group">
             <label for="dimension-extensionista">3.2 Dimensión extensionista</label>
-            <textarea id="dimension-extensionista" name="dimension-extensionista" class="form-control" rows="4"  ></textarea>
+            <textarea id="dimension-extensionista" name="dim_extensionista" class="form-control" rows="4"></textarea>
           </div>
           <div class="form-group">
             <label for="dimension-politico-ideologica">3.3 Dimensión político-ideológica</label>
-            <textarea id="dimension-politico-ideologica" name="dimension-politico-ideologica" class="form-control" rows="4"  ></textarea>
+            <textarea id="dimension-politico-ideologica" name="dim_politica" class="form-control" rows="4"></textarea>
           </div>
           <div class="form-group">
             <label for="conclusiones">3.4 Conclusiones</label>
-            <textarea id="conclusiones" name="conclusiones" class="form-control" rows="4"  ></textarea>
+            <textarea id="conclusiones" name="conclusiones" class="form-control" rows="4"></textarea>
           </div>
         </div>
       
@@ -192,31 +108,31 @@
           <h3 class="mb-4">4. Plan de acciones</h3>
           <div class="form-group">
             <label for="objetivo-general">4.1 Objetivo General</label>
-            <textarea id="objetivo-general" name="objetivo-general" class="form-control" rows="4"  ></textarea>
+            <textarea id="objetivo-general" name="obj_general" class="form-control" rows="4"></textarea>
           </div>
           <div class="form-group">
             <label for="objetivos-especificos-curricular">4.2.1 Objetivos específicos (Dimensión curricular)</label>
-            <textarea id="objetivos-especificos-curricular" name="objetivos-especificos-curricular" class="form-control" rows="4"  ></textarea>
+            <textarea id="objetivos-especificos-curricular" name="obj_dc" class="form-control" rows="4"></textarea>
           </div>
           <div class="form-group">
             <label for="plan-acciones-curricular">4.2.2 Plan de acciones (Dimensión curricular)</label>
-            <textarea id="plan-acciones-curricular" name="plan-acciones-curricular" class="form-control" rows="4"  ></textarea>
+            <textarea id="plan-acciones-curricular" name="plan_dc" class="form-control" rows="4"></textarea>
           </div>
           <div class="form-group">
             <label for="objetivos-especificos-extensionista">4.3.1 Objetivos específicos (Dimensión extensionista)</label>
-            <textarea id="objetivos-especificos-extensionista" name="objetivos-especificos-extensionista" class="form-control" rows="4"  ></textarea>
+            <textarea id="objetivos-especificos-extensionista" name="obj_de" class="form-control" rows="4"></textarea>
           </div>
           <div class="form-group">
             <label for="plan-acciones-extensionista">4.3.2 Plan de acciones (Dimensión extensionista)</label>
-            <textarea id="plan-acciones-extensionista" name="plan-acciones-extensionista" class="form-control" rows="4"  ></textarea>
+            <textarea id="plan-acciones-extensionista" name="plan_de" class="form-control" rows="4"></textarea>
           </div>
           <div class="form-group">
             <label for="objetivos-especificos-politico-ideologica">4.4.1 Objetivos específicos (Dimensión político-ideológica)</label>
-            <textarea id="objetivos-especificos-politico-ideologica" name="objetivos-especificos-politico-ideologica" class="form-control" rows="4"  ></textarea>
+            <textarea id="objetivos-especificos-politico-ideologica" name="obj_dp" class="form-control" rows="4"></textarea>
           </div>
           <div class="form-group">
             <label for="plan-acciones-politico-ideologica">4.4.2 Plan de acciones (Dimensión político-ideológica)</label>
-            <textarea id="plan-acciones-politico-ideologica" name="plan-acciones-politico-ideologica" class="form-control" rows="4"  ></textarea>
+            <textarea id="plan-acciones-politico-ideologica" name="plan_dp" class="form-control" rows="4"></textarea>
           </div>
         </div>
       
@@ -225,7 +141,7 @@
           <h3 class="mb-4">5. Evaluación integral</h3>
           <div class="form-group">
             <label for="evaluacion-integral">Evaluación integral</label>
-            <textarea id="evaluacion-integral" name="evaluacion-integral" class="form-control" rows="4"  ></textarea>
+            <textarea id="evaluacion-integral" name="evaluacion" class="form-control" rows="4"></textarea>
           </div>
         </div>
       
@@ -234,7 +150,7 @@
           <h3 class="mb-4">6. Autor</h3>
           <div class="form-group">
             <label for="autor">Nombre del autor</label>
-            <input type="text" id="autor" name="autor" class="form-control"  >
+            <input type="text" id="autor" name="autor" value="{{user.first_name}} {{ user.last_name }}" class="form-control">
           </div>
         </div>
         
@@ -250,79 +166,15 @@
       </form>
     </div>
 </section>
-
-  
-    
- <!-- ======= Footer ======= -->
- <footer id="footer" class="footer">
-    <div class="container footer-top">
-      <div class="row gy-4">
-        <!-- Columna 1: Acerca de -->
-        <div class="col-lg-5 col-md-12 footer-about footer-fade-in">
-          <a href="{% url 'pagina_principal' %}" class="d-flex align-items-center logo">
-            <span>ESTRA</span>
-          </a>
-          <p>"Recuerda: una buena gestión educativa es la base del éxito. ¡Gracias por visitarnos!"</p>
-          <div class="d-flex mt-4 social-links">
-            <a href="#"><i class="bi bi-twitter"></i></a>
-            <a href="#"><i class="bi bi-facebook"></i></a>
-            <a href="#"><i class="bi bi-instagram"></i></a>
-            <a href="#"><i class="bi bi-linkedin"></i></a>
-          </div>
-        </div>
-
-        <!-- Columna 2: Enlaces útiles -->
-        <div class="col-6 col-lg-2 footer-fade-in footer-links" data-delay="100">
-          <h4>Enlaces Útiles</h4>
-          <ul>
-            <li><a href="{% url 'pagina_principal' %}">Inicio</a></li>
-            <li><a href="{% url 'sobrenos' %}">>Sobre Nosotros</a></li>
-            <li><a href="#">Términos de Servicios</a></li>
-            <li><a href="#">Política de Privacidad</a></li>
-          </ul>
-        </div>
-
-        <!-- Columna 3: Contáctenos -->
-        <div class="col-lg-3 col-md-12 text-center text-md-start footer-contact footer-fade-in" data-delay="200">
-          <h4>Contáctenos</h4>
-          <p>Carretera a San Antonio de los Baños Km 2 1/2, Reparto. Torrens</p>
-          <p>La Habana</p>
-          <p>Cuba</p>
-          <p class="mt-4"><strong>Teléfono:</strong> <span>+53 558-648-04</span></p>
-          <p><strong>Correo:</strong> <span>cFc@estudiantes.uci.cu</span></p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Copyright -->
-    <div class="container text-center copyright footer-fade-in mt-4" data-delay="300">
-      <p>&copy; <span>Copyright</span> <strong class="px-1">ESTRA</strong> <span>Todos los derechos reservados.</span></p>
-      <div class="credits">
-        Diseñado por "CodeFusion Creators"
-      </div>
-    </div>
-  </footer><!-- Fin del Footer -->
-
-
-  <!-- Archivos JS de Vendor -->
-  <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-  <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
-  <script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
-  <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
-  <script src="{% static 'assets/vendor/waypoints/noframework.waypoints.js' %}"></script>
-
-  <!-- Archivo JS Principal -->
-  <script src="{% static 'assets/js/main.js' %}"></script>
-
-
-
+{% endblock %}
+{% block scripts %}
   <script>
     // Inserta el JSON serializado desde la vista aquí
     const gruposData = {{ grupos_json|safe }};
 
     document.getElementById('grupo').addEventListener('change', function() {
-        const selectedId = this.value;
-        const grupo = gruposData.find(b => b.id == selectedId || b.id == parseInt(selectedId));
+        const selectedName = this.value;
+        const grupo = gruposData.find(b => b.nombre == selectedName);
         if (grupo) {
             document.getElementById('direccion-grupo').value = grupo.direccion;
             document.getElementById('caracteristicas-grupo').value = grupo.caracterizacion;
@@ -336,5 +188,4 @@
         }
     });
   </script>
-</body>
-</html>
+{% endblock%}

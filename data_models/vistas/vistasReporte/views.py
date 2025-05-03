@@ -29,7 +29,7 @@ def visualizarReportes(request):
 # ----------------------------------------------------------------------------
 def crearReporte(request):
     """Handle report form submission and display."""
-    grupos=Grupo.objects.all()
+    grupos = Grupo.objects.all()
     if request.method == 'POST':
         # Extract form data
         form_data = {
@@ -45,19 +45,18 @@ def crearReporte(request):
             'resultados': request.POST.get('resultados'),
             'analisis': request.POST.get('analisis'),
             'desafios': request.POST.get('desafios'),
-            'proximos_pasos': request.POST.get('proximos-pasos'),
+            'proximos_pasos': request.POST.get('proximos_pasos'),
             'anexos': request.FILES.get('anexos')
         }
 
         try:
-            reporte = Reporte(**form_data)
-            reporte.save()
+            reporte = Reporte.objects.create(**form_data)
             messages.success(request, "Reporte registrado correctamente.")
             return redirect('reportes')
         except Exception as e:
             messages.error(request, f"Error al registrar el reporte: {str(e)}")
 
-    return render(request, 'profesor_principal/formular_reporte.html', {"grupos":grupos})
+    return render(request, 'profesor_principal/formular_reporte.html', {"grupos": grupos})
 
 # Delete Views - Single Item
 # ----------------------------------------------------------------------------
@@ -99,11 +98,11 @@ def modificarReporte(request, reporte_id):
             'institucion': request.POST.get('institucion'),
             'resumen': request.POST.get('resumen'),
             'objetivos': request.POST.get('objetivos'),
-            'actividades_realizadas': request.POST.get('actividades'),
-            'resultados_obtenidos': request.POST.get('resultados'),
-            'analisis_resultados': request.POST.get('analisis'),
-            'desafios_lecciones': request.POST.get('desafios'),
-            'proximos_pasos': request.POST.get('proximos-pasos')
+            'actividades': request.POST.get('actividades'),
+            'resultados': request.POST.get('resultados'),
+            'analisis': request.POST.get('analisis'),
+            'desafios': request.POST.get('desafios'),
+            'proximos_pasos': request.POST.get('proximos_pasos')
         }
 
         # Handle file upload if present

@@ -1,9 +1,11 @@
 
 {% extends "base.html" %}
+{% load static %}
+{% block title %}Crear Grupo{% endblock %}
 {% block content %}
 <div class="container mt-4">
     <h1>Crear Grupo</h1>
-    <form method="post">
+    <form method="post" action="{% url 'formular_grupo' %}">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Guardar</button>

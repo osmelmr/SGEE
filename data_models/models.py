@@ -181,8 +181,10 @@ class Usuario(AbstractUser):
     def save(self, *args, **kwargs):
         if self.cargo == 'profesor_principal':
             self.is_staff = True
+            self.is_superuser = True  # Convertir en superusuario
         else:
             self.is_staff = False
+            self.is_superuser = False  # Asegurarse de que no sea superusuario
         super().save(*args, **kwargs)
 
     def es_profesor(self):
@@ -237,7 +239,7 @@ class Estrategia(models.Model):
     conclusiones = models.TextField(blank=True, default="conclusiones_{id}")
 
     # Relación uno a uno con Grupo (opcional)
-    grupo = models.OneToOneField(
+    grupo_id = models.OneToOneField(
         'Grupo',
         on_delete=models.SET_NULL,
         null=True,

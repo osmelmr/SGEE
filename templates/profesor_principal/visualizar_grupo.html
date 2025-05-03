@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Detalle de Grupo</h1>
+    <p><strong>ID:</strong> {{ grupo.id }}</p>
+    <p><strong>Nombre:</strong> {{ grupo.nombre }}</p>
+    <p><strong>Descripción:</strong> {{ grupo.descripcion }}</p>
+
+    <h2>Profesores Asignados</h2>
+    <ul>
+        {% for profesor in grupo.profesores.all %}
+        <li>{{ profesor.nombre }} {{ profesor.primer_apellido }} {{ profesor.segundo_apellido }}</li>
+        {% empty %}
+        <li>No hay profesores asignados a esta grupo.</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'listar_grupos' %}" class="btn btn-secondary">Volver a la lista</a>
+</div>
+{% endblock %}

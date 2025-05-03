@@ -29,19 +29,17 @@ def visualizarProfesores(request):
 def crearProfesor(request):
     """Handle professor information form submission and display."""
     if request.method == 'POST':
-        
         form_data = {
-            'nombre': request.POST.get('nombre-profesor'),
-            'primer_apellido': request.POST.get('primer-apellido'),
-            'segundo_apellido': request.POST.get('segundo-apellido'),
+            'nombre': request.POST.get('nombre'),
+            'primer_apellido': request.POST.get('primer_apellido'),
+            'segundo_apellido': request.POST.get('segundo_apellido'),
             'sexo': request.POST.get('sexo'),
-            'categoria_docente': request.POST.get('categoria-docente'),
+            'categoria_docente': request.POST.get('categoria_docente'),
             'asignatura': request.POST.get('asignatura'),
             'solapin': request.POST.get('solapin'),
             'telefono': request.POST.get('telefono'),
             'correo': request.POST.get('correo'),
-            'grupo_asignada': request.POST.get('grupo-asignada'),
-            'descripcion': request.POST.get('descripcion-profesor')
+            'descripcion': request.POST.get('descripcion')
         }
         # Validate required fields
         if not all(form_data.values()):
@@ -49,9 +47,7 @@ def crearProfesor(request):
             return render(request, 'profesor_principal/formular_profesor.html')
 
         try:
-            profesor = Profesor(**form_data)
-            print(profesor)
-            profesor.save()
+            profesor = Profesor.objects.create(**form_data)
             messages.success(request, "Profesor registrado correctamente.")
             return redirect('profesores')
         except Exception as e:
@@ -89,18 +85,16 @@ def modificarProfesor(request, profesor_id):
     profesor = get_object_or_404(Profesor, id=profesor_id)
     
     if request.method == 'POST':
-        # Eliminar 'grupos_impartir' del diccionario form_data
         form_data = {
             'nombre': request.POST.get('nombre'),
-            'primer_apellido': request.POST.get('primer-apellido'),
-            'segundo_apellido': request.POST.get('segundo-apellido'),
+            'primer_apellido': request.POST.get('primer_apellido'),
+            'segundo_apellido': request.POST.get('segundo_apellido'),
             'sexo': request.POST.get('sexo'),
-            'categoria_docente': request.POST.get('categoria-docente'),
+            'categoria_docente': request.POST.get('categoria_docente'),
             'asignatura': request.POST.get('asignatura'),
             'solapin': request.POST.get('solapin'),
             'telefono': request.POST.get('telefono'),
             'correo': request.POST.get('correo'),
-            'grupo_asignada': request.POST.get('grupo-asignada'),
             'descripcion': request.POST.get('descripcion')
         }
 

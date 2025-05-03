@@ -108,8 +108,8 @@ urlpatterns = [
     
     #----------------------------------------
     #BRIGADAS URLS
-    path('crear_grupo/', crearGrupo, name='crear_grupo'),  
-    path('grupos/', listarGrupos, name='profesor_principal/listar_grupos'),
+    path('formular_grupo/', crearGrupo, name='formular_grupo'),  
+    path('grupos/', listarGrupos, name='grupos'),
     path('grupos/<int:grupo_id>/', visualizarGrupo, name='visualizar_grupo'),
 
     #----------------------------------------

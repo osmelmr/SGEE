@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.http import JsonResponse
 from django.db.models import Q
 import json
+from django.contrib.auth.decorators import user_passes_test, login_required
 
 def visualizarEstrategias(request):
     """Display all strategies with optional search functionality."""
@@ -29,16 +30,14 @@ def visualizarEstrategias(request):
 # ----------------------------------------------------------------------------
 def crearEstrategia(request):
     """Handle strategy form submission and display."""
-    from data_models.models import Grupo  # Asegúrate de importar Grupo
-
-    grupos = Grupo.objects.all()  # Obtén todas las grupos
+    grupos = Grupo.objects.all()
     grupos_json = json.dumps([
         {
             "id": grupo.id,
             "nombre": grupo.nombre,
             "direccion": grupo.direccion,
             "curso": grupo.curso,
-            "anio_escolar":grupo.anio_escolar,
+            "anio_escolar": grupo.anio_escolar,
             "caracterizacion": grupo.caracterizacion
         }
         for grupo in grupos
@@ -47,45 +46,42 @@ def crearEstrategia(request):
     if request.method == "POST":
         # Extract form data
         form_data = {
-            "nombre": request.POST.get("titulo-estrategia"),
+            "nombre": request.POST.get("nombre"),
             "curso": request.POST.get("curso"),
-            "anio_escolar": request.POST.get("ano-escolar"),
+            "anio_escolar": request.POST.get("anio_escolar"),
             "grupo": request.POST.get("grupo"),
-            "plan_estudios": request.POST.get("plan-estudios"),
-            "obj_estrategia": request.POST.get("objetivos-estrategia"),
-            "dir_grupo": request.POST.get("direccion-grupo"),
-            "caract_grupo": request.POST.get("caracteristicas-grupo"),
-            "colect_pedagogico": request.POST.get("colectivo-pedagogico"),
-            "otros_aspectos": request.POST.get("otros-aspectos", "otros_aspectos"),
-            "dim_curricular": request.POST.get("dimension-curricular"),
-            "dim_extensionista": request.POST.get("dimension-extensionista"),
-            "dim_politica": request.POST.get("dimension-politico-ideologica"),
+            "plan_estudios": request.POST.get("plan_estudios"),
+            "obj_estrategia": request.POST.get("obj_estrategia"),
+            "dir_grupo": request.POST.get("dir_grupo"),
+            "caract_grupo": request.POST.get("caract_grupo"),
+            "colect_pedagogico": request.POST.get("colect_pedagogico"),
+            "otros_aspectos": request.POST.get("otros_aspectos"),
+            "dim_curricular": request.POST.get("dim_curricular"),
+            "dim_extensionista": request.POST.get("dim_extensionista"),
+            "dim_politica": request.POST.get("dim_politica"),
             "conclusiones": request.POST.get("conclusiones"),
-            "obj_general": request.POST.get("objetivo-general"),
-            "obj_dc": request.POST.get("objetivos-especificos-curricular"),
-            "plan_dc": request.POST.get("plan-acciones-curricular"),
-            "obj_de": request.POST.get("objetivos-especificos-extensionista"),
-            "plan_de": request.POST.get("plan-acciones-extensionista"),
-            "obj_dp": request.POST.get("objetivos-especificos-politico-ideologica"),
-            "plan_dp": request.POST.get("plan-acciones-politico-ideologica"),
-            "evaluacion": request.POST.get("evaluacion-integral"),
+            "obj_general": request.POST.get("obj_general"),
+            "obj_dc": request.POST.get("obj_dc"),
+            "plan_dc": request.POST.get("plan_dc"),
+            "obj_de": request.POST.get("obj_de"),
+            "plan_de": request.POST.get("plan_de"),
+            "obj_dp": request.POST.get("obj_dp"),
+            "plan_dp": request.POST.get("plan_dp"),
+            "evaluacion": request.POST.get("evaluacion"),
             "autor": request.POST.get("autor"),
         }
-        
         try:
-            estrategia = Estrategia(**form_data)
-            estrategia.save()
+            estrategia = Estrategia.objects.create(**form_data)
             messages.success(request, "Estrategia registrada correctamente.")
             return redirect("estrategias")
         except Exception as e:
+            print(str(e))
             messages.error(request, f"Error al registrar la estrategia: {str(e)}")
-            # Si hay error, vuelve a mostrar el formulario con las grupos
             return render(request, "profesor_principal/formular_estrategia.html", {
                 "grupos": grupos,
                 "grupos_json": grupos_json
             })
     
-    # GET: mostrar formulario con las grupos y datos para autocompletar
     return render(request, "profesor_principal/formular_estrategia.html", {
         "grupos": grupos,
         "grupos_json": grupos_json
@@ -116,44 +112,43 @@ def eliminarEstrategias(request):
 
 # Update Views - Unique Item
 # ----------------------------------------------------------------------------
+@login_required
+@user_passes_test(lambda u: u.es_profesor(), login_url='/login/')
 def modificarEstrategia(request, estra_id):
     """Modify a single strategy."""
     estra = get_object_or_404(Estrategia, id=estra_id)
     
     if request.method == "POST":
-        # Extraer datos del formulario
+        # Extract form data
         form_data = {
-            "nombre": request.POST.get("titulo-estrategia"),
+            "nombre": request.POST.get("nombre"),
             "curso": request.POST.get("curso"),
-            "anio_escolar": request.POST.get("ano-escolar"),
+            "anio_escolar": request.POST.get("anio_escolar"),
             "grupo": request.POST.get("grupo"),
-            "plan_estudios": request.POST.get("plan-estudios"),
-            "obj_estrategia": request.POST.get("objetivos-estrategia"),
-            "dir_grupo": request.POST.get("direccion-grupo"),
-            "caract_grupo": request.POST.get("caracteristicas-grupo"),
-            "colect_pedagogico": request.POST.get("colectivo-pedagogico"),
-            "otros_aspectos": request.POST.get("otros-aspectos"),
-            "dim_curricular": request.POST.get("dimension-curricular"),
-            "dim_extensionista": request.POST.get("dimension-extensionista"),
-            "dim_politica": request.POST.get("dimension-politico-ideologica"),
+            "plan_estudios": request.POST.get("plan_estudios"),
+            "obj_estrategia": request.POST.get("obj_estrategia"),
+            "dir_grupo": request.POST.get("dir_grupo"),
+            "caract_grupo": request.POST.get("caract_grupo"),
+            "colect_pedagogico": request.POST.get("colect_pedagogico"),
+            "otros_aspectos": request.POST.get("otros_aspectos"),
+            "dim_curricular": request.POST.get("dim_curricular"),
+            "dim_extensionista": request.POST.get("dim_extensionista"),
+            "dim_politica": request.POST.get("dim_politica"),
             "conclusiones": request.POST.get("conclusiones"),
-            "obj_general": request.POST.get("objetivo-general"),
-            "obj_dc": request.POST.get("objetivos-especificos-curricular"),
-            "plan_dc": request.POST.get("plan-acciones-curricular"),
-            "obj_de": request.POST.get("objetivos-especificos-extensionista"),
-            "plan_de": request.POST.get("plan-acciones-extensionista"),
-            "obj_dp": request.POST.get("objetivos-especificos-politico-ideologica"),
-            "plan_dp": request.POST.get("plan-acciones-politico-ideologica"),
-            "evaluacion": request.POST.get("evaluacion-integral"),
+            "obj_general": request.POST.get("obj_general"),
+            "obj_dc": request.POST.get("obj_dc"),
+            "plan_dc": request.POST.get("plan_dc"),
+            "obj_de": request.POST.get("obj_de"),
+            "plan_de": request.POST.get("plan_de"),
+            "obj_dp": request.POST.get("obj_dp"),
+            "plan_dp": request.POST.get("plan_dp"),
+            "evaluacion": request.POST.get("evaluacion"),
             "autor": request.POST.get("autor"),
         }
         
         try:
-            # Actualizar cada campo de la estrategia
             for field, value in form_data.items():
                 setattr(estra, field, value)
-            
-            # Guardar los cambios
             estra.save()
             messages.success(request, "Estrategia modificada correctamente.")
             return redirect("estrategias")
@@ -161,7 +156,6 @@ def modificarEstrategia(request, estra_id):
             messages.error(request, f"Error al modificar la estrategia: {str(e)}")
             return render(request, "profesor_principal/modificar_estrategia.html", {"estrategia": estra})
     
-    # Si es GET, mostrar el formulario con los datos actuales
     return render(request, "profesor_principal/modificar_estrategia.html", {"estrategia": estra})
 
 # Update Views - Unique Item
@@ -169,4 +163,4 @@ def modificarEstrategia(request, estra_id):
 def visualizarEstrategia(request, estra_id):
     """View a single strategy."""
     estra = get_object_or_404(Estrategia, id=estra_id)
-    return render(request, "profesor_principal/visualizar__estrategia.html", {"estrategia": estra})
+    return render(request, "profesor_principal/visualizar_estrategia.html", {"estrategia": estra})

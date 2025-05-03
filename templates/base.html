@@ -63,6 +63,7 @@
               <li><a href="{% url 'usuarios'%}"> Usuarios </a></li>
               <li><a href="{% url 'profesores'%}"> Información Profesoral</a></li>
               <li><a href="{% url 'encuestas'%}"> Encuestas</a></li>
+              <li><a href="{% url 'grupos'%}"> Grupos</a></li>
             </ul>
           </li>
           <li><a href="{% url 'contactar' %}">Contáctenos</a></li>
@@ -73,11 +74,15 @@
                 {% if user.is_authenticated %}
                 <span class="user-name"><i class="bi bi-person-fill"></i> {{ user.first_name }}</span>
                 <span class="user-role"><i class="bi bi-briefcase-fill"></i>Cargo: {{ user.cargo }}</span>
-                <a href="{% url 'logout' %}">Salir</a>
+                <form action="{% url 'logout' %}" method="POST" style="display: inline;">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-link" style="padding: 0; border: none; background: none; color: inherit; cursor: pointer;">
+                    Salir
+                  </button>
+                </form>
                 {% else %}
                 <p>No has iniciado sesión. <a href="{% url 'login' %}">Iniciar sesión</a></p>
                 {% endif %}
-                
               </li>
             </ul>
           </li>

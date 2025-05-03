@@ -29,7 +29,7 @@ def visualizarEncuestas(request):
 def crearEncuesta(request):
     """Handle survey form submission and display."""
     if request.method == 'POST':
-        # Extraer datos del formulario
+        # Extract data from the form
         form_data = {
             'titulo': request.POST.get('titulo'),
             'descripcion': request.POST.get('descripcion'),
@@ -39,9 +39,8 @@ def crearEncuesta(request):
         
         try:
             encuesta = Encuesta.objects.create(**form_data)
-            # Guardar preguntas asociadas
+            # Save associated questions
             preguntas = request.POST.getlist('preguntas[]')
-            print(preguntas)
             for texto in preguntas:
                 if texto.strip():
                     encuesta.preguntas.create(texto=texto)
@@ -98,11 +97,9 @@ def modificarEncuesta(request, encuesta_id):
 
             # Handle questions
             preguntas = request.POST.getlist('preguntas[]')
-            # Delete existing questions
             encuesta.preguntas.all().delete()
-            # Add new questions
             for texto in preguntas:
-                if texto.strip():  # Only add non-empty questions
+                if texto.strip():
                     encuesta.preguntas.create(texto=texto)
 
             messages.success(request, "Encuesta actualizada correctamente.")
