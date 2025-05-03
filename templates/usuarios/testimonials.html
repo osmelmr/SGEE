@@ -1,0 +1,124 @@
+{% extends 'baseg.html' %}
+{% load static %}
+{% block title %} Reseñas {% endblock %}
+{% block content %}
+<div id="maind">
+
+    <!-- ======= Breadcrumbs ======= -->
+    <section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2> Reseñas </h2>
+          <ol>
+            <li><a href="{% url 'pagina_principal' %}"> Inicio </a></li>
+            <li> Reseñas </li>
+          </ol>
+        </div>
+
+      </div>
+    </section><!-- End Breadcrumbs -->
+
+    <!-- ======= Testimonials Section ======= -->
+<section id="testimonials" class="testimonials">
+  <div class="container">
+    <div class="row">
+
+      <!-- Testimonio 1 -->
+      <div class="col-lg-6">
+        <div class="testimonial-item fade-in" data-delay="100">
+          <!--<img src="./imagenes/Julio.jpg" class="testimonial-img" alt="">-->
+          <img src=" {% static './imagenes/Julio.jpg'%}" class="testimonial-img" alt="">
+          <h3>Julio César Bello Benítez</h3>
+          <h4>Estudiante Segundo Año</h4>
+          <p>
+            <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+            "¡Excelente recurso! ESTRA me ha proporcionado herramientas prácticas y fáciles de implementar."
+            <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+          </p>
+        </div>
+      </div>
+
+      <!-- Testimonio 2 -->
+      <div class="col-lg-6">
+        <div class="testimonial-item mt-4 mt-lg-0 slide-in-right" data-delay="200">
+          <!--<img src="./imagenes/anubis.jpg" class="testimonial-img" alt="">-->
+          <img src=" {% static './imagenes/anubis.jpg'%}" class="testimonial-img" alt="">
+          <h3>Anubis Áreas Velázques</h3>
+          <h4>Estudiante Cuarto Año</h4>
+          <p>
+            <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+            "Imprescindible para cualquier educador. Esta aplicación web me ha ayudado a enfocar mis estrategias de enseñanza de manera más efectiva. ¡Gracias!"
+            <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+          </p>
+        </div>
+      </div>
+
+      <!-- Testimonio 3 -->
+      <div class="col-lg-6">
+        <div class="testimonial-item mt-4 fade-in-up" data-delay="300">
+          <!--<img src="./imagenes/Luis.jpg" class="testimonial-img" alt="">-->
+          <img src=" {% static './imagenes/Luis.jpg'%}" class="testimonial-img" alt="">
+          <h3>Luis Alberto Roselló</h3>
+          <h4>Estudiante Cuarto Año</h4>
+          <p>
+            <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+            "Contenido claro, conciso y muy útil, aunque puede seguir mejorando y ampliando sus herramientas."
+            <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+          </p>
+        </div>
+      </div>
+
+      <!-- Testimonio 4 -->
+      <div class="col-lg-6">
+        <div class="testimonial-item mt-4 slide-in-left" data-delay="400">
+          <!--<img src="./imagenes/patricia.jpg" class="testimonial-img" alt="">-->
+          <img src=" {% static './imagenes/patricia.jpg'%}" class="testimonial-img" alt="">
+          <h3>Patricia León del Valle</h3>
+          <h4>Estudiante Cuarto Año</h4>
+          <p>
+            <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+            "Me encanta la organización y la facilidad de navegación de esta página. Encuentro la información que necesito rápidamente. ¡Felicitaciones!"
+            <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+          </p>
+        </div>
+      </div>
+
+      <!-- Testimonio 5 -->
+      <div class="col-lg-6">
+        <div class="testimonial-item mt-4 fade-in" data-delay="500">
+          <!--<img src="./imagenes/colas.jpg" class="testimonial-img" alt="">-->
+          <img src=" {% static './imagenes/colas.jpg'%}" class="testimonial-img" alt="">
+          <h3>Leonardo Colás Leyva</h3>
+          <h4>Estudiante Cuarto Año</h4>
+          <p>
+            <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+            "Un recurso innovador que me ha brindado nuevas perspectivas sobre la gestión de estrategias educativas. ¡Sigan así!"
+            <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+          </p>
+        </div>
+      </div>
+
+      <!-- Testimonio 6 -->
+      <div class="col-lg-6">
+        <div class="testimonial-item mt-4 slide-in-right" data-delay="600">
+          <!--<img src="./imagenes/mallea.jpg" class="testimonial-img" alt="">-->
+          <img src=" {% static './imagenes/mallea.jpg'%}" class="testimonial-img" alt="">
+          <h3>Iván Mallea</h3>
+          <h4>Profesor</h4>
+          <p>
+            <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+            "Muy agradecido por esta aplicación web. Me ha ayudado a optimizar mis estrategias educativas y a obtener mejores resultados con mis alumnos."
+            <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section><!-- End Testimonials Section -->
+
+</div><!-- End #main -->
+{% endblock %}
+
+  

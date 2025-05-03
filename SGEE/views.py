@@ -33,7 +33,9 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('pagina_principal')  # Redirige a la página principal después del login
+            if request.user.es_profesor():
+                return redirect('pagina_principal')
+            return redirect('pagina_principal_g')  # Redirige a la página principal después del login
         else:
             messages.error(request, 'Usuario o contraseña incorrectos.')
     return render(request, 'login.html')

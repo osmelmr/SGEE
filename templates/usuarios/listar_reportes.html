@@ -1,0 +1,154 @@
+{% extends "baseg.html" %}
+{% load static %}
+{% block title %} Contáctenos {% endblock %}
+{% block content %}
+
+<div id="maind">
+
+<!-- Sección de Reportes de Cumplimiento -->
+<section id="reportes-cumplimiento" class="reportes-cumplimiento section-bg">
+    <div class="container-fluid">
+      <div class="section-title">
+        <h2>Reportes de Cumplimiento</h2>
+        <br>
+        <p>Administración de reportes de cumplimiento.</p>
+        <br>
+      </div>
+  
+      <!-- Barra de búsqueda -->
+      <div id="barra-busqueda-reportes" class="search-bar">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Buscar reporte..." aria-label="Buscar">
+          <button class="btn btn-primary" type="button">
+            <i class="bi bi-search"></i> <!-- Ícono de lupa -->
+          </button>
+        </div>
+      </div>
+  
+      <!-- Contenedor de la tabla con scroll -->
+      <form id="form-eliminar-reportes" method="POST" action="{% url 'eliminar_reportes' %}">
+        {% csrf_token %}
+        <div id="tabla-reportes" class="table-container">
+          <div id="tabla-reportes-responsive" class="table-responsive">
+            <table id="tablita-reportes" class="table table-bordered table-hover custom-table">
+              <thead>
+                <tr>
+                  <th>Código</th>
+                  <th>Grupo</th>
+                  <th>Curso</th>
+                  <th>Año Escolar</th>
+                  <th>
+                    Acciones
+                    <button id="btn-seleccionar-todo" class="btn btn-link p-0 ms-2" title="Seleccionar Todo">
+                      <i class="bi bi-check-all"></i>
+                    </button>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for reporte in reportes %}
+                <tr data-id="{{ reporte.id }}">
+                  <td>{{ reporte.codigo }}</td>
+                  <td>{{ reporte.grupo }}</td>
+                  <td>{{ reporte.curso }}</td>
+                  <td>{{ reporte.anio_escolar }}</td>
+                  <td>
+                    <button type="button" class="btn btn-action btn-ver-detalles" data-id="{{ reporte.id }}" title="Ver Detalles">
+                      <i class="bi bi-eye"></i>
+                    </button>
+                    <button type="button" class="btn btn-action btn-modificar" data-id="{{ reporte.id }}" title="Modificar">
+                      <i class="bi bi-pencil"></i>
+                    </button>
+                    <button type="button" class="btn btn-action btn-eliminar" data-id="{{ reporte.id }}" title="Eliminar">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                    <input type="checkbox" class="form-check-input seleccionar-fila" name="reportes[]" value="{{ reporte.id }}">
+                  </td>
+                </tr>
+                {% empty %}
+                <tr>
+                  <td colspan="5" class="text-center">No hay reportes registrados.</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- Botones independientes debajo de la tabla -->
+      <div id="botones-accion-reportes" class="d-flex justify-content-between mt-4">
+        <a href="{% url 'formular_reporte' %}">
+          <div id="btn-registrar-reporte" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Registrar
+          </div>
+        </a>
+        <button type="submit" id="btn-eliminar-reporte" class="btn btn-danger"><i class="bi bi-trash"></i> Aceptar</button>
+      </div></form>
+  
+      
+    </div>
+  </section>
+
+
+  </div>
+{% endblock %}
+{% block scripts %}
+
+  
+  <script>
+    // Selecciona todos los botones con la clase "btn-eliminar"
+    document.querySelectorAll(".btn-eliminar").forEach(button => {
+        button.addEventListener("click", function () {
+            const reporteId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
+            if (confirm("¿Estás seguro de que quieres eliminar este reporte?")) {
+                // Redirige a la URL para eliminar la reporte
+                window.location.href = `/eliminar_reporte/${reporteId}/`;
+            }
+        });
+    });
+
+  </script>
+  <script>
+    // Selecciona todos los botones con la clase "btn-modificar"
+    document.querySelectorAll(".btn-modificar").forEach(button => {
+        button.addEventListener("click", function (e) {
+            //e.stopPropagation();
+            const reporteId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
+            window.location.href = `/modificar_reporte/${reporteId}/`;
+        });
+    });
+  </script>
+
+  <script>
+    // Selecciona todos los botones con la clase "btn-ver-detalles"
+    document.querySelectorAll(".btn-ver-detalles").forEach(button => {
+        button.addEventListener("click", function (e) {
+            //e.stopPropagation();
+            const reporteId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
+            window.location.href = `/visualizar_reporte/${reporteId}/`;
+        });
+    });
+  </script>
+
+  <script>
+    document.getElementById('btn-seleccionar-todo').addEventListener('click', function (e) {
+      e.preventDefault();
+      const checkboxes = document.querySelectorAll('.seleccionar-fila');
+      checkboxes.forEach(checkbox => checkbox.checked = !checkbox.checked);
+    });
+  </script>
+  
+  <script>
+    let formulario=document.getElementById("form-eliminar-reportes");
+    formulario.addEventListener("submit", function(event){
+      event.preventDefault();
+      let reportes=document.querySelectorAll(".seleccionar-fila:checked");
+      if(reportes.length===0){
+        alert("No hay reportes seleccionados");
+        return;
+      }
+      if(confirm("¿Estás seguro de que quieres eliminar los reportes seleccionados?")){
+        formulario.submit();
+      }
+    });
+  </script>
+{% endblock%}

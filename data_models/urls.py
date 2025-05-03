@@ -5,7 +5,7 @@ from data_models.vistas.vistasProfesor.views import visualizarProfesor, eliminar
 from data_models.vistas.vistasReporte.views import visualizarReporte, eliminarReportes,eliminarReporte,modificarReporte,visualizarReportes,crearReporte
 from data_models.vistas.vistasEncuesta.views import visualizarEncuesta, eliminarEncuestas,eliminarEncuesta,modificarEncuesta,visualizarEncuestas,crearEncuesta
 from data_models.vistas.vistasUsuario.views import visualizarUsuario, eliminarUsuarios,eliminarUsuario,modificarUsuario,visualizarUsuarios,crearUsuario
-from data_models.vistas.vistasRolEstudiante.views import visualizarEstrategiasE
+from data_models.vistas.vistasRolUsuario.views import visualizarEstrategiasG, principalG, visualizarEstrategiaG, visualizarProfesoresG, visualizarProfesorG, visualizarEventosG, visualizarEventoG, visualizarReportesG, visualizarReporteG, visualizarEncuestasG, visualizarEncuestaG, contact_view, sobrenos_view, visualizarTestimonios
 from data_models.vistas.vistasGrupo.views import crearGrupo, listarGrupos, visualizarGrupo
 
 urlpatterns = [
@@ -107,7 +107,7 @@ urlpatterns = [
     path('eliminar_usuarios/', eliminarUsuarios, name='eliminar_usuarios'),
     
     #----------------------------------------
-    #BRIGADAS URLS
+    #GRUPOS URLS
     path('formular_grupo/', crearGrupo, name='formular_grupo'),  
     path('grupos/', listarGrupos, name='grupos'),
     path('grupos/<int:grupo_id>/', visualizarGrupo, name='visualizar_grupo'),
@@ -115,28 +115,33 @@ urlpatterns = [
     #----------------------------------------
     #ESTUDIANTES URLS
     #View Multiple Estrategys
-    path('estrategias_e/', visualizarEstrategiasE, name='estrategias_e'),
-    # #View Unique Estrategy
-    # path('visualizar_estrategia_e/<int:estra_id>/', visualizarEstrategiaE, name='visualizar_estrategia_e'),
-    
-    # #Ver multiples Profesores
-    # path('profesores_e/', visualizarProfesoresE, name='profesores_e'),
-    # #Ver una unica Profesor
-    # path('visualizar_profesor_e/<int:profesor_id>/', visualizarProfesorE, name='visualizar_profesor_e'),
+    path('pagina_principal_g/', principalG, name='pagina_principal_g'),
+    path('estrategias_g/', visualizarEstrategiasG, name='estrategias_g'),
+     #View Unique Estrategy
+     path('visualizar_estrategia_g/<int:estra_id>/', visualizarEstrategiaG, name='visualizar_estrategia_g'),
 
-    # #Ver multiples Eventos
-    # path('eventos_e/', visualizarEventosE, name='eventos_e'),
-    # #Ver una unica Evento
-    # path('visualizar_evento_e/<int:evento_id>/', visualizarEventoE, name='visualizar_evento_e'),
-    
-    # #Ver multiples Reportes
-    # path('reportes_e/', visualizarReportesE, name='reportes_e'),
-    # #Ver una unica Reporte
-    # path('visualizar_reporte_e/<int:reporte_id>/', visualizarReporteE, name='visualizar_reporte_e'),
-    
-    # #Ver multiples Encuestas
-    # path('encuestas_e/', visualizarEncuestasE, name='encuestas_e'),
-    # #Ver una unica Encuesta
-    # path('visualizar_encuesta_e/<int:encuesta_id>/', visualizarEncuestaE, name='visualizar_encuesta_e'),
-    # #----------------------------------------
+     #Ver multiples Profesores
+     path('profesores_g/', visualizarProfesoresG, name='profesores_g'),
+     #Ver una unica Profesor
+     path('visualizar_profesor_g/<int:profesor_id>/', visualizarProfesorG, name='visualizar_profesor_g'),
+     #Ver multiples Eventos
+     path('eventos_g/', visualizarEventosG, name='eventos_g'),
+     #Ver una unica Evento
+     path('visualizar_evento_g/<int:evento_id>/', visualizarEventoG, name='visualizar_evento_g'),
+
+     #Ver multiples Reportes
+     path('reportes_g/', visualizarReportesG, name='reportes_g'),
+     #Ver una unica Reporte
+     path('visualizar_reporte_g/<int:reporte_id>/', visualizarReporteG, name='visualizar_reporte_g'),
+
+     #Ver multiples Encuestas
+     path('encuestas_g/', visualizarEncuestasG, name='encuestas_g'),
+     #Ver una unica Encuesta
+     path('visualizar_encuesta_g/<int:encuesta_id>/', visualizarEncuestaG, name='visualizar_encuesta_g'),
+     path('contactenos_g/',contact_view,name='contactar_g'),
+
+     path('sobrenos_g/',sobrenos_view, name='sobrenos_g'),
+
+     path('testimonials_g/',visualizarTestimonios, name='testimonials_g'),
+     #----------------------------------------
 ]

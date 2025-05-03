@@ -248,7 +248,7 @@ class Estrategia(models.Model):
     )
 
     class Meta:
-        unique_together = ('curso', 'anio_escolar', 'grupo')
+        unique_together = ('curso', 'grupo')
 
     def __str__(self):
         return f"Estrategia: {self.nombre or 'Sin nombre'} ({self.curso} - {self.anio_escolar} - {self.grupo})"
