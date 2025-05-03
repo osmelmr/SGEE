@@ -13,7 +13,7 @@ def visualizarUsuarios(request):
         Q(cargo__icontains=query) |
         Q(grupo__icontains=query)
     )
-    return render(request, 'usuarios.html', {
+    return render(request, 'profesor_principal/listar_usuarios.html', {
         'usuarios': usuarios,
         'query': query
     })
@@ -63,7 +63,7 @@ def crearUsuario(request):
             messages.success(request, f'Usuario {usuario.username} creado exitosamente.')
             return redirect('usuarios')  # Redirige a la lista de usuarios
 
-    return render(request, 'formulario_usuario.html')
+    return render(request, 'profesor_principal/formular_usuario.html')
 
 # Eliminar un usuario específico
 def eliminarUsuario(request, usuario_id):
@@ -71,7 +71,7 @@ def eliminarUsuario(request, usuario_id):
     usuario = get_object_or_404(Usuario, id=usuario_id)
     usuario.delete()
     messages.success(request, f'Usuario {usuario.username} eliminado exitosamente.')
-    return redirect('visualizar_usuarios')
+    return redirect('profesor_principal/visualizar__usuarios')
 
 # Eliminar múltiples usuarios
 def eliminarUsuarios(request):
@@ -96,7 +96,7 @@ def modificarUsuario(request, usuario_id):
         usuario.telefono = request.POST.get('telefono', usuario.telefono)
         usuario.save()
         messages.success(request, f'Usuario {usuario.username} modificado exitosamente.')
-        return redirect('visualizar_usuarios')
+        return redirect('profesor_principal/visualizar__usuarios')
 
     return render(request, 'modificar_usuario.html', {'usuario': usuario})
 
@@ -104,4 +104,4 @@ def modificarUsuario(request, usuario_id):
 def visualizarUsuario(request, usuario_id):
     """Muestra los detalles de un usuario específico."""
     usuario = get_object_or_404(Usuario, id=usuario_id)
-    return render(request, 'visualizar_usuario.html', {'usuario': usuario})
+    return render(request, 'profesor_principal/visualizar__usuario.html', {'usuario': usuario})

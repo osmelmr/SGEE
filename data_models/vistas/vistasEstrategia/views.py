@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from data_models.models import Estrategia, Brigada
+from data_models.models import Estrategia, Grupo
 from django.contrib import messages
 from django.http import JsonResponse
 from django.db.models import Q
@@ -20,7 +20,7 @@ def visualizarEstrategias(request):
     else:
         estrategias = Estrategia.objects.all()
     
-    return render(request, "estrategias.html", {
+    return render(request, "profesor_principal/listar_estrategias.html", {
         "estrategias": estrategias,
         "query": query
     })
@@ -29,19 +29,19 @@ def visualizarEstrategias(request):
 # ----------------------------------------------------------------------------
 def crearEstrategia(request):
     """Handle strategy form submission and display."""
-    from data_models.models import Brigada  # Asegúrate de importar Brigada
+    from data_models.models import Grupo  # Asegúrate de importar Grupo
 
-    brigadas = Brigada.objects.all()  # Obtén todas las brigadas
-    brigadas_json = json.dumps([
+    grupos = Grupo.objects.all()  # Obtén todas las grupos
+    grupos_json = json.dumps([
         {
-            "id": brigada.id,
-            "nombre": brigada.nombre,
-            "direccion": brigada.direccion,
-            "curso": brigada.curso,
-            "anio_escolar":brigada.anio_escolar,
-            "caracterizacion": brigada.caracterizacion
+            "id": grupo.id,
+            "nombre": grupo.nombre,
+            "direccion": grupo.direccion,
+            "curso": grupo.curso,
+            "anio_escolar":grupo.anio_escolar,
+            "caracterizacion": grupo.caracterizacion
         }
-        for brigada in brigadas
+        for grupo in grupos
     ])
 
     if request.method == "POST":
@@ -53,8 +53,8 @@ def crearEstrategia(request):
             "grupo": request.POST.get("grupo"),
             "plan_estudios": request.POST.get("plan-estudios"),
             "obj_estrategia": request.POST.get("objetivos-estrategia"),
-            "dir_brigada": request.POST.get("direccion-brigada"),
-            "caract_brigada": request.POST.get("caracteristicas-brigada"),
+            "dir_grupo": request.POST.get("direccion-grupo"),
+            "caract_grupo": request.POST.get("caracteristicas-grupo"),
             "colect_pedagogico": request.POST.get("colectivo-pedagogico"),
             "otros_aspectos": request.POST.get("otros-aspectos", "otros_aspectos"),
             "dim_curricular": request.POST.get("dimension-curricular"),
@@ -79,16 +79,16 @@ def crearEstrategia(request):
             return redirect("estrategias")
         except Exception as e:
             messages.error(request, f"Error al registrar la estrategia: {str(e)}")
-            # Si hay error, vuelve a mostrar el formulario con las brigadas
-            return render(request, "formulario_estrategia.html", {
-                "brigadas": brigadas,
-                "brigadas_json": brigadas_json
+            # Si hay error, vuelve a mostrar el formulario con las grupos
+            return render(request, "profesor_principal/formular_estrategia.html", {
+                "grupos": grupos,
+                "grupos_json": grupos_json
             })
     
-    # GET: mostrar formulario con las brigadas y datos para autocompletar
-    return render(request, "formulario_estrategia.html", {
-        "brigadas": brigadas,
-        "brigadas_json": brigadas_json
+    # GET: mostrar formulario con las grupos y datos para autocompletar
+    return render(request, "profesor_principal/formular_estrategia.html", {
+        "grupos": grupos,
+        "grupos_json": grupos_json
     })
 
 # Delete Views - Single Item
@@ -129,8 +129,8 @@ def modificarEstrategia(request, estra_id):
             "grupo": request.POST.get("grupo"),
             "plan_estudios": request.POST.get("plan-estudios"),
             "obj_estrategia": request.POST.get("objetivos-estrategia"),
-            "dir_brigada": request.POST.get("direccion-brigada"),
-            "caract_brigada": request.POST.get("caracteristicas-brigada"),
+            "dir_grupo": request.POST.get("direccion-grupo"),
+            "caract_grupo": request.POST.get("caracteristicas-grupo"),
             "colect_pedagogico": request.POST.get("colectivo-pedagogico"),
             "otros_aspectos": request.POST.get("otros-aspectos"),
             "dim_curricular": request.POST.get("dimension-curricular"),
@@ -159,14 +159,14 @@ def modificarEstrategia(request, estra_id):
             return redirect("estrategias")
         except Exception as e:
             messages.error(request, f"Error al modificar la estrategia: {str(e)}")
-            return render(request, "modificar_estrategia.html", {"estrategia": estra})
+            return render(request, "profesor_principal/modificar_estrategia.html", {"estrategia": estra})
     
     # Si es GET, mostrar el formulario con los datos actuales
-    return render(request, "modificar_estrategia.html", {"estrategia": estra})
+    return render(request, "profesor_principal/modificar_estrategia.html", {"estrategia": estra})
 
 # Update Views - Unique Item
 # ----------------------------------------------------------------------------
 def visualizarEstrategia(request, estra_id):
     """View a single strategy."""
     estra = get_object_or_404(Estrategia, id=estra_id)
-    return render(request, "visualizar_estrategia.html", {"estrategia": estra})
+    return render(request, "profesor_principal/visualizar__estrategia.html", {"estrategia": estra})

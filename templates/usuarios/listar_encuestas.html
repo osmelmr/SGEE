@@ -1,0 +1,287 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Título y metadatos -->
+  <title> Encuestas </title>
+  <meta name="description" content="Sistema de Gestión de Estrategias Educativas para la Universidad de las Ciencias Informáticas (UCI).">
+  <meta name="keywords" content="ESTRA, educación, gestión, UCI, estrategias educativas">
+
+ <!-- Favicons -->
+  <!--<link href="assets/img/favicon.png" rel="icon"-->
+  <!--<<link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">-->
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Archivos CSS de Vendor -->
+  <link href="{% static 'assets/vendor/animate.css/animate.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+
+  <!-- Archivo CSS Principal -->
+  <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+</head>
+<body>
+  <!-- ======= Header ======= -->
+  <header id="header" class="d-flex align-items-center fixed-top">
+    <div class="container d-flex align-items-center">
+      <!-- Logo -->
+      <!--<a href="{% url 'pagina_principal' %}" class="logo me-auto"><img src="{% static './imagenes/logo/logo.png'%}" alt="" class="img-fluid"></a>-->
+      <h1 class="logo me-auto"><a href="{% url 'pagina_principal' %}">ESTRA</a></h1>
+
+      <!-- Navegación -->
+      <nav id="navbar" class="navbar">
+        <ul>
+          <!--
+          <li><a href="{% url 'pagina_principal' %}" class="active">Inicio</a></li>
+          -->
+          <li><a href="{% url 'pagina_principal' %}" class="active">Inicio</a></li>
+          <li class="dropdown">
+            <a href="#"><span>Sobre Nosotros</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="{% url 'sobrenos' %}">Sobre Nosotros</a></li>
+              <li><a href="{% url 'testimonials' %}"> Reseñas </a></li>
+            </ul>
+          </li>
+          <li class="dropdown"><a href="#"><span> Servicios </span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="{% url 'estrategias'%}"> Estrategias Educativas </a></li>
+              <li><a href="{% url 'eventos'%}"> Eventos </a></li>
+              <li><a href="{% url 'reportes'%}"> Reportes de Cumplimiento </a></li>
+              <li><a href="{% url 'usuarios'%}"> Usuarios </a></li>
+              <li><a href="{% url 'profesores'%}"> Información Profesoral</a></li>
+              <li><a href="{% url 'encuestas'%}"> Encuestas</a></li>
+            </ul>
+          </li>
+          <li><a href="{% url 'contactar' %}">Contáctenos</a></li>
+          <li class="dropdown user-menu">
+            <a href="#"><i class="bi bi-person-circle"></i> Mi cuenta <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li class="user-info">
+                <span class="user-name"><i class="bi bi-person-fill"></i> Nombre del Usuario</span>
+                <span class="user-role"><i class="bi bi-briefcase-fill"></i> Cargo del Usuario</span>
+              </li>
+              <li class="divider"></li>
+              <li><a href="#">Salir</a></li>
+            </ul>
+          </li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- Fin de la navegación -->
+    </div>
+  </header><!-- Fin del Header -->
+
+  <main id="main">
+    <!-- Sección de Encuestas -->
+<section id="encuestas" class="encuestas section-bg">
+    <div class="container-fluid">
+      <div class="section-title">
+        <h2>Repositorio de Encuestas</h2>
+        <br>
+        <p>Gestión de Encuestas</p>
+        <br>
+      </div>
+  
+      <!-- Barra de búsqueda -->
+      <div id="barra-busqueda-encuestas" class="search-bar">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Buscar encuesta..." aria-label="Buscar">
+          <button class="btn btn-primary" type="button">
+            <i class="bi bi-search"></i> <!-- Ícono de lupa -->
+          </button>
+        </div>
+      </div>
+  
+      <!-- Contenedor de la tabla con scroll -->
+      <form id="form-eliminar-encuestas" method="POST" action="{% url 'eliminar_encuestas' %}">
+        {% csrf_token %}
+        <div id="tabla-encuestas" class="table-container">
+          <div id="tabla-encuestas-responsive" class="table-responsive">
+            <table id="tablita-encuestas" class="table table-bordered table-hover custom-table">
+              <thead>
+                <tr>
+                  <th>Nombre de Encuesta</th>
+                  <th>Autor</th>
+                  <th>Fecha de Creación</th>
+                  <th>Estado</th>
+                  <th>
+                    Acciones
+                    <button id="btn-seleccionar-todo" class="btn btn-link p-0 ms-2" title="Seleccionar Todo">
+                      <i class="bi bi-check-all"></i>
+                    </button>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for encuesta in encuestas %}
+                <tr data-id="{{ encuesta.id }}">
+                  <td>{{ encuesta.titulo }}</td>
+                  <td>{{ encuesta.autor }}</td>
+                  <td>{{ encuesta.fecha_creacion }}</td>
+                  <td>{{ encuesta.estado }}</td>
+                  <td>
+                    <button type="button" class="btn btn-action btn-ver-detalles" data-id="{{ encuesta.id }}" title="Ver Detalles">
+                      <i class="bi bi-eye"></i>
+                    </button>
+                    <button type="button" class="btn btn-action btn-modificar" data-id="{{ encuesta.id }}" title="Modificar">
+                      <i class="bi bi-pencil"></i>
+                    </button>
+                    <button type="button" class="btn btn-action btn-eliminar" data-id="{{ encuesta.id }}" title="Eliminar">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                    <input type="checkbox" class="form-check-input seleccionar-fila" name="encuestas[]" value="{{ encuesta.id }}">
+                  </td>
+                </tr>
+                {% empty %}
+                <tr>
+                  <td colspan="5" class="text-center">No hay encuestas registradas.</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- Botones independientes debajo de la tabla -->
+      <div id="botones-accion-encuestas" class="d-flex justify-content-between mt-4">
+        <a href="{%url 'formular_encuesta'%}">
+          <div id="btn-registrar-encuesta" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Registrar
+          </div>
+        </a>
+        <button type="submit" id="btn-eliminar-encuesta" class="btn btn-danger"> <i class="bi bi-trash"></i> Aceptar
+        </div>
+      </div>
+      </form>
+  
+      
+    </div>
+  </section>
+
+</main>
+<!-- ======= Footer ======= -->
+<footer id="footer" class="footer">
+  <div class="container footer-top">
+    <div class="row gy-4">
+      <!-- Columna 1: Acerca de -->
+      <div class="col-lg-5 col-md-12 footer-about footer-fade-in">
+        <!--<a href="{% url 'pagina_principal' %}" class="d-flex align-items-center logo">-->
+        <a href="{% url 'pagina_principal' %}" class="d-flex align-items-center logo">
+          <span>ESTRA</span>
+        </a>
+        <p>"Recuerda: una buena gestión educativa es la base del éxito. ¡Gracias por visitarnos!"</p>
+        <div class="d-flex mt-4 social-links">
+          <a href="#"><i class="bi bi-twitter"></i></a>
+          <a href="#"><i class="bi bi-facebook"></i></a>
+          <a href="#"><i class="bi bi-instagram"></i></a>
+          <a href="#"><i class="bi bi-linkedin"></i></a>
+        </div>
+      </div>
+
+      <!-- Columna 2: Enlaces útiles -->
+      <div class="col-6 col-lg-2 footer-fade-in footer-links" data-delay="100">
+        <h4>Enlaces Útiles</h4>
+        <ul>
+          <!--<li><a href="{% url 'pagina_principal' %}"> Inicio </a></li>-->
+          <li><a href="{% url 'pagina_principal' %}"> Inicio </a></li>
+            
+          <!--<li><a href="{% url 'sobrenos' %}">>Sobre Nosotros</a></li>-->
+          <li><a href="{% url 'sobrenos' %}"> Sobre Nosotros </a></li>
+
+          <li><a href="#">Términos de Servicios</a></li>
+          <li><a href="#">Política de Privacidad</a></li>
+        </ul>
+      </div>
+
+      <!-- Columna 3: Contáctenos -->
+      <div class="col-lg-3 col-md-12 text-center text-md-start footer-contact footer-fade-in" data-delay="200">
+        <h4>Contáctenos</h4>
+        <p>Carretera a San Antonio de los Baños Km 2 1/2, Reparto. Torrens</p>
+        <p>La Habana</p>
+        <p>Cuba</p>
+        <p class="mt-4"><strong>Teléfono:</strong> <span>+53 558-648-04</span></p>
+        <p><strong>Correo:</strong> <span>cFc@estudiantes.uci.cu</span></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Copyright -->
+  <div class="container text-center copyright footer-fade-in mt-4" data-delay="300">
+    <p>&copy; <span>Copyright</span> <strong class="px-1">ESTRA</strong> <span>Todos los derechos reservados.</span></p>
+    <div class="credits">
+      Diseñado por "CodeFusion Creators"
+    </div>
+  </div>
+</footer><!-- Fin del Footer -->
+
+  <!-- Archivos JS de Vendor -->
+  <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/waypoints/noframework.waypoints.js' %}"></script>
+  
+
+  <!-- Archivo JS Principal -->
+  <script src="{% static 'assets/js/main.js' %}"></script>
+
+  <!-- SCRIPTS DE BOTÓN DE ELIMINAR -->
+  <script>
+    // Selecciona todos los botones con la clase "btn-eliminar"
+    document.querySelectorAll(".btn-eliminar").forEach(button => {
+      button.addEventListener("click", function () {
+        const encuestaId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
+        if (confirm("¿Estás seguro de que quieres eliminar esta encuesta?")) {
+          // Redirige a la URL para eliminar la encuesta
+          window.location.href = `/eliminar_encuesta/${encuestaId}/`;
+        }
+      });
+    });
+    
+  </script>
+    <script>
+      // Selecciona todos los botones con la clase "btn-modificar"
+      document.querySelectorAll(".btn-modificar").forEach(button => {
+          button.addEventListener("click", function (e) {
+              //e.stopPropagation();
+              const encuestaId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
+              window.location.href = `/modificar_encuesta/${encuestaId}/`;
+          });
+      });
+    </script>
+  
+    <script>
+      // Selecciona todos los botones con la clase "btn-ver-detalles"
+      document.querySelectorAll(".btn-ver-detalles").forEach(button => {
+          button.addEventListener("click", function (e) {
+              //e.stopPropagation();
+              const encuestaId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
+              window.location.href = `/visualizar_encuesta/${encuestaId}/`;
+          });
+      });
+    </script>
+  <script>
+    let formulario=document.getElementById("form-eliminar-encuestas");
+    formulario.addEventListener("submit", function(event){
+      event.preventDefault();
+      let encuestas=document.querySelectorAll(".seleccionar-fila:checked");
+      if(encuestas.length===0){
+        alert("No hay encuestas seleccionados");
+        return;
+      }
+      if(confirm("¿Estás seguro de que quieres eliminar los encuestas seleccionados?")){
+        formulario.submit();
+      }
+    });
+  </script>
+</body>
+</html>

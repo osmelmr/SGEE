@@ -19,7 +19,7 @@ def visualizarEventos(request):
     else:
         eventos = Evento.objects.all()
     
-    return render(request, 'eventos.html', {
+    return render(request, 'profesor_principal/listar_eventos.html', {
         'eventos': eventos,
         'query': query
     })
@@ -39,14 +39,14 @@ def crearEvento(request):
             'ubicacion_evento': request.POST.get('ubicacion-evento'),
             'tipo_evento': request.POST.get('tipo-evento'),
             'descripcion': request.POST.get('descripcion-evento'),
-            'profesor_cargo': request.POST.get('profesor-cargo'),
+            'profesor_encargado': request.POST.get('profesor-cargo'),
             'telefono_contacto': request.POST.get('telefono-contacto')
         }
         
         # Validate required fields
         if not all(form_data.values()):
             messages.error(request, "Todos los campos obligatorios deben ser completados.")
-            return render(request, 'formulario_evento.html')
+            return render(request, 'profesor_principal/formular_evento.html')
 
         try:
             evento = Evento(**form_data)
@@ -56,7 +56,7 @@ def crearEvento(request):
         except Exception as e:
             messages.error(request, f"Error al registrar el evento: {str(e)}")
 
-    return render(request, 'formulario_evento.html')
+    return render(request, 'profesor_principal/formular_evento.html')
 
 # Delete Views - Single Item
 # ----------------------------------------------------------------------------
@@ -98,7 +98,7 @@ def modificarEvento(request, evento_id):
             'ubicacion_evento': request.POST.get('ubicacion-evento'),
             'tipo_evento': request.POST.get('tipo-evento'),
             'descripcion': request.POST.get('descripcion-evento'),
-            'profesor_cargo': request.POST.get('profesor-cargo'),
+            'profesor_encargado': request.POST.get('profesor-cargo'),
             'telefono_contacto': request.POST.get('telefono-contacto')
         }
         
@@ -125,4 +125,4 @@ def modificarEvento(request, evento_id):
 def visualizarEvento(request, evento_id):
     """View a single event."""
     evento = get_object_or_404(Evento, id=evento_id)
-    return render(request, 'visualizar_evento.html', {'evento': evento})
+    return render(request, 'profesor_principal/visualizar__evento.html', {'evento': evento})

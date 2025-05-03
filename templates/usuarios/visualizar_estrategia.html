@@ -1,0 +1,252 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Título y metadatos -->
+  <title> Formulario Estrategias Educativas </title>
+  <meta name="description" content="Sistema de Gestión de Estrategias Educativas para la Universidad de las Ciencias Informáticas (UCI).">
+  <meta name="keywords" content="ESTRA, educación, gestión, UCI, estrategias educativas">
+
+  <!-- Favicons -->
+  <!--<link href="assets/img/favicon.png" rel="icon"-->
+  <!--<<link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">-->
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Archivos CSS de Vendor -->
+  <!--
+  <link href="assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  -->
+  <link href="{% static 'assets/vendor/animate.css/animate.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+
+  <!-- Archivo CSS Principal -->
+  <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+</head>
+<body>
+  <!-- ======= Header ======= -->
+  <header id="header" class="d-flex align-items-center fixed-top">
+    <div class="container d-flex align-items-center">
+      <!-- Logo -->
+      <!--<a href="{% url 'pagina_principal' %}" class="logo me-auto"><img src="{% static './imagenes/logo/logo.png'%}" alt="" class="img-fluid"></a>-->
+      <h1 class="logo me-auto"><a href="{% url 'pagina_principal' %}">ESTRA</a></h1>
+
+      <!-- Navegación -->
+      <nav id="navbar" class="navbar">
+        <ul>
+          <!--
+          <li><a href="{% url 'pagina_principal' %}" class="active">Inicio</a></li>
+          -->
+          <li><a href="{% url 'pagina_principal' %}" class="active">Inicio</a></li>
+          <li class="dropdown">
+            <a href="#"><span>Sobre Nosotros</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <!--
+              <li><a href="{% url 'sobrenos' %}">>Sobre Nosotros</a></li>
+              <li><a href="testimonials.html"> Reseñas </a></li>
+              -->
+              <li><a href="{% url 'sobrenos' %}">Sobre Nosotros</a></li>
+              <li><a href="{% url 'testimonials' %}"> Reseñas </a></li>
+            </ul>
+          </li>
+          <li class="dropdown"><a href="#"><span> Servicios </span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="{% url 'estrategias'%}"> Estrategias Educativas </a></li>
+              <li><a href="{% url 'eventos'%}"> Eventos </a></li>
+              <li><a href="{% url 'reportes'%}"> Reportes de Cumplimiento </a></li>
+              <li><a href="{% url 'usuarios'%}"> Usuarios </a></li>
+              <li><a href="{% url 'profesores'%}"> Información Profesoral</a></li>
+              <li><a href="{% url 'encuestas'%}"> Encuestas</a></li>
+            </ul>
+          </li>
+          <li><a href="{% url 'contactar' %}">Contáctenos</a></li>
+          <li class="dropdown user-menu">
+            <a href="#"><i class="bi bi-person-circle"></i> Mi cuenta <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li class="user-info">
+                <span class="user-name"><i class="bi bi-person-fill"></i> Nombre del Usuario</span>
+                <span class="user-role"><i class="bi bi-briefcase-fill"></i> Cargo del Usuario</span>
+              </li>
+              <li class="divider"></li>
+              <li><a href="#">Salir</a></li>
+            </ul>
+          </li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- Fin de la navegación -->
+    </div>
+  </header><!-- Fin del Header -->
+
+  <section id="formulario-estrategia" class="estrategia-educativa">
+    <div class="container">
+      <div class="section-title">
+        <h2>Visualizar Estrategia Educativa</h2>
+
+      </div>
+  
+      <form id="form-estrategia" class="php-email-form" action="" method="POST">
+        {% csrf_token %}
+        <!-- Campos adicionales: curso, año escolar y grupo -->
+         <div><h4>{{estrategia.nombre}}</h4></div>
+         <br>
+         <h5>Datos generales</h5>
+         <div> Estrategia <b>{{estrategia.curso}}</b>          Año escolar <b>{{estrategia.anio_escolar}}</b>        Grupo <b>{{estrategia.grupo}}</b></div>
+         <br>
+        <!-- Sección 1: Introducción -->
+        <div class="form-section mb-4 p-4 ">
+          <h3>1. Introducción</h3>
+          <h4>1.1 Plan de estudios</h4>
+          <p>{{estrategia.plan_estudios}}</p>
+          <h4>1.2 Objetivos de la Estrategia Educativa</h4>
+          <p>{{estrategia.obj_estrategia}}</p>
+        </div>
+      
+        <!-- Sección 2: Caracterización de la grupo -->
+        <div class="form-section mb-4 p-4 ">
+          <h3>2. Caracterización de la grupo</h3>
+          <h4>2.1 Dirección de la grupo</h4>
+          <p>{{estrategia.dir_grupo}}</p>
+          <h4>2.2 Características de la grupo</h4>
+          <p>{{estrategia.caract_grupo}}</p>
+          <h4>2.3 Colectivo pedagógico</h4>
+          <p>{{estrategia.colect_pedagogico}}</p>
+          <h4>2.4 Otros aspectos</h4>
+          <p>{{estrategia.otros_aspectos}}</p>
+        </div>
+      
+        <!-- Sección 3: Problemas detectados en la grupo -->
+        <div class="form-section mb-4 p-4 ">
+          <h3>3. Problemas detectados en la grupo</h3>
+          <h4>3.1 Dimensión curricular</h4>
+          <p>{{estrategia.dim_curricular}}</p>
+          <h4>3.2 Dimensión extensionista</h4>
+          <p>{{estrategia.dim_extensionista}}</p>
+          <h4>3.3 Dimensión político-ideológica</h4>
+          <p>{{estrategia.dim_politica}}</p>
+          <h4>3.4 Conclusiones</h4>
+          <p>{{estrategia.conclusiones}}</p>
+        </div>
+      
+        <!-- Sección 4: Plan de acciones -->
+        <div class="form-section mb-4 p-4 ">
+          <h3>4. Plan de acciones</h3>
+          <h4>4.1 Objetivo General</h4>
+          <p>{{estrategia.obj_general}}</p>
+          <h4>4.2.1 Objetivos específicos (Dimensión curricular)</h4>
+          <p>{{estrategia.obj_dc}}</p>
+          <h4>4.2.2 Plan de acciones (Dimensión curricular)</h4>
+          <p>{{estrategia.plan_dc}}</p>
+          <h4>4.3.1 Objetivos específicos (Dimensión extensionista)</h4>
+          <p>{{estrategia.obj_de}}</p>
+          <h4>4.3.2 Plan de acciones (Dimensión extensionista)</h4>
+          <p>{{estrategia.plan_de}}</p>
+          <h4>4.4.1 Objetivos específicos (Dimensión político-ideológica)</h4>
+          <p>{{estrategia.obj_dp}}</p>
+          <h4>4.4.2 Plan de acciones (Dimensión político-ideológica)</h4>
+          <p>{{estrategia.plan_dp}}</p>
+        </div>
+      
+        <!-- Sección 5: Evaluación integral -->
+        <div class="form-section mb-4 p-4 ">
+          <h3>5. Evaluación integral</h3>
+          <h4>Evaluación integral</h4>
+          <p>{{estrategia.evaluacion}}</p>
+        </div>
+      
+        <!-- Sección 6: Autor -->
+        <div class="form-section mb-4 p-4 ">
+          <h3>6. Autor</h3>
+          <h4>Nombre del autor</h4>
+          <p>{{estrategia.autor}}</p>
+        </div>
+        
+        <!-- Línea divisoria y botones -->
+        <div class="text-center mt-4 pt-4 border-top">
+          <div class="d-flex justify-content-between">
+            <button type="button" id="boton-cancelar-estrategias" class="btn btn-cancelar" onclick="window.history.back()">Cancelar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+</section>
+
+  
+    
+ <!-- ======= Footer ======= -->
+ <footer id="footer" class="footer">
+    <div class="container footer-top">
+      <div class="row gy-4">
+        <!-- Columna 1: Acerca de -->
+        <div class="col-lg-5 col-md-12 footer-about footer-fade-in">
+          <a href="{% url 'pagina_principal' %}" class="d-flex align-items-center logo">
+            <span>ESTRA</span>
+          </a>
+          <p>"Recuerda: una buena gestión educativa es la base del éxito. ¡Gracias por visitarnos!"</p>
+          <div class="d-flex mt-4 social-links">
+            <a href="#"><i class="bi bi-twitter"></i></a>
+            <a href="#"><i class="bi bi-facebook"></i></a>
+            <a href="#"><i class="bi bi-instagram"></i></a>
+            <a href="#"><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+
+        <!-- Columna 2: Enlaces útiles -->
+        <div class="col-6 col-lg-2 footer-fade-in footer-links" data-delay="100">
+          <h4>Enlaces Útiles</h4>
+          <ul>
+            <li><a href="{% url 'pagina_principal' %}">Inicio</a></li>
+            <li><a href="{% url 'sobrenos' %}">>Sobre Nosotros</a></li>
+            <li><a href="#">Términos de Servicios</a></li>
+            <li><a href="#">Política de Privacidad</a></li>
+          </ul>
+        </div>
+
+        <!-- Columna 3: Contáctenos -->
+        <div class="col-lg-3 col-md-12 text-center text-md-start footer-contact footer-fade-in" data-delay="200">
+          <h4>Contáctenos</h4>
+          <p>Carretera a San Antonio de los Baños Km 2 1/2, Reparto. Torrens</p>
+          <p>La Habana</p>
+          <p>Cuba</p>
+          <p class="mt-4"><strong>Teléfono:</strong> <span>+53 558-648-04</span></p>
+          <p><strong>Correo:</strong> <span>cFc@estudiantes.uci.cu</span></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Copyright -->
+    <div class="container text-center copyright footer-fade-in mt-4" data-delay="300">
+      <p>&copy; <span>Copyright</span> <strong class="px-1">ESTRA</strong> <span>Todos los derechos reservados.</span></p>
+      <div class="credits">
+        Diseñado por "CodeFusion Creators"
+      </div>
+    </div>
+  </footer><!-- Fin del Footer -->
+
+  <!-- Archivos JS de Vendor -->
+  <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/waypoints/noframework.waypoints.js' %}"></script>
+
+  <!-- Archivo JS Principal -->
+  <script src="{% static 'assets/js/main.js' %}"></script>
+</body>
+</html>

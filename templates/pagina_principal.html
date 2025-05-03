@@ -1,0 +1,272 @@
+  {% extends "base.html" %}
+  {% load static %}
+  {% block title %}Página Principal - Estrategias Educativas{% endblock %}
+  {% block content %}
+  <div id="main">
+  <!-- ======= Sección Hero ======= -->
+  <section id="hero">
+    <div id="heroCarousel" data-bs-interval="5000" class="carousel carousel-fade slide" data-bs-ride="carousel">
+      <!-- Indicadores del carrusel -->
+      <ol class="carousel-indicators" id="hero-carousel-indicators"></ol>
+
+      <!-- Contenido del carrusel -->
+      <div class="carousel-inner" role="listbox">
+        <!-- Slide 1 -->
+        <div class="active carousel-item" style="background-image: url('{% static "./imagenes/hero3.jpg" %}')">
+          <div class="carousel-container">
+            <div class="container">
+              <h2 class="animate__animated animate__fadeInDown">Bienvenido a <span>ESTRA</span></h2>
+              <p class="animate__animated animate__fadeInUp">El Sistema de Gestión de Estrategias Educativas para la UCI.</p>
+              <a href="#why-us" class="btn-get-started animate__animated animate__fadeInUp scrollto">Saber Más</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="carousel-item" style="background-image: url({% static "./imagenes/hero2.jpg" %})">
+          <div class="carousel-container">
+            <div class="container">
+              <h2 class="animate__animated animate__fadeInDown">El futuro de la gestión educativa está aquí.</h2>
+              <p class="animate__animated animate__fadeInUp"> Tecnología de vanguardia. Soluciones Inteligentes. Prepárate para el mañana.</p>
+              <a href="#why-us" class="btn-get-started animate__animated animate__fadeInUp scrollto">Saber Más</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="carousel-item" style="background-image: url(' {% static "./imagenes/residencia_2.jpg" %} ')">
+          <div class="carousel-container">
+            <div class="container">
+              <h2 class="animate__animated animate__fadeInDown">Transforma la Educación.</h2>
+              <p class="animate__animated animate__fadeInUp">Revoluciona tu institución con nuestra plataforma educativa.</p>
+              <a href="#why-us" class="btn-get-started animate__animated animate__fadeInUp scrollto">Saber Más</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controles del carrusel -->
+      <a class="carousel-control-prev" href="#heroCarousel" role="button" data-bs-slide="prev">
+        <span class="bi bi-chevron-left carousel-control-prev-icon" aria-hidden="true"></span>
+      </a>
+      <a class="carousel-control-next" href="#heroCarousel" role="button" data-bs-slide="next">
+        <span class="bi bi-chevron-right carousel-control-next-icon" aria-hidden="true"></span>
+      </a>
+    </div>
+  </section><!-- Fin de la sección Hero -->
+
+   <!-- ======= Sección de Curiosidad ======= -->
+<section id="why-us" class="why-us">
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Imagen con animación -->
+      <div class="col-lg-5 align-items-stretch position-relative fade-in image-box" style="background-image: url('{% static ".assets/img/why-us.jpg"%}')">
+        <img src="{% static './imagenes/estrategiaeducativa1.jpeg'%}" alt="Estrategias Educativas" class="custom-image img-fluid mb-4">
+      </div>
+
+      <!-- Contenido con animación -->
+      <div class="col-lg-7 d-flex flex-column align-items-stretch justify-content-center fade-in">
+        <div class="content">
+          <h3><strong>Sobre Estrategias Educativas...</strong></h3>
+        </div>
+
+        <!-- Lista de acordeones -->
+        <div class="accordion-list">
+          <ul>
+            <li class="fade-in" data-delay="100">
+              <a data-bs-toggle="collapse" class="collapse" data-bs-target="#accordion-list-1">
+                <span>01</span> ¿Qué es una Estrategia Educativa?
+                <i class="bx bx-chevron-down icon-show"></i>
+                <i class="bx bx-chevron-up icon-close"></i>
+              </a>
+              <div id="accordion-list-1" class="collapse show" data-bs-parent=".accordion-list">
+                <p> Es un plan estructurado y deliberado que integra métodos, técnicas y recursos para facilitar el aprendizaje efectivo y significativo. 
+                  Su objetivo es transformar la práctica educativa, promoviendo la innovación, la inclusión y la equidad, 
+                  mientras se adapta a las necesidades de los estudiantes y los desafíos del entorno(Coll, C. (2013)).</p>
+              </div>
+            </li>
+            <li class="fade-in" data-delay="200">
+              <a data-bs-toggle="collapse" data-bs-target="#accordion-list-2" class="collapsed">
+                <span>02</span> ¿Cómo se trata en Cuba?
+                <i class="bx bx-chevron-down icon-show"></i>
+                <i class="bx bx-chevron-up icon-close"></i>
+              </a>
+              <div id="accordion-list-2" class="collapse" data-bs-parent=".accordion-list">
+                <p>En Cuba, las estrategias educativas están profundamente integradas en el proyecto social y político del país, 
+                  reflejando los principios de la Revolución Cubana. Estas estrategias no se limitan únicamente al ámbito académico, 
+                  sino que abarcan dimensiones político-ideológicas, extensionistas y curriculares, 
+                  con el objetivo de formar ciudadanos comprometidos con los valores socialistas, el desarrollo nacional y la justicia social.</p>
+              </div>
+            </li>
+            <li class="fade-in" data-delay="300">
+              <a data-bs-toggle="collapse" data-bs-target="#accordion-list-3" class="collapsed">
+                <span>03</span> ¿Qué beneficios ofrece?
+                <i class="bx bx-chevron-down icon-show"></i>
+                <i class="bx bx-chevron-up icon-close"></i>
+              </a>
+              <div id="accordion-list-3" class="collapse" data-bs-parent=".accordion-list">
+                <p>Una estrategia educativa adapta el aprendizaje a las necesidades y estilos de los estudiantes, 
+                  promoviendo motivación, inclusión y equidad. Desarrolla habilidades críticas y creativas, prepara para la vida laboral e 
+                  integra valores éticos y culturales. Fomenta la innovación con tecnologías y métodos modernos, impacta positivamente en la 
+                  comunidad mediante proyectos sociales y promueve el desarrollo sostenible. Este enfoque integral no solo maximiza el potencial 
+                  individual, sino que también contribuye al progreso social y equitativo, como destaca Carnoy (2007) en su análisis del modelo cubano..</p>
+              </div>
+            </li>
+            <li class="fade-in" data-delay="400">
+              <a data-bs-toggle="collapse" data-bs-target="#accordion-list-4" class="collapsed">
+                <span>04</span> ¿Cómo se implementa en las instituciones?
+                <i class="bx bx-chevron-down icon-show"></i>
+                <i class="bx bx-chevron-up icon-close"></i>
+              </a>
+              <div id="accordion-list-4" class="collapse" data-bs-parent=".accordion-list">
+                <p>La implementación de una estrategia educativa sólida, como la de Cuba, se basa en adaptar el aprendizaje 
+                  a las necesidades y estilos de los estudiantes, integrando tecnologías y métodos innovadores. 
+                  Promueve la inclusión y equidad, vinculando el aprendizaje con proyectos comunitarios y valores éticos. 
+                  Con un enfoque sistemático, se realiza un seguimiento continuo para ajustar el proceso, asegurando que los 
+                  objetivos educativos contribuyan al desarrollo sostenible y al crecimiento personal y social, 
+                  como destaca Carnoy (2007) en su análisis del modelo cubano.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><!-- Fin de la sección de Curiosidad -->
+
+    <!-- ======= Sección de Noticias ======= -->
+    <section id="recent-posts" class="recent-posts">
+      <div class="container fade-in-up section-title">
+        <h2>Noticias</h2>
+        <p>Conoce todo lo que acontece en nuestra Universidad.</p>
+      </div>
+
+      <div id="contendor-noticias" class="container">
+        <div class="row gy-4">
+          <!-- Noticia 1 -->
+          <div class="col-md-6 col-xl-4 fade-in-up" data-delay="100">
+            <article>
+              <div class="post-img scale-in">
+                <img src="{% static './imagenes/antorcha.jpg'%}" alt="Noticia 1" class="img-fluid">
+              </div>
+              <p class="post-category"> Política </p>
+              <h2 class="title">
+                <a href="blog-details.html"> Alta concurrencia en Marcha de las Antorchas. </a>
+              </h2>
+              <div class="d-flex align-items-center">
+                <img src="{% static './imagenes/logoprofesora.png'%}" alt="Autor" class="flex-shrink-0 img-fluid post-author-img">
+                <div class="post-meta">
+                  <p class="post-author"> Yadira Ramírez Rodríguez </p>
+                  <p class="post-date">
+                    <time datetime="2022-01-01"> 27-1-2025 </time>
+                  </p>
+                </div>
+              </div>
+            </article>
+          </div><!-- Fin de Noticia 1 -->
+
+          <!-- Noticia 2 -->
+          <div class="col-md-6 col-xl-4 fade-in-up" data-delay="200">
+            <article>
+              <div class="post-img scale-in">
+                <img src="{% static './imagenes/festival.jpg'%}" alt="Noticia 2" class="img-fluid">
+              </div>
+              <p class="post-category"> Cultural </p>
+              <h2 class="title">
+                <a href="blog-details.html"> Comienza el Festival de Artistas Aficionados </a>
+              </h2>
+              <div class="d-flex align-items-center">
+                <img src="{% static './imagenes/logoprofesora2.png' %}" alt="Autor" class="flex-shrink-0 img-fluid post-author-img">
+                <div class="post-meta">
+                  <p class="post-author">Yanetsi Millet Lombida</p>
+                  <p class="post-date">
+                    <time datetime="2022-01-01">6-3-2025</time>
+                  </p>
+                </div>
+              </div>
+            </article>
+          </div><!-- Fin de Noticia 2 -->
+
+          <!-- Noticia 3 -->
+          <div class="col-md-6 col-xl-4 fade-in-up" data-delay="300">
+            <article>
+              <div class="post-img scale-in">
+                <img src="{% static './imagenes/bastionuni.jpg' %}" alt="Noticia 3" class="img-fluid">
+              </div>
+              <p class="post-category">Política</p>
+              <h2 class="title">
+                <a href="blog-details.html">Bastión Universitario</a>
+              </h2>
+              <div class="d-flex align-items-center">
+                <img src="{% static './imagenes/profesora3.png' %}" alt="Autor" class="flex-shrink-0 img-fluid post-author-img">
+                <div class="post-meta">
+                  <p class="post-author">Tatiana Leyva Estrada</p>
+                  <p class="post-date">
+                    <time datetime="2022-01-01">22 Jun 2022</time>
+                  </p>
+                </div>
+              </div>
+            </article>
+          </div><!-- Fin de Noticia 3 -->
+        </div>
+      </div>
+    </section><!-- Fin de la sección de Noticias -->
+
+    <!-- ======= Sección Galería ======= -->
+    <section id="gallery" class="gallery section-bg">
+      <div class="container" data-aos="fade-up">
+        <div class="gallery-slide-in section-header">
+          <h2>Galería</h2>
+          <p>Visualiza <span>nuestra Universidad</span></p>
+        </div>
+
+        <!-- Slider de la galería -->
+        <div class="gallery-slide-in gallery-slider swiper">
+          <div class="align-items-center swiper-wrapper">
+            <div class="gallery-scale-in swiper-slide">
+              <a class="glightbox" data-gallery="images-gallery" href="{% static './imagenes/galeria/galería1.jpg' %}">
+                <img src="{% static './imagenes/galeria/galería1.jpg' %}" class="img-fluid" alt="Galería 1">
+              </a>
+            </div>
+            <div class="gallery-scale-in swiper-slide">
+              <a class="glightbox" data-gallery="images-gallery" href="{% static './imagenes/galeria/galeria2.jpg' %}">
+                <img src="{% static './imagenes/galeria/galeria2.jpg' %}" class="img-fluid" alt="Galería 2">
+              </a>
+            </div>
+            <div class="gallery-scale-in swiper-slide">
+              <a class="glightbox" data-gallery="images-gallery" href="{% static './imagenes/galeria/galeria4.jpg' %}">
+                <img src="{% static './imagenes/galeria/galeria4.jpg' %}" class="img-fluid" alt="Galería 3">
+              </a>
+            </div>
+            <div class="gallery-scale-in swiper-slide">
+              <a class="glightbox" data-gallery="images-gallery" href="{% static './imagenes/galeria/galeria5.jpg' %}">
+                <img src="{% static './imagenes/galeria/galeria5.jpg' %}" class="img-fluid" alt="Galería 4">
+              </a>
+            </div>
+            <div class="gallery-scale-in swiper-slide">
+              <a class="glightbox" data-gallery="images-gallery" href="{% static './imagenes/galeria/galeria6.jpg' %}">
+                <img src="{% static './imagenes/galeria/galeria6.jpg' %}" class="img-fluid" alt="Galería 5">
+              </a>
+            </div>
+            <div class="gallery-scale-in swiper-slide">
+              <a class="glightbox" data-gallery="images-gallery" href="{% static './imagenes/galeria/galeria7.jpg' %}">
+                <img src="{% static './imagenes/galeria/galeria7.jpg' %}" class="img-fluid" alt="Galería 6">
+              </a>
+            </div>
+            <div class="gallery-scale-in swiper-slide">
+              <a class="glightbox" data-gallery="images-gallery" href="{% static './imagenes/galeria/galeria8.jpg' %}">
+                <img src="{% static './imagenes/galeria/galeria8.jpeg'%}" class="img-fluid" alt="Galería 7">
+              </a>
+            </div>
+            <div class="gallery-scale-in swiper-slide">
+              <a class="glightbox" data-gallery="images-gallery" href="{% static './imagenes/galeria/galeria9.jpg' %}">
+                <img src="{% static './imagenes/galeria/galeria9.jpg' %}" class="img-fluid" alt="Galería 8">
+              </a>
+            </div>
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
+    </section><!-- Fin de la sección Galería -->
+  </div><!-- Fin de la contenedora -->
+  {% endblock %}

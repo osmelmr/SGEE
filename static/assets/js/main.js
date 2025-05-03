@@ -282,8 +282,8 @@
     return valido;
   }
 
-  function validarBrigadaAsignada() {
-    const campo = document.getElementById('brigada-asignada');
+  function validarGrupoAsignada() {
+    const campo = document.getElementById('grupo-asignada');
     if (!campo) return true;
     const valido = validarCampoGenerico(campo);
     
@@ -295,8 +295,8 @@
     return valido;
   }
 
-  function validarBrigadasImpartir() {
-    const campo = document.getElementById('brigadas-impartir');
+  function validarGruposImpartir() {
+    const campo = document.getElementById('grupos-impartir');
     if (!campo) return true;
     const valido = validarCampoGenerico(campo);
     
@@ -322,8 +322,8 @@
   }
 
   // ------------------- Reporte de Cumplimiento -------------------
-  function validarBrigada() {
-    const campo = document.getElementById('brigada');
+  function validarGrupo() {
+    const campo = document.getElementById('grupo');
     if (!campo) return true;
     return validarCampoGenerico(
       campo,
@@ -860,13 +860,13 @@
       'solapin': validarSolapin,
       'telefono': validarTelefonoProfesor,
       'correo': validarCorreo,
-      'brigada-asignada': validarBrigadaAsignada,
-      'brigadas-impartir': validarBrigadasImpartir,
+      'grupo-asignada': validarGrupoAsignada,
+      'grupos-impartir': validarGruposImpartir,
       'descripcion-profesor': validarDescripcion
     });
 
     configurarValidacionFormulario('form-reporte', {
-      'brigada': validarBrigada,
+      'grupo': validarGrupo,
       'codigo': validarCodigo,
       'periodo': validarPeriodo,
       'fecha': validarFecha,

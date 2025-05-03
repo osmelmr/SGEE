@@ -19,7 +19,7 @@ def visualizarProfesores(request):
     else:
         profesores = Profesor.objects.all()
     
-    return render(request, 'profesores.html', {
+    return render(request, 'profesor_principal/listar_profesores.html', {
         'profesores': profesores,
         'query': query
     })
@@ -40,13 +40,13 @@ def crearProfesor(request):
             'solapin': request.POST.get('solapin'),
             'telefono': request.POST.get('telefono'),
             'correo': request.POST.get('correo'),
-            'brigada_asignada': request.POST.get('brigada-asignada'),
+            'grupo_asignada': request.POST.get('grupo-asignada'),
             'descripcion': request.POST.get('descripcion-profesor')
         }
         # Validate required fields
         if not all(form_data.values()):
             messages.error(request, "Todos los campos obligatorios deben ser completados.")
-            return render(request, 'formulario_informacion_pro.html')
+            return render(request, 'profesor_principal/formular_profesor.html')
 
         try:
             profesor = Profesor(**form_data)
@@ -57,7 +57,7 @@ def crearProfesor(request):
         except Exception as e:
             messages.error(request, f"Error al registrar el profesor: {str(e)}")
 
-    return render(request, 'formulario_informacion_pro.html')
+    return render(request, 'profesor_principal/formular_profesor.html')
 
 # Delete Views - Single Item
 # ----------------------------------------------------------------------------
@@ -89,7 +89,7 @@ def modificarProfesor(request, profesor_id):
     profesor = get_object_or_404(Profesor, id=profesor_id)
     
     if request.method == 'POST':
-        # Eliminar 'brigadas_impartir' del diccionario form_data
+        # Eliminar 'grupos_impartir' del diccionario form_data
         form_data = {
             'nombre': request.POST.get('nombre'),
             'primer_apellido': request.POST.get('primer-apellido'),
@@ -100,7 +100,7 @@ def modificarProfesor(request, profesor_id):
             'solapin': request.POST.get('solapin'),
             'telefono': request.POST.get('telefono'),
             'correo': request.POST.get('correo'),
-            'brigada_asignada': request.POST.get('brigada-asignada'),
+            'grupo_asignada': request.POST.get('grupo-asignada'),
             'descripcion': request.POST.get('descripcion')
         }
 
@@ -127,4 +127,4 @@ def modificarProfesor(request, profesor_id):
 def visualizarProfesor(request, profesor_id):
     """View a single strategy."""
     profesor = get_object_or_404(Profesor, id=profesor_id)
-    return render(request, 'visualizar_profesor.html', {'profesor': profesor})
+    return render(request, 'profesor_principal/visualizar__profesor.html', {'profesor': profesor})

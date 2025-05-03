@@ -6,14 +6,14 @@ from data_models.vistas.vistasReporte.views import visualizarReporte, eliminarRe
 from data_models.vistas.vistasEncuesta.views import visualizarEncuesta, eliminarEncuestas,eliminarEncuesta,modificarEncuesta,visualizarEncuestas,crearEncuesta
 from data_models.vistas.vistasUsuario.views import visualizarUsuario, eliminarUsuarios,eliminarUsuario,modificarUsuario,visualizarUsuarios,crearUsuario
 from data_models.vistas.vistasRolEstudiante.views import visualizarEstrategiasE
-from data_models.vistas.vistasBrigada.views import crearBrigada, listarBrigadas, visualizarBrigada
+from data_models.vistas.vistasGrupo.views import crearGrupo, listarGrupos, visualizarGrupo
 
 urlpatterns = [
     #----------------------------------------
     #STRATEGYS
 
     #Create Strategy
-    path('formulario_estrategia/', crearEstrategia, name='formulario_estrategia'),
+    path('formular_estrategia/', crearEstrategia, name='formular_estrategia'),
     #View Multiple Estrategys
     path('estrategias/', visualizarEstrategias, name='estrategias'),
     #View Unique Estrategy
@@ -29,7 +29,7 @@ urlpatterns = [
     #EVENTOS
 
     #Crear Evento
-    path('formulario_evento/', crearEvento, name='formulario_evento'),
+    path('formular_evento/', crearEvento, name='formular_evento'),
     #Ver multiples Eventos
     path('eventos/', visualizarEventos, name='eventos'),
     #Ver una unica Evento
@@ -45,7 +45,7 @@ urlpatterns = [
     #PROFESORES
 
     #Crear Profesor
-    path('formulario_profesor/', crearProfesor, name='formulario_profesor'),
+    path('formular_profesor/', crearProfesor, name='formular_profesor'),
     #Ver multiples Profesores
     path('profesores/', visualizarProfesores, name='profesores'),
 
@@ -62,7 +62,7 @@ urlpatterns = [
     #REPORTES
 
     #Crear Reporte
-    path('formulario_reporte/', crearReporte, name='formulario_reporte'),
+    path('formular_reporte/', crearReporte, name='formular_reporte'),
     #Ver multiples Reportes
     path('reportes/', visualizarReportes, name='reportes'),
     #Ver una unica Reporte
@@ -78,7 +78,7 @@ urlpatterns = [
     #ENCUESTAS
 
     #Crear Encuesta
-    path('formulario_encuesta/', crearEncuesta, name='formulario_encuesta'),
+    path('formular_encuesta/', crearEncuesta, name='formular_encuesta'),
     #Ver multiples Encuestas
     path('encuestas/', visualizarEncuestas, name='encuestas'),
     #Ver una unica Encuesta
@@ -94,7 +94,7 @@ urlpatterns = [
     #USUARIOS
 
     #Crear Usuario
-    path('formulario_usuario/', crearUsuario, name='formulario_usuario'),
+    path('formular_usuario/', crearUsuario, name='formular_usuario'),
     #Ver multiples Usuarios
     path('usuarios/', visualizarUsuarios, name='usuarios'),
     #Ver una unica Usuario
@@ -108,9 +108,9 @@ urlpatterns = [
     
     #----------------------------------------
     #BRIGADAS URLS
-    path('crear_brigada/', crearBrigada, name='crear_brigada'),  
-    path('brigadas/', listarBrigadas, name='listar_brigadas'),
-    path('brigadas/<int:brigada_id>/', visualizarBrigada, name='visualizar_brigada'),
+    path('crear_grupo/', crearGrupo, name='crear_grupo'),  
+    path('grupos/', listarGrupos, name='profesor_principal/listar_grupos'),
+    path('grupos/<int:grupo_id>/', visualizarGrupo, name='visualizar_grupo'),
 
     #----------------------------------------
     #ESTUDIANTES URLS

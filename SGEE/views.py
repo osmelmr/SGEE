@@ -12,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 # ----------------------------------------------------------------------------
 def estra_view(request):
     """Render the main strategy page."""
-    return render(request, 'estra.html')
+    return render(request, 'pagina_principal.html')
 
 def contact_view(request):
     """Render the contact page."""

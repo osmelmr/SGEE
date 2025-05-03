@@ -19,7 +19,7 @@ def visualizarEncuestas(request):
     else:
         encuestas = Encuesta.objects.all()
     
-    return render(request, 'encuestas.html', {
+    return render(request, 'profesor_principal/listar_encuestas.html', {
         'encuestas': encuestas,
         'query': query
     })
@@ -50,7 +50,7 @@ def crearEncuesta(request):
         except Exception as e:
             messages.error(request, f"Error al registrar la encuesta: {str(e)}")
     
-    return render(request, 'formulario_encuesta.html')
+    return render(request, 'profesor_principal/formular_encuesta.html')
 
 # Delete Views - Single Item
 # ----------------------------------------------------------------------------
@@ -118,4 +118,4 @@ def modificarEncuesta(request, encuesta_id):
 def visualizarEncuesta(request, encuesta_id):
     """View a single strategy."""
     encuesta = get_object_or_404(Encuesta, id=encuesta_id)
-    return render(request, 'visualizar_encuesta.html', {'encuesta': encuesta})
+    return render(request, 'profesor_principal/visualizar__encuesta.html', {'encuesta': encuesta})

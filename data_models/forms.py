@@ -1,12 +1,12 @@
 from django import forms
-from .models import Brigada
+from .models import Grupo
 
-class BrigadaForm(forms.ModelForm):
+class GrupoForm(forms.ModelForm):
     class Meta:
-        model = Brigada
+        model = Grupo
         fields = ['nombre', 'direccion', 'curso', 'anio_escolar', 'caracterizacion', 'profesores']
         widgets = {
-            'nombre': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre de la brigada'}),
+            'nombre': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre de la grupo'}),
             'direccion': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Dirección'}),
             'curso': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Curso'}),
             'anio_escolar': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Año escolar'}),

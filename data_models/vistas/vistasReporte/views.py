@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from data_models.models import Reporte
-from data_models.models import Brigada
+from data_models.models import Grupo
 from django.contrib import messages
 from django.http import JsonResponse
 from django.db.models import Q
@@ -20,7 +20,7 @@ def visualizarReportes(request):
     else:
         reportes = Reporte.objects.all()
     
-    return render(request, 'reportes.html', {
+    return render(request, 'profesor_principal/listar_reportes.html', {
         'reportes': reportes,
         'query': query
     })
@@ -29,11 +29,11 @@ def visualizarReportes(request):
 # ----------------------------------------------------------------------------
 def crearReporte(request):
     """Handle report form submission and display."""
-    brigadas=Brigada.objects.all()
+    grupos=Grupo.objects.all()
     if request.method == 'POST':
         # Extract form data
         form_data = {
-            'brigada': request.POST.get('brigada'),
+            'grupo': request.POST.get('grupo'),
             'codigo': request.POST.get('codigo'),
             'periodo': request.POST.get('periodo'),
             'fecha': request.POST.get('fecha'),
@@ -57,7 +57,7 @@ def crearReporte(request):
         except Exception as e:
             messages.error(request, f"Error al registrar el reporte: {str(e)}")
 
-    return render(request, 'formulario_reporte.html', {"brigadas":brigadas})
+    return render(request, 'profesor_principal/formular_reporte.html', {"grupos":grupos})
 
 # Delete Views - Single Item
 # ----------------------------------------------------------------------------
@@ -91,7 +91,7 @@ def modificarReporte(request, reporte_id):
     if request.method == 'POST':
         # Extract form data
         form_data = {
-            'brigada': request.POST.get('brigada'),
+            'grupo': request.POST.get('grupo'),
             'codigo': request.POST.get('codigo'),
             'periodo': request.POST.get('periodo'),
             'fecha': request.POST.get('fecha'),
@@ -128,4 +128,4 @@ def modificarReporte(request, reporte_id):
 def visualizarReporte(request, reporte_id):
     """View a single strategy."""
     reporte = get_object_or_404(Reporte, id=reporte_id)
-    return render(request, 'visualizar_reporte.html', {'reporte': reporte})
+    return render(request, 'profesor_principal/visualizar__reporte.html', {'reporte': reporte})

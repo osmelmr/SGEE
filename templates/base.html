@@ -7,14 +7,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Título y metadatos -->
-  <title> Formulario Encuestas </title>
+  <title>{% block title %}Mi Proyecto{% endblock %}</title>
   <meta name="description" content="Sistema de Gestión de Estrategias Educativas para la Universidad de las Ciencias Informáticas (UCI).">
   <meta name="keywords" content="ESTRA, educación, gestión, UCI, estrategias educativas">
 
   <!-- Favicons -->
-  <!--<link href="assets/img/favicon.png" rel="icon"-->
-  <!--<<link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">-->
-
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
@@ -73,11 +70,15 @@
             <a href="#"><i class="bi bi-person-circle"></i> Mi cuenta <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li class="user-info">
-                <span class="user-name"><i class="bi bi-person-fill"></i> Nombre del Usuario</span>
-                <span class="user-role"><i class="bi bi-briefcase-fill"></i> Cargo del Usuario</span>
+                {% if user.is_authenticated %}
+                <span class="user-name"><i class="bi bi-person-fill"></i> {{ user.first_name }}</span>
+                <span class="user-role"><i class="bi bi-briefcase-fill"></i>Cargo: {{ user.cargo }}</span>
+                <a href="{% url 'logout' %}">Salir</a>
+                {% else %}
+                <p>No has iniciado sesión. <a href="{% url 'login' %}">Iniciar sesión</a></p>
+                {% endif %}
+                
               </li>
-              <li class="divider"></li>
-              <li><a href="#">Salir</a></li>
             </ul>
           </li>
         </ul>
@@ -85,7 +86,7 @@
       </nav><!-- Fin de la navegación -->
     </div>
   </header><!-- Fin del Header -->
-  <main>
+  <main id="main">
     {% block content %}
     <!-- Aquí va el contenido específico de cada página -->
     {% endblock %}
@@ -148,67 +149,8 @@
 
   <!-- Archivo JS Principal -->
   <script src="{% static 'assets/js/main.js' %}"></script>
-
-
-
-
-
-  
-  <script>
-    // Selecciona todos los botones con la clase "btn-eliminar"
-    document.querySelectorAll(".btn-eliminar").forEach(button => {
-        button.addEventListener("click", function () {
-            const estrategiaId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
-            if (confirm("¿Estás seguro de que quieres eliminar esta estrategia ?"+estrategiaId)) {
-                // Redirige a la URL para eliminar la estrategia
-                window.location.href = `/eliminar_estrategia/${estrategiaId}/`;
-            }
-        });
-    });
-  </script>
-
-  <script>
-    // Selecciona todos los botones con la clase "btn-modificar"
-    document.querySelectorAll(".btn-modificar").forEach(button => {
-        button.addEventListener("click", function (e) {
-            //e.stopPropagation();
-            const estrategiaId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
-            window.location.href = `/modificar_estrategia/${estrategiaId}/`;
-        });
-    });
-  </script>
-
-  <script>
-    // Selecciona todos los botones con la clase "btn-ver-detalles"
-    document.querySelectorAll(".btn-ver-detalles").forEach(button => {
-        button.addEventListener("click", function (e) {
-            //e.stopPropagation();
-            const estrategiaId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
-            window.location.href = `/visualizar_estrategia/${estrategiaId}/`;
-        });
-    });
-  </script>
-
-  <script>
-    let formulario=document.getElementById("form-eliminar-estrategias");
-    formulario.addEventListener("submit", function(event){
-      event.preventDefault();
-      let estrategias=document.querySelectorAll(".seleccionar-fila:checked");
-      if(estrategias.length===0){
-        alert("No hay estrategias seleccionados");
-        return;
-      }
-      if(confirm("¿Estás seguro de que quieres eliminar las estrategias seleccionadas?")){
-        formulario.submit();
-      }
-    });
-  </script>
-  <script>
-    document.getElementById('btn-seleccionar-todo').addEventListener('click', function (e) {
-      e.preventDefault();
-      const checkboxes = document.querySelectorAll('.seleccionar-fila');
-      checkboxes.forEach(checkbox => checkbox.checked = !checkbox.checked);
-    });
-  </script>
+  {% block scripts %}
+  <!-- Aquí puedes incluir scripts adicionales específicos de cada página -->
+  {% endblock %}
 </body>
 </html>
