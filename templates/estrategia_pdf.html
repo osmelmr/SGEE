@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Estrategia</title>
+    <style>
+        /* Estilos generales para el PDF */
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 16px; /* Aumento del tamaño global de la fuente */
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 24px;  /* Título principal más grande */
+            text-align: center;
+            color: #4CAF50;
+        }
+
+        h2 {
+            font-size: 20px;  /* Subtítulos más grandes */
+            color: #333;
+        }
+
+        .section {
+            margin-bottom: 10px;
+        }
+
+        .section h3 {
+            font-size: 18px;  /* Títulos de sección más grandes */
+            color: #4CAF50;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 5px;
+        }
+
+        .section p {
+            font-size: 16px;  /* Tamaño de fuente más grande en párrafos */
+            line-height: 1.6;
+            margin: 5px 0;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .table th, .table td {
+            font-size: 14px; /* Tamaño de fuente más grande en la tabla */
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .table th {
+            background-color: #f4f4f4;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 10px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 12px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>{{ estrategia.nombre }}</h1>
+
+    <div class="section">
+        <h3>Datos Generales</h3>
+        <p><strong>Curso:</strong> {{ estrategia.curso }}</p>
+        <p><strong>Año Escolar:</strong> {{ estrategia.anio_escolar }}</p>
+        <p><strong>Grupo:</strong> {{ estrategia.grupo }}</p>
+        <p><strong>Nombre de la Estrategia:</strong> {{ estrategia.nombre }}</p>
+        <p><strong>Autor:</strong> {{ estrategia.autor }}</p>
+    </div>
+
+    <div class="section">
+        <h3>Objetivos</h3>
+        <p><strong>Objetivo General:</strong> {{ estrategia.obj_general }}</p>
+        <p><strong>Objetivos de la Estrategia:</strong> {{ estrategia.obj_estrategia }}</p>
+    </div>
+
+    <div class="section">
+        <h3>Características del Grupo</h3>
+        <p><strong>Dirección del Grupo:</strong> {{ estrategia.dir_grupo }}</p>
+        <p><strong>Características del Grupo:</strong> {{ estrategia.caract_grupo }}</p>
+        <p><strong>Colectivo Pedagógico:</strong> {{ estrategia.colect_pedagogico }}</p>
+    </div>
+
+    <div class="section">
+        <h3>Dimensiones</h3>
+        <p><strong>Dimensión Curricular:</strong> {{ estrategia.dim_curricular }}</p>
+        <p><strong>Dimensión Extensionista:</strong> {{ estrategia.dim_extensionista }}</p>
+        <p><strong>Dimensión Político-ideológica:</strong> {{ estrategia.dim_politica }}</p>
+    </div>
+
+    <div class="section">
+        <h3>Objetivos Específicos y Planes</h3>
+        <table class="table">
+            <tr>
+                <th>Objetivo</th>
+                <th>Plan</th>
+            </tr>
+            <tr>
+                <td>{{ estrategia.obj_dc }}</td>
+                <td>{{ estrategia.plan_dc }}</td>
+            </tr>
+            <tr>
+                <td>{{ estrategia.obj_de }}</td>
+                <td>{{ estrategia.plan_de }}</td>
+            </tr>
+            <tr>
+                <td>{{ estrategia.obj_dp }}</td>
+                <td>{{ estrategia.plan_dp }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section">
+        <h3>Evaluación</h3>
+        <p><strong>Evaluación Integral:</strong> {{ estrategia.evaluacion }}</p>
+    </div>
+
+    <div class="section">
+        <h3>Conclusiones</h3>
+        <p>{{ estrategia.conclusiones }}</p>
+    </div>
+
+    <div class="footer">
+        <p>Generado por el Sistema Gestor de Estrategias Educativas SGEE</p>
+    </div>
+
+</body>
+</html>

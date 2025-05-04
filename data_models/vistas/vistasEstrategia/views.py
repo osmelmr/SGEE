@@ -4,7 +4,12 @@ from django.contrib import messages
 from django.http import JsonResponse
 from django.db.models import Q
 import json
-from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
+from docx import Document
+from io import BytesIO
+from django.db.models import OneToOneField
+from django.template.loader import render_to_string
+from xhtml2pdf import pisa
 
 def visualizarEstrategias(request):
     """Display all strategies with optional search functionality."""
@@ -79,7 +84,6 @@ def crearEstrategia(request):
                     "plan_dp": request.POST.get("plan_dp"),
                     "evaluacion": request.POST.get("evaluacion"),
                     "autor": request.POST.get("autor"),
-                    "grupo_id": grupo_escogido.id,  # Set the group ID
                 }
                 try:
                     Estrategia.objects.create(**form_data)
@@ -145,7 +149,6 @@ def eliminarEstrategias(request):
 
 # Update Views - Unique Item
 # ----------------------------------------------------------------------------
-@login_required
 def modificarEstrategia(request, estra_id):
     if request.user.is_authenticated:
         if request.user.es_profesor():
@@ -208,3 +211,51 @@ def visualizarEstrategia(request, estra_id):
     else:
         messages.error(request, "No estás autenticado.")
         return redirect("login")
+    
+
+def estrategia_docx(request, id):
+    # Obtener la instancia de Estrategia
+    estrategia = get_object_or_404(Estrategia, id=id)
+
+    # Crear documento Word en memoria
+    doc = Document()
+    for field in Estrategia._meta.fields:
+        # Omitir campo one-to-one (grupo)
+        if isinstance(field, OneToOneField):
+            continue
+        # Obtener valor del campo
+        value = getattr(estrategia, field.name)
+        # Agregar párrafo con "nombre del campo: valor"
+        doc.add_paragraph(f"{field.verbose_name}: {value}")
+
+    # Guardar documento en un buffer en memoria
+    buffer = BytesIO()
+    doc.save(buffer)
+    buffer.seek(0)
+
+    # Preparar respuesta como archivo adjunto
+    response = HttpResponse(
+        buffer.getvalue(),
+        content_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    )
+    response['Content-Disposition'] = f'attachment; filename="estrategia_{estrategia.id}.docx"'
+    return response
+
+
+def estrategia_pdf(request, estra_id):
+    estrategia = get_object_or_404(Estrategia, id=estra_id)
+
+    # Renderizar HTML
+    html = render_to_string("estrategia_pdf.html", {'estrategia': estrategia})
+
+    # Generar PDF desde HTML
+    buffer = BytesIO()
+    pisa_status = pisa.CreatePDF(html, dest=buffer)
+    buffer.seek(0)
+
+    if pisa_status.err:
+        return HttpResponse("Error al generar el PDF", status=500)
+
+    response = HttpResponse(buffer, content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="{estrategia.nombre}_{estrategia.id}.pdf"'
+    return response

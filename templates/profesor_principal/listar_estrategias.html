@@ -53,6 +53,9 @@
                 <td>{{ estrategia.curso }}</td>
                 <td>{{ estrategia.anio_escolar }}</td>
                 <td>
+                  <button type="button" class="btn btn-action btn-descargar-pdf" data-id="{{ estrategia.id }}" title="DescargarPdf">
+                    <i class="bi bi-download"></i>
+                  </button>
                   <button type="button" class="btn btn-action btn-ver-detalles" data-id="{{ estrategia.id }}" title="Ver Detalles">
                     <i class="bi bi-eye"></i>
                   </button>
@@ -99,7 +102,18 @@
         });
     });
   </script>
-
+  <script>
+    // Selecciona todos los botones con la clase "btn-descargar-pdf"
+    document.querySelectorAll(".btn-descargar-pdf").forEach(button => {
+        button.addEventListener("click", function () {
+            const estrategiaId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
+            if (confirm("¿Estás seguro de que quieres descargar esta estrategia ?"+estrategiaId)) {
+                // Redirige a la URL para eliminar la estrategia
+                window.location.href = `/descargar_estrategia_pdf/${estrategiaId}/`;
+            }
+        });
+    });
+  </script>
   <script>
     // Selecciona todos los botones con la clase "btn-modificar"
     document.querySelectorAll(".btn-modificar").forEach(button => {

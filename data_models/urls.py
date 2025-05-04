@@ -1,5 +1,5 @@
 from django.urls import path
-from data_models.vistas.vistasEstrategia.views import visualizarEstrategia, eliminarEstrategias,eliminarEstrategia,modificarEstrategia,visualizarEstrategias,crearEstrategia
+from data_models.vistas.vistasEstrategia.views import visualizarEstrategia, eliminarEstrategias,eliminarEstrategia,modificarEstrategia,visualizarEstrategias,crearEstrategia,estrategia_pdf
 from data_models.vistas.vistasEvento.views import visualizarEvento, eliminarEventos,eliminarEvento,modificarEvento,visualizarEventos,crearEvento
 from data_models.vistas.vistasProfesor.views import visualizarProfesor, eliminarProfesores,eliminarProfesor,modificarProfesor,visualizarProfesores,crearProfesor
 from data_models.vistas.vistasReporte.views import visualizarReporte, eliminarReportes,eliminarReporte,modificarReporte,visualizarReportes,crearReporte
@@ -24,6 +24,9 @@ urlpatterns = [
     path('eliminar_estrategia/<int:estra_id>/', eliminarEstrategia, name='eliminar_estrategia'),
     #Delete Multiple Estrategys
     path('eliminar_estrategias/', eliminarEstrategias, name='eliminar_estrategias'),
+    #Descargar estrategia pdf
+    path('descargar_estrategia_pdf/<int:estra_id>/', estrategia_pdf, name='descargar_estrategia_pdf'),
+    
     
     #----------------------------------------
     #EVENTOS
