@@ -59,6 +59,7 @@ def crearEstrategia(request):
 
             if request.method == "POST":
                 grupo_escogido = Grupo.objects.get(nombre=request.POST.get("grupo"))
+                print(grupo_escogido.id)
                 # Extract form data
                 form_data = {
                     "nombre": request.POST.get("nombre"),
@@ -84,6 +85,7 @@ def crearEstrategia(request):
                     "plan_dp": request.POST.get("plan_dp"),
                     "evaluacion": request.POST.get("evaluacion"),
                     "autor": request.POST.get("autor"),
+                    "grupo_id": grupo_escogido,  # Set the group ID
                 }
                 try:
                     Estrategia.objects.create(**form_data)
