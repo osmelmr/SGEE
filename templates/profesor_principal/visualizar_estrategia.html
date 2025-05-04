@@ -9,9 +9,6 @@
         <h2>Visualizar Estrategia Educativa</h2>
 
       </div>
-  
-      <form id="form-estrategia" class="php-email-form" action="" method="POST">
-        {% csrf_token %}
         <!-- Campos adicionales: curso, año escolar y grupo -->
          <div><h4>{{estrategia.nombre}}</h4></div>
          <br>
@@ -85,14 +82,14 @@
           <h4>Nombre del autor</h4>
           <p>{{estrategia.autor}}</p>
         </div>
-        
         <!-- Línea divisoria y botones -->
         <div class="text-center mt-4 pt-4 border-top">
-          <div class="d-flex justify-content-between">
+          <div style="display: flex; justify-content: space-between;">
             <button type="button" id="boton-cancelar-estrategias" class="btn btn-cancelar" onclick="window.history.back()">Cancelar</button>
+            <button type="button" id="boton-descargar-estrategia" class="btn btn-descargar" onclick="window.location.href='{% url 'descargar_estrategia_pdf' estrategia.id %}'">Descargar</button>
           </div>
         </div>
-      </form>
+    </div>
     </div>
 </section>
 
