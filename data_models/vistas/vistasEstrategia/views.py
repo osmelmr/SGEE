@@ -189,6 +189,7 @@ def modificarEstrategia(request, estra_id):
                     messages.success(request, "Estrategia modificada correctamente.")
                     return redirect("estrategias")
                 except Exception as e:
+                    print(str(e))
                     messages.error(request, f"Error al modificar la estrategia: {str(e)}")
                     return render(request, "profesor_principal/modificar_estrategia.html", {"estrategia": estra})
             return render(request, "profesor_principal/modificar_estrategia.html", {"estrategia": estra})

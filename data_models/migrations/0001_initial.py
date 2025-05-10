@@ -145,7 +145,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='grupo',
             name='guia',
-            field=models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='grupo_asignada', to='data_models.profesor'),
+            field=models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='grupo_asignado', to='data_models.profesor'),
         ),
         migrations.AddField(
             model_name='grupo',

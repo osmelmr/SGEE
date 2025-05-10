@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from data_models.models import Profesor
+from data_models.models import Profesor, Grupo
 from django.contrib import messages
 from django.http import JsonResponse
 from django.db.models import Q
@@ -35,7 +35,8 @@ def visualizarProfesores(request):
 def crearProfesor(request):
     if request.user.is_authenticated:
         if request.user.es_profesor():
-            """Handle professor information form submission and display."""
+            grupos = Grupo.objects.all()
+
             if request.method == 'POST':
                 form_data = {
                     'nombre': request.POST.get('nombre'),
@@ -47,26 +48,39 @@ def crearProfesor(request):
                     'solapin': request.POST.get('solapin'),
                     'telefono': request.POST.get('telefono'),
                     'correo': request.POST.get('correo'),
-                    'descripcion': request.POST.get('descripcion')
+                    'descripcion': request.POST.get('descripcion'),
                 }
-                # Validate required fields
+                grupos_ids = request.POST.getlist('grupos')  # Obtén los IDs seleccionados
+                grupo_asignado_id = request.POST.get('grupo_asignado')  # Obtén el grupo asignado
+
+                # Validar campos obligatorios
                 if not all(form_data.values()):
                     messages.error(request, "Todos los campos obligatorios deben ser completados.")
-                    return render(request, 'profesor_principal/formular_profesor.html')
+                    return render(request, 'profesor_principal/formular_profesor.html', {'grupos': grupos})
 
                 try:
+                    # Crear el profesor
                     profesor = Profesor.objects.create(**form_data)
+                    profesor.grupos.set(grupos_ids)  # Asignar grupos al profesor
+
+                    # Asignar el profesor como guía del grupo
+                    if grupo_asignado_id:
+                        grupo_asignado = Grupo.objects.get(id=grupo_asignado_id)
+                        grupo_asignado.guia = profesor
+                        grupo_asignado.save()
+
                     messages.success(request, "Profesor registrado correctamente.")
                     return redirect('profesores')
                 except Exception as e:
+                    print(f"Error: {str(e)}")
                     messages.error(request, f"Error al registrar el profesor: {str(e)}")
 
-            return render(request, 'profesor_principal/formular_profesor.html')
+            return render(request, 'profesor_principal/formular_profesor.html', {'grupos': grupos})
         else:
             messages.error(request, "No tienes permiso para crear profesores.")
             return redirect("pagina_principal_g")
     else:
-        messages.error(request, "No estas autenticado.")
+        messages.error(request, "No estás autenticado.")
         return redirect("login")
 
 def eliminarProfesor(request, profesor_id):

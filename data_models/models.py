@@ -34,8 +34,7 @@ class Profesor(models.Model):
     asignatura = models.CharField(max_length=50)
     
     # Datos institucionales
-    solapin = models.CharField(max_length=10, unique=True)
-    
+    solapin = models.CharField(max_length=10, unique=True) 
     # Contacto
     telefono = models.CharField(max_length=15)
     correo = models.EmailField(max_length=50)
@@ -59,7 +58,7 @@ class Grupo(models.Model):
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
-        related_name='grupo_asignada'
+        related_name='grupo_asignado'
     )
     profesores = models.ManyToManyField(
         'Profesor',
