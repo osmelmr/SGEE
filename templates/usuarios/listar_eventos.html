@@ -92,25 +92,13 @@
   </div>
   {% endblock %}
 {% block scripts %}
-  <script>
-  // Selecciona todos los botones con la clase "btn-eliminar"
-  document.querySelectorAll(".btn-eliminar").forEach(button => {
-    button.addEventListener("click", function () {
-      const eventoId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
-      if (confirm("¿Estás seguro de que quieres eliminar este evento?")) {
-        // Redirige a la URL para eliminar el evento
-        window.location.href = `/eliminar_evento/${eventoId}/`;
-      }
-    });
-  });
-</script>
 <script>
   // Selecciona todos los botones con la clase "btn-modificar"
   document.querySelectorAll(".btn-modificar").forEach(button => {
       button.addEventListener("click", function (e) {
           //e.stopPropagation();
           const eventoId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
-          window.location.href = `/modificar_evento/${eventoId}/`;
+          window.location.href = `/inscribir_evento/${eventoId}/`;
       });
   });
 </script>
@@ -123,20 +111,6 @@
           const eventoId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
           window.location.href = `/visualizar_evento/${eventoId}/`;
       });
-  });
-</script>
-<script>
-  let formulario=document.getElementById("form-eliminar-eventos");
-  formulario.addEventListener("submit", function(event){
-    event.preventDefault();
-    let eventos=document.querySelectorAll(".seleccionar-fila:checked");
-    if(eventos.length===0){
-      alert("No hay eventos seleccionados");
-      return;
-    }
-    if(confirm("¿Estás seguro de que quieres eliminar los eventos seleccionados?")){
-      formulario.submit();
-    }
   });
 </script>
 {% endblock%}

@@ -5,7 +5,7 @@ from data_models.vistas.vistasProfesor.views import visualizarProfesor, eliminar
 from data_models.vistas.vistasReporte.views import visualizarReporte, eliminarReportes,eliminarReporte,modificarReporte,visualizarReportes,crearReporte
 from data_models.vistas.vistasEncuesta.views import visualizarEncuesta, eliminarEncuestas,eliminarEncuesta,modificarEncuesta,visualizarEncuestas,crearEncuesta
 from data_models.vistas.vistasUsuario.views import visualizarUsuario, eliminarUsuarios,eliminarUsuario,modificarUsuario,visualizarUsuarios,crearUsuario
-from data_models.vistas.vistasRolUsuario.views import visualizarEstrategiasG, principalG, visualizarEstrategiaG, visualizarProfesoresG, visualizarProfesorG, visualizarEventosG, visualizarEventoG, visualizarReportesG, visualizarReporteG, visualizarEncuestasG, visualizarEncuestaG, contact_view, sobrenos_view, visualizarTestimonios, realizar_encuesta
+from data_models.vistas.vistasRolUsuario.views import visualizarEstrategiasG, principalG, visualizarEstrategiaG, visualizarProfesoresG, visualizarProfesorG, visualizarEventosG, visualizarEventoG, visualizarReportesG, visualizarReporteG, visualizarEncuestasG, visualizarEncuestaG, contact_view, sobrenos_view, visualizarTestimonios, realizar_encuesta, toggleEvento
 from data_models.vistas.vistasGrupo.views import crearGrupo, listarGrupos, visualizarGrupo, modificarGrupo
 
 urlpatterns = [
@@ -43,6 +43,8 @@ urlpatterns = [
     path('eliminar_evento/<int:evento_id>/', eliminarEvento, name='eliminar_evento'),
     #Eliminar multiples Eventos
     path('eliminar_eventos/', eliminarEventos, name='eliminar_eventos'),
+    #Inscribir en un evento
+    path('inscribir_evento/<int:evento_id>/', toggleEvento, name='inscribir_evento'),
     
     #----------------------------------------
     #PROFESORES

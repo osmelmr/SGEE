@@ -71,7 +71,12 @@
         <div class="row mb-4">
           <div class="form-group col-md-6">
             <label for="profesor-cargo">Profesor a Cargo</label>
-            <input type="text" id="profesor-cargo" name="profesor_encargado" class="form-control" maxlength="50" required>
+            <select id="profesor-cargo" name="profesor_encargado" class="form-control" required>
+              <option value="">Seleccione un profesor</option>
+              {% for profesor in profesores %}
+                <option value="{{ profesor.id }}">{{ profesor.nombre }} {{ profesor.primer_apellido }}</option>
+              {% endfor %}
+            </select>
           </div>
           <div class="form-group col-md-6">
             <label for="telefono-contacto">Teléfono de Contacto</label>

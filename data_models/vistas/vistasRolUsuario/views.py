@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from data_models.models import Reporte, Grupo, Estrategia, Evento, Profesor, Encuesta, Usuario
 from django.contrib import messages
 from data_models.models import Respuesta, Pregunta
-
+from django.http import HttpResponse
 
 def visualizarEstrategiasG(request):
     if not request.user.is_authenticated:
@@ -138,8 +138,7 @@ def toggleEvento(request, evento_id):
             messages.error(request, f"Error al procesar el evento: {str(e)}")
     else:
         messages.error(request, "Debes iniciar sesión para realizar esta acción.")
-    
-    return redirect('pagina_principal')  # Cambia esto a la página que desees redirigir
+    return redirect('eventos_g')
 
 def realizar_encuesta(request, encuesta_id):
     if not request.user.is_authenticated:

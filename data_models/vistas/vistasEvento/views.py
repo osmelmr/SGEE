@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from data_models.models import Evento
+from data_models.models import Evento, Profesor
 from django.contrib import messages
 from django.http import JsonResponse
 from django.db.models import Q
@@ -39,18 +39,23 @@ def crearEvento(request):
     if request.user.is_authenticated:
         if request.user.es_profesor():
             if request.method == 'POST':
-                # Extract form data
+                profesor_id = request.POST.get('profesor_encargado')
+                try:
+                    profesor_obj = Profesor.objects.get(id=profesor_id)
+                except Profesor.DoesNotExist:
+                    profesor_obj = None
+
                 form_data = {
-                    'nombre_evento': request.POST.get('nombre-evento'),
-                    'fecha_inicio': request.POST.get('fecha-inicio'),
-                    'fecha_fin': request.POST.get('fecha-fin'),
-                    'hora_inicio': request.POST.get('hora-inicio'),
-                    'hora_fin': request.POST.get('hora-fin'),
-                    'ubicacion_evento': request.POST.get('ubicacion-evento'),
-                    'tipo_evento': request.POST.get('tipo-evento'),
-                    'descripcion': request.POST.get('descripcion-evento'),
-                    'profesor_encargado': request.POST.get('profesor-cargo'),
-                    'telefono_contacto': request.POST.get('telefono-contacto')
+                    'nombre_evento': request.POST.get('nombre_evento'),
+                    'fecha_inicio': request.POST.get('fecha_inicio'),
+                    'fecha_fin': request.POST.get('fecha_fin'),
+                    'hora_inicio': request.POST.get('hora_inicio'),
+                    'hora_fin': request.POST.get('hora_fin'),
+                    'ubicacion_evento': request.POST.get('ubicacion_evento'),
+                    'tipo_evento': request.POST.get('tipo_evento'),
+                    'descripcion': request.POST.get('descripcion'),
+                    'profesor_encargado': profesor_obj,
+                    'telefono_contacto': request.POST.get('telefono_contacto')
                 }
                 
                 # Validate required fields
@@ -64,9 +69,12 @@ def crearEvento(request):
                     messages.success(request, "Evento registrado correctamente.")
                     return redirect('eventos')
                 except Exception as e:
+                    print(str(e))
                     messages.error(request, f"Error al registrar el evento: {str(e)}")
 
-            return render(request, 'profesor_principal/formular_evento.html')
+            profesores = Profesor.objects.all()
+
+            return render(request, 'profesor_principal/formular_evento.html', {'profesores': profesores})
         else:
             messages.error(request, "No tienes permiso para crear eventos.")
             return redirect("pagina_principal_g")
@@ -122,18 +130,23 @@ def modificarEvento(request, evento_id):
             evento = get_object_or_404(Evento, id=evento_id)
             
             if request.method == 'POST':
-                # Extract form data
+                profesor_id = request.POST.get('profesor_encargado')
+                try:
+                    profesor_obj = Profesor.objects.get(id=profesor_id)
+                except Profesor.DoesNotExist:
+                    profesor_obj = None
+
                 form_data = {
-                    'nombre_evento': request.POST.get('nombre-evento'),
-                    'fecha_inicio': request.POST.get('fecha-inicio'),
-                    'fecha_fin': request.POST.get('fecha-fin'),
-                    'hora_inicio': request.POST.get('hora-inicio'),
-                    'hora_fin': request.POST.get('hora-fin'),
-                    'ubicacion_evento': request.POST.get('ubicacion-evento'),
-                    'tipo_evento': request.POST.get('tipo-evento'),
-                    'descripcion': request.POST.get('descripcion-evento'),
-                    'profesor_encargado': request.POST.get('profesor-cargo'),
-                    'telefono_contacto': request.POST.get('telefono-contacto')
+                    'nombre_evento': request.POST.get('nombre_evento'),
+                    'fecha_inicio': request.POST.get('fecha_inicio'),
+                    'fecha_fin': request.POST.get('fecha_fin'),
+                    'hora_inicio': request.POST.get('hora_inicio'),
+                    'hora_fin': request.POST.get('hora_fin'),
+                    'ubicacion_evento': request.POST.get('ubicacion_evento'),
+                    'tipo_evento': request.POST.get('tipo_evento'),
+                    'descripcion': request.POST.get('descripcion'),
+                    'profesor_encargado': profesor_obj,
+                    'telefono_contacto': request.POST.get('telefono_contacto')
                 }
                 
                 # Validate required fields

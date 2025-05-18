@@ -185,16 +185,6 @@
     return true;
   }
 
-  function validarProfesor() {
-    const campo = document.getElementById('profesor-cargo');
-    if (!campo) return true;
-    return validarCampoGenerico(
-      campo,
-      /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/,
-      'El nombre no puede contener números ni caracteres especiales'
-    );
-  }
-
   function validarTelefonoContacto() {
     const campo = document.getElementById('telefono-contacto');
     if (!campo) return true;
@@ -850,7 +840,6 @@
     configurarValidacionFormulario('form-evento', {
       'fecha-inicio': () => validarFechasEvento(),
       'fecha-fin': () => validarFechasEvento(),
-      'profesor-cargo': validarProfesor,
       'telefono-contacto': validarTelefonoContacto
     });
 

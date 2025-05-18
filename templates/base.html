@@ -28,6 +28,7 @@
 
   <!-- Archivo CSS Principal -->
   <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+  <link href="{% static 'css/base.css' %}" rel="stylesheet">
 </head>
 <body>
   <!-- ======= Header ======= -->
@@ -154,6 +155,15 @@
 
   <!-- Archivo JS Principal -->
   <script src="{% static 'assets/js/main.js' %}"></script>
+  {% if messages %}
+  <div id="alert-container">
+    {% for message in messages %}
+      <div class="alert {{ message.tags }}">
+        {{ message }}
+      </div>
+    {% endfor %}
+  </div>
+  {% endif %}
   {% block scripts %}
   <!-- Aquí puedes incluir scripts adicionales específicos de cada página -->
   {% endblock %}
