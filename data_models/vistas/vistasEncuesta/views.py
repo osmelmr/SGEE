@@ -3,6 +3,8 @@ from data_models.models import Encuesta
 from django.contrib import messages
 from django.http import JsonResponse
 from django.db.models import Q
+from data_models.models import Pregunta, Respuesta
+
 
 def visualizarEncuestas(request):
     """Display all strategies with optional search functionality."""
@@ -20,7 +22,6 @@ def visualizarEncuestas(request):
                 )
             else:
                 encuestas = Encuesta.objects.all()
-            
             return render(request, 'profesor_principal/listar_encuestas.html', {
                 'encuestas': encuestas,
                 'query': query
@@ -164,3 +165,4 @@ def visualizarEncuesta(request, encuesta_id):
     else:
         messages.error(request, "No estas autenticado.")
         return redirect("login")
+

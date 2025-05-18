@@ -5,8 +5,8 @@ from data_models.vistas.vistasProfesor.views import visualizarProfesor, eliminar
 from data_models.vistas.vistasReporte.views import visualizarReporte, eliminarReportes,eliminarReporte,modificarReporte,visualizarReportes,crearReporte
 from data_models.vistas.vistasEncuesta.views import visualizarEncuesta, eliminarEncuestas,eliminarEncuesta,modificarEncuesta,visualizarEncuestas,crearEncuesta
 from data_models.vistas.vistasUsuario.views import visualizarUsuario, eliminarUsuarios,eliminarUsuario,modificarUsuario,visualizarUsuarios,crearUsuario
-from data_models.vistas.vistasRolUsuario.views import visualizarEstrategiasG, principalG, visualizarEstrategiaG, visualizarProfesoresG, visualizarProfesorG, visualizarEventosG, visualizarEventoG, visualizarReportesG, visualizarReporteG, visualizarEncuestasG, visualizarEncuestaG, contact_view, sobrenos_view, visualizarTestimonios
-from data_models.vistas.vistasGrupo.views import crearGrupo, listarGrupos, visualizarGrupo
+from data_models.vistas.vistasRolUsuario.views import visualizarEstrategiasG, principalG, visualizarEstrategiaG, visualizarProfesoresG, visualizarProfesorG, visualizarEventosG, visualizarEventoG, visualizarReportesG, visualizarReporteG, visualizarEncuestasG, visualizarEncuestaG, contact_view, sobrenos_view, visualizarTestimonios, realizar_encuesta
+from data_models.vistas.vistasGrupo.views import crearGrupo, listarGrupos, visualizarGrupo, modificarGrupo
 
 urlpatterns = [
     #----------------------------------------
@@ -92,6 +92,8 @@ urlpatterns = [
     path('eliminar_encuesta/<int:encuesta_id>/', eliminarEncuesta, name='eliminar_encuesta'),
     #Eliminar multiples Encuestas
     path('eliminar_encuestas/', eliminarEncuestas, name='eliminar_encuestas'),
+    # Nueva URL para realizar encuesta
+    path('realizar_encuesta/<int:encuesta_id>/', realizar_encuesta, name='realizar_encuesta'),
     
     #----------------------------------------
     #USUARIOS
@@ -113,7 +115,8 @@ urlpatterns = [
     #GRUPOS URLS
     path('formular_grupo/', crearGrupo, name='formular_grupo'),  
     path('grupos/', listarGrupos, name='grupos'),
-    path('grupos/<int:grupo_id>/', visualizarGrupo, name='visualizar_grupo'),
+    path('grupo/<int:grupo_id>/', visualizarGrupo, name='visualizar_grupo'),
+    path('modificar/grupo/<int:grupo_id>/', modificarGrupo, name='modificar_grupo'),
 
     #----------------------------------------
     #ESTUDIANTES URLS

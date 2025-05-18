@@ -34,6 +34,18 @@ def visualizarGrupo(request, grupo_id):
     else:
         messages.error(request, "No estas autenticado.")
         return redirect("login")
+    
+def modificarGrupo(request, grupo_id):
+    if request.user.is_authenticated:
+        if request.user.es_profesor():
+            grupo = Grupo.objects.get(id=grupo_id)
+            return render(request, 'profesor_principal/modificar_grupo.html', {'grupo': grupo})
+        else:
+            messages.error(request, "No tienes permiso para visualizar grupos.")
+            return redirect("pagina_principal_g")
+    else:
+        messages.error(request, "No estas autenticado.")
+        return redirect("login")
 
 def listarGrupos(request):
     if request.user.is_authenticated:

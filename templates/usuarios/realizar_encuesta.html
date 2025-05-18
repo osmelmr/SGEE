@@ -1,0 +1,26 @@
+{% extends "baseg.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>{{ encuesta.titulo }}</h2>
+    <p>{{ encuesta.descripcion }}</p>
+    <form method="post">
+        {% csrf_token %}
+        <div>
+            {% for pregunta in preguntas %}
+                <div class="mb-3">
+                    <label><strong>{{ pregunta.texto }}</strong></label>
+                    <div>
+                        <label><input type="radio" name="pregunta_{{ pregunta.id }}" value="muy bien" required> Muy bien</label>
+                        <label><input type="radio" name="pregunta_{{ pregunta.id }}" value="bien"> Bien</label>
+                        <label><input type="radio" name="pregunta_{{ pregunta.id }}" value="regular"> Regular</label>
+                        <label><input type="radio" name="pregunta_{{ pregunta.id }}" value="mal"> Mal</label>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-success">Aceptar</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

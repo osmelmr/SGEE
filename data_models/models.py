@@ -139,6 +139,27 @@ class Pregunta(models.Model):
     def __str__(self):
         return f"Pregunta: {self.texto} (Encuesta: {self.encuesta.titulo})"
 
+class Respuesta(models.Model):
+    # Relación con la tabla Pregunta
+    pregunta = models.ForeignKey(
+        'Pregunta',
+        on_delete=models.CASCADE,
+        related_name='respuestas'
+    )
+    
+    # Relación con la tabla Encuesta
+    encuesta = models.ForeignKey(
+        'Encuesta',
+        on_delete=models.CASCADE,
+        related_name='respuestas'
+    )
+    # Contenido de la respuesta
+    evaluacion = models.CharField(
+        max_length=20, blank=True, null=True)
+    fecha_respuesta = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Respuesta de {self.usuario} a {self.pregunta.texto}"
 # ============================================================================
 
 # ----------------------------------------
@@ -165,7 +186,7 @@ class Usuario(AbstractUser):
     telefono = models.CharField(max_length=15, blank=True, null=True)
 
     # Relaciones
-    encuestas = models.ManyToManyField(
+    encuestas_realizadas = models.ManyToManyField(
         'Encuesta',
         related_name='usuarios',
         blank=True
