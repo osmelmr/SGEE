@@ -59,7 +59,6 @@ def crearEstrategia(request):
 
             if request.method == "POST":
                 grupo_escogido = Grupo.objects.get(nombre=request.POST.get("grupo"))
-                print(grupo_escogido.id)
                 # Extract form data
                 form_data = {
                     "nombre": request.POST.get("nombre"),
@@ -92,7 +91,6 @@ def crearEstrategia(request):
                     messages.success(request, "Estrategia registrada correctamente.")
                     return redirect("estrategias")
                 except Exception as e:
-                    print(str(e))
                     messages.error(request, f"Error al registrar la estrategia: {str(e)}")
                     return render(request, "profesor_principal/formular_estrategia.html", {
                         "grupos": grupos,
