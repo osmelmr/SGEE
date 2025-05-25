@@ -182,9 +182,16 @@
       return false;
     }
     
+    // Validar horas si las fechas son iguales
+    if (fechaInicio.value === fechaFin.value) {
+      const validoHoraInicio = validarHoraInicio();
+      const validoHoraFin = validarHoraFin();
+      return validoHoraInicio && validoHoraFin;
+    }
+    
     return true;
   }
-
+  
   function validarTelefonoContacto() {
     const campo = document.getElementById('telefono-contacto');
     if (!campo) return true;
@@ -193,6 +200,55 @@
       /^[0-9+]*$/,
       'Solo se permiten números y el símbolo +'
     );
+  }
+  
+  // Nuevas funciones para validación de horas (añadir estas)
+  function validarHoraInicio() {
+    const campo = document.getElementById('hora-inicio');
+    const horaFin = document.getElementById('hora-fin');
+    const fechaInicio = document.getElementById('fecha-inicio');
+    const fechaFin = document.getElementById('fecha-fin');
+    
+    // Validación básica de campo requerido
+    if (!campo.value) {
+      mostrarError(campo, 'Este campo es obligatorio');
+      return false;
+    }
+    
+    // Validar relación de horas solo si las fechas son iguales
+    if (fechaInicio.value && fechaFin.value && 
+        fechaInicio.value === fechaFin.value && 
+        horaFin.value && campo.value > horaFin.value) {
+      mostrarError(campo, 'Cuando las fechas son iguales, la hora de inicio no puede ser posterior a la hora de fin');
+      return false;
+    }
+    
+    mostrarError(campo);
+    return true;
+  }
+  
+  function validarHoraFin() {
+    const campo = document.getElementById('hora-fin');
+    const horaInicio = document.getElementById('hora-inicio');
+    const fechaInicio = document.getElementById('fecha-inicio');
+    const fechaFin = document.getElementById('fecha-fin');
+    
+    // Validación básica de campo requerido
+    if (!campo.value) {
+      mostrarError(campo, 'Este campo es obligatorio');
+      return false;
+    }
+    
+    // Validar relación de horas solo si las fechas son iguales
+    if (fechaInicio.value && fechaFin.value && 
+        fechaInicio.value === fechaFin.value && 
+        horaInicio.value && campo.value < horaInicio.value) {
+      mostrarError(campo, 'Cuando las fechas son iguales, la hora de fin no puede ser anterior a la hora de inicio');
+      return false;
+    }
+    
+    mostrarError(campo);
+    return true;
   }
 
   // ------------------- Información Profesoral -------------------
@@ -838,8 +894,15 @@
     });
 
     configurarValidacionFormulario('form-evento', {
+      'nombre-evento': validarNombreEvento,
       'fecha-inicio': () => validarFechasEvento(),
       'fecha-fin': () => validarFechasEvento(),
+      'hora-inicio': validarHoraInicio,
+      'hora-fin': validarHoraFin,
+      'ubicacion-evento': validarUbicacion,
+      'tipo-evento': validarTipoEvento,
+      'descripcion-evento': validarDescripcionEvento,
+      'profesor-cargo': validarProfesorCargo,
       'telefono-contacto': validarTelefonoContacto
     });
 
