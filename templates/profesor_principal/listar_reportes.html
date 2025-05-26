@@ -16,14 +16,14 @@
       </div>
   
       <!-- Barra de búsqueda -->
-      <div id="barra-busqueda-reportes" class="search-bar">
-        <div class="input-group">
-          <input type="text" class="form-control" placeholder="Buscar reporte..." aria-label="Buscar">
-          <button class="btn btn-primary" type="button">
-            <i class="bi bi-search"></i> <!-- Ícono de lupa -->
-          </button>
-        </div>
+    <form method="GET" action="{% url 'p_reportes' %}" class="search-bar mb-4">
+      <div class="input-group">
+        <input type="text" name="q" class="form-control" placeholder="Buscar reporte..." aria-label="Buscar" value="{{ request.GET.q }}">
+        <button class="btn btn-primary" type="submit">
+          <i class="bi bi-search"></i> <!-- Ícono de lupa -->
+        </button>
       </div>
+    </form>
   
       <!-- Contenedor de la tabla con scroll -->
       <form id="form-eliminar-reportes" method="POST" action="{% url 'p_eliminar_reportes' %}">

@@ -15,14 +15,14 @@
         </div>
     
         <!-- Barra de búsqueda -->
-        <form method="GET" action="{% url 'estrategias' %}" class="search-bar mb-4">
-          <div class="input-group">
-            <input type="text" name="q" class="form-control" placeholder="Buscar estrategia..." aria-label="Buscar" value="{{ request.GET.q }}">
-            <button class="btn btn-primary" type="submit">
-              <i class="bi bi-search"></i> <!-- Ícono de lupa -->
-            </button>
-          </div>
-        </form>
+    <form method="GET" action="{% url 'estrategias' %}" class="search-bar mb-4">
+      <div class="input-group">
+        <input type="text" name="q" class="form-control" placeholder="Buscar estrategia..." aria-label="Buscar" value="{{ request.GET.q }}">
+        <button class="btn btn-primary" type="submit">
+          <i class="bi bi-search"></i> <!-- Ícono de lupa -->
+        </button>
+      </div>
+    </form>
     
         <!-- Contenedor de la tabla con scroll -->
         <form id="form-eliminar-estrategias" method="POST" action="{% url 'p_eliminar_estrategias' %}">
