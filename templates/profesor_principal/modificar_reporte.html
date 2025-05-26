@@ -98,7 +98,7 @@
       <!-- Campo: Anexos -->
       <div class="form-group mb-4">
         <label for="anexos">Anexos</label>
-        <input type="file" id="anexos" name="anexos" class="form-control" multiple>
+        <input type="file" name="anexos" accept="image/*">
         {% if reporte.anexos %}
           <div class="mt-2">
             <small class="text-muted">Anexos actuales: {{reporte.anexos}}</small>

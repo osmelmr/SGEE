@@ -18,6 +18,8 @@ from django.urls import path, include
 from SGEE.vistas.vistas_generales import login_view, logout_view
 from SGEE.vistas import vistas_principal, vistas_usuario
 from SGEE.vistas import vistas_usuario
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     
@@ -48,4 +50,4 @@ urlpatterns = [
     path('', include('reportes.urls')),
     path('', include('eventos.urls')),
     
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -4,6 +4,8 @@ from grupos.models import Grupo
 from django.contrib import messages
 from django.http import JsonResponse
 from django.db.models import Q
+import os
+from django.core.files.base import ContentFile
 
 def visualizarReportes(request):
     """Display all reports with optional search functionality."""
@@ -63,11 +65,21 @@ def crearReporte(request):
             'desafios': request.POST.get('desafios'),
             'proximos_pasos': request.POST.get('proximos_pasos'),
         }
-        if request.FILES.get('anexos'):
-            form_data['anexos'] = request.FILES['anexos']
 
         try:
+            # 1. Crear el reporte sin anexos para obtener el id
             reporte = Reporte.objects.create(**form_data)
+            # 2. Si hay archivo, renombrar y asignar
+            if request.FILES.get('anexos'):
+                file = request.FILES['anexos']
+                if not file.content_type.startswith('image/'):
+                    messages.error(request, "Solo se permiten archivos de imagen (foto).")
+                    reporte.delete()  # Limpieza si no es imagen
+                    return render(request, 'profesor_principal/formular_reporte.html', {"grupos": grupos})
+                ext = os.path.splitext(file.name)[1]
+                nuevo_nombre = f"reporte_{reporte.id}_anexo{ext}"
+                file_content = ContentFile(file.read())
+                reporte.anexos.save(nuevo_nombre, file_content, save=True)
             messages.success(request, "Reporte registrado correctamente.")
             return redirect('p_reportes')
         except Exception as e:
@@ -116,7 +128,6 @@ def modificarReporte(request, reporte_id):
         return redirect("pagina_principal")
     reporte = get_object_or_404(Reporte, id=reporte_id)
     if request.method == 'POST':
-        # Extract form data
         form_data = {
             'grupo': request.POST.get('grupo'),
             'codigo': request.POST.get('codigo'),
@@ -133,7 +144,11 @@ def modificarReporte(request, reporte_id):
             'proximos_pasos': request.POST.get('proximos_pasos')
         }
         if 'anexos' in request.FILES:
-            form_data['anexos'] = request.FILES['anexos']
+            file = request.FILES['anexos']
+            if not file.content_type.startswith('image/'):
+                messages.error(request, "Solo se permiten archivos de imagen (foto).")
+                return render(request, 'profesor_principal/modificar_reporte.html', {'reporte': reporte})
+            form_data['anexos'] = file
 
         try:
             for key, value in form_data.items():
