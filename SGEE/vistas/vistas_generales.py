@@ -4,9 +4,8 @@ This module contains all the views for handling different aspects of the educati
 """
 
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 
 # Static Pages
 # ----------------------------------------------------------------------------
@@ -25,3 +24,11 @@ def login_view(request):
         else:
             messages.error(request, 'Usuario o contraseña incorrectos.')
     return render(request, 'login.html')
+
+
+def logout_view(request):
+    """
+    Cierra la sesión del usuario y redirige a la página de login.
+    """
+    logout(request)
+    return redirect('login')

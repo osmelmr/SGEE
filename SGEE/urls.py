@@ -14,28 +14,39 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
 from django.urls import path, include
-from .views import estra_view, contact_view, login_view
-from .views import sobrenos_view,visualizarTestimonios
-from django.contrib.auth.views import LogoutView
+from SGEE.vistas.vistas_generales import login_view
+from SGEE.vistas import vistas_principal, vistas_usuario
+from SGEE.vistas.vistas_usuario import vistas_usuario
 
 urlpatterns = [
     
     path('', login_view, name='login'),
 
-    path('', include('data_models.urls')),
-
     
 
-    path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
+    path('p/pagina_principal/', vistas_principal.estra_view, name='p/pagina_principal'),
 
-    path('pagina_principal/', estra_view, name='pagina_principal'),
+    path('p/contactenos/',vistas_principal.contact_view,name='p/contactar'),
 
-    path('contactenos/',contact_view,name='contactar'),
+    path('p/sobrenos/',vistas_principal.sobrenos_view, name='p/sobrenos'),
 
-    path('sobrenos/',sobrenos_view, name='sobrenos'),
+    path('p/testimonials/',vistas_principal.visualizarTestimonios, name='p/testimonials'),
 
-    path('testimonials/',visualizarTestimonios, name='testimonials'),
+    path('pagina_principal/', vistas_usuario.estra_view, name='pagina_principal'),
+
+    path('contactenos/',vistas_usuario.contact_view,name='contactar'),
+
+    path('sobrenos/',vistas_usuario.sobrenos_view, name='sobrenos'),
+
+    path('testimonials/',vistas_usuario.visualizarTestimonios, name='testimonials'),
+
+    path('', include('encuestas.urls')),
+    path('', include('grupos.urls')),
+    path('', include('profesores.urls')),
+    path('', include('estrategias.urls')),
+    path('', include('usuarios.urls')),
+    path('', include('reportes.urls')),
+    path('', include('eventos.urls')),
     
 ]
