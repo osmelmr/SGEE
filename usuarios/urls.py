@@ -6,20 +6,20 @@ urlpatterns = [
     #USUARIOS
 
     #Crear Usuario
-    path('principal_formular_usuario/', vistas_principal.crearUsuario, name='principal_formular_usuario'),
+    path('p/formular/usuario/', vistas_principal.crearUsuario, name='p_formular_usuario'),
     #Ver multiples Usuarios
-    path('principal_usuarios/', vistas_principal.visualizarUsuarios, name='principal_usuarios'),
+    path('p/usuarios/', vistas_principal.visualizarUsuarios, name='p_usuarios'),
     #Ver una unica Usuario
-    path('principal_visualizar_usuario/<int:usuario_id>/', vistas_principal.visualizarUsuario, name='principal_visualizar_usuario'),
+    path('p/visualizar/usuario/<int:usuario_id>/', vistas_principal.visualizarUsuario, name='p_visualizar_usuario'),
     #Modificar muliples Usuarios
-    path('principal_modificar_usuario/<int:usuario_id>/', vistas_principal.modificarUsuario, name='principal_modificar_usuario'), 
+    path('p/modificar/usuario/<int:usuario_id>/', vistas_principal.modificarUsuario, name='p_modificar_usuario'), 
     #Eliminar una unica Usuario
-    path('principal_eliminar_usuario/<int:usuario_id>/', vistas_principal.eliminarUsuario, name='principal_eliminar_usuario'),
+    path('p/eliminar/usuario/<int:usuario_id>/', vistas_principal.eliminarUsuario, name='p_eliminar_usuario'),
     #Eliminar multiples Usuarios
-    path('principal_eliminar_usuarios/', vistas_principal.eliminarUsuarios, name='principal_eliminar_usuarios'),
+    path('p/eliminar/usuarios/', vistas_principal.eliminarUsuarios, name='p_eliminar_usuarios'),
     #Ver multiples Usuarios
     path('usuarios/', vistas_usuario.visualizarUsuarios, name='usuarios'),
     #Ver una unica Usuario
-    path('visualizar_usuario/<int:usuario_id>/', vistas_usuario.visualizarUsuario, name='visualizar_usuario'),
+    path('visualizar/usuario/<int:usuario_id>/', vistas_usuario.visualizarUsuario, name='visualizar_usuario'),
     
 ]

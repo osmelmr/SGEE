@@ -25,13 +25,13 @@ urlpatterns = [
 
     
 
-    path('p/pagina_principal/', vistas_principal.estra_view, name='p/pagina_principal'),
+    path('p/pagina_principal/', vistas_principal.estra_view, name='p_pagina_principal'),
 
-    path('p/contactenos/',vistas_principal.contact_view,name='p/contactar'),
+    path('p/contactenos/',vistas_principal.contact_view,name='p_contactar'),
 
-    path('p/sobrenos/',vistas_principal.sobrenos_view, name='p/sobrenos'),
+    path('p/sobrenos/',vistas_principal.sobrenos_view, name='p_sobrenos'),
 
-    path('p/testimonials/',vistas_principal.visualizarTestimonios, name='p/testimonials'),
+    path('p/testimonials/',vistas_principal.visualizarTestimonios, name='p_testimonials'),
 
     path('pagina_principal/', vistas_usuario.estra_view, name='pagina_principal'),
 

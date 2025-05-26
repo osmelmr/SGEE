@@ -6,18 +6,23 @@ urlpatterns = [
     #PROFESORES
 
     #Crear Profesor
-    path('principal_formular_profesor/', vistas_principal.crearProfesor, name='principal_formular_profesor'),
+    path('p/formular/profesor/', vistas_principal.crearProfesor, name='p_formular_profesor'),
     #Ver multiples Profesores
-    path('principal_profesores/', vistas_principal.visualizarProfesores, name='principal_profesores'),
+    path('p/profesores/', vistas_principal.visualizarProfesores, name='p_profesores'),
 
     #Ver una unica Profesor
-    path('principal_visualizar_profesor/<int:profesor_id>/', vistas_principal.visualizarProfesor, name='principal_visualizar_profesor'),
+    path('p/visualizar/profesor/<int:profesor_id>/', vistas_principal.visualizarProfesor, name='p_visualizar_profesor'),
     #Modificar muliples Profesores
-    path('principal_modificar_profesor/<int:profesor_id>/', vistas_principal.modificarProfesor, name='principal_modificar_profesor'), 
+    path('p/modificar/profesor/<int:profesor_id>/', vistas_principal.modificarProfesor, name='p_modificar_profesor'), 
     #Eliminar una unica Profesor
-    path('principal_eliminar_profesor/<int:profesor_id>/', vistas_principal.eliminarProfesor, name='principal_eliminar_profesor'),
+    path('p/eliminar/profesor/<int:profesor_id>/', vistas_principal.eliminarProfesor, name='p_eliminar_profesor'),
     #Eliminar multiples Profesores
-    path('principal_eliminar_profesores/', vistas_principal.eliminarProfesores, name='principal_eliminar_profesores'),
+    path('p/eliminar/profesores/', vistas_principal.eliminarProfesores, name='p_eliminar_profesores'),
+
+    #Ver multiples Profesores
+    path('profesores/', vistas_usuario.visualizarProfesores, name='profesores'),
+    #Ver una unica Profesor
+    path('visualizar/profesor/<int:profesor_id>/', vistas_usuario.visualizarProfesor, name='visualizar_profesor'),
     
     
 ]
