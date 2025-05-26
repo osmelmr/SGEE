@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.db.models import Q
 from django.http import JsonResponse
 
-def crearGrupo(request):
+def crear_grupo(request):
     if not request.user.is_authenticated:
         messages.error(request, "No estas autenticado.")
         return redirect("login")
@@ -23,7 +23,7 @@ def crearGrupo(request):
         form = GrupoForm()
     return render(request, 'profesor_principal/formular_grupo.html', {'form': form})
 
-def visualizarGrupo(request, grupo_id):
+def visualizar_grupo(request, grupo_id):
     if not request.user.is_authenticated:
         messages.error(request, "No estas autenticado.")
         return redirect("login")
@@ -33,7 +33,7 @@ def visualizarGrupo(request, grupo_id):
     grupo = Grupo.objects.get(id=grupo_id)
     return render(request, 'profesor_principal/visualizar_grupo.html', {'grupo': grupo})
 
-def modificarGrupo(request, grupo_id):
+def modificar_grupo(request, grupo_id):
     if not request.user.is_authenticated:
         messages.error(request, "No estas autenticado.")
         return redirect("login")
@@ -43,7 +43,7 @@ def modificarGrupo(request, grupo_id):
     grupo = Grupo.objects.get(id=grupo_id)
     return render(request, 'profesor_principal/modificar_grupo.html', {'grupo': grupo})
 
-def listarGrupos(request):
+def listar_grupos(request):
     if not request.user.is_authenticated:
         messages.error(request, "No estas autenticado.")
         return redirect("login")
@@ -63,7 +63,7 @@ def listarGrupos(request):
         grupos = Grupo.objects.all()
     return render(request, 'profesor_principal/listar_grupos.html', {'grupos': grupos, 'query': query})
 
-def eliminarGrupo(request, grupo_id):
+def eliminar_grupo(request, grupo_id):
     if not request.user.is_authenticated:
         messages.error(request, "No estas autenticado.")
         return redirect("login")
@@ -78,7 +78,7 @@ def eliminarGrupo(request, grupo_id):
         messages.error(request, "El grupo no existe.")
     return redirect('p_grupos')
 
-def eliminarGrupos(request, grupo_id=None):
+def eliminar_grupos(request, grupo_id=None):
     if not request.user.is_authenticated:
         messages.error(request, "No estas autenticado.")
         return redirect("login")

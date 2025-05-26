@@ -3,7 +3,7 @@ from reportes.models import Reporte
 from django.contrib import messages
 from django.db.models import Q
 
-def visualizarReportes(request):
+def visualizar_reportes(request):
     if not request.user.is_authenticated:
         messages.error(request, "Debes iniciar sesión para realizar esta acción.")
         return redirect('login')
@@ -19,7 +19,7 @@ def visualizarReportes(request):
         reportes = Reporte.objects.all()
     return render(request, "usuarios/listar_reportes.html", {"reportes": reportes, "query": query})
 
-def visualizarReporte(request, reporte_id):
+def visualizar_reporte(request, reporte_id):
     if not request.user.is_authenticated:
         messages.error(request, "Debes iniciar sesión para realizar esta acción.")
         return redirect('login')

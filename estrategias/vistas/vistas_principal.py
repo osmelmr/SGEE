@@ -7,7 +7,7 @@ from django.db.models import Q
 import json
 
 
-def visualizarEstrategias(request):
+def visualizar_estrategias(request):
     """Display all strategies with optional search functionality."""
     if not request.user.is_authenticated:
         messages.error(request, "No estás autenticado.")
@@ -33,7 +33,7 @@ def visualizarEstrategias(request):
         "query": query
     })
 
-def crearEstrategia(request):
+def crear_estrategia(request):
     """Handle strategy form submission and display."""
     if not request.user.is_authenticated:
         messages.error(request, "No estás autenticado.")
@@ -102,7 +102,7 @@ def crearEstrategia(request):
 
 # Delete Views - Single Item
 # ----------------------------------------------------------------------------
-def eliminarEstrategia(request, estra_id):
+def eliminar_estrategia(request, estra_id):
     """Delete a single strategy."""
     if not request.user.is_authenticated:
         messages.error(request, "No estás autenticado.")
@@ -118,7 +118,7 @@ def eliminarEstrategia(request, estra_id):
 
 # Delete Views - Multiple Items
 # ----------------------------------------------------------------------------
-def eliminarEstrategias(request):
+def eliminar_estrategias(request):
     """Delete multiple strategies."""
     if not request.user.is_authenticated:
         messages.error(request, "No estás autenticado.")
@@ -139,7 +139,7 @@ def eliminarEstrategias(request):
 
 # Update Views - Unique Item
 # ----------------------------------------------------------------------------
-def modificarEstrategia(request, estra_id):
+def modificar_estrategia(request, estra_id):
     if not request.user.is_authenticated:
         messages.error(request, "No estás autenticado.")
         return redirect("login")
@@ -190,7 +190,7 @@ def modificarEstrategia(request, estra_id):
 
 # Update Views - Unique Item
 # ----------------------------------------------------------------------------
-def visualizarEstrategia(request, estra_id):
+def visualizar_estrategia(request, estra_id):
     """View a single strategy."""
     if not request.user.is_authenticated:
         messages.error(request, "No estás autenticado.")

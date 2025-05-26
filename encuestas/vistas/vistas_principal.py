@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from django.db.models import Q
 
 
-def visualizarEncuestas(request):
+def visualizar_encuestas(request):
     """Display all surveys with optional search functionality."""
     if not request.user.is_authenticated:
         messages.error(request, "No estas autenticado.")
@@ -28,7 +28,7 @@ def visualizarEncuestas(request):
         'query': query
     })
 
-def crearEncuesta(request):
+def crear_encuesta(request):
     """Handle survey form submission and display."""
     if not request.user.is_authenticated:
         messages.error(request, "No estas autenticado.")
@@ -55,7 +55,7 @@ def crearEncuesta(request):
             messages.error(request, f"Error al registrar la encuesta: {str(e)}")
     return render(request, 'profesor_principal/formular_encuesta.html')
 
-def eliminarEncuesta(request, encuesta_id):
+def eliminar_encuesta(request, encuesta_id):
     """Delete a single survey."""
     if not request.user.is_authenticated:
         messages.error(request, "No estas autenticado.")
@@ -68,7 +68,7 @@ def eliminarEncuesta(request, encuesta_id):
     messages.success(request, "Encuesta eliminada correctamente.")
     return redirect('p_encuestas')
 
-def eliminarEncuestas(request):
+def eliminar_encuestas(request):
     """Delete multiple strategies."""
     if not request.user.is_authenticated:
         messages.error(request, "No estas autenticado.")
@@ -86,7 +86,7 @@ def eliminarEncuestas(request):
         return redirect('p_encuestas')
     return JsonResponse({'error': 'Método no permitido'}, status=405)
 
-def modificarEncuesta(request, encuesta_id):
+def modificar_encuesta(request, encuesta_id):
     """Modify a single survey."""
     if not request.user.is_authenticated:
         messages.error(request, "No estas autenticado.")
@@ -118,7 +118,7 @@ def modificarEncuesta(request, encuesta_id):
             return render(request, 'profesor_principal/modificar_encuesta.html', {'encuesta': encuesta})
     return render(request, 'profesor_principal/modificar_encuesta.html', {'encuesta': encuesta})
 
-def visualizarEncuesta(request, encuesta_id):
+def visualizar_encuesta(request, encuesta_id):
     """View a single strategy."""
     if not request.user.is_authenticated:
         messages.error(request, "No estas autenticado.")

@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.http import JsonResponse
 from django.db.models import Q
 
-def visualizarEventos(request):
+def visualizar_eventos(request):
     """Display all events with optional search functionality."""
     if not request.user.is_authenticated:
         messages.error(request, "No estas autenticado.")
@@ -31,7 +31,7 @@ def visualizarEventos(request):
         'query': query
     })
 
-def crearEvento(request):
+def crear_evento(request):
     """Handle event form submission and display."""
     if not request.user.is_authenticated:
         messages.error(request, "No estas autenticado.")
@@ -76,7 +76,7 @@ def crearEvento(request):
     profesores = Profesor.objects.all()
     return render(request, 'profesor_principal/formular_evento.html', {'profesores': profesores})
 
-def eliminarEvento(request, evento_id):
+def eliminar_evento(request, evento_id):
     """Delete a single event."""
     if not request.user.is_authenticated:
         messages.error(request, "No estas autenticado.")
@@ -89,7 +89,7 @@ def eliminarEvento(request, evento_id):
     messages.success(request, "Evento eliminado correctamente.")
     return redirect('p_eventos')
 
-def eliminarEventos(request):
+def eliminar_eventos(request):
     """Delete multiple events."""
     if not request.user.is_authenticated:
         messages.error(request, "No estas autenticado.")
@@ -107,7 +107,7 @@ def eliminarEventos(request):
         return redirect('p_eventos')
     return JsonResponse({'error': 'Método no permitido'}, status=405)
 
-def modificarEvento(request, evento_id):
+def modificar_evento(request, evento_id):
     """Modify a single event."""
     if not request.user.is_authenticated:
         messages.error(request, "No estas autenticado.")
@@ -156,7 +156,7 @@ def modificarEvento(request, evento_id):
 
     return render(request, 'profesor_principal/modificar_evento.html', {'evento': evento, 'profesores': profesores })
 
-def visualizarEvento(request, evento_id):
+def visualizar_evento(request, evento_id):
     """View a single event."""
     if not request.user.is_authenticated:
         messages.error(request, "No estas autenticado.")

@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.db.models import Q
 
 
-def visualizarEstrategias(request):
+def visualizar_estrategias(request):
     if not request.user.is_authenticated:
         messages.error(request, "Debes iniciar sesión para realizar esta acción.")
         return redirect('login')
@@ -22,7 +22,7 @@ def visualizarEstrategias(request):
         estrategias = Estrategia.objects.all()
     return render(request, "usuarios/listar_estrategias.html", {"estrategias": estrategias, "query": query})
 
-def visualizarEstrategia(request, estrategia_id):
+def visualizar_estrategia(request, estrategia_id):
     if not request.user.is_authenticated:
         messages.error(request, "Debes iniciar sesión para realizar esta acción.")
         return redirect('login')

@@ -5,7 +5,7 @@ from django.db.models import Q
 from usuarios.models import Usuario
 
 # Visualizar todos los usuarios
-def visualizarUsuarios(request):
+def visualizar_usuarios(request):
     """Muestra todos los usuarios con funcionalidad de búsqueda opcional."""
     if not request.user.is_authenticated:
         messages.error(request, "No estas autenticado.")
@@ -25,7 +25,7 @@ def visualizarUsuarios(request):
     })
 
 # Crear un nuevo usuario
-def crearUsuario(request):
+def crear_usuario(request):
     """Crea un nuevo usuario.
     if not request.user.is_authenticated:
         messages.error(request, "No estas autenticado.")
@@ -82,7 +82,7 @@ def crearUsuario(request):
     return render(request, 'profesor_principal/formular_usuario.html')
 
 # Eliminar un usuario específico
-def eliminarUsuario(request, usuario_id):
+def eliminar_usuario(request, usuario_id):
     """Elimina un usuario específico."""
     if not request.user.is_authenticated:
         messages.error(request, "No estas autenticado.")
@@ -96,7 +96,7 @@ def eliminarUsuario(request, usuario_id):
     return redirect('p_usuarios')
 
 # Eliminar múltiples usuarios
-def eliminarUsuarios(request):
+def eliminar_usuarios(request):
     """Elimina múltiples usuarios seleccionados."""
     if not request.user.is_authenticated:
         messages.error(request, "No estas autenticado.")
@@ -112,7 +112,7 @@ def eliminarUsuarios(request):
     return JsonResponse({'error': 'Método no permitido'}, status=405)
 
 # Modificar un usuario existente
-def modificarUsuario(request, usuario_id):
+def modificar_usuario(request, usuario_id):
     """Modifica un usuario existente."""
     if not request.user.is_authenticated:
         messages.error(request, "No estas autenticado.")
@@ -144,7 +144,7 @@ def modificarUsuario(request, usuario_id):
 
 
 # Visualizar un usuario específico
-def visualizarUsuario(request, usuario_id):
+def visualizar_usuario(request, usuario_id):
     """Muestra los detalles de un usuario específico."""
     if not request.user.is_authenticated:
         messages.error(request, "No estas autenticado.")

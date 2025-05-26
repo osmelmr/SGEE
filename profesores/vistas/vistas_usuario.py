@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.db.models import Q
 
 
-def visualizarProfesores(request):
+def visualizar_profesores(request):
     if not request.user.is_authenticated:
         messages.error(request, "Debes iniciar sesión para realizar esta acción.")
         return redirect('login')
@@ -20,7 +20,7 @@ def visualizarProfesores(request):
         profesores = Profesor.objects.all()
     return render(request, "usuarios/listar_profesores.html", {"profesores": profesores, "query": query})
 
-def visualizarProfesor(request, profesor_id):
+def visualizar_profesor(request, profesor_id):
     if not request.user.is_authenticated:
         messages.error(request, "Debes iniciar sesión para realizar esta acción.")
         return redirect('login')

@@ -3,9 +3,9 @@ from pyexpat.errors import messages
 from django.shortcuts import redirect, render
 
 from grupos.models import Grupo
+from django.db.models import Q
 
-
-def visualizarGrupo(request, grupo_id):
+def visualizar_grupo(request, grupo_id):
     if not request.user.is_authenticated:
         messages.error(request, "No estas autenticado.")
         return redirect("login")
@@ -13,7 +13,7 @@ def visualizarGrupo(request, grupo_id):
     return render(request, 'profesor_principal/visualizar_grupo.html', {'grupo': grupo})
 
 
-def visualizarGrupos(request):
+def visualizar_grupos(request):
     if not request.user.is_authenticated:
         messages.error(request, "No estas autenticado.")
         return redirect("login")

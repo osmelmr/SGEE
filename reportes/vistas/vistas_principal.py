@@ -7,7 +7,7 @@ from django.db.models import Q
 import os
 from django.core.files.base import ContentFile
 
-def visualizarReportes(request):
+def visualizar_reportes(request):
     """Display all reports with optional search functionality."""
     if not request.user.is_authenticated:
         messages.error(request, "No estas autenticado.")
@@ -38,7 +38,7 @@ def visualizarReportes(request):
         'query': query
     })
 
-def crearReporte(request):
+def crear_reporte(request):
     """Handle report form submission and display."""
     if not request.user.is_authenticated:
         messages.error(request, "No estas autenticado.")
@@ -87,7 +87,7 @@ def crearReporte(request):
 
     return render(request, 'profesor_principal/formular_reporte.html', {"grupos": grupos})
 
-def eliminarReporte(request, reporte_id):
+def eliminar_reporte(request, reporte_id):
     """Delete a single report."""
     if not request.user.is_authenticated:
         messages.error(request, "No estas autenticado.")
@@ -100,7 +100,7 @@ def eliminarReporte(request, reporte_id):
     messages.success(request, "Reporte eliminado correctamente.")
     return redirect('p_reportes')
 
-def eliminarReportes(request):
+def eliminar_reportes(request):
     """Delete multiple reports."""
     if not request.user.is_authenticated:
         messages.error(request, "No estas autenticado.")
@@ -118,7 +118,7 @@ def eliminarReportes(request):
         return redirect('p_reportes')
     return JsonResponse({'error': 'Método no permitido'}, status=405)
 
-def modificarReporte(request, reporte_id):
+def modificar_reporte(request, reporte_id):
     """Modify a single report."""
     if not request.user.is_authenticated:
         messages.error(request, "No estas autenticado.")
@@ -162,7 +162,7 @@ def modificarReporte(request, reporte_id):
 
     return render(request, 'profesor_principal/modificar_reporte.html', {'reporte': reporte})
 
-def visualizarReporte(request, reporte_id):
+def visualizar_reporte(request, reporte_id):
     """View a single strategy."""
     if not request.user.is_authenticated:
         messages.error(request, "No estas autenticado.")

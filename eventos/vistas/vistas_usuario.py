@@ -5,7 +5,7 @@ from django.db.models import Q
 
 
 
-def visualizarEventos(request):
+def visualizar_eventos(request):
     if not request.user.is_authenticated:
         messages.error(request, "Debes iniciar sesión para realizar esta acción.")
         return redirect('login')
@@ -21,7 +21,7 @@ def visualizarEventos(request):
         eventos = Evento.objects.all()
     return render(request, "usuarios/listar_eventos.html", {"eventos": eventos, "query": query})
 
-def visualizarEvento(request, evento_id):
+def visualizar_evento(request, evento_id):
     if not request.user.is_authenticated:
         messages.error(request, "Debes iniciar sesión para realizar esta acción.")
         return redirect('login')

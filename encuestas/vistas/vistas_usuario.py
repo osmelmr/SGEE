@@ -4,7 +4,7 @@ from django.contrib import messages
 from encuestas.models import Respuesta, Pregunta
 from django.db.models import Q
 
-def visualizarEncuestas(request):
+def visualizar_encuestas(request):
     if not request.user.is_authenticated:
         messages.error(request, "Debes iniciar sesión para realizar esta acción.")
         return redirect('login')
@@ -21,7 +21,7 @@ def visualizarEncuestas(request):
         encuestas = Encuesta.objects.exclude(id__in=encuestas_realizadas.values_list('id', flat=True))
     return render(request, "usuarios/listar_encuestas.html", {"encuestas": encuestas, "query": query})
 
-def visualizarEncuesta(request, encuesta_id):
+def visualizar_encuesta(request, encuesta_id):
     if not request.user.is_authenticated:
         messages.error(request, "Debes iniciar sesión para realizar esta acción.")
         return redirect('login')

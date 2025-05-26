@@ -7,21 +7,21 @@ urlpatterns = [
     #REPORTES
 
     #Crear Reporte
-    path('p/formular/reporte/', vistas_principal.crearReporte, name='p_formular_reporte'),
+    path('p/formular/reporte/', vistas_principal.crear_reporte, name='p_formular_reporte'),
     #Ver multiples Reportes
-    path('p/reportes/', vistas_principal.visualizarReportes, name='p_reportes'),
+    path('p/reportes/', vistas_principal.visualizar_reportes, name='p_reportes'),
     #Ver una unica Reporte
-    path('p/visualizar/reporte/<int:reporte_id>/', vistas_principal.visualizarReporte, name='p_visualizar_reporte'),
+    path('p/visualizar/reporte/<int:reporte_id>/', vistas_principal.visualizar_reporte, name='p_visualizar_reporte'),
     #Modificar muliples Reportes
-    path('p/modificar/reporte/<int:reporte_id>/', vistas_principal.modificarReporte, name='p_modificar_reporte'), 
+    path('p/modificar/reporte/<int:reporte_id>/', vistas_principal.modificar_reporte, name='p_modificar_reporte'), 
     #Eliminar una unica Reporte
-    path('p/eliminar/reporte/<int:reporte_id>/', vistas_principal.eliminarReporte, name='p_eliminar_reporte'),
+    path('p/eliminar/reporte/<int:reporte_id>/', vistas_principal.eliminar_reporte, name='p_eliminar_reporte'),
     #Eliminar multiples Reportes
-    path('p/eliminar/reportes/', vistas_principal.eliminarReportes, name='p_eliminar_reportes'),
+    path('p/eliminar/reportes/', vistas_principal.eliminar_reportes, name='p_eliminar_reportes'),
     #Ver multiples Reportes
-    path('reportes/', vistas_usuario.visualizarReportes, name='reportes'),
+    path('reportes/', vistas_usuario.visualizar_reportes, name='reportes'),
     #Ver una unica Reporte
-    path('visualizar_reporte/<int:reporte_id>/', vistas_usuario.visualizarReporte, name='visualizar_reporte'),
+    path('visualizar_reporte/<int:reporte_id>/', vistas_usuario.visualizar_reporte, name='visualizar_reporte'),
     
     
 ]

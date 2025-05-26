@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.http import JsonResponse
 from django.db.models import Q
 
-def visualizarProfesores(request):
+def visualizar_profesores(request):
     if not request.user.is_authenticated:
         messages.error(request, "No estas autenticado.")
         return redirect("login")
@@ -33,7 +33,7 @@ def visualizarProfesores(request):
         'query': query
     })
 
-def crearProfesor(request):
+def crear_profesor(request):
     if not request.user.is_authenticated:
         messages.error(request, "No estas autenticado.")
         return redirect("login")
@@ -82,7 +82,7 @@ def crearProfesor(request):
 
     return render(request, 'profesor_principal/formular_profesor.html', {'grupos': grupos})
 
-def eliminarProfesor(request, profesor_id):
+def eliminar_profesor(request, profesor_id):
     if not request.user.is_authenticated:
         messages.error(request, "No estas autenticado.")
         return redirect("login")
@@ -95,7 +95,7 @@ def eliminarProfesor(request, profesor_id):
     messages.success(request, "Profesor eliminado correctamente.")
     return redirect('p_profesores')
 
-def eliminarProfesores(request):
+def eliminar_profesores(request):
     if not request.user.is_authenticated:
         messages.error(request, "No estas autenticado.")
         return redirect("login")
@@ -113,7 +113,7 @@ def eliminarProfesores(request):
         return redirect('p_profesores')
     return JsonResponse({'error': 'Método no permitido'}, status=405)
 
-def modificarProfesor(request, profesor_id):
+def modificar_profesor(request, profesor_id):
     if not request.user.is_authenticated:
         messages.error(request, "No estas autenticado.")
         return redirect("login")
@@ -155,7 +155,7 @@ def modificarProfesor(request, profesor_id):
 
     return render(request, 'profesor_principal/modificar_profesor.html', {'profesor': profesor})
 
-def visualizarProfesor(request, profesor_id):
+def visualizar_profesor(request, profesor_id):
     if not request.user.is_authenticated:
         messages.error(request, "No estas autenticado.")
         return redirect("login")

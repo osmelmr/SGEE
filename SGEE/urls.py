@@ -32,7 +32,7 @@ urlpatterns = [
 
     path('p/sobrenos/',vistas_principal.sobrenos_view, name='p_sobrenos'),
 
-    path('p/testimonials/',vistas_principal.visualizarTestimonios, name='p_testimonials'),
+    path('p/testimonials/',vistas_principal.visualizar_testimonios, name='p_testimonials'),
 
     path('pagina_principal/', vistas_usuario.estra_view, name='pagina_principal'),
 
@@ -41,6 +41,8 @@ urlpatterns = [
     path('sobrenos/',vistas_usuario.sobrenos_view, name='sobrenos'),
 
     path('testimonials/',vistas_usuario.visualizarTestimonios, name='testimonials'),
+
+    path('foto/<str:foto_id>/', vistas_principal.ver_foto, name='foto'),
 
     path('', include('encuestas.urls')),
     path('', include('grupos.urls')),
