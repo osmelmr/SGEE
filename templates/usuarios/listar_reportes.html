@@ -1,6 +1,6 @@
 {% extends "baseg.html" %}
 {% load static %}
-{% block title %} Contáctenos {% endblock %}
+{% block title %} Listar Reportes {% endblock %}
 {% block content %}
 
 <div id="maind">
@@ -26,7 +26,7 @@
       </div>
   
       <!-- Contenedor de la tabla con scroll -->
-      <form id="form-eliminar-reportes" method="POST" action="{% url 'eliminar_reportes' %}">
+      <form id="form-eliminar-reportes" method="POST" action="{% url 'p_eliminar_reportes' %}">
         {% csrf_token %}
         <div id="tabla-reportes" class="table-container">
           <div id="tabla-reportes-responsive" class="table-responsive">
@@ -101,7 +101,7 @@
             const reporteId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
             if (confirm("¿Estás seguro de que quieres eliminar este reporte?")) {
                 // Redirige a la URL para eliminar la reporte
-                window.location.href = `/eliminar_reporte/${reporteId}/`;
+                window.location.href = `/p_eliminar_reporte/${reporteId}/`;
             }
         });
     });
@@ -113,7 +113,7 @@
         button.addEventListener("click", function (e) {
             //e.stopPropagation();
             const reporteId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
-            window.location.href = `/modificar_reporte/${reporteId}/`;
+            window.location.href = `/p_modificar_reporte/${reporteId}/`;
         });
     });
   </script>

@@ -24,7 +24,7 @@
     </form>
 
     <!-- Contenedor de la tabla con scroll -->
-    <form id="form-eliminar-estrategias" method="POST" action="{% url 'eliminar_estrategias' %}">
+    <form id="form-eliminar-estrategias" method="POST" action="{% url 'p_eliminar_estrategias' %}">
       {% csrf_token %}
       <div class="table-container">
         <div class="table-responsive">
@@ -76,7 +76,7 @@
 
       <!-- Botones independientes debajo de la tabla -->
       <div id="botones-accion-estrategia-educativa" class="d-flex justify-content-between mt-4">
-        <a href="{% url 'formular_estrategia' %}">
+        <a href="{% url 'p_formular_estrategia' %}">
           <div id="btn-registrar-estrategia-educativa" class="btn btn-success">
             <i class="bi bi-plus-circle"></i> Registrar
           </div>
@@ -97,7 +97,7 @@
             const estrategiaId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
             if (confirm("¿Estás seguro de que quieres eliminar esta estrategia ?"+estrategiaId)) {
                 // Redirige a la URL para eliminar la estrategia
-                window.location.href = `/eliminar_estrategia/${estrategiaId}/`;
+                window.location.href = `/p_eliminar_estrategia/${estrategiaId}/`;
             }
         });
     });
@@ -120,7 +120,7 @@
         button.addEventListener("click", function (e) {
             //e.stopPropagation();
             const estrategiaId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
-            window.location.href = `/modificar_estrategia/${estrategiaId}/`;
+            window.location.href = `/p_modificar_estrategia/${estrategiaId}/`;
         });
     });
   </script>
@@ -131,7 +131,7 @@
         button.addEventListener("click", function (e) {
             //e.stopPropagation();
             const estrategiaId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
-            window.location.href = `/visualizar_estrategia/${estrategiaId}/`;
+            window.location.href = `/p_visualizar_estrategia/${estrategiaId}/`;
         });
     });
   </script>

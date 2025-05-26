@@ -1,6 +1,6 @@
 {% extends "baseg.html" %}
 {% load static %}
-{% block title %} Contáctenos {% endblock %}
+{% block title %} Listar Encuestas {% endblock %}
 {% block content %}
 
 <div id="maind">
@@ -25,7 +25,7 @@
       </div>
   
       <!-- Contenedor de la tabla con scroll -->
-      <form id="form-eliminar-encuestas" method="POST" action="{% url 'eliminar_encuestas' %}">
+      <form id="form-eliminar-encuestas" method="POST" action="{% url 'p_eliminar_encuestas' %}">
         {% csrf_token %}
         <div id="tabla-encuestas" class="table-container">
           <div id="tabla-encuestas-responsive" class="table-responsive">

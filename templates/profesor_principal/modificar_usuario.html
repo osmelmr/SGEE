@@ -11,7 +11,7 @@
         <p>Realice las modificaciones pertinentes y presione el botón Aceptar para completar sus ajustes.</p>
       </div>
   
-      <form id="form-registro" class="php-email-form" method="POST" action="{% url 'modificar_usuario' usuario.id %}">
+      <form id="form-registro" class="php-email-form" method="POST" action="{% url 'p_modificar_usuario' usuario.id %}">
         {% csrf_token %}
         <!-- Fila 1: Nombre, Primer Apellido y Segundo Apellido -->
         <div class="row mb-4">

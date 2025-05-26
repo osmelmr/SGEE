@@ -15,15 +15,14 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path, include
-from SGEE.vistas.vistas_generales import login_view
+from SGEE.vistas.vistas_generales import login_view, logout_view
 from SGEE.vistas import vistas_principal, vistas_usuario
 from SGEE.vistas.vistas_usuario import vistas_usuario
 
 urlpatterns = [
     
     path('', login_view, name='login'),
-
-    
+    path('logout/', logout_view, name='logout'),
 
     path('p/pagina_principal/', vistas_principal.estra_view, name='p_pagina_principal'),
 

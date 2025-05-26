@@ -17,7 +17,7 @@
                 <td>{{ grupo.id }}</td>
                 <td>{{ grupo.nombre }}</td>
                 <td>
-                    <a href="{% url 'visualizar_grupo' grupo.id %}" class="btn btn-info btn-sm">Ver</a>
+                    <a href="{% url 'p_visualizar_grupo' grupo.id %}" class="btn btn-info btn-sm">Ver</a>
                 </td>
             </tr>
             {% empty %}
@@ -28,8 +28,10 @@
         </tbody>
     </table>
     <div class="botones">
-        <button type="button" class="btn btn-primary" onclick="location.href='{% url 'formular_grupo' %}'">Crear Nuevo Grupo</button>
+        <button type="button" class="btn btn-primary" onclick="location.href='{% url 'p_formular_grupo' %}'">Crear Nuevo Grupo</button>
         
     </div>
 </div>
+{% endblock %}
+{% block scripts %}
 {% endblock %}

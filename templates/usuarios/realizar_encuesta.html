@@ -1,4 +1,6 @@
 {% extends "baseg.html" %}
+{% load static %}
+{% block title %} Realizar Encuesta {% endblock %}
 {% block content %}
 <div class="container mt-4">
     <h2>{{ encuesta.titulo }}</h2>
@@ -23,4 +25,7 @@
         </div>
     </form>
 </div>
+{% endblock %}
+{% block scripts %}
+  
 {% endblock %}

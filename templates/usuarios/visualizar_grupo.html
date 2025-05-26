@@ -1,5 +1,7 @@
 {% extends 'baseg.html' %}
+{% load static %}
 
+{% block title %} Detalle de Grupo {% endblock %}
 {% block content %}
 <div class="container mt-4">
     <h1>Detalle de Grupo</h1>
@@ -18,4 +20,7 @@
 
     <a href="{% url 'listar_grupos' %}" class="btn btn-secondary">Volver a la lista</a>
 </div>
+{% endblock %}
+{% block scripts %}
+  
 {% endblock %}

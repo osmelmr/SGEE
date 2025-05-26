@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %} Contáctenos {% endblock %}
+{% block title %} Listar Encuestas {% endblock %}
 {% block content %}
 
   <div id="maind">
@@ -25,7 +25,7 @@
       </div>
   
       <!-- Contenedor de la tabla con scroll -->
-      <form id="form-eliminar-encuestas" method="POST" action="{% url 'eliminar_encuestas' %}">
+      <form id="form-eliminar-encuestas" method="POST" action="{% url 'p_eliminar_encuestas' %}">
         {% csrf_token %}
         <div id="tabla-encuestas" class="table-container">
           <div id="tabla-encuestas-responsive" class="table-responsive">
@@ -75,7 +75,7 @@
         </div>
         <!-- Botones independientes debajo de la tabla -->
       <div id="botones-accion-encuestas" class="d-flex justify-content-between mt-4">
-        <a href="{%url 'formular_encuesta'%}">
+        <a href="{%url 'p_formular_encuesta'%}">
           <div id="btn-registrar-encuesta" class="btn btn-success">
             <i class="bi bi-plus-circle"></i> Registrar
           </div>
@@ -97,7 +97,7 @@
         const encuestaId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
         if (confirm("¿Estás seguro de que quieres eliminar esta encuesta?")) {
           // Redirige a la URL para eliminar la encuesta
-          window.location.href = `/eliminar_encuesta/${encuestaId}/`;
+          window.location.href = `/p_eliminar_encuesta/${encuestaId}/`;
         }
       });
     });
@@ -109,7 +109,7 @@
           button.addEventListener("click", function (e) {
               //e.stopPropagation();
               const encuestaId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
-              window.location.href = `/modificar_encuesta/${encuestaId}/`;
+              window.location.href = `/p_modificar_encuesta/${encuestaId}/`;
           });
       });
     </script>
@@ -120,7 +120,7 @@
           button.addEventListener("click", function (e) {
               //e.stopPropagation();
               const encuestaId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
-              window.location.href = `/visualizar_encuesta/${encuestaId}/`;
+              window.location.href = `/p_visualizar_encuesta/${encuestaId}/`;
           });
       });
     </script>

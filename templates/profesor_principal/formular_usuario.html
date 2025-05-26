@@ -10,7 +10,7 @@
         <p>Complete los siguientes campos para registrar un nuevo usuario.</p>
       </div>
   
-      <form id="form-registro" class="php-email-form" action="{% url 'formular_usuario' %}" method="POST">
+      <form id="form-registro" class="php-email-form" action="{% url 'p_formular_usuario' %}" method="POST">
         {% csrf_token %}
         <!-- Fila 1: Nombre, Primer Apellido y Segundo Apellido -->
         <div class="row mb-4">
@@ -100,3 +100,6 @@
     </div>
   </section> 
 {% endblock%}
+{% block scripts %}
+  
+{% endblock %}

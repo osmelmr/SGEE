@@ -1,4 +1,6 @@
 {% extends "baseg.html" %}
+{% load static %}
+{% block title %} Listar Estrategias {% endblock %}
 {% block content %}
 <div id="maind">
 
@@ -13,7 +15,7 @@
         </div>
     
         <!-- Barra de búsqueda -->
-        <form method="GET" action="{% url 'estrategias' %}" class="search-bar mb-4">
+        <form method="GET" action="{% url 'p_estrategias' %}" class="search-bar mb-4">
           <div class="input-group">
             <input type="text" name="q" class="form-control" placeholder="Buscar estrategia..." aria-label="Buscar" value="{{ request.GET.q }}">
             <button class="btn btn-primary" type="submit">
@@ -23,7 +25,7 @@
         </form>
     
         <!-- Contenedor de la tabla con scroll -->
-        <form id="form-eliminar-estrategias" method="POST" action="{% url 'eliminar_estrategias' %}">
+        <form id="form-eliminar-estrategias" method="POST" action="{% url 'p_eliminar_estrategias' %}">
           {% csrf_token %}
           <div class="table-container">
             <div class="table-responsive">
@@ -61,4 +63,7 @@
       </div>
     </section>
 </div>
+{% endblock %}
+{% block scripts %}
+  
 {% endblock %}

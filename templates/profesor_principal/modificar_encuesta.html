@@ -9,7 +9,7 @@
             <p>Realice las modificaciones pertinentes y presione el botón Aceptar para completar sus ajustes.</p>
         </div>
 
-        <form id="form-crear-encuesta" method="POST" action="{% url 'modificar_encuesta' encuesta.id %}">
+        <form id="form-crear-encuesta" method="POST" action="{% url 'p_modificar_encuesta' encuesta.id %}">
             {% csrf_token %}
             <!-- Título de la Encuesta -->
             <div class="form-group mb-3">

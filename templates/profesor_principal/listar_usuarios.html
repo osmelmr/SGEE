@@ -26,7 +26,7 @@
       </div>
   
       <!-- Contenedor de la tabla con scroll -->
-      <form id="form-eliminar-usuarios" method="POST" action="{% url 'eliminar_usuarios' %}">
+      <form id="form-eliminar-usuarios" method="POST" action="{% url 'p_eliminar_usuarios' %}">
         {% csrf_token %}
         <div id="tabla-usuarios" class="table-container">
           <div id="tabla-usuarios-responsive" class="table-responsive">
@@ -76,7 +76,7 @@
         </div>
         <!-- Botones independientes debajo de la tabla -->
       <div id="botones-accion-usuarios" class="d-flex justify-content-between mt-4">
-        <a href="{% url 'formular_usuario'%}">
+        <a href="{% url 'p_formular_usuario'%}">
           <div id="btn-registrar-usuario" class="btn btn-success">
             <i class="bi bi-plus-circle"></i> Registrar
           </div>
@@ -101,7 +101,7 @@
             const usuarioId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
             if (confirm("¿Estás seguro de que quieres eliminar este usuario?")) {
                 // Redirige a la URL para eliminar la usuario
-                window.location.href = `/eliminar_usuario/${usuarioId}/`;
+                window.location.href = `/p_eliminar_usuario/${usuarioId}/`;
             }
         });
     });

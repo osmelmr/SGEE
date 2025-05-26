@@ -1,6 +1,6 @@
 {% extends "baseg.html" %}
 {% load static %}
-{% block title %} Contáctenos {% endblock %}
+{% block title %} Listar Eventos {% endblock %}
 {% block content %}
 
   <div id="maind">
@@ -26,7 +26,11 @@
     </div>
 
     <!-- Contenedor de la tabla con scroll -->
-    <form id="form-eliminar-eventos" method="POST" action="{% url 'eliminar_eventos' %}">
+    <form id="form-eliminar-eventos" method="POST" action="{% url 'p_
+    
+    
+    
+    eliminar_eventos' %}">
       {% csrf_token %}
       <div id="tabla-eventos" class="table-container">
         <div id="tabla-eventos-resposive" class="table-responsive">

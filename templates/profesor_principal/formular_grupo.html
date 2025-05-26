@@ -5,10 +5,13 @@
 {% block content %}
 <div class="container mt-4">
     <h1>Crear Grupo</h1>
-    <form method="post" action="{% url 'formular_grupo' %}">
+    <form method="post" action="{% url 'p_formular_grupo' %}">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Guardar</button>
     </form>
 </div>
+{% endblock %}
+{% block scripts %}
+  
 {% endblock %}

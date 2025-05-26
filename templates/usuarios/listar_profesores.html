@@ -1,6 +1,6 @@
 {% extends "baseg.html" %}
 {% load static %}
-{% block title %} Contáctenos {% endblock %}
+{% block title %} Listar Profesores {% endblock %}
 {% block content %}
 
   <div id="maind">
@@ -25,7 +25,7 @@
       </div>
   
       <!-- Contenedor de la tabla con scroll -->
-      <form id="form-eliminar-profesores" method="POST" action="{% url 'eliminar_profesores' %}">
+      <form id="form-eliminar-profesores" method="POST" action="{% url 'p_eliminar_profesores' %}">
         {% csrf_token %}
         <div id="tabla-profesoral" class="table-container">
           <div id="tabla-profesoral-responsive" class="table-responsive">
@@ -100,7 +100,7 @@
       const profesorId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
       if (confirm("¿Estás seguro de que quieres eliminar este profesor?")) {
         // Redirige a la URL para eliminar el profesor
-        window.location.href = `/eliminar_profesor/${profesorId}/`;
+        window.location.href = `/p_eliminar_profesor/${profesorId}/`;
       }
     });
   });
@@ -111,7 +111,7 @@
       button.addEventListener("click", function (e) {
           //e.stopPropagation();
           const profesorId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
-          window.location.href = `/modificar_profesor/${profesorId}/`;
+          window.location.href = `/p_modificar_profesor/${profesorId}/`;
       });
   });
 </script>

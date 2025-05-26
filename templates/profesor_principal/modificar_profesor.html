@@ -11,7 +11,7 @@
       <p>Realice las modificaciones pertinentes y presione el botón Aceptar para completar sus ajustes.</p>
     </div>
 
-    <form id="form-profesor" method="POST" class="php-email-form" action="{% url 'modificar_profesor' profesor.id %}">
+    <form id="form-profesor" method="POST" class="php-email-form" action="{% url 'p_modificar_profesor' profesor.id %}">
       {% csrf_token %}
       <!-- Fila 1: Nombre -->
       <div class="form-group mb-4">

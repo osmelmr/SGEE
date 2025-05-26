@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %} Contáctenos {% endblock %}
+{% block title %} Crear Encuesta {% endblock %}
 {% block content %}
 <div id="maind">
     <!-- Sección de Crear Encuesta -->
@@ -19,7 +19,7 @@
             <p>Complete el siguiente formulario para crear una nueva encuesta.</p>
         </div>
 
-        <form id="form-crear-encuesta" method="POST" action="{% url 'formular_encuesta' %}">
+        <form id="form-crear-encuesta" method="POST" action="{% url 'p_formular_encuesta' %}">
             {% csrf_token %}
             <!-- Título de la Encuesta -->
             <div class="form-group mb-3">
@@ -84,3 +84,6 @@
 </section>
 </div> 
 {% endblock%}
+{% block scripts %}
+  
+{% endblock %}

@@ -11,7 +11,7 @@
       <p>Realice las modificaciones pertinentes y presione el botón Aceptar para completar sus ajustes.</p>
     </div>
 
-    <form id="form-reporte" class="php-email-form" method="POST" action="{% url 'modificar_reporte' reporte.id %}">
+    <form id="form-reporte" class="php-email-form" method="POST" action="{% url 'p_modificar_reporte' reporte.id %}">
       {% csrf_token %}
       <!-- Fila 1: Grupo y Código -->
       <div class="row mb-4">

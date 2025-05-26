@@ -12,7 +12,7 @@
       <p>Complete los siguientes campos para registrar un nuevo profesor.</p>
     </div>
 
-    <form id="form-profesoral" class="php-email-form" method="post" action="{% url 'formular_profesor' %}">
+    <form id="form-profesoral" class="php-email-form" method="post" action="{% url 'p_formular_profesor' %}">
       {% csrf_token %}
       <!-- Fila 1: Nombre -->
       <div class="form-group mb-4">
@@ -122,3 +122,6 @@
 </section>
   
 {% endblock%}
+{% block scripts %}
+  
+{% endblock %}

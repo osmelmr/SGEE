@@ -10,7 +10,7 @@
         <p> Realice las modificaciones pertinentes y presione el botón Aceptar para completar sus ajustes.</p>
       </div>
   
-      <form id="form-estrategia" class="php-email-form" action="{% url 'modificar_estrategia' estrategia.id %}" method="POST">
+      <form id="form-estrategia" class="php-email-form" action="{% url 'p_modificar_estrategia' estrategia.id %}" method="POST">
         {% csrf_token %}
         <!-- Campos adicionales: curso, año escolar y grupo -->
         <div class="form-section mb-4 p-4 border rounded">

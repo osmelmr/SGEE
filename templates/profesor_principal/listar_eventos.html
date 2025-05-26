@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %} Contáctenos {% endblock %}
+{% block title %} Listar Eventos {% endblock %}
 {% block content %}
 <div id="maind">
 
@@ -25,7 +25,7 @@
     </div>
 
     <!-- Contenedor de la tabla con scroll -->
-    <form id="form-eliminar-eventos" method="POST" action="{% url 'eliminar_eventos' %}">
+    <form id="form-eliminar-eventos" method="POST" action="{% url 'p_eliminar_eventos' %}">
       {% csrf_token %}
       <div id="tabla-eventos" class="table-container">
         <div id="tabla-eventos-resposive" class="table-responsive">
@@ -78,7 +78,7 @@
 
       <!-- Botones independientes debajo de la tabla -->
       <div id="botones-accion-evento" class="d-flex justify-content-between mt-4">
-        <a href="{% url 'formular_evento' %}">
+        <a href="{% url 'p_formular_evento' %}">
           <div id="btn-registrar-evento" class="btn btn-success">
             <i class="bi bi-plus-circle"></i> Registrar
           </div>
@@ -99,7 +99,7 @@
       const eventoId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
       if (confirm("¿Estás seguro de que quieres eliminar este evento?")) {
         // Redirige a la URL para eliminar el evento
-        window.location.href = `/eliminar_evento/${eventoId}/`;
+        window.location.href = `/p_eliminar_evento/${eventoId}/`;
       }
     });
   });
@@ -110,7 +110,7 @@
       button.addEventListener("click", function (e) {
           //e.stopPropagation();
           const eventoId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
-          window.location.href = `/modificar_evento/${eventoId}/`;
+          window.location.href = `/p_modificar_evento/${eventoId}/`;
       });
   });
 </script>
@@ -121,7 +121,7 @@
       button.addEventListener("click", function (e) {
           //e.stopPropagation();
           const eventoId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
-          window.location.href = `/visualizar_evento/${eventoId}/`;
+          window.location.href = `/p_visualizar_evento/${eventoId}/`;
       });
   });
 </script>
