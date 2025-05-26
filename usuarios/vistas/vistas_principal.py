@@ -7,6 +7,12 @@ from data_models.models import Usuario
 # Visualizar todos los usuarios
 def visualizarUsuarios(request):
     """Muestra todos los usuarios con funcionalidad de búsqueda opcional."""
+    if not request.user.is_authenticated:
+        messages.error(request, "No estas autenticado.")
+        return redirect("login")
+    if not request.user.es_profesor():
+        messages.error(request, "No tienes permiso para funcion modelo.")
+        return redirect("pagina_principal_g")
     query = request.GET.get('q', '')
     usuarios = Usuario.objects.filter(
         Q(username__icontains=query) |
@@ -21,6 +27,12 @@ def visualizarUsuarios(request):
 # Crear un nuevo usuario
 def crearUsuario(request):
     """Crea un nuevo usuario."""
+    if not request.user.is_authenticated:
+        messages.error(request, "No estas autenticado.")
+        return redirect("login")
+    if not request.user.es_profesor():
+        messages.error(request, "No tienes permiso para funcion modelo.")
+        return redirect("pagina_principal_g")
     if request.method == 'POST':
         # Obtener los datos del formulario
         form_data = {
@@ -71,6 +83,12 @@ def crearUsuario(request):
 # Eliminar un usuario específico
 def eliminarUsuario(request, usuario_id):
     """Elimina un usuario específico."""
+    if not request.user.is_authenticated:
+        messages.error(request, "No estas autenticado.")
+        return redirect("login")
+    if not request.user.es_profesor():
+        messages.error(request, "No tienes permiso para funcion modelo.")
+        return redirect("pagina_principal_g")
     usuario = get_object_or_404(Usuario, id=usuario_id)
     usuario.delete()
     messages.success(request, f'Usuario {usuario.username} eliminado exitosamente.')
@@ -79,6 +97,12 @@ def eliminarUsuario(request, usuario_id):
 # Eliminar múltiples usuarios
 def eliminarUsuarios(request):
     """Elimina múltiples usuarios seleccionados."""
+    if not request.user.is_authenticated:
+        messages.error(request, "No estas autenticado.")
+        return redirect("login")
+    if not request.user.es_profesor():
+        messages.error(request, "No tienes permiso para funcion modelo.")
+        return redirect("pagina_principal_g")
     if request.method == 'POST':
         ids = request.POST.getlist('ids')
         Usuario.objects.filter(id__in=ids).delete()
@@ -89,6 +113,12 @@ def eliminarUsuarios(request):
 # Modificar un usuario existente
 def modificarUsuario(request, usuario_id):
     """Modifica un usuario existente."""
+    if not request.user.is_authenticated:
+        messages.error(request, "No estas autenticado.")
+        return redirect("login")
+    if not request.user.es_profesor():
+        messages.error(request, "No tienes permiso para funcion modelo.")
+        return redirect("pagina_principal_g")
     usuario = get_object_or_404(Usuario, id=usuario_id)
     if request.method == 'POST':
         form_data = {
@@ -111,8 +141,15 @@ def modificarUsuario(request, usuario_id):
 
     return render(request, 'modificar_usuario.html', {'usuario': usuario})
 
+
 # Visualizar un usuario específico
 def visualizarUsuario(request, usuario_id):
     """Muestra los detalles de un usuario específico."""
+    if not request.user.is_authenticated:
+        messages.error(request, "No estas autenticado.")
+        return redirect("login")
+    if not request.user.es_profesor():
+        messages.error(request, "No tienes permiso para funcion modelo.")
+        return redirect("pagina_principal_g")
     usuario = get_object_or_404(Usuario, id=usuario_id)
     return render(request, 'profesor_principal/visualizar__usuario.html', {'usuario': usuario})

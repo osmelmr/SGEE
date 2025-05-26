@@ -21,11 +21,12 @@ from .views import sobrenos_view,visualizarTestimonios
 from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    
+    path('', login_view, name='login'),
 
     path('', include('data_models.urls')),
 
-    path('', login_view, name='login'),
+    
 
     path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
 

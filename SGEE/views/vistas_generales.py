@@ -10,21 +10,7 @@ from django.contrib.auth.decorators import login_required
 
 # Static Pages
 # ----------------------------------------------------------------------------
-def estra_view(request):
-    """Render the main strategy page."""
-    return render(request, 'pagina_principal.html')
 
-def contact_view(request):
-    """Render the contact page."""
-    return render(request, 'contactenos.html')
-
-def sobrenos_view(request):
-    """Render the about us page."""
-    return render(request, 'sobrenos.html')
-
-def visualizarTestimonios(request):
-    """Render the testimonials page."""
-    return render(request, 'testimonials.html')
 
 def login_view(request):
     if request.method == 'POST':
