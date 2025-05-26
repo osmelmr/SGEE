@@ -7,7 +7,7 @@ from django.contrib.auth.models import AbstractUser
 
 class Usuario(AbstractUser):
     # Opciones
-    CARGO_CHOICES = [
+    rol_CHOICES = [
         ('profesor_principal', 'Profesor_Principal'),
         ('usuario', 'Usuario'),
     ]
@@ -18,7 +18,7 @@ class Usuario(AbstractUser):
     ]
 
     # Campos adicionales
-    cargo = models.CharField(max_length=20, choices=CARGO_CHOICES)
+    rol = models.CharField(max_length=20, choices=rol_CHOICES)
     sexo = models.CharField(max_length=10, choices=SEXO_CHOICES)
     grupo = models.CharField(max_length=50, blank=True, null=True)
     solapin = models.CharField(max_length=10, unique=True)

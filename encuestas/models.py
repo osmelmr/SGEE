@@ -45,7 +45,7 @@ class Respuesta(models.Model):
     )
     # Contenido de la respuesta
     evaluacion = models.CharField(
-        max_length=20, blank=True, null=True)
+        max_length=20)
     fecha_respuesta = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

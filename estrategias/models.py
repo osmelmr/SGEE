@@ -2,9 +2,15 @@ from django.db import models
 
 # Create your models here.
 class Estrategia(models.Model):
+    ANIO_CHOICES = [
+        ('primero', 'Primero'),
+        ('segundo', 'Segundo'),
+        ('tercero', 'Tercero'),
+        ('cuarto', 'Cuarto'),
+    ]
     # Campos únicos
     curso = models.CharField(max_length=20)
-    anio_escolar = models.CharField(max_length=10)
+    anio_escolar = models.CharField(max_length=10, choices=ANIO_CHOICES)
     grupo = models.CharField(max_length=20)
 
     # Información general

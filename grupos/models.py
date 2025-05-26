@@ -2,11 +2,17 @@ from django.db import models
 
 # Create your models here.
 class Grupo(models.Model):
+    ANIO_CHOICES = [
+        ('primero', 'Primero'),
+        ('segundo', 'Segundo'),
+        ('tercero', 'Tercero'),
+        ('cuarto', 'Cuarto'),
+    ]
     # Información básica
     nombre = models.CharField(max_length=50, unique=True)
     direccion = models.CharField(max_length=100)
     curso = models.CharField(max_length=20)
-    anio_escolar = models.CharField(max_length=10)
+    anio_escolar = models.CharField(max_length=10, choices=ANIO_CHOICES)
     caracterizacion = models.TextField()
 
     # Relaciones
