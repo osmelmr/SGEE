@@ -89,38 +89,40 @@
 
   // ==================== VALIDACIONES ESPECÍFICAS ====================
 
-  /**
-   * Función base de validación para campos de formulario
-   * @param {HTMLElement} campo - Campo a validar
-   * @param {RegExp} regex - Patrón de validación
-   * @param {string} mensajeError - Mensaje de error
-   * @returns {boolean} True si la validación pasa
-   */
-  function validarCampoGenerico(campo, regex, mensajeError) {
-    const valor = campo.value.trim();
-    
-    // Primero validar si es requerido y está vacío
-    if (campo.required && !valor) {
+/**
+ * Función base de validación para campos de formulario (versión corregida)
+ * @param {HTMLElement} campo - Campo a validar (input/select/textarea)
+ * @param {RegExp} [regex] - Patrón de validación (opcional)
+ * @param {string} [mensajeError] - Mensaje de error personalizado (opcional)
+ * @returns {boolean} True si la validación pasa
+ */
+function validarCampoGenerico(campo, regex, mensajeError) {
+  const valor = campo.value.trim();
+  const esRequerido = campo.hasAttribute('required');
+  
+  // 1. Validación de campo requerido vacío (tiene máxima prioridad)
+  if (esRequerido && !valor) {
       mostrarError(campo, 'Este campo es obligatorio');
       return false;
-    }
-    
-    // Si no es requerido y está vacío, no mostrar error pero no marcar como válido
-    if (!valor) {
-      mostrarError(campo);
-      return true;
-    }
-    
-    // Validar contra regex si existe valor
-    if (regex && !regex.test(valor)) {
-      mostrarError(campo, mensajeError);
-      return false;
-    }
-    
-    // Si pasan todas las validaciones
-    mostrarError(campo);
-    return true;
   }
+  
+  // 2. Si no es requerido y está vacío, no validar más
+  if (!esRequerido && !valor) {
+      mostrarError(campo); // Limpiar errores previos
+      return true; // Considerar válido porque no es requerido
+  }
+  
+  // 3. Validar contra regex si se proporcionó
+  if (regex && !regex.test(valor)) {
+      mostrarError(campo, mensajeError || 'El formato no es válido');
+      return false;
+  }
+  
+  // 4. Si pasa todas las validaciones
+  mostrarError(campo); // Limpiar errores
+  campo.classList.add('is-valid');
+  return true;
+}
 
   // ------------------- Estrategia Educativa -------------------
   function validarCurso() {
@@ -182,9 +184,16 @@
       return false;
     }
     
+    // Validar horas si las fechas son iguales
+    if (fechaInicio.value === fechaFin.value) {
+      const validoHoraInicio = validarHoraInicio();
+      const validoHoraFin = validarHoraFin();
+      return validoHoraInicio && validoHoraFin;
+    }
+    
     return true;
   }
-
+  
   function validarTelefonoContacto() {
     const campo = document.getElementById('telefono-contacto');
     if (!campo) return true;
@@ -193,6 +202,55 @@
       /^[0-9+]*$/,
       'Solo se permiten números y el símbolo +'
     );
+  }
+  
+  // Nuevas funciones para validación de horas (añadir estas)
+  function validarHoraInicio() {
+    const campo = document.getElementById('hora-inicio');
+    const horaFin = document.getElementById('hora-fin');
+    const fechaInicio = document.getElementById('fecha-inicio');
+    const fechaFin = document.getElementById('fecha-fin');
+    
+    // Validación básica de campo requerido
+    if (!campo.value) {
+      mostrarError(campo, 'Este campo es obligatorio');
+      return false;
+    }
+    
+    // Validar relación de horas solo si las fechas son iguales
+    if (fechaInicio.value && fechaFin.value && 
+        fechaInicio.value === fechaFin.value && 
+        horaFin.value && campo.value > horaFin.value) {
+      mostrarError(campo, 'Cuando las fechas son iguales, la hora de inicio no puede ser posterior a la hora de fin');
+      return false;
+    }
+    
+    mostrarError(campo);
+    return true;
+  }
+  
+  function validarHoraFin() {
+    const campo = document.getElementById('hora-fin');
+    const horaInicio = document.getElementById('hora-inicio');
+    const fechaInicio = document.getElementById('fecha-inicio');
+    const fechaFin = document.getElementById('fecha-fin');
+    
+    // Validación básica de campo requerido
+    if (!campo.value) {
+      mostrarError(campo, 'Este campo es obligatorio');
+      return false;
+    }
+    
+    // Validar relación de horas solo si las fechas son iguales
+    if (fechaInicio.value && fechaFin.value && 
+        fechaInicio.value === fechaFin.value && 
+        horaInicio.value && campo.value < horaInicio.value) {
+      mostrarError(campo, 'Cuando las fechas son iguales, la hora de fin no puede ser anterior a la hora de inicio');
+      return false;
+    }
+    
+    mostrarError(campo);
+    return true;
   }
 
   // ------------------- Información Profesoral -------------------
@@ -838,8 +896,15 @@
     });
 
     configurarValidacionFormulario('form-evento', {
+      'nombre-evento': validarNombreEvento,
       'fecha-inicio': () => validarFechasEvento(),
       'fecha-fin': () => validarFechasEvento(),
+      'hora-inicio': validarHoraInicio,
+      'hora-fin': validarHoraFin,
+      'ubicacion-evento': validarUbicacion,
+      'tipo-evento': validarTipoEvento,
+      'descripcion-evento': validarDescripcionEvento,
+      'profesor-cargo': validarProfesorCargo,
       'telefono-contacto': validarTelefonoContacto
     });
 
