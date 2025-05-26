@@ -12,7 +12,7 @@ def visualizarEncuestas(request):
         return redirect("login")
     if not request.user.es_profesor():
         messages.error(request, "No tienes permiso para visualizar encuestas.")
-        return redirect("pagina_principal_g")
+        return redirect("pagina_principal")
     query = request.GET.get('q', '')
     if query:
         encuestas = Encuesta.objects.filter(
@@ -35,7 +35,7 @@ def crearEncuesta(request):
         return redirect("login")
     if not request.user.es_profesor():
         messages.error(request, "No tienes permiso para crear encuestas.")
-        return redirect("pagina_principal_g")
+        return redirect("pagina_principal")
     if request.method == 'POST':
         form_data = {
             'titulo': request.POST.get('titulo'),
@@ -62,7 +62,7 @@ def eliminarEncuesta(request, encuesta_id):
         return redirect("login")
     if not request.user.es_profesor():
         messages.error(request, "No tienes permiso para eliminar encuestas.")
-        return redirect("pagina_principal_g")
+        return redirect("pagina_principal")
     encuesta = get_object_or_404(Encuesta, id=encuesta_id)
     encuesta.delete()
     messages.success(request, "Encuesta eliminada correctamente.")
@@ -75,7 +75,7 @@ def eliminarEncuestas(request):
         return redirect("login")
     if not request.user.es_profesor():
         messages.error(request, "No tienes permiso para eliminar encuestas.")
-        return redirect("pagina_principal_g")
+        return redirect("pagina_principal")
     if request.method == 'POST':
         encuestas_ids = request.POST.getlist('encuestas[]')
         if encuestas_ids:
@@ -93,7 +93,7 @@ def modificarEncuesta(request, encuesta_id):
         return redirect("login")
     if not request.user.es_profesor():
         messages.error(request, "No tienes permiso para modificar encuestas.")
-        return redirect("pagina_principal_g")
+        return redirect("pagina_principal")
     encuesta = get_object_or_404(Encuesta, id=encuesta_id)
     if request.method == 'POST':
         form_data = {
@@ -125,7 +125,7 @@ def visualizarEncuesta(request, encuesta_id):
         return redirect("login")
     if not request.user.es_profesor():
         messages.error(request, "No tienes permiso para visualizar encuestas.")
-        return redirect("pagina_principal_g")
+        return redirect("pagina_principal")
     encuesta = get_object_or_404(Encuesta, id=encuesta_id)
     return render(request, 'profesor_principal/visualizar_encuesta.html', {'encuesta': encuesta})
 

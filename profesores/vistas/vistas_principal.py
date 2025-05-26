@@ -10,7 +10,7 @@ def visualizarProfesores(request):
         return redirect("login")
     if not request.user.es_profesor():
         messages.error(request, "No tienes permiso para funcion modelo.")
-        return redirect("pagina_principal_g")
+        return redirect("pagina_principal")
     query = request.GET.get('q', '')
     if query:
         profesores = Profesor.objects.filter(
@@ -38,7 +38,7 @@ def crearProfesor(request):
         return redirect("login")
     if not request.user.es_profesor():
         messages.error(request, "No tienes permiso para funcion modelo.")
-        return redirect("pagina_principal_g")
+        return redirect("pagina_principal")
     grupos = Grupo.objects.all()
 
     if request.method == 'POST':
@@ -87,7 +87,7 @@ def eliminarProfesor(request, profesor_id):
         return redirect("login")
     if not request.user.es_profesor():
         messages.error(request, "No tienes permiso para funcion modelo.")
-        return redirect("pagina_principal_g")
+        return redirect("pagina_principal")
     """Delete a single professor."""
     profesor = get_object_or_404(Profesor, id=profesor_id)
     profesor.delete()
@@ -100,7 +100,7 @@ def eliminarProfesores(request):
         return redirect("login")
     if not request.user.es_profesor():
         messages.error(request, "No tienes permiso para funcion modelo.")
-        return redirect("pagina_principal_g")
+        return redirect("pagina_principal")
     """Delete multiple strategies."""
     if request.method == 'POST':
         profesores_ids = request.POST.getlist('profesores[]')
@@ -118,7 +118,7 @@ def modificarProfesor(request, profesor_id):
         return redirect("login")
     if not request.user.es_profesor():
         messages.error(request, "No tienes permiso para funcion modelo.")
-        return redirect("pagina_principal_g")
+        return redirect("pagina_principal")
     """Modify a single professor."""
     profesor = get_object_or_404(Profesor, id=profesor_id)
     
@@ -160,7 +160,7 @@ def visualizarProfesor(request, profesor_id):
         return redirect("login")
     if not request.user.es_profesor():
         messages.error(request, "No tienes permiso para funcion modelo.")
-        return redirect("pagina_principal_g")
+        return redirect("pagina_principal")
     """View a single strategy."""
     profesor = get_object_or_404(Profesor, id=profesor_id)
     return render(request, 'profesor_principal/visualizar_profesor.html', {'profesor': profesor})

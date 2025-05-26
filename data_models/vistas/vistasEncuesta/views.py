@@ -28,7 +28,7 @@ def visualizarEncuestas(request):
             })
         else:
             messages.error(request, "No tienes permiso para visualizar encuestas.")
-            return redirect("pagina_principal_g")
+            return redirect("pagina_principal")
     else:
         messages.error(request, "No estas autenticado.")
         return redirect("login")
@@ -63,7 +63,7 @@ def crearEncuesta(request):
             return render(request, 'profesor_principal/formular_encuesta.html')
         else:
             messages.error(request, "No tienes permiso para crear encuestas.")
-            return redirect("pagina_principal_g")
+            return redirect("pagina_principal")
     else:
         messages.error(request, "No estas autenticado.")
         return redirect("login")
@@ -80,7 +80,7 @@ def eliminarEncuesta(request, encuesta_id):
             return redirect('encuestas')
         else:
             messages.error(request, "No tienes permiso para eliminar encuestas.")
-            return redirect("pagina_principal_g")
+            return redirect("pagina_principal")
     else:
         messages.error(request, "No estas autenticado.")
         return redirect("login")
@@ -102,7 +102,7 @@ def eliminarEncuestas(request):
             return JsonResponse({'error': 'Método no permitido'}, status=405)
         else:
             messages.error(request, "No tienes permiso para eliminar encuestas.")
-            return redirect("pagina_principal_g")
+            return redirect("pagina_principal")
     else:
         messages.error(request, "No estas autenticado.")
         return redirect("login")
@@ -146,7 +146,7 @@ def modificarEncuesta(request, encuesta_id):
             return render(request, 'profesor_principal/modificar_encuesta.html', {'encuesta': encuesta})
         else:
             messages.error(request, "No tienes permiso para modificar encuestas.")
-            return redirect("pagina_principal_g")
+            return redirect("pagina_principal")
     else:
         messages.error(request, "No estas autenticado.")
         return redirect("login")
@@ -161,7 +161,7 @@ def visualizarEncuesta(request, encuesta_id):
             return render(request, 'profesor_principal/visualizar_encuesta.html', {'encuesta': encuesta})
         else:
             messages.error(request, "No tienes permiso para visualizar encuestas.")
-            return redirect("pagina_principal_g")
+            return redirect("pagina_principal")
     else:
         messages.error(request, "No estas autenticado.")
         return redirect("login")

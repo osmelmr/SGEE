@@ -11,7 +11,7 @@ def visualizarEventos(request):
         return redirect("login")
     if not request.user.es_profesor():
         messages.error(request, "No tienes permiso para funcion modelo.")
-        return redirect("pagina_principal_g")
+        return redirect("pagina_principal")
     query = request.GET.get('q', '')
     if query:
         eventos = Evento.objects.filter(
@@ -37,7 +37,7 @@ def crearEvento(request):
         return redirect("login")
     if not request.user.es_profesor():
         messages.error(request, "No tienes permiso para funcion modelo.")
-        return redirect("pagina_principal_g")
+        return redirect("pagina_principal")
     if request.method == 'POST':
         profesor_id = request.POST.get('profesor_encargado')
         try:
@@ -82,7 +82,7 @@ def eliminarEvento(request, evento_id):
         return redirect("login")
     if not request.user.es_profesor():
         messages.error(request, "No tienes permiso para funcion modelo.")
-        return redirect("pagina_principal_g")
+        return redirect("pagina_principal")
     evento = get_object_or_404(Evento, id=evento_id)
     evento.delete()
     messages.success(request, "Evento eliminado correctamente.")
@@ -95,7 +95,7 @@ def eliminarEventos(request):
         return redirect("login")
     if not request.user.es_profesor():
         messages.error(request, "No tienes permiso para funcion modelo.")
-        return redirect("pagina_principal_g")
+        return redirect("pagina_principal")
     if request.method == 'POST':
         eventos_ids = request.POST.getlist('eventos[]')
         if eventos_ids:
@@ -113,7 +113,7 @@ def modificarEvento(request, evento_id):
         return redirect("login")
     if not request.user.es_profesor():
         messages.error(request, "No tienes permiso para funcion modelo.")
-        return redirect("pagina_principal_g")
+        return redirect("pagina_principal")
     evento = get_object_or_404(Evento, id=evento_id)
     
     if request.method == 'POST':
@@ -139,7 +139,7 @@ def modificarEvento(request, evento_id):
         # Validate required fields
         if not all(form_data.values()):
             messages.error(request, "Todos los campos obligatorios deben ser completados.")
-            return render(request, 'modificar_evento.html', {'evento': evento})
+            return render(request, 'profesor_principal/modificar_evento.html', {'evento': evento})
 
         try:
             # Update event with new data
@@ -150,9 +150,9 @@ def modificarEvento(request, evento_id):
             return redirect('eventos')
         except Exception as e:
             messages.error(request, f"Error al actualizar el evento: {str(e)}")
-            return render(request, 'modificar_evento.html', {'evento': evento})
+            return render(request, 'profesor_principal/modificar_evento.html', {'evento': evento})
 
-    return render(request, 'modificar_evento.html', {'evento': evento})
+    return render(request, 'profesor_principal/modificar_evento.html', {'evento': evento})
 
 def visualizarEvento(request, evento_id):
     """View a single event."""
@@ -161,6 +161,6 @@ def visualizarEvento(request, evento_id):
         return redirect("login")
     if not request.user.es_profesor():
         messages.error(request, "No tienes permiso para funcion modelo.")
-        return redirect("pagina_principal_g")
+        return redirect("pagina_principal")
     evento = get_object_or_404(Evento, id=evento_id)
     return render(request, 'profesor_principal/visualizar_evento.html', {'evento': evento})

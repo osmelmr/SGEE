@@ -12,7 +12,7 @@ def visualizarUsuarios(request):
         return redirect("login")
     if not request.user.es_profesor():
         messages.error(request, "No tienes permiso para funcion modelo.")
-        return redirect("pagina_principal_g")
+        return redirect("pagina_principal")
     query = request.GET.get('q', '')
     usuarios = Usuario.objects.filter(
         Q(username__icontains=query) |
@@ -32,7 +32,7 @@ def crearUsuario(request):
         return redirect("login")
     if not request.user.es_profesor():
         messages.error(request, "No tienes permiso para funcion modelo.")
-        return redirect("pagina_principal_g")
+        return redirect("pagina_principal")
     if request.method == 'POST':
         # Obtener los datos del formulario
         form_data = {
@@ -88,7 +88,7 @@ def eliminarUsuario(request, usuario_id):
         return redirect("login")
     if not request.user.es_profesor():
         messages.error(request, "No tienes permiso para funcion modelo.")
-        return redirect("pagina_principal_g")
+        return redirect("pagina_principal")
     usuario = get_object_or_404(Usuario, id=usuario_id)
     usuario.delete()
     messages.success(request, f'Usuario {usuario.username} eliminado exitosamente.')
@@ -102,7 +102,7 @@ def eliminarUsuarios(request):
         return redirect("login")
     if not request.user.es_profesor():
         messages.error(request, "No tienes permiso para funcion modelo.")
-        return redirect("pagina_principal_g")
+        return redirect("pagina_principal")
     if request.method == 'POST':
         ids = request.POST.getlist('ids')
         Usuario.objects.filter(id__in=ids).delete()
@@ -118,7 +118,7 @@ def modificarUsuario(request, usuario_id):
         return redirect("login")
     if not request.user.es_profesor():
         messages.error(request, "No tienes permiso para funcion modelo.")
-        return redirect("pagina_principal_g")
+        return redirect("pagina_principal")
     usuario = get_object_or_404(Usuario, id=usuario_id)
     if request.method == 'POST':
         form_data = {
@@ -139,7 +139,7 @@ def modificarUsuario(request, usuario_id):
         except Exception as e:
             messages.error(request, f'Error al modificar el usuario: {str(e)}')
 
-    return render(request, 'modificar_usuario.html', {'usuario': usuario})
+    return render(request, 'profesor_principal/modificar_usuario.html', {'usuario': usuario})
 
 
 # Visualizar un usuario específico
@@ -150,6 +150,6 @@ def visualizarUsuario(request, usuario_id):
         return redirect("login")
     if not request.user.es_profesor():
         messages.error(request, "No tienes permiso para funcion modelo.")
-        return redirect("pagina_principal_g")
+        return redirect("pagina_principal")
     usuario = get_object_or_404(Usuario, id=usuario_id)
     return render(request, 'profesor_principal/visualizar__usuario.html', {'usuario': usuario})

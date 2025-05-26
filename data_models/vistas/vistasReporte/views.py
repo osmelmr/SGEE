@@ -28,7 +28,7 @@ def visualizarReportes(request):
             })
         else:
             messages.error(request, "No tienes permiso para visualizar reportes.")
-            return redirect("pagina_principal_g")
+            return redirect("pagina_principal")
     else:
         messages.error(request, "No estas autenticado.")
         return redirect("login")
@@ -69,7 +69,7 @@ def crearReporte(request):
             return render(request, 'profesor_principal/formular_reporte.html', {"grupos": grupos})
         else:
             messages.error(request, "No tienes permiso para crear reportes.")
-            return redirect("pagina_principal_g")
+            return redirect("pagina_principal")
     else:
         messages.error(request, "No estas autenticado.")
         return redirect("login")
@@ -86,7 +86,7 @@ def eliminarReporte(request, reporte_id):
             return redirect('reportes')
         else:
             messages.error(request, "No tienes permiso para eliminar reportes.")
-            return redirect("pagina_principal_g")
+            return redirect("pagina_principal")
     else:
         messages.error(request, "No estas autenticado.")
         return redirect("login")
@@ -108,7 +108,7 @@ def eliminarReportes(request):
             return JsonResponse({'error': 'Método no permitido'}, status=405)
         else:
             messages.error(request, "No tienes permiso para eliminar reportes.")
-            return redirect("pagina_principal_g")
+            return redirect("pagina_principal")
     else:
         messages.error(request, "No estas autenticado.")
         return redirect("login")
@@ -157,7 +157,7 @@ def modificarReporte(request, reporte_id):
             return render(request, 'modificar_reporte.html', {'reporte': reporte})
         else:
             messages.error(request, "No tienes permiso para modificar reportes.")
-            return redirect("pagina_principal_g")
+            return redirect("pagina_principal")
     else:
         messages.error(request, "No estas autenticado.")
         return redirect("login")
@@ -172,7 +172,7 @@ def visualizarReporte(request, reporte_id):
             return render(request, 'profesor_principal/visualizar__reporte.html', {'reporte': reporte})
         else:
             messages.error(request, "No tienes permiso para visualizar reportes.")
-            return redirect("pagina_principal_g")
+            return redirect("pagina_principal")
     else:
         messages.error(request, "No estas autenticado.")
         return redirect("login")

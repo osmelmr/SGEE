@@ -18,7 +18,7 @@ def crearGrupo(request):
             return render(request, 'profesor_principal/formular_grupo.html', {'form': form})
         else:
             messages.error(request, "No tienes permiso para crear grupos.")
-            return redirect("pagina_principal_g")
+            return redirect("pagina_principal")
     else:
         messages.error(request, "No estas autenticado.")
         return redirect("login")
@@ -30,7 +30,7 @@ def visualizarGrupo(request, grupo_id):
             return render(request, 'profesor_principal/visualizar_grupo.html', {'grupo': grupo})
         else:
             messages.error(request, "No tienes permiso para visualizar grupos.")
-            return redirect("pagina_principal_g")
+            return redirect("pagina_principal")
     else:
         messages.error(request, "No estas autenticado.")
         return redirect("login")
@@ -42,7 +42,7 @@ def modificarGrupo(request, grupo_id):
             return render(request, 'profesor_principal/modificar_grupo.html', {'grupo': grupo})
         else:
             messages.error(request, "No tienes permiso para visualizar grupos.")
-            return redirect("pagina_principal_g")
+            return redirect("pagina_principal")
     else:
         messages.error(request, "No estas autenticado.")
         return redirect("login")
@@ -54,7 +54,7 @@ def listarGrupos(request):
             return render(request, 'profesor_principal/listar_grupos.html', {'grupos': grupos})
         else:
             messages.error(request, "No tienes permiso para listar grupos.")
-            return redirect("pagina_principal_g")
+            return redirect("pagina_principal")
     else:
         messages.error(request, "No estas autenticado.")
         return redirect("login")

@@ -51,4 +51,4 @@ def toggleEvento(request, evento_id):
             messages.error(request, f"Error al procesar el evento: {str(e)}")
     else:
         messages.error(request, "Debes iniciar sesión para realizar esta acción.")
-    return redirect('eventos_g')
+    return redirect('eventos')

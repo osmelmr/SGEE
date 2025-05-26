@@ -27,7 +27,7 @@ def visualizarProfesores(request):
             })
         else:
             messages.error(request, "No tienes permiso para visualizar profesores.")
-            return redirect("pagina_principal_g")
+            return redirect("pagina_principal")
     else:
         messages.error(request, "No estas autenticado.")
         return redirect("login")
@@ -78,7 +78,7 @@ def crearProfesor(request):
             return render(request, 'profesor_principal/formular_profesor.html', {'grupos': grupos})
         else:
             messages.error(request, "No tienes permiso para crear profesores.")
-            return redirect("pagina_principal_g")
+            return redirect("pagina_principal")
     else:
         messages.error(request, "No estás autenticado.")
         return redirect("login")
@@ -93,7 +93,7 @@ def eliminarProfesor(request, profesor_id):
             return redirect('profesores')
         else:
             messages.error(request, "No tienes permiso para eliminar profesores.")
-            return redirect("pagina_principal_g")
+            return redirect("pagina_principal")
     else:
         messages.error(request, "No estas autenticado.")
         return redirect("login")
@@ -113,7 +113,7 @@ def eliminarProfesores(request):
             return JsonResponse({'error': 'Método no permitido'}, status=405)
         else:
             messages.error(request, "No tienes permiso para eliminar profesores.")
-            return redirect("pagina_principal_g")
+            return redirect("pagina_principal")
     else:
         messages.error(request, "No estas autenticado.")
         return redirect("login")
@@ -157,7 +157,7 @@ def modificarProfesor(request, profesor_id):
             return render(request, 'profesor_principal/modificar_profesor.html', {'profesor': profesor})
         else:
             messages.error(request, "No tienes permiso para modificar profesores.")
-            return redirect("pagina_principal_g")
+            return redirect("pagina_principal")
     else:
         messages.error(request, "No estas autenticado.")
         return redirect("login")
@@ -170,7 +170,7 @@ def visualizarProfesor(request, profesor_id):
             return render(request, 'profesor_principal/visualizar_profesor.html', {'profesor': profesor})
         else:
             messages.error(request, "No tienes permiso para visualizar profesores.")
-            return redirect("pagina_principal_g")
+            return redirect("pagina_principal")
     else:
         messages.error(request, "No estas autenticado.")
         return redirect("login")

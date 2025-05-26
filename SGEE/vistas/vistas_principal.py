@@ -10,7 +10,7 @@ def estra_view(request):
         messages.error(request, "No tienes permiso para listar grupos.")
         return redirect("p/pagina_principal")
     """Render the main strategy page."""
-    return render(request, 'pagina_principal.html')
+    return render(request, 'profesor_principal/pagina_principal.html')
 
 def contact_view(request):
     if not request.user.is_authenticated:
@@ -20,7 +20,7 @@ def contact_view(request):
         messages.error(request, "No tienes permiso para listar grupos.")
         return redirect("p/pagina_principal")
     """Render the contact page."""
-    return render(request, 'contactenos.html')
+    return render(request, 'profesor_principal/contactenos.html')
 
 def sobrenos_view(request):
     if not request.user.is_authenticated:
@@ -30,7 +30,7 @@ def sobrenos_view(request):
         messages.error(request, "No tienes permiso para listar grupos.")
         return redirect("p/pagina_principal")
     """Render the about us page."""
-    return render(request, 'sobrenos.html')
+    return render(request, 'profesor_principal/sobrenos.html')
 
 def visualizarTestimonios(request):
     if not request.user.is_authenticated:
@@ -40,5 +40,5 @@ def visualizarTestimonios(request):
         messages.error(request, "No tienes permiso para listar grupos.")
         return redirect("p/pagina_principal")
     """Render the testimonials page."""
-    return render(request, 'testimonials.html')
+    return render(request, 'profesor_principal/testimonials.html')
 

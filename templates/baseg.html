@@ -36,7 +36,7 @@
     <div class="container d-flex align-items-center">
       <!-- Logo -->
       <!--<a href="{% url 'pagina_principal' %}" class="logo me-auto"><img src="{% static './imagenes/logo/logo.png'%}" alt="" class="img-fluid"></a>-->
-      <h1 class="logo me-auto"><a href="{% url 'pagina_principal_g' %}">ESTRAG</a></h1>
+      <h1 class="logo me-auto"><a href="{% url 'pagina_principal' %}">ESTRAG</a></h1>
 
       <!-- Navegación -->
       <nav id="navbar" class="navbar">
@@ -44,7 +44,7 @@
           <!--
           <li><a href="{% url 'pagina_principal' %}" class="active">Inicio</a></li>
           -->
-          <li><a href="{% url 'pagina_principal_g' %}" class="active">Inicio</a></li>
+          <li><a href="{% url 'pagina_principal' %}" class="active">Inicio</a></li>
           <li class="dropdown">
             <a href="#"><span>Sobre Nosotros</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
@@ -52,20 +52,20 @@
               <li><a href="{% url 'sobrenos' %}">>Sobre Nosotros</a></li>
               <li><a href="testimonials.html"> Reseñas </a></li>
               -->
-              <li><a href="{% url 'sobrenos_g' %}">Sobre Nosotros</a></li>
-              <li><a href="{% url 'testimonials_g' %}"> Reseñas </a></li>
+              <li><a href="{% url 'sobrenos' %}">Sobre Nosotros</a></li>
+              <li><a href="{% url 'testimonials' %}"> Reseñas </a></li>
             </ul>
           </li>
           <li class="dropdown"><a href="#"><span> Servicios </span> <i class="bi bi-chevron-down"></i></a>
             <ul>
-              <li><a href="{% url 'estrategias_g'%}"> Estrategias Educativas </a></li>
-              <li><a href="{% url 'eventos_g'%}"> Eventos </a></li>
-              <li><a href="{% url 'reportes_g'%}"> Reportes de Cumplimiento </a></li>
-              <li><a href="{% url 'profesores_g'%}"> Información Profesoral</a></li>
-              <li><a href="{% url 'encuestas_g'%}"> Encuestas</a></li>
+              <li><a href="{% url 'estrategias'%}"> Estrategias Educativas </a></li>
+              <li><a href="{% url 'eventos'%}"> Eventos </a></li>
+              <li><a href="{% url 'reportes'%}"> Reportes de Cumplimiento </a></li>
+              <li><a href="{% url 'profesores'%}"> Información Profesoral</a></li>
+              <li><a href="{% url 'encuestas'%}"> Encuestas</a></li>
             </ul>
           </li>
-          <li><a href="{% url 'contactar_g' %}">Contáctenos</a></li>
+          <li><a href="{% url 'contactar' %}">Contáctenos</a></li>
           <li class="dropdown user-menu">
             <a href="#"><i class="bi bi-person-circle"></i> Mi cuenta <i class="bi bi-chevron-down"></i></a>
             <ul>
@@ -100,7 +100,7 @@
       <div class="row gy-4">
         <!-- Columna 1: Acerca de -->
         <div class="col-lg-5 col-md-12 footer-about footer-fade-in">
-          <a href="{% url 'pagina_principal_g' %}" class="d-flex align-items-center logo">
+          <a href="{% url 'pagina_principal' %}" class="d-flex align-items-center logo">
             <span>ESTRA</span>
           </a>
           <p>"Recuerda: una buena gestión educativa es la base del éxito. ¡Gracias por visitarnos!"</p>
@@ -116,8 +116,8 @@
         <div class="col-6 col-lg-2 footer-fade-in footer-links" data-delay="100">
           <h4>Enlaces Útiles</h4>
           <ul>
-            <li><a href="{% url 'pagina_principal_g' %}">Inicio</a></li>
-            <li><a href="{% url 'sobrenos_g' %}">>Sobre Nosotros</a></li>
+            <li><a href="{% url 'pagina_principal' %}">Inicio</a></li>
+            <li><a href="{% url 'sobrenos' %}">>Sobre Nosotros</a></li>
             <li><a href="#">Términos de Servicios</a></li>
             <li><a href="#">Política de Privacidad</a></li>
           </ul>

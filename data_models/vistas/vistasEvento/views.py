@@ -27,7 +27,7 @@ def visualizarEventos(request):
             })
         else:
             messages.error(request, "No tienes permiso para visualizar eventos.")
-            return redirect("pagina_principal_g")
+            return redirect("pagina_principal")
     else:
         messages.error(request, "No estas autenticado.")
         return redirect("login")
@@ -77,7 +77,7 @@ def crearEvento(request):
             return render(request, 'profesor_principal/formular_evento.html', {'profesores': profesores})
         else:
             messages.error(request, "No tienes permiso para crear eventos.")
-            return redirect("pagina_principal_g")
+            return redirect("pagina_principal")
     else:
         messages.error(request, "No estas autenticado.")
         return redirect("login")
@@ -94,7 +94,7 @@ def eliminarEvento(request, evento_id):
             return redirect('eventos')
         else:
             messages.error(request, "No tienes permiso para eliminar eventos.")
-            return redirect("pagina_principal_g")
+            return redirect("pagina_principal")
     else:
         messages.error(request, "No estas autenticado.")
         return redirect("login")
@@ -116,7 +116,7 @@ def eliminarEventos(request):
             return JsonResponse({'error': 'Método no permitido'}, status=405)
         else:
             messages.error(request, "No tienes permiso para eliminar eventos.")
-            return redirect("pagina_principal_g")
+            return redirect("pagina_principal")
     else:
         messages.error(request, "No estas autenticado.")
         return redirect("login")
@@ -168,7 +168,7 @@ def modificarEvento(request, evento_id):
             return render(request, 'modificar_evento.html', {'evento': evento})
         else:
             messages.error(request, "No tienes permiso para modificar eventos.")
-            return redirect("pagina_principal_g")
+            return redirect("pagina_principal")
     else:
         messages.error(request, "No estas autenticado.")
         return redirect("login")
@@ -183,7 +183,7 @@ def visualizarEvento(request, evento_id):
             return render(request, 'profesor_principal/visualizar_evento.html', {'evento': evento})
         else:
             messages.error(request, "No tienes permiso para visualizar eventos.")
-            return redirect("pagina_principal_g")
+            return redirect("pagina_principal")
     else:
         messages.error(request, "No estas autenticado.")
         return redirect("login")

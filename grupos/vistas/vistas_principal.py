@@ -10,7 +10,7 @@ def crearGrupo(request):
         return redirect("login")
     if not request.user.es_profesor():
         messages.error(request, "No tienes permiso para crear grupos.")
-        return redirect("pagina_principal_g")
+        return redirect("pagina_principal")
     if request.method == 'POST':
         form = GrupoForm(request.POST)
         if form.is_valid():
@@ -28,7 +28,7 @@ def visualizarGrupo(request, grupo_id):
         return redirect("login")
     if not request.user.es_profesor():
         messages.error(request, "No tienes permiso para visualizar grupos.")
-        return redirect("pagina_principal_g")
+        return redirect("pagina_principal")
     grupo = Grupo.objects.get(id=grupo_id)
     return render(request, 'profesor_principal/visualizar_grupo.html', {'grupo': grupo})
 
@@ -38,7 +38,7 @@ def modificarGrupo(request, grupo_id):
         return redirect("login")
     if not request.user.es_profesor():
         messages.error(request, "No tienes permiso para modificar grupos.")
-        return redirect("pagina_principal_g")
+        return redirect("pagina_principal")
     grupo = Grupo.objects.get(id=grupo_id)
     return render(request, 'profesor_principal/modificar_grupo.html', {'grupo': grupo})
 
@@ -48,7 +48,7 @@ def listarGrupos(request):
         return redirect("login")
     if not request.user.es_profesor():
         messages.error(request, "No tienes permiso para listar grupos.")
-        return redirect("pagina_principal_g")
+        return redirect("pagina_principal")
     query = request.GET.get('q', '')
     if query:
         grupos = Grupo.objects.filter(

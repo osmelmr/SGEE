@@ -57,7 +57,7 @@ def realizar_encuesta(request, encuesta_id):
         request.user.encuestas_realizadas.add(encuesta)
 
         messages.success(request, "¡Respuestas enviadas correctamente!")
-        return redirect('pagina_principal_g')
+        return redirect('pagina_principal')
 
     return render(request, 'usuarios/realizar_encuesta.html', {
         'encuesta': encuesta,

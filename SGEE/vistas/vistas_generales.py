@@ -20,7 +20,7 @@ def login_view(request):
             login(request, user)
             if request.user.es_profesor():
                 return redirect('pagina_principal')
-            return redirect('pagina_principal_g')  # Redirige a la página principal después del login
+            return redirect('pagina_principal')  # Redirige a la página principal después del login
         else:
             messages.error(request, 'Usuario o contraseña incorrectos.')
     return render(request, 'login.html')

@@ -12,7 +12,7 @@ def visualizarReportes(request):
         return redirect("login")
     if not request.user.es_profesor():
         messages.error(request, "No tienes permiso para funcion modelo.")
-        return redirect("pagina_principal_g")
+        return redirect("pagina_principal")
     query = request.GET.get('q', '')
     if query:
         reportes = Reporte.objects.filter(
@@ -43,7 +43,7 @@ def crearReporte(request):
         return redirect("login")
     if not request.user.es_profesor():
         messages.error(request, "No tienes permiso para funcion modelo.")
-        return redirect("pagina_principal_g")
+        return redirect("pagina_principal")
     grupos = Grupo.objects.all()
     if request.method == 'POST':
         # Extract form data
@@ -80,7 +80,7 @@ def eliminarReporte(request, reporte_id):
         return redirect("login")
     if not request.user.es_profesor():
         messages.error(request, "No tienes permiso para funcion modelo.")
-        return redirect("pagina_principal_g")
+        return redirect("pagina_principal")
     reporte = get_object_or_404(Reporte, id=reporte_id)
     reporte.delete()
     messages.success(request, "Reporte eliminado correctamente.")
@@ -93,7 +93,7 @@ def eliminarReportes(request):
         return redirect("login")
     if not request.user.es_profesor():
         messages.error(request, "No tienes permiso para funcion modelo.")
-        return redirect("pagina_principal_g")
+        return redirect("pagina_principal")
     if request.method == 'POST':
         reportes_ids = request.POST.getlist('reportes[]')
         if reportes_ids:
@@ -111,7 +111,7 @@ def modificarReporte(request, reporte_id):
         return redirect("login")
     if not request.user.es_profesor():
         messages.error(request, "No tienes permiso para funcion modelo.")
-        return redirect("pagina_principal_g")
+        return redirect("pagina_principal")
     reporte = get_object_or_404(Reporte, id=reporte_id)
     if request.method == 'POST':
         # Extract form data
@@ -141,9 +141,9 @@ def modificarReporte(request, reporte_id):
             return redirect('reportes')
         except Exception as e:
             messages.error(request, f"Error al actualizar el reporte: {str(e)}")
-            return render(request, 'modificar_reporte.html', {'reporte': reporte})
+            return render(request, 'profesor_principal/modificar_reporte.html', {'reporte': reporte})
 
-    return render(request, 'modificar_reporte.html', {'reporte': reporte})
+    return render(request, 'profesor_principal/modificar_reporte.html', {'reporte': reporte})
 
 def visualizarReporte(request, reporte_id):
     """View a single strategy."""
@@ -152,6 +152,6 @@ def visualizarReporte(request, reporte_id):
         return redirect("login")
     if not request.user.es_profesor():
         messages.error(request, "No tienes permiso para funcion modelo.")
-        return redirect("pagina_principal_g")
+        return redirect("pagina_principal")
     reporte = get_object_or_404(Reporte, id=reporte_id)
     return render(request, 'profesor_principal/visualizar__reporte.html', {'reporte': reporte})
