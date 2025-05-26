@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from data_models.models import Estrategia, Grupo
+from estrategias.models import Estrategia
+from grupos.models import Grupo
 from django.contrib import messages
 from django.http import JsonResponse
 from django.db.models import Q
@@ -86,7 +87,7 @@ def crearEstrategia(request):
         try:
             Estrategia.objects.create(**form_data)
             messages.success(request, "Estrategia registrada correctamente.")
-            return redirect("estrategias")
+            return redirect("p_estrategias")
         except Exception as e:
             messages.error(request, f"Error al registrar la estrategia: {str(e)}")
             return render(request, "profesor_principal/formular_estrategia.html", {
@@ -113,7 +114,7 @@ def eliminarEstrategia(request, estra_id):
     estra = get_object_or_404(Estrategia, id=estra_id)
     estra.delete()
     messages.success(request, "Estrategia eliminada correctamente.")
-    return redirect("estrategias")
+    return redirect("p_estrategias")
 
 # Delete Views - Multiple Items
 # ----------------------------------------------------------------------------
@@ -133,7 +134,7 @@ def eliminarEstrategias(request):
             messages.success(request, "Estrategias eliminadas correctamente.")
         else:
             messages.error(request, "No se seleccionaron estrategias para eliminar.")
-        return redirect("estrategias")
+        return redirect("p_estrategias")
     return JsonResponse({"error": "Método no permitido"}, status=405)
 
 # Update Views - Unique Item
@@ -147,6 +148,7 @@ def modificarEstrategia(request, estra_id):
         return redirect("estrategias")
     
     estra = get_object_or_404(Estrategia, id=estra_id)
+    grupos = Grupo.objects.all()
     if request.method == "POST":
         # Extract form data
         form_data = {
@@ -179,12 +181,12 @@ def modificarEstrategia(request, estra_id):
                 setattr(estra, field, value)
             estra.save()
             messages.success(request, "Estrategia modificada correctamente.")
-            return redirect("estrategias")
+            return redirect("p_estrategias")
         except Exception as e:
             print(str(e))
             messages.error(request, f"Error al modificar la estrategia: {str(e)}")
             return render(request, "profesor_principal/modificar_estrategia.html", {"estrategia": estra})
-    return render(request, "profesor_principal/modificar_estrategia.html", {"estrategia": estra})
+    return render(request, "profesor_principal/modificar_estrategia.html", {"estrategia": estra, "grupos": grupos})
 
 # Update Views - Unique Item
 # ----------------------------------------------------------------------------

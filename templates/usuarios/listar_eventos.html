@@ -24,14 +24,6 @@
         </button>
       </div>
     </div>
-
-    <!-- Contenedor de la tabla con scroll -->
-    <form id="form-eliminar-eventos" method="POST" action="{% url 'p_
-    
-    
-    
-    eliminar_eventos' %}">
-      {% csrf_token %}
       <div id="tabla-eventos" class="table-container">
         <div id="tabla-eventos-resposive" class="table-responsive">
           <table id="tablita-eventos" class="table table-bordered table-hover custom-table">
@@ -62,14 +54,11 @@
                   <button type="button"  class="btn btn-action btn-ver-detalles" data-id="{{ evento.id }}" title="Ver Detalles">
                     <i class="bi bi-eye"></i>
                   </button>
-                  <button type="button" class="btn btn-action btn-modificar" data-id="{{ evento.id }}" title="Modificar">
+                  <button type="button" class="btn btn-action btn-inscribirse btn-secondary" data-id="{{ evento.id }}" title="inscribirse">
                     <i class="bi bi-pencil"></i>
                   </button>
-                  <button type="button" class="btn btn-action btn-eliminar" data-id="{{ evento.id }}" title="Eliminar">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                  <input type="checkbox" class="form-check-input seleccionar-fila" name="eventos[]" value="{{ evento.id }}">
                 </td>
+
               </tr>
               {% empty %}
               <tr>
@@ -81,28 +70,18 @@
         </div>
       </div>
 
-      <!-- Botones independientes debajo de la tabla -->
-      <div id="botones-accion-evento" class="d-flex justify-content-between mt-4">
-        <a href="{% url 'formular_evento' %}">
-          <div id="btn-registrar-evento" class="btn btn-success">
-            <i class="bi bi-plus-circle"></i> Registrar
-          </div>
-        </a>
-        <button type="submit" id="btn-eliminar-evento" class="btn btn-danger"> <i class="bi bi-trash"></i> Aceptar </button>
-      </div>
-    </form>
   </div>
 </section>
   </div>
   {% endblock %}
 {% block scripts %}
 <script>
-  // Selecciona todos los botones con la clase "btn-modificar"
-  document.querySelectorAll(".btn-modificar").forEach(button => {
+  // Selecciona todos los botones con la clase "btn-inscribirse"
+  document.querySelectorAll(".btn-inscribirse").forEach(button => {
       button.addEventListener("click", function (e) {
           //e.stopPropagation();
           const eventoId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
-          window.location.href = `/inscribir_evento/${eventoId}/`;
+          window.location.href = `/inscribir/evento/${eventoId}/`;
       });
   });
 </script>
@@ -113,7 +92,7 @@
       button.addEventListener("click", function (e) {
           //e.stopPropagation();
           const eventoId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
-          window.location.href = `/visualizar_evento/${eventoId}/`;
+          window.location.href = `/visualizar/evento/${eventoId}/`;
       });
   });
 </script>

@@ -1,7 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from data_models.models import Reporte, Grupo, Estrategia, Evento, Profesor, Encuesta, Usuario
+from profesores.models import  Profesor
 from django.contrib import messages
-from data_models.models import Respuesta, Pregunta
 from django.db.models import Q
 
 

@@ -11,10 +11,11 @@
       <br>
       <p>Gestión de estrategias.</p>
       <br>
+
     </div>
 
     <!-- Barra de búsqueda -->
-    <form method="GET" action="{% url 'estrategias' %}" class="search-bar mb-4">
+    <form method="GET" action="{% url 'p_estrategias' %}" class="search-bar mb-4">
       <div class="input-group">
         <input type="text" name="q" class="form-control" placeholder="Buscar estrategia..." aria-label="Buscar" value="{{ request.GET.q }}">
         <button class="btn btn-primary" type="submit">
@@ -53,7 +54,7 @@
                 <td>{{ estrategia.curso }}</td>
                 <td>{{ estrategia.anio_escolar }}</td>
                 <td>
-                  <button type="button" class="btn btn-action btn-descargar-pdf" data-id="{{ estrategia.id }}" title="DescargarPdf">
+                  <button type="button" class="btn btn-action btn-descargar-pdf  btn-secondary" data-id="{{ estrategia.id }}" title="DescargarPdf">
                     <i class="bi bi-download"></i>
                   </button>
                   <button type="button" class="btn btn-action btn-ver-detalles" data-id="{{ estrategia.id }}" title="Ver Detalles">
@@ -97,7 +98,7 @@
             const estrategiaId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
             if (confirm("¿Estás seguro de que quieres eliminar esta estrategia ?"+estrategiaId)) {
                 // Redirige a la URL para eliminar la estrategia
-                window.location.href = `/p_eliminar_estrategia/${estrategiaId}/`;
+                window.location.href = `/p/eliminar/estrategia/${estrategiaId}/`;
             }
         });
     });
@@ -109,7 +110,7 @@
             const estrategiaId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
             if (confirm("¿Estás seguro de que quieres descargar esta estrategia ?"+estrategiaId)) {
                 // Redirige a la URL para eliminar la estrategia
-                window.location.href = `/descargar_estrategia_pdf/${estrategiaId}/`;
+                window.location.href = `/descargar/estrategia/pdf/${estrategiaId}/`;
             }
         });
     });
@@ -120,7 +121,7 @@
         button.addEventListener("click", function (e) {
             //e.stopPropagation();
             const estrategiaId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
-            window.location.href = `/p_modificar_estrategia/${estrategiaId}/`;
+            window.location.href = `/p/modificar/estrategia/${estrategiaId}/`;
         });
     });
   </script>
@@ -131,7 +132,7 @@
         button.addEventListener("click", function (e) {
             //e.stopPropagation();
             const estrategiaId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
-            window.location.href = `/p_visualizar_estrategia/${estrategiaId}/`;
+            window.location.href = `/p/visualizar/estrategia/${estrategiaId}/`;
         });
     });
   </script>

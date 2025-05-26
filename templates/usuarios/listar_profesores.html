@@ -24,10 +24,7 @@
         </div>
       </div>
   
-      <!-- Contenedor de la tabla con scroll -->
-      <form id="form-eliminar-profesores" method="POST" action="{% url 'p_eliminar_profesores' %}">
-        {% csrf_token %}
-        <div id="tabla-profesoral" class="table-container">
+      <div id="tabla-profesoral" class="table-container">
           <div id="tabla-profesoral-responsive" class="table-responsive">
             <table id="tablita-profesoral" class="table table-bordered table-hover custom-table">
               <thead>
@@ -74,18 +71,6 @@
           </div>
         </div>
       
-        <!-- Botones independientes debajo de la tabla -->
-        <div id="botones-accion-profesoral" class="d-flex justify-content-between mt-4">
-          <a href="{% url 'formular_profesor' %}">
-            <div id="btn-registrar-profesoral" class="btn btn-success">
-              <i class="bi bi-plus-circle"></i> Registrar
-            </div>
-          </a>
-          <button type="submit" id="btn-eliminar-profesoral" class="btn btn-danger">
-             <i class="bi bi-trash"></i> Aceptar
-          </button>
-        </div>
-      </form>
     </div>
   </section>
 
@@ -100,7 +85,7 @@
       const profesorId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
       if (confirm("¿Estás seguro de que quieres eliminar este profesor?")) {
         // Redirige a la URL para eliminar el profesor
-        window.location.href = `/p_eliminar_profesor/${profesorId}/`;
+        window.location.href = `/p/eliminar/profesor/${profesorId}/`;
       }
     });
   });
@@ -111,7 +96,7 @@
       button.addEventListener("click", function (e) {
           //e.stopPropagation();
           const profesorId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
-          window.location.href = `/p_modificar_profesor/${profesorId}/`;
+          window.location.href = `/p/modificar/profesor/${profesorId}/`;
       });
   });
 </script>
@@ -122,7 +107,7 @@
       button.addEventListener("click", function (e) {
           //e.stopPropagation();
           const profesorId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
-          window.location.href = `/visualizar_profesor/${profesorId}/`;
+          window.location.href = `/visualizar/profesor/${profesorId}/`;
       });
   });
 </script>

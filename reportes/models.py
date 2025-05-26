@@ -7,7 +7,6 @@ from django.db import models
 
 class Reporte(models.Model):
     # Identificación
-    grupo = models.CharField(max_length=10, blank=True, null=True)
     codigo = models.CharField(max_length=10, blank=True, null=True)
     periodo = models.CharField(max_length=10, blank=True, null=True)
     fecha = models.DateField(blank=True, null=True)
@@ -28,9 +27,9 @@ class Reporte(models.Model):
     proximos_pasos = models.TextField(blank=True, null=True)
     anexos = models.FileField(upload_to='anexos/', blank=True, null=True)
 
-    # Relación muchos a uno con Estrategia
-    estrategia = models.ForeignKey(
-        'Estrategia',
+    # Relación muchos a uno con Grupo
+    grupo = models.ForeignKey(
+        'grupos.Grupo',
         on_delete=models.CASCADE,
         related_name='reportes'
     )

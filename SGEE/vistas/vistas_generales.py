@@ -13,14 +13,15 @@ from django.contrib import messages
 
 def login_view(request):
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
+        # Usar los nombres de campo personalizados para evitar autocompletado/sugerencias
+        username = request.POST.get('user_login')
+        password = request.POST.get('pass_login')
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            if request.user.es_profesor():
-                return redirect('pagina_principal')
-            return redirect('pagina_principal')  # Redirige a la página principal después del login
+            if hasattr(request.user, 'es_profesor') and request.user.es_profesor():
+                return redirect('p_pagina_principal')
+            return redirect('pagina_principal')
         else:
             messages.error(request, 'Usuario o contraseña incorrectos.')
     return render(request, 'login.html')

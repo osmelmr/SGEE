@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from data_models.models import  Encuesta
+from encuestas.models import  Encuesta
 from django.contrib import messages
-from data_models.models import Respuesta, Pregunta
+from encuestas.models import Respuesta, Pregunta
 from django.db.models import Q
 
 def visualizarEncuestas(request):
@@ -57,7 +57,7 @@ def realizar_encuesta(request, encuesta_id):
         request.user.encuestas_realizadas.add(encuesta)
 
         messages.success(request, "¡Respuestas enviadas correctamente!")
-        return redirect('pagina_principal')
+        return redirect('encuestas')
 
     return render(request, 'usuarios/realizar_encuesta.html', {
         'encuesta': encuesta,

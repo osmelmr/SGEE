@@ -12,7 +12,7 @@ urlpatterns = [
     path('p/eliminar/<int:grupo_id>/', vistas_principal.eliminarGrupo, name='p_eliminar_grupo'),
     path('p/eliminar/grupos/<int:grupo_id>/', vistas_principal.eliminarGrupos, name='p_eliminar_grupos'),
 
-    path('grupos/', vistas_usuario.listarGrupos, name='grupos'),
+    path('grupos/', vistas_usuario.visualizarGrupos, name='grupos'),
     path('visualizar/grupo/<int:grupo_id>/', vistas_usuario.visualizarGrupo, name='visualizar_grupo'),
 
 ]

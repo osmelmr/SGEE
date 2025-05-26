@@ -1,37 +1,77 @@
 {% extends 'base.html' %}
-{% block title %} Lista de Grupos {% endblock %}
+{% block title %}Lista de Grupos{% endblock %}
 {% block content %}
-<div class="container mt-4" style="margin-top: 70px;">
-    <h1>Lista de Grupos</h1>
-    <table class="table table-bordered">
-        <thead>
+<!-- Sección de Grupos -->
+<section id="grupos" class="estrategia-educativa section-bg">
+  <div class="container-fluid">
+    <div class="section-title">
+      <h2>Repositorio de Grupos</h2>
+      <br>
+      <p>Gestión de grupos.</p>
+      <br>
+    </div>
+
+    <!-- Barra de búsqueda -->
+    <form method="GET" action="{% url 'p_grupos' %}" class="search-bar mb-4">
+      <div class="input-group">
+        <input type="text" name="q" class="form-control" placeholder="Buscar grupo..." aria-label="Buscar" value="{{ request.GET.q }}">
+        <button class="btn btn-primary" type="submit">
+          <i class="bi bi-search"></i>
+        </button>
+      </div>
+    </form>
+
+    <!-- Contenedor de la tabla con scroll -->
+    <div class="table-container">
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover custom-table">
+          <thead>
             <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Acciones</th>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Acciones</th>
             </tr>
-        </thead>
-        <tbody>
+          </thead>
+          <tbody>
             {% for grupo in grupos %}
             <tr>
-                <td>{{ grupo.id }}</td>
-                <td>{{ grupo.nombre }}</td>
-                <td>
-                    <a href="{% url 'p_visualizar_grupo' grupo.id %}" class="btn btn-info btn-sm">Ver</a>
-                </td>
+              <td>{{ grupo.id }}</td>
+              <td>
+                <i class="bi bi-people"></i> {{ grupo.nombre }}
+              </td>
+              <td>
+                <a href="{% url 'p_visualizar_grupo' grupo.id %}" class="btn btn-action btn-info btn-sm" title="Ver">
+                  <i class="bi bi-eye"></i>
+                </a>
+              </td>
             </tr>
             {% empty %}
             <tr>
-                <td colspan="3" class="text-center">No hay grupos registradas.</td>
+              <td colspan="3" class="text-center">No hay grupos registrados.</td>
             </tr>
             {% endfor %}
-        </tbody>
-    </table>
-    <div class="botones">
-        <button type="button" class="btn btn-primary" onclick="location.href='{% url 'p_formular_grupo' %}'">Crear Nuevo Grupo</button>
-        
+          </tbody>
+        </table>
+      </div>
     </div>
-</div>
+
+    <!-- Botones independientes debajo de la tabla -->
+    <div id="botones-accion-estrategia-educativa" class="d-flex justify-content-between mt-4">
+      <a href="{% url 'p_formular_grupo' %}">
+        <div id="btn-registrar-estrategia-educativa" class="btn btn-success">
+          <i class="bi bi-plus-circle"></i> Registrar
+        </div>
+      </a>
+      <button type="button" id="btn-eliminar-grupo" class="btn btn-danger">
+        <i class="bi bi-trash"></i> Aceptar
+      </button>
+    </div>
+  </div>
+</section>
 {% endblock %}
 {% block scripts %}
+<script>
+  // Ejemplo: puedes agregar aquí lógica para eliminar grupos seleccionados si agregas checkboxes en la tabla
+  // document.getElementById('btn-eliminar-grupo').addEventListener('click', function() { ... });
+</script>
 {% endblock %}

@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.http import JsonResponse
 from django.db.models import Q
-from data_models.models import Usuario
+from usuarios.models import Usuario
 
 # Visualizar todos los usuarios
 def visualizarUsuarios(request):
@@ -26,13 +26,14 @@ def visualizarUsuarios(request):
 
 # Crear un nuevo usuario
 def crearUsuario(request):
-    """Crea un nuevo usuario."""
+    """Crea un nuevo usuario.
     if not request.user.is_authenticated:
         messages.error(request, "No estas autenticado.")
         return redirect("login")
     if not request.user.es_profesor():
         messages.error(request, "No tienes permiso para funcion modelo.")
         return redirect("pagina_principal")
+    """
     if request.method == 'POST':
         # Obtener los datos del formulario
         form_data = {
@@ -76,7 +77,7 @@ def crearUsuario(request):
             usuario.save()
 
             messages.success(request, f'Usuario {usuario.username} creado exitosamente.')
-            return redirect('usuarios')  # Redirige a la lista de usuarios
+            return redirect('p_usuarios')  # Redirige a la lista de usuarios
 
     return render(request, 'profesor_principal/formular_usuario.html')
 
@@ -92,7 +93,7 @@ def eliminarUsuario(request, usuario_id):
     usuario = get_object_or_404(Usuario, id=usuario_id)
     usuario.delete()
     messages.success(request, f'Usuario {usuario.username} eliminado exitosamente.')
-    return redirect('usuarios')
+    return redirect('p_usuarios')
 
 # Eliminar múltiples usuarios
 def eliminarUsuarios(request):
@@ -135,7 +136,7 @@ def modificarUsuario(request, usuario_id):
                 setattr(usuario, key, value)
             usuario.save()
             messages.success(request, f'Usuario {usuario.username} modificado exitosamente.')
-            return redirect('usuarios')
+            return redirect('p_usuarios')
         except Exception as e:
             messages.error(request, f'Error al modificar el usuario: {str(e)}')
 
@@ -152,4 +153,4 @@ def visualizarUsuario(request, usuario_id):
         messages.error(request, "No tienes permiso para funcion modelo.")
         return redirect("pagina_principal")
     usuario = get_object_or_404(Usuario, id=usuario_id)
-    return render(request, 'profesor_principal/visualizar__usuario.html', {'usuario': usuario})
+    return render(request, 'profesor_principal/visualizar_usuario.html', {'usuario': usuario})

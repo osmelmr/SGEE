@@ -39,7 +39,7 @@ class Estrategia(models.Model):
 
     # Relación uno a uno con Grupo (opcional)
     grupo_id = models.OneToOneField(
-        'Grupo',
+        'grupos.Grupo',
         on_delete=models.SET_NULL,
         null=True,
         blank=True,

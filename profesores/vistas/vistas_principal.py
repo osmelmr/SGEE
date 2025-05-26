@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from data_models.models import Profesor, Grupo
+from profesores.models import Profesor
+from grupos.models import Grupo
 from django.contrib import messages
 from django.http import JsonResponse
 from django.db.models import Q
@@ -74,7 +75,7 @@ def crearProfesor(request):
                 grupo_asignado.save()
 
             messages.success(request, "Profesor registrado correctamente.")
-            return redirect('profesores')
+            return redirect('p_profesores')
         except Exception as e:
             print(f"Error: {str(e)}")
             messages.error(request, f"Error al registrar el profesor: {str(e)}")
@@ -92,7 +93,7 @@ def eliminarProfesor(request, profesor_id):
     profesor = get_object_or_404(Profesor, id=profesor_id)
     profesor.delete()
     messages.success(request, "Profesor eliminado correctamente.")
-    return redirect('profesores')
+    return redirect('p_profesores')
 
 def eliminarProfesores(request):
     if not request.user.is_authenticated:
@@ -109,7 +110,7 @@ def eliminarProfesores(request):
             messages.success(request, "Profesores eliminadas correctamente.")
         else:
             messages.error(request, "No se seleccionaron profesores para eliminar.")
-        return redirect('profesores')
+        return redirect('p_profesores')
     return JsonResponse({'error': 'Método no permitido'}, status=405)
 
 def modificarProfesor(request, profesor_id):
@@ -147,7 +148,7 @@ def modificarProfesor(request, profesor_id):
                 setattr(profesor, key, value)
             profesor.save()
             messages.success(request, "Profesor actualizado correctamente.")
-            return redirect('profesores')
+            return redirect('p_profesores')
         except Exception as e:
             messages.error(request, f"Error al actualizar el profesor: {str(e)}")
             return render(request, 'profesor_principal/modificar_profesor.html', {'profesor': profesor})

@@ -101,7 +101,7 @@
             const reporteId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
             if (confirm("¿Estás seguro de que quieres eliminar este reporte?")) {
                 // Redirige a la URL para eliminar la reporte
-                window.location.href = `/p_eliminar_reporte/${reporteId}/`;
+                window.location.href = `/p/eliminar/reporte/${reporteId}/`;
             }
         });
     });
@@ -113,7 +113,7 @@
         button.addEventListener("click", function (e) {
             //e.stopPropagation();
             const reporteId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
-            window.location.href = `/p_modificar_reporte/${reporteId}/`;
+            window.location.href = `/p/modificar/reporte/${reporteId}/`;
         });
     });
   </script>
@@ -124,7 +124,7 @@
         button.addEventListener("click", function (e) {
             //e.stopPropagation();
             const reporteId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
-            window.location.href = `/p_visualizar_reporte/${reporteId}/`;
+            window.location.href = `/p/visualizar/reporte/${reporteId}/`;
         });
     });
   </script>

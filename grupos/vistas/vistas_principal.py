@@ -1,8 +1,9 @@
-from data_models.forms import GrupoForm
+from grupos.forms import GrupoForm
 from django.shortcuts import render, redirect
-from data_models.models import Grupo
+from grupos.models import Grupo
 from django.contrib import messages
 from django.db.models import Q
+from django.http import JsonResponse
 
 def crearGrupo(request):
     if not request.user.is_authenticated:
@@ -17,7 +18,7 @@ def crearGrupo(request):
             grupo = form.save(commit=False)
             grupo.save()
             form.save_m2m()
-            return redirect('profesor_principal/listar_grupos')
+            return redirect('p_grupos')
     else:
         form = GrupoForm()
     return render(request, 'profesor_principal/formular_grupo.html', {'form': form})
@@ -61,3 +62,35 @@ def listarGrupos(request):
     else:
         grupos = Grupo.objects.all()
     return render(request, 'profesor_principal/listar_grupos.html', {'grupos': grupos, 'query': query})
+
+def eliminarGrupo(request, grupo_id):
+    if not request.user.is_authenticated:
+        messages.error(request, "No estas autenticado.")
+        return redirect("login")
+    if not request.user.es_profesor():
+        messages.error(request, "No tienes permiso para eliminar grupos.")
+        return redirect("pagina_principal")
+    grupo = Grupo.objects.filter(id=grupo_id).first()
+    if grupo:
+        grupo.delete()
+        messages.success(request, "Grupo eliminado correctamente.")
+    else:
+        messages.error(request, "El grupo no existe.")
+    return redirect('p_grupos')
+
+def eliminarGrupos(request, grupo_id=None):
+    if not request.user.is_authenticated:
+        messages.error(request, "No estas autenticado.")
+        return redirect("login")
+    if not request.user.es_profesor():
+        messages.error(request, "No tienes permiso para eliminar grupos.")
+        return redirect("pagina_principal")
+    if request.method == "POST":
+        grupos_ids = request.POST.getlist("grupos[]")
+        if grupos_ids:
+            Grupo.objects.filter(id__in=grupos_ids).delete()
+            messages.success(request, "Grupos eliminados correctamente.")
+        else:
+            messages.error(request, "No se seleccionaron grupos para eliminar.")
+        return redirect('p_grupos')
+    return JsonResponse({"error": "Método no permitido"}, status=405)

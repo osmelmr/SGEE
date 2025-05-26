@@ -2,14 +2,12 @@
 {% load static %}
 {% block title %} Modificar Estrategia Educativa {% endblock %}
 {% block content %}
-
   <section id="formulario-estrategia" class="estrategia-educativa">
     <div class="container">
       <div class="section-title">
         <h2>Modificar Estrategia Educativa</h2>
         <p> Realice las modificaciones pertinentes y presione el botón Aceptar para completar sus ajustes.</p>
       </div>
-  
       <form id="form-estrategia" class="php-email-form" action="{% url 'p_modificar_estrategia' estrategia.id %}" method="POST">
         {% csrf_token %}
         <!-- Campos adicionales: curso, año escolar y grupo -->
@@ -18,31 +16,35 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label for="nombre">Nombre</label>
-                <input type="text" id="nombre" name="nombre" class="form-control" value="{{estrategia.nombre}}">
+                <label for="titulo-estrategia">Nombre de Estrategia </label>
+                <input type="text" id="titulo-estrategia" name="nombre" class="form-control" required value="{{estrategia.nombre}}">
               </div>
             </div>
             <div class="col-md-2">
               <div class="form-group">
                 <label for="curso">Curso</label>
-                <input type="text" id="curso" name="curso" class="form-control" value="{{estrategia.curso}}">
+                <input type="text" id="curso" name="curso" class="form-control" required value="{{estrategia.curso}}">
               </div>
             </div>
             <div class="col-md-2">
               <div class="form-group">
-                <label for="anio_escolar">Año escolar</label>
-                <input type="text" id="anio_escolar" name="anio_escolar" class="form-control" value="{{estrategia.anio_escolar}}">
+                <label for="ano-escolar">Año escolar</label>
+                <input type="text" id="ano-escolar" name="anio_escolar" class="form-control" required value="{{estrategia.anio_escolar}}">
               </div>
             </div>
             <div class="col-md-2">
               <div class="form-group">
                 <label for="grupo">Grupo</label>
-                <input type="text" id="grupo" name="grupo" class="form-control" value="{{estrategia.grupo}}">
+                <select id="grupo" name="grupo" class="form-control" required>
+                    <option value="" disabled>Seleccione una grupo</option>
+                    {% for grupo in grupos %}
+                        <option value="{{ grupo.nombre }}" {% if estrategia.grupo == grupo.nombre %}selected{% endif %}>{{ grupo.nombre }}</option>
+                    {% endfor %}
+                </select>
               </div>
             </div>
           </div>
         </div>
-      
         <!-- Sección 1: Introducción -->
         <div class="form-section mb-4 p-4 border rounded">
           <h3 class="mb-4">1. Introducción</h3>
@@ -55,100 +57,94 @@
             <textarea id="obj_estrategia" name="obj_estrategia" class="form-control" rows="4">{{estrategia.obj_estrategia}}</textarea>
           </div>
         </div>
-      
         <!-- Sección 2: Caracterización de la grupo -->
         <div class="form-section mb-4 p-4 border rounded">
           <h3 class="mb-4">2. Caracterización de la grupo</h3>
           <div class="form-group">
-            <label for="dir_grupo">2.1 Dirección de la grupo</label>
-            <input type="text" id="dir_grupo" name="dir_grupo" class="form-control" value="{{estrategia.dir_grupo}}">
+            <label for="direccion-grupo">2.1 Dirección de la grupo</label>
+            <input type="text" id="direccion-grupo" name="dir_grupo" class="form-control" value="{{estrategia.dir_grupo}}">
           </div>
           <div class="form-group">
-            <label for="caract_grupo">2.2 Características de la grupo</label>
-            <textarea id="caract_grupo" name="caract_grupo" class="form-control" rows="4">{{estrategia.caract_grupo}}</textarea>
+            <label for="caracteristicas-grupo">2.2 Características de la grupo</label>
+            <textarea id="caracteristicas-grupo" name="caract_grupo" class="form-control" rows="4">{{estrategia.caract_grupo}}</textarea>
           </div>
           <div class="form-group">
-            <label for="colect_pedagogico">2.3 Colectivo pedagógico</label>
-            <textarea id="colect_pedagogico" name="colect_pedagogico" class="form-control" rows="4">{{estrategia.colect_pedagogico}}</textarea>
+            <label for="colectivo-pedagogico">2.3 Colectivo pedagógico</label>
+            <textarea id="colectivo-pedagogico" name="colect_pedagogico" class="form-control" rows="4">{{estrategia.colect_pedagogico}}</textarea>
           </div>
           <div class="form-group">
-            <label for="otros_aspectos">2.4 Otros aspectos</label>
-            <textarea id="otros_aspectos" name="otros_aspectos" class="form-control" rows="4">{{estrategia.otros_aspectos}}</textarea>
+            <label for="otros-aspectos">2.4 Otros aspectos</label>
+            <textarea id="otros-aspectos" name="otros_aspectos" class="form-control" rows="4">{{estrategia.otros_aspectos}}</textarea>
           </div>
         </div>
-      
         <!-- Sección 3: Problemas detectados en la grupo -->
         <div class="form-section mb-4 p-4 border rounded">
           <h3 class="mb-4">3. Problemas detectados en la grupo</h3>
           <div class="form-group">
-            <label for="dim_curricular">3.1 Dimensión curricular</label>
-            <textarea id="dim_curricular" name="dim_curricular" class="form-control" rows="4">{{estrategia.dim_curricular}}</textarea>
+            <label for="dimension-curricular">3.1 Dimensión curricular</label>
+            <textarea id="dimension-curricular" name="dim_curricular" class="form-control" rows="4">{{estrategia.dim_curricular}}</textarea>
           </div>
           <div class="form-group">
-            <label for="dim_extensionista">3.2 Dimensión extensionista</label>
-            <textarea id="dim_extensionista" name="dim_extensionista" class="form-control" rows="4">{{estrategia.dim_extensionista}}</textarea>
+            <label for="dimension-extensionista">3.2 Dimensión extensionista</label>
+            <textarea id="dimension-extensionista" name="dim_extensionista" class="form-control" rows="4">{{estrategia.dim_extensionista}}</textarea>
           </div>
           <div class="form-group">
-            <label for="dim_politica">3.3 Dimensión político-ideológica</label>
-            <textarea id="dim_politica" name="dim_politica" class="form-control" rows="4">{{estrategia.dim_politica}}</textarea>
+            <label for="dimension-politico-ideologica">3.3 Dimensión político-ideológica</label>
+            <textarea id="dimension-politico-ideologica" name="dim_politica" class="form-control" rows="4">{{estrategia.dim_politica}}</textarea>
           </div>
           <div class="form-group">
             <label for="conclusiones">3.4 Conclusiones</label>
             <textarea id="conclusiones" name="conclusiones" class="form-control" rows="4">{{estrategia.conclusiones}}</textarea>
           </div>
         </div>
-      
         <!-- Sección 4: Plan de acciones -->
         <div class="form-section mb-4 p-4 border rounded">
           <h3 class="mb-4">4. Plan de acciones</h3>
           <div class="form-group">
-            <label for="obj_general">4.1 Objetivo General</label>
-            <textarea id="obj_general" name="obj_general" class="form-control" rows="4">{{estrategia.obj_general}}</textarea>
+            <label for="objetivo-general">4.1 Objetivo General</label>
+            <textarea id="objetivo-general" name="obj_general" class="form-control" rows="4">{{estrategia.obj_general}}</textarea>
           </div>
           <div class="form-group">
-            <label for="obj_dc">4.2.1 Objetivos específicos (Dimensión curricular)</label>
-            <textarea id="obj_dc" name="obj_dc" class="form-control" rows="4">{{estrategia.obj_dc}}</textarea>
+            <label for="objetivos-especificos-curricular">4.2.1 Objetivos específicos (Dimensión curricular)</label>
+            <textarea id="objetivos-especificos-curricular" name="obj_dc" class="form-control" rows="4">{{estrategia.obj_dc}}</textarea>
           </div>
           <div class="form-group">
-            <label for="plan_dc">4.2.2 Plan de acciones (Dimensión curricular)</label>
-            <textarea id="plan_dc" name="plan_dc" class="form-control" rows="4">{{estrategia.plan_dc}}</textarea>
+            <label for="plan-acciones-curricular">4.2.2 Plan de acciones (Dimensión curricular)</label>
+            <textarea id="plan-acciones-curricular" name="plan_dc" class="form-control" rows="4">{{estrategia.plan_dc}}</textarea>
           </div>
           <div class="form-group">
-            <label for="obj_de">4.3.1 Objetivos específicos (Dimensión extensionista)</label>
-            <textarea id="obj_de" name="obj_de" class="form-control" rows="4">{{estrategia.obj_de}}</textarea>
+            <label for="objetivos-especificos-extensionista">4.3.1 Objetivos específicos (Dimensión extensionista)</label>
+            <textarea id="objetivos-especificos-extensionista" name="obj_de" class="form-control" rows="4">{{estrategia.obj_de}}</textarea>
           </div>
           <div class="form-group">
-            <label for="plan_de">4.3.2 Plan de acciones (Dimensión extensionista)</label>
-            <textarea id="plan_de" name="plan_de" class="form-control" rows="4">{{estrategia.plan_de}}</textarea>
+            <label for="plan-acciones-extensionista">4.3.2 Plan de acciones (Dimensión extensionista)</label>
+            <textarea id="plan-acciones-extensionista" name="plan_de" class="form-control" rows="4">{{estrategia.plan_de}}</textarea>
           </div>
           <div class="form-group">
-            <label for="obj_dp">4.4.1 Objetivos específicos (Dimensión político-ideológica)</label>
-            <textarea id="obj_dp" name="obj_dp" class="form-control" rows="4">{{estrategia.obj_dp}}</textarea>
+            <label for="objetivos-especificos-politico-ideologica">4.4.1 Objetivos específicos (Dimensión político-ideológica)</label>
+            <textarea id="objetivos-especificos-politico-ideologica" name="obj_dp" class="form-control" rows="4">{{estrategia.obj_dp}}</textarea>
           </div>
           <div class="form-group">
-            <label for="plan_dp">4.4.2 Plan de acciones (Dimensión político-ideológica)</label>
-            <textarea id="plan_dp" name="plan_dp" class="form-control" rows="4">{{estrategia.plan_dp}}</textarea>
+            <label for="plan-acciones-politico-ideologica">4.4.2 Plan de acciones (Dimensión político-ideológica)</label>
+            <textarea id="plan-acciones-politico-ideologica" name="plan_dp" class="form-control" rows="4">{{estrategia.plan_dp}}</textarea>
           </div>
         </div>
-      
         <!-- Sección 5: Evaluación integral -->
         <div class="form-section mb-4 p-4 border rounded">
           <h3 class="mb-4">5. Evaluación integral</h3>
           <div class="form-group">
-            <label for="evaluacion">Evaluación integral</label>
-            <textarea id="evaluacion" name="evaluacion" class="form-control" rows="4">{{estrategia.evaluacion}}</textarea>
+            <label for="evaluacion-integral">Evaluación integral</label>
+            <textarea id="evaluacion-integral" name="evaluacion" class="form-control" rows="4">{{estrategia.evaluacion}}</textarea>
           </div>
         </div>
-      
         <!-- Sección 6: Autor -->
         <div class="form-section mb-4 p-4 border rounded">
           <h3 class="mb-4">6. Autor</h3>
           <div class="form-group">
             <label for="autor">Nombre del autor</label>
-            <input type="text" id="autor" name="autor" class="form-control" value="{{estrategia.autor}}">
+            <input type="text" id="autor" name="autor" value="{{estrategia.autor}}" class="form-control">
           </div>
         </div>
-        
         <!-- Línea divisoria y botones -->
         <div class="text-center mt-4 pt-4 border-top">
           <div class="d-flex justify-content-between">
@@ -161,5 +157,4 @@
       </form>
     </div>
 </section>
-
-{% endblock%}
+{% endblock %}

@@ -8,8 +8,8 @@
   <section id="formulario-evento" class="estrategia-educativa">
     <div class="container">
       <div class="section-title">
-        <h2>Formulario de Evento</h2>
-        <p> Realice las modificaciones pertinentes y presione el botón Aceptar para completar sus ajustes.</p>
+        <h2>Modificar Evento</h2>
+        <p>Realice las modificaciones pertinentes y presione el botón Aceptar para completar sus ajustes.</p>
       </div>
 
       <form id="form-evento" method="POST" class="php-email-form" action="{% url 'p_modificar_evento' evento.id %}">
@@ -17,18 +17,18 @@
         <!-- Campo: Nombre del Evento -->
         <div class="form-group mb-4">
           <label for="nombre-evento">Nombre del Evento</label>
-          <input type="text" id="nombre-evento" name="nombre-evento" class="form-control" maxlength="100" required value="{{evento.nombre_evento}}">
+          <input type="text" id="nombre-evento" name="nombre_evento" class="form-control" maxlength="100" required value="{{evento.nombre_evento}}">
         </div>
 
         <!-- Fila 1: Fechas de Inicio y Fin -->
         <div class="row mb-4">
           <div class="form-group col-md-6">
             <label for="fecha-inicio">Fecha de Inicio</label>
-            <input type="date" id="fecha-inicio" name="fecha-inicio" class="form-control" required value="{{evento.fecha_inicio|date:'Y-m-d'}}">
+            <input type="date" id="fecha-inicio" name="fecha_inicio" class="form-control" required value="{{evento.fecha_inicio|date:'Y-m-d'}}">
           </div>
           <div class="form-group col-md-6">
             <label for="fecha-fin">Fecha de Fin</label>
-            <input type="date" id="fecha-fin" name="fecha-fin" class="form-control" required value="{{evento.fecha_fin|date:'Y-m-d'}}">
+            <input type="date" id="fecha-fin" name="fecha_fin" class="form-control" required value="{{evento.fecha_fin|date:'Y-m-d'}}">
           </div>
         </div>
 
@@ -36,24 +36,24 @@
         <div class="row mb-4">
           <div class="form-group col-md-6">
             <label for="hora-inicio">Hora de Inicio</label>
-            <input type="time" id="hora-inicio" name="hora-inicio" class="form-control" required value="{{evento.hora_inicio|time:'H:i'}}">
+            <input type="time" id="hora-inicio" name="hora_inicio" class="form-control" required value="{{evento.hora_inicio|time:'H:i'}}">
           </div>
           <div class="form-group col-md-6">
             <label for="hora-fin">Hora de Fin</label>
-            <input type="time" id="hora-fin" name="hora-fin" class="form-control" required value="{{evento.hora_fin|time:'H:i'}}">
+            <input type="time" id="hora-fin" name="hora_fin" class="form-control" required value="{{evento.hora_fin|time:'H:i'}}">
           </div>
         </div>
 
         <!-- Campo: Ubicación -->
         <div class="form-group mb-4">
           <label for="ubicacion-evento">Ubicación</label>
-          <input type="text" id="ubicacion-evento" name="ubicacion-evento" class="form-control" maxlength="100" required value="{{evento.ubicacion_evento}}">
+          <input type="text" id="ubicacion-evento" name="ubicacion_evento" class="form-control" maxlength="100" required value="{{evento.ubicacion_evento}}">
         </div>
 
         <!-- Campo: Tipo de Evento -->
         <div class="form-group mb-4">
           <label for="tipo-evento">Tipo de Evento</label>
-          <select id="tipo-evento" name="tipo-evento" class="form-control" required>
+          <select id="tipo-evento" name="tipo_evento" class="form-control" required>
             <option value="">Seleccione un tipo</option>
             <option value="academico" {% if evento.tipo_evento == 'academico' %}selected{% endif %}>Académico</option>
             <option value="cultural" {% if evento.tipo_evento == 'cultural' %}selected{% endif %}>Cultural</option>
@@ -65,18 +65,23 @@
         <!-- Campo: Descripción -->
         <div class="form-group mb-4">
           <label for="descripcion-evento">Descripción</label>
-          <textarea id="descripcion-evento" name="descripcion-evento" class="form-control" rows="4" required>{{evento.descripcion}}</textarea>
+          <textarea id="descripcion-evento" name="descripcion" class="form-control" rows="4" required>{{evento.descripcion}}</textarea>
         </div>
 
         <!-- Fila 3: Profesor a Cargo y Teléfono de Contacto -->
         <div class="row mb-4">
           <div class="form-group col-md-6">
             <label for="profesor-cargo">Profesor a Cargo</label>
-            <input type="text" id="profesor-cargo" name="profesor-cargo" class="form-control" maxlength="50" required value="{{evento.profesor_encargado}}">
+            <select id="profesor-cargo" name="profesor_encargado" class="form-control" required>
+              <option value="">Seleccione un profesor</option>
+              {% for profesor in profesores %}
+                <option value="{{ profesor.id }}" {% if evento.profesor_encargado == profesor.id %}selected{% endif %}>{{ profesor.nombre }} {{ profesor.primer_apellido }}</option>
+              {% endfor %}
+            </select>
           </div>
           <div class="form-group col-md-6">
             <label for="telefono-contacto">Teléfono de Contacto</label>
-            <input type="tel" id="telefono-contacto" name="telefono-contacto" class="form-control" maxlength="15" required value="{{evento.telefono_contacto}}">
+            <input type="tel" id="telefono-contacto" name="telefono_contacto" class="form-control" maxlength="15" required value="{{evento.telefono_contacto}}">
           </div>
         </div>
 

@@ -86,7 +86,7 @@
         <div class="text-center mt-4 pt-4 border-top">
           <div style="display: flex; justify-content: space-between;">
             <button type="button" id="boton-cancelar-estrategias" class="btn btn-cancelar" onclick="window.history.back()">Cancelar</button>
-            <button type="button" id="boton-descargar-estrategia" class="btn btn-descargar" onclick="window.location.href='{% url 'descargar_estrategia_pdf' estrategia.id %}'">Descargar</button>
+            <button type="button" id="boton-descargar-estrategia" class="btn btn-descargar" onclick="window.location.href='{% url 'descargar/estrategia/pdf' estrategia.id %}'">Descargar</button>
           </div>
         </div>
     </div>

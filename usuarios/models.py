@@ -26,12 +26,12 @@ class Usuario(AbstractUser):
 
     # Relaciones
     encuestas_realizadas = models.ManyToManyField(
-        'Encuesta',
+        'encuestas.Encuesta',
         related_name='usuarios',
         blank=True
     )
     eventos = models.ManyToManyField(
-        'Evento',
+        'eventos.Evento',
         related_name='usuarios',
         blank=True
     )

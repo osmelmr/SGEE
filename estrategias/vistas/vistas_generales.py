@@ -1,7 +1,7 @@
 from xhtml2pdf import pisa
 from django.template.loader import render_to_string
 from django.shortcuts import render, get_object_or_404, redirect
-from data_models.models import Estrategia
+from estrategias.models import Estrategia
 from io import BytesIO
 from django.http import HttpResponse
 from django.contrib import messages

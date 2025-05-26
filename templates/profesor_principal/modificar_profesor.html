@@ -2,7 +2,6 @@
 {% load static %}
 {% block title %}Modificar Información Profesoral{% endblock %}
 {% block content %}
-
  <!-- Sección del Formulario de Información Profesoral -->
  <section id="formulario-profesoral" class="formulario-profesoral">
   <div class="container">
@@ -10,33 +9,30 @@
       <h2>Modificar Información Profesoral</h2>
       <p>Realice las modificaciones pertinentes y presione el botón Aceptar para completar sus ajustes.</p>
     </div>
-
-    <form id="form-profesor" method="POST" class="php-email-form" action="{% url 'p_modificar_profesor' profesor.id %}">
+    <form id="form-profesoral" class="php-email-form" method="post" action="{% url 'p_modificar_profesor' profesor.id %}">
       {% csrf_token %}
       <!-- Fila 1: Nombre -->
       <div class="form-group mb-4">
-        <label for="nombre">Nombre</label>
-        <input type="text" id="nombre" name="nombre" class="form-control" maxlength="50" required value="{{profesor.nombre}}">
+        <label for="nombre-profesor">Nombre</label>
+        <input type="text" id="nombre-profesor" name="nombre" class="form-control" maxlength="50" required value="{{profesor.nombre}}">
       </div>
-
       <!-- Fila 2: Apellidos -->
       <div class="row mb-4">
         <div class="form-group col-md-6">
           <label for="primer-apellido">Primer Apellido</label>
-          <input type="text" id="primer-apellido" name="primer-apellido" class="form-control" maxlength="50" required value="{{profesor.primer_apellido}}">
+          <input type="text" id="primer-apellido" name="primer_apellido" class="form-control" maxlength="50" required value="{{profesor.primer_apellido}}">
         </div>
         <div class="form-group col-md-6">
           <label for="segundo-apellido">Segundo Apellido</label>
-          <input type="text" id="segundo-apellido" name="segundo-apellido" class="form-control" maxlength="50" value="{{profesor.segundo_apellido}}">
+          <input type="text" id="segundo-apellido" name="segundo_apellido" class="form-control" maxlength="50" value="{{profesor.segundo_apellido}}">
         </div>
       </div>
-
       <!-- Fila 3: Sexo y Categoría Docente -->
       <div class="row mb-4">
         <div class="form-group col-md-6">
           <label for="sexo">Sexo</label>
           <select id="sexo" name="sexo" class="form-control" required>
-            <option value="">Seleccione una opción</option>
+            <option value="">Seleccione un sexo</option>
             <option value="masculino" {% if profesor.sexo == 'masculino' %}selected{% endif %}>Masculino</option>
             <option value="femenino" {% if profesor.sexo == 'femenino' %}selected{% endif %}>Femenino</option>
             <option value="otro" {% if profesor.sexo == 'otro' %}selected{% endif %}>Otro</option>
@@ -44,7 +40,7 @@
         </div>
         <div class="form-group col-md-6">
           <label for="categoria-docente">Categoría Docente</label>
-          <select id="categoria-docente" name="categoria-docente" class="form-control" required>
+          <select id="categoria-docente" name="categoria_docente" class="form-control" required>
             <option value="">Seleccione una categoría</option>
             <option value="instructor" {% if profesor.categoria_docente == 'instructor' %}selected{% endif %}>Instructor</option>
             <option value="asistente" {% if profesor.categoria_docente == 'asistente' %}selected{% endif %}>Asistente</option>
@@ -53,7 +49,6 @@
           </select>
         </div>
       </div>
-
       <!-- Fila 4: Asignatura y Solapín -->
       <div class="row mb-4">
         <div class="form-group col-md-6">
@@ -65,7 +60,6 @@
           <input type="text" id="solapin" name="solapin" class="form-control" maxlength="10" required value="{{profesor.solapin}}">
         </div>
       </div>
-
       <!-- Fila 5: Teléfono y Correo -->
       <div class="row mb-4">
         <div class="form-group col-md-6">
@@ -77,35 +71,42 @@
           <input type="email" id="correo" name="correo" class="form-control" maxlength="50" required value="{{profesor.correo}}">
         </div>
       </div>
-
-      <!-- Fila 6: Grupo Asignado y Grupos a Impartir -->
+      <!-- Fila combinada: Grupo Asignado y Grupos a Impartir -->
       <div class="row mb-4">
         <div class="form-group col-md-6">
-          <label for="grupo-asignada">Grupo Asignado</label>
-          <input type="text" id="grupo-asignada" name="grupo-asignada" class="form-control" maxlength="10" required value="{{profesor.grupo_asignado}}">
+          <label for="grupo_asignado">Grupo Asignado</label>
+          <select id="grupo_asignado" name="grupo_asignado" class="form-control" maxlength="10" required>
+            {% for grupo in grupos %}
+            <option value="{{ grupo.id }}" {% if profesor.grupo_asignado == grupo.id %}selected{% endif %}>{{ grupo.nombre }}</option>
+            {% endfor %}
+          </select>
         </div>
         <div class="form-group col-md-6">
-          <label for="grupos-impartir">Grupos a Impartir</label>
-          <input type="text" id="grupos-impartir" name="grupos-impartir" class="form-control" maxlength="50" required value="{{profesor.grupos_impartir}}">
+          <label for="grupos">Grupos</label>
+          <select id="grupos" name="grupos" class="form-control" multiple maxlength="10" required>
+            {% for grupo in grupos %}
+            <option value="{{ grupo.id }}" {% if grupo.id in profesor.grupos_impartir_ids %}selected{% endif %}>{{ grupo.nombre }}</option>
+            {% endfor %}
+          </select>
         </div>
       </div>
-
-      <!-- Campo: Descripción -->
+      <!-- Fila 8: Descripción -->
       <div class="form-group mb-4">
-        <label for="descripcion">Descripción</label>
-        <textarea id="descripcion" name="descripcion" class="form-control" rows="4">{{profesor.descripcion}}</textarea>
+        <label for="descripcion-profesor">Descripción</label>
+        <textarea id="descripcion-profesor" name="descripcion" class="form-control" rows="4" required>{{profesor.descripcion}}</textarea>
       </div>
-
-      <!-- Botones -->
-      <div class="d-flex justify-content-between mt-4 pt-4 border-top">
-        <button type="submit" id="boton-registrar-profesor" class="btn btn-primary">
-          <i class="bi bi-check-circle"></i> Aceptar
-        </button>
-        <button type="button" id="boton-cancelar-profesor" class="btn btn-cancelar" onclick="window.history.back()">
-          <i class="bi bi-x-circle"></i> Cancelar
-        </button>
+      <!-- Línea divisoria y botones -->
+      <div class="text-center mt-4 pt-4 border-top">
+        <div style="display: flex; justify-content: space-between;">
+          <button type="submit" id="boton-registrar-profesor" class="btn btn-primary">
+            <i class="bi bi-person-plus"></i> Aceptar
+          </button>
+          <button type="button" id="boton-cancelar-profesor" class="btn btn-cancelar" onclick="window.history.back()">
+            <i class="bi bi-x-circle"></i> Cancelar
+          </button>
+        </div>
       </div>
     </form>
   </div>
 </section>
-{% endblock%}
+{% endblock %}

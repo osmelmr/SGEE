@@ -103,7 +103,7 @@
       const profesorId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
       if (confirm("¿Estás seguro de que quieres eliminar este profesor?")) {
         // Redirige a la URL para eliminar el profesor
-        window.location.href = `/p_eliminar_profesor/${profesorId}/`;
+        window.location.href = `/p/eliminar/profesor/${profesorId}/`;
       }
     });
   });
@@ -114,7 +114,7 @@
       button.addEventListener("click", function (e) {
           //e.stopPropagation();
           const profesorId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
-          window.location.href = `/p_modificar_profesor/${profesorId}/`;
+          window.location.href = `/p/modificar/profesor/${profesorId}/`;
       });
   });
 </script>
@@ -125,7 +125,7 @@
       button.addEventListener("click", function (e) {
           //e.stopPropagation();
           const profesorId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
-          window.location.href = `/p_visualizar_profesor/${profesorId}/`;
+          window.location.href = `/p/visualizar/profesor/${profesorId}/`;
       });
   });
 </script>

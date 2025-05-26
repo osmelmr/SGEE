@@ -101,11 +101,26 @@
             const usuarioId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
             if (confirm("¿Estás seguro de que quieres eliminar este usuario?")) {
                 // Redirige a la URL para eliminar la usuario
-                window.location.href = `/p_eliminar_usuario/${usuarioId}/`;
+                window.location.href = `/p/eliminar/usuario/${usuarioId}/`;
             }
         });
     });
 
+    // Selecciona todos los botones con la clase "btn-ver-detalles"
+    document.querySelectorAll(".btn-ver-detalles").forEach(button => {
+        button.addEventListener("click", function () {
+            const usuarioId = this.getAttribute("data-id");
+            window.location.href = `/p/visualizar/usuario/${usuarioId}/`;
+        });
+    });
+
+    // Selecciona todos los botones con la clase "btn-modificar"
+    document.querySelectorAll(".btn-modificar").forEach(button => {
+        button.addEventListener("click", function () {
+            const usuarioId = this.getAttribute("data-id");
+            window.location.href = `/p/modificar/usuario/${usuarioId}/`;
+        });
+    });
   </script>
   <script>
     document.getElementById('btn-seleccionar-todo').addEventListener('click', function (e) {

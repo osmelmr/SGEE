@@ -26,7 +26,7 @@ class Evento(models.Model):
     
     # Contacto
     profesor_encargado = models.ForeignKey(
-        'Profesor',
+        'profesores.Profesor',
         on_delete=models.SET_NULL,
         related_name="eventos_asociados",
         blank=True,

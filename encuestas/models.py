@@ -1,4 +1,4 @@
-from data_models import models
+from django.db import models
 
 # ----------------------------------------
 # Modelos de Gestión de Encuestas
@@ -32,14 +32,14 @@ class Pregunta(models.Model):
 class Respuesta(models.Model):
     # Relación con la tabla Pregunta
     pregunta = models.ForeignKey(
-        'Pregunta',
+        Pregunta,
         on_delete=models.CASCADE,
         related_name='respuestas'
     )
     
     # Relación con la tabla Encuesta
     encuesta = models.ForeignKey(
-        'Encuesta',
+        Encuesta,
         on_delete=models.CASCADE,
         related_name='respuestas'
     )

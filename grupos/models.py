@@ -11,14 +11,14 @@ class Grupo(models.Model):
 
     # Relaciones
     guia = models.OneToOneField(
-        'Profesor',
+        'profesores.Profesor',
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
         related_name='grupo_asignado'
     )
     profesores = models.ManyToManyField(
-        'Profesor',
+        'profesores.Profesor',
         related_name='grupos',
         blank=True
     )

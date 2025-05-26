@@ -18,15 +18,39 @@
   <div class="container d-flex justify-content-center align-items-center vh-100">
     <div class="card p-4 shadow" style="width: 400px;">
       <h3 class="text-center mb-4">Iniciar Sesión</h3>
-      <form method="post" action="{% url 'login' %}">
+      <form method="post" action="{% url 'login' %}" autocomplete="off">
         {% csrf_token %}
         <div class="mb-3">
-          <label for="username" class="form-label">Usuario</label>
-          <input type="text" class="form-control" id="username" name="username" required>
+          <label for="user_login" class="form-label">Usuario</label>
+          <input
+            type="text"
+            class="form-control"
+            id="user_login"
+            name="user_login"
+            required
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+            readonly
+            onfocus="this.removeAttribute('readonly');"
+          >
         </div>
         <div class="mb-3">
-          <label for="password" class="form-label">Contraseña</label>
-          <input type="password" class="form-control" id="password" name="password" required>
+          <label for="pass_login" class="form-label">Contraseña</label>
+          <input
+            type="password"
+            class="form-control"
+            id="pass_login"
+            name="pass_login"
+            required
+            autocomplete="new-password"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+            readonly
+            onfocus="this.removeAttribute('readonly');"
+          >
         </div>
         {% if form.errors %}
           <div class="alert alert-danger">
@@ -39,3 +63,4 @@
   </div>
   <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 </body>
+</html>

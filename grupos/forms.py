@@ -1,5 +1,6 @@
 from django import forms
-from .models import Grupo
+from grupos.models import Grupo
+
 
 class GrupoForm(forms.ModelForm):
     class Meta:

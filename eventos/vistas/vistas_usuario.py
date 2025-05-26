@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from data_models.models import Evento
+from eventos.models import Evento
 from django.contrib import messages
 from django.db.models import Q
 

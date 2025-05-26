@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from data_models.models import Evento, Profesor
+from eventos.models import Evento
+from profesores.models import Profesor
 from django.contrib import messages
 from django.http import JsonResponse
 from django.db.models import Q
@@ -67,7 +68,7 @@ def crearEvento(request):
             evento = Evento(**form_data)
             evento.save()
             messages.success(request, "Evento registrado correctamente.")
-            return redirect('eventos')
+            return redirect('p_eventos')
         except Exception as e:
             print(str(e))
             messages.error(request, f"Error al registrar el evento: {str(e)}")
@@ -86,7 +87,7 @@ def eliminarEvento(request, evento_id):
     evento = get_object_or_404(Evento, id=evento_id)
     evento.delete()
     messages.success(request, "Evento eliminado correctamente.")
-    return redirect('eventos')
+    return redirect('p_eventos')
 
 def eliminarEventos(request):
     """Delete multiple events."""
@@ -103,7 +104,7 @@ def eliminarEventos(request):
             messages.success(request, "Eventos eliminados correctamente.")
         else:
             messages.error(request, "No se seleccionaron eventos para eliminar.")
-        return redirect('eventos')
+        return redirect('p_eventos')
     return JsonResponse({'error': 'Método no permitido'}, status=405)
 
 def modificarEvento(request, evento_id):
@@ -114,6 +115,7 @@ def modificarEvento(request, evento_id):
     if not request.user.es_profesor():
         messages.error(request, "No tienes permiso para funcion modelo.")
         return redirect("pagina_principal")
+    profesores = Profesor.objects.all()
     evento = get_object_or_404(Evento, id=evento_id)
     
     if request.method == 'POST':
@@ -147,12 +149,12 @@ def modificarEvento(request, evento_id):
                 setattr(evento, key, value)
             evento.save()
             messages.success(request, "Evento actualizado correctamente.")
-            return redirect('eventos')
+            return redirect('p_eventos')
         except Exception as e:
             messages.error(request, f"Error al actualizar el evento: {str(e)}")
             return render(request, 'profesor_principal/modificar_evento.html', {'evento': evento})
 
-    return render(request, 'profesor_principal/modificar_evento.html', {'evento': evento})
+    return render(request, 'profesor_principal/modificar_evento.html', {'evento': evento, 'profesores': profesores })
 
 def visualizarEvento(request, evento_id):
     """View a single event."""

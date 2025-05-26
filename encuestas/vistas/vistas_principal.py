@@ -50,7 +50,7 @@ def crearEncuesta(request):
                 if texto.strip():
                     encuesta.preguntas.create(texto=texto)
             messages.success(request, "Encuesta registrada correctamente.")
-            return redirect('encuestas')
+            return redirect('p_encuestas')
         except Exception as e:
             messages.error(request, f"Error al registrar la encuesta: {str(e)}")
     return render(request, 'profesor_principal/formular_encuesta.html')
@@ -66,7 +66,7 @@ def eliminarEncuesta(request, encuesta_id):
     encuesta = get_object_or_404(Encuesta, id=encuesta_id)
     encuesta.delete()
     messages.success(request, "Encuesta eliminada correctamente.")
-    return redirect('encuestas')
+    return redirect('p_encuestas')
 
 def eliminarEncuestas(request):
     """Delete multiple strategies."""
@@ -83,7 +83,7 @@ def eliminarEncuestas(request):
             messages.success(request, "Encuestas eliminadas correctamente.")
         else:
             messages.error(request, "No se seleccionaron encuestas para eliminar.")
-        return redirect('encuestas')
+        return redirect('p_encuestas')
     return JsonResponse({'error': 'Método no permitido'}, status=405)
 
 def modificarEncuesta(request, encuesta_id):
@@ -112,7 +112,7 @@ def modificarEncuesta(request, encuesta_id):
                 if texto.strip():
                     encuesta.preguntas.create(texto=texto)
             messages.success(request, "Encuesta actualizada correctamente.")
-            return redirect('encuestas')
+            return redirect('p_encuestas')
         except Exception as e:
             messages.error(request, f"Error al actualizar la encuesta: {str(e)}")
             return render(request, 'profesor_principal/modificar_encuesta.html', {'encuesta': encuesta})
