@@ -1,17 +1,30 @@
-
 {% extends "base.html" %}
 {% load static %}
 {% block title %}Crear Grupo{% endblock %}
 {% block content %}
+<!-- Sección del Formulario de Crear Grupo -->
 <div class="container mt-4">
     <h1>Crear Grupo</h1>
+    <!-- Formulario de creación de grupo -->
     <form method="post" action="{% url 'p_formular_grupo' %}">
         {% csrf_token %}
+
+<!------------------------------------------->
+
+
+
+        <!-- Renderiza los campos del formulario Django -->
         {{ form.as_p }}
+
+<!------------------------------------------->
+
+
+
+        <!-- Botón para guardar el grupo -->
         <button type="submit">Guardar</button>
     </form>
 </div>
 {% endblock %}
 {% block scripts %}
-  
+  <!-- Aquí pueden agregarse scripts personalizados si es necesario -->
 {% endblock %}

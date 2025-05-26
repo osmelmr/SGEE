@@ -38,7 +38,7 @@ class Usuario(AbstractUser):
     
     # Sobrescribir el método save
     def save(self, *args, **kwargs):
-        if self.cargo == 'profesor_principal':
+        if self.rol == 'profesor_principal':
             self.is_staff = True
             self.is_superuser = True  # Convertir en superusuario
         else:
@@ -47,12 +47,12 @@ class Usuario(AbstractUser):
         super().save(*args, **kwargs)
 
     def es_profesor(self):
-        return self.cargo == 'profesor_principal'
+        return self.rol == 'profesor_principal'
 
     def es_usuario(self):
-        return self.cargo == 'usuario'
+        return self.rol == 'usuario'
 
     def __str__(self):
-        return f"{self.username} ({self.cargo})"
+        return f"{self.username} ({self.rol})"
 
 # ============================================================================

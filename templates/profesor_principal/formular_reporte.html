@@ -3,15 +3,16 @@
 {% block title %} formulario de reporte {% endblock %}
 {% block content %}
 
-
 <!-- Sección del Formulario de Reporte de Cumplimiento -->
 <section id="formulario-reporte" class="formulario-reporte">
   <div class="container">
+    <!-- Título y descripción -->
     <div class="section-title">
       <h2>Formulario de Reporte de Cumplimiento</h2>
       <p>Complete los siguientes campos para registrar un nuevo reporte.</p>
     </div>
 
+    <!-- Formulario de registro de reporte -->
     <form id="form-reporte" class="php-email-form" method="POST" enctype="multipart/form-data" action="{% url 'p_formular_reporte' %}">
       {% csrf_token %}
       <!-- Fila 1: Grupo y Código -->
@@ -24,6 +25,13 @@
             {% endfor %}
           </select>
         </div>
+
+
+
+<!------------------------------------------->
+
+
+
         <div class="form-group col-md-6">
           <label for="codigo">Código</label>
           <input type="text" id="codigo" name="codigo" class="form-control" maxlength="10" required>
@@ -36,6 +44,13 @@
           <label for="periodo">Periodo</label>
           <input type="text" id="periodo" name="periodo" class="form-control" maxlength="10" required>
         </div>
+
+
+
+<!------------------------------------------->
+
+
+
         <div class="form-group col-md-6">
           <label for="fecha">Fecha</label>
           <input type="date" id="fecha" name="fecha" class="form-control" required>
@@ -48,6 +63,13 @@
           <label for="autor">Autor</label>
           <input type="text" id="autor" name="autor" class="form-control" maxlength="50" required value="{{user.first_name}} {{ user.last_name }}">
         </div>
+
+
+
+<!------------------------------------------->
+
+
+
         <div class="form-group col-md-6">
           <label for="institucion">Institución</label>
           <input type="text" id="institucion" name="institucion" class="form-control" maxlength="50" required>
@@ -60,11 +82,23 @@
         <textarea id="resumen" name="resumen" class="form-control" rows="3" required></textarea>
       </div>
 
+
+
+<!------------------------------------------->
+
+
+
       <!-- Campo: Objetivos -->
       <div class="form-group mb-4">
         <label for="objetivos">Objetivos</label>
         <textarea id="objetivos" name="objetivos" class="form-control" rows="5" required></textarea>
       </div>
+
+
+
+<!------------------------------------------->
+
+
 
       <!-- Campo: Actividades Realizadas -->
       <div class="form-group mb-4">
@@ -72,11 +106,23 @@
         <textarea id="actividades" name="actividades" class="form-control" rows="5" required></textarea>
       </div>
 
+
+
+<!------------------------------------------->
+
+
+
       <!-- Campo: Resultados Obtenidos -->
       <div class="form-group mb-4">
         <label for="resultados">Resultados Obtenidos</label>
         <textarea id="resultados" name="resultados" class="form-control" rows="5" required></textarea>
       </div>
+
+
+
+<!------------------------------------------->
+
+
 
       <!-- Campo: Análisis de los Resultados -->
       <div class="form-group mb-4">
@@ -84,17 +130,35 @@
         <textarea id="analisis" name="analisis" class="form-control" rows="5" required></textarea>
       </div>
 
+
+
+<!------------------------------------------->
+
+
+
       <!-- Campo: Desafíos y Lecciones Aprendidas -->
       <div class="form-group mb-4">
         <label for="desafios">Desafíos y Lecciones Aprendidas</label>
         <textarea id="desafios" name="desafios" class="form-control" rows="5" required></textarea>
       </div>
 
+
+
+<!------------------------------------------->
+
+
+
       <!-- Campo: Próximos Pasos -->
       <div class="form-group mb-4">
         <label for="proximos-pasos">Próximos Pasos</label>
         <textarea id="proximos-pasos" name="proximos_pasos" class="form-control" rows="5" required></textarea>
       </div>
+
+
+
+<!------------------------------------------->
+
+
 
       <!-- Campo: Anexos -->
       <div class="form-group mb-4">
@@ -116,22 +180,24 @@
     </form>
   </div>
 </section>
-    
 {% endblock%}
 {% block scripts %}
+  <!-- Aquí pueden agregarse scripts personalizados si es necesario -->
   <script>
-    // Cuando la página termine de cargar
-  window.addEventListener('DOMContentLoaded', function() {
-    var select = document.getElementById('select_grupo');
-    var input = document.getElementById('grupo');
-    // Si hay una opción seleccionada, copia su valor al input
-    if (select.value) {
-      input.value = select.value;
-    }
-  });
-    document.getElementById('select_grupo').addEventListener('change', function() {
+    // Sincroniza el valor del grupo seleccionado con un input oculto (si es necesario)
+    window.addEventListener('DOMContentLoaded', function() {
+      var select = document.getElementById('select_grupo');
+      var input = document.getElementById('grupo');
+      // Si hay una opción seleccionada, copia su valor al input
+      if (select && input && select.value) {
+        input.value = select.value;
+      }
+    });
+    // Actualiza el input oculto cuando cambia el select
+    document.getElementById('select_grupo')?.addEventListener('change', function() {
       var selectedValue = this.value;
-      document.getElementById('grupo').value = selectedValue;
+      var input = document.getElementById('grupo');
+      if (input) input.value = selectedValue;
     });
   </script>
-{% endblock%}
+{% endblock %

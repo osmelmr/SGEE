@@ -13,7 +13,7 @@ def visualizar_usuarios(request):
     query = request.GET.get('q', '')
     usuarios = Usuario.objects.filter(
         Q(username__icontains=query) |
-        Q(cargo__icontains=query) |
+        Q(rol__icontains=query) |
         Q(grupo__icontains=query)
     )
     return render(request, 'usuarios/listar_usuarios.html', {

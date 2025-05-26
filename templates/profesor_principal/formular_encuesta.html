@@ -12,78 +12,115 @@
             </div>
         </div>
     </section>
-  <section id="formulario-crear-encuesta" class="formulario-crear-encuesta">
-    <div class="container">
-        <div class="section-title">
-            <h2>Crear Nueva Encuesta</h2>
-            <p>Complete el siguiente formulario para crear una nueva encuesta.</p>
-        </div>
-
-        <form id="form-crear-encuesta" method="POST" action="{% url 'p_formular_encuesta' %}">
-            {% csrf_token %}
-            <!-- Título de la Encuesta -->
-            <div class="form-group mb-3">
-                <label for="titulo-encuesta">Título de la Encuesta</label>
-                <input type="text" id="titulo-encuesta" name="titulo" class="form-control" required>
+    <!-- Sección del Formulario de Encuesta -->
+    <section id="formulario-crear-encuesta" class="formulario-crear-encuesta">
+        <div class="container">
+            <div class="section-title">
+                <h2>Crear Nueva Encuesta</h2>
+                <p>Complete el siguiente formulario para crear una nueva encuesta.</p>
             </div>
 
-            <!-- Descripción de la Encuesta -->
-            <div class="form-group mb-3">
-                <label for="descripcion-encuesta">Descripción de la Encuesta</label>
-                <textarea id="descripcion-encuesta" name="descripcion" class="form-control" rows="3" required></textarea>
-            </div>
 
-            <!-- Autor de la Encuesta -->
-            <div class="form-group mb-3">
-                <label for="autor-encuesta">Autor</label>
-                <input type="text" id="autor-encuesta" name="autor" class="form-control" required value="{{user.first_name}} {{ user.last_name }}">
-            </div>
 
-            <!-- Estado de la Encuesta -->
-            <div class="form-group mb-3">
-                <label for="estado-encuesta">Estado</label>
-                <select id="estado-encuesta" name="estado" class="form-control" required>
-                    <option value="activa">Activa</option>
-                    <option value="inactiva">Inactiva</option>
-                </select>
-            </div>
+            <!-- Formulario de creación de encuesta -->
+<!--=====================================================================-->
 
-            <!-- Preguntas de la Encuesta -->
-            <div id="preguntas-encuesta">
-                <div class="pregunta mb-3 p-3 border rounded">
-                    <div class="form-group">
-                        <label for="pregunta1">Pregunta 1</label>
-                        <input type="text" id="pregunta1" name="preguntas[]" class="form-control" required>
-                    </div>
-                    <div class="text-right">
-                        <button type="button" class="btn btn-danger btn-sm btn-eliminar" onclick="eliminarPregunta(this)">
-                            <i class="bi bi-trash"></i> Eliminar
-                        </button>
+
+
+            <form id="form-crear-encuesta" method="POST" action="{% url 'p_formular_encuesta' %}">
+                {% csrf_token %}
+
+<!------------------------------------------->
+
+
+
+                <!-- Título de la Encuesta -->
+                <div class="form-group mb-3">
+                    <label for="titulo-encuesta">Título de la Encuesta</label>
+                    <input type="text" id="titulo-encuesta" name="titulo" class="form-control" required>
+                </div>
+
+<!------------------------------------------->
+
+
+
+                <!-- Descripción de la Encuesta -->
+                <div class="form-group mb-3">
+                    <label for="descripcion-encuesta">Descripción de la Encuesta</label>
+                    <textarea id="descripcion-encuesta" name="descripcion" class="form-control" rows="3" required></textarea>
+                </div>
+
+<!------------------------------------------->
+
+
+
+                <!-- Autor de la Encuesta -->
+                <div class="form-group mb-3">
+                    <label for="autor-encuesta">Autor</label>
+                    <input type="text" id="autor-encuesta" name="autor" class="form-control" required value="{{user.first_name}} {{ user.last_name }}">
+                </div>
+
+<!------------------------------------------->
+
+
+
+                <!-- Estado de la Encuesta -->
+                <div class="form-group mb-3">
+                    <label for="estado-encuesta">Estado</label>
+                    <select id="estado-encuesta" name="estado" class="form-control" required>
+                        <option value="activa">Activa</option>
+                        <option value="inactiva">Inactiva</option>
+                    </select>
+                </div>
+
+<!------------------------------------------->
+
+
+
+                <!-- Preguntas de la Encuesta -->
+                <div id="preguntas-encuesta">
+                    <div class="pregunta mb-3 p-3 border rounded">
+                        <div class="form-group">
+                            <label for="pregunta1">Pregunta 1</label>
+                            <input type="text" id="pregunta1" name="preguntas[]" class="form-control" required>
+                        </div>
+                        <div class="text-right">
+                            <button type="button" class="btn btn-danger btn-sm btn-eliminar" onclick="eliminarPregunta(this)">
+                                <i class="bi bi-trash"></i> Eliminar
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Botón para agregar más preguntas -->
-            <div class="form-group text-center mb-4">
-                <button type="button" id="agregar-pregunta" class="btn btn-secondary">
-                    <i class="bi bi-plus-circle"></i> Agregar Pregunta
-                </button>
-            </div>
+<!------------------------------------------->
 
-            <!-- Botones de Envío y Cancelar -->
-            <div class="text-center d-flex justify-content-between">
-                <button type="submit" id="boton-crear-encuesta" class="btn btn-primary">
-                    <i class="bi bi-check-circle"></i> Crear Encuesta
-                </button>
-                <button type="button" id="boton-cancelar-encuesta" class="btn btn-cancelar" onclick="window.history.back()">
-                    <i class="bi bi-x-circle"></i> Cancelar
-                </button>
-            </div>
-        </form>
-    </div>
-</section>
-</div> 
+
+
+                <!-- Botón para agregar más preguntas -->
+                <div class="form-group text-center mb-4">
+                    <button type="button" id="agregar-pregunta" class="btn btn-secondary">
+                        <i class="bi bi-plus-circle"></i> Agregar Pregunta
+                    </button>
+                </div>
+
+<!------------------------------------------->
+
+
+
+                <!-- Botones de Envío y Cancelar -->
+                <div class="text-center d-flex justify-content-between">
+                    <button type="submit" id="boton-crear-encuesta" class="btn btn-primary">
+                        <i class="bi bi-check-circle"></i> Crear Encuesta
+                    </button>
+                    <button type="button" id="boton-cancelar-encuesta" class="btn btn-cancelar" onclick="window.history.back()">
+                        <i class="bi bi-x-circle"></i> Cancelar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>
 {% endblock%}
 {% block scripts %}
-  
+  <!-- Aquí pueden agregarse scripts personalizados si es necesario -->
 {% endblock %}

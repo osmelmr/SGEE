@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.http import JsonResponse
 from django.db.models import Q
 from usuarios.models import Usuario
+from grupos.models import Grupo  # Asegúrate de tener este import
 
 # Visualizar todos los usuarios
 def visualizar_usuarios(request):
@@ -16,7 +17,7 @@ def visualizar_usuarios(request):
     query = request.GET.get('q', '')
     usuarios = Usuario.objects.filter(
         Q(username__icontains=query) |
-        Q(cargo__icontains=query) |
+        Q(rol__icontains=query) |
         Q(grupo__icontains=query)
     )
     return render(request, 'profesor_principal/listar_usuarios.html', {
@@ -34,6 +35,7 @@ def crear_usuario(request):
         messages.error(request, "No tienes permiso para funcion modelo.")
         return redirect("pagina_principal")
     """
+    grupos = Grupo.objects.all()
     if request.method == 'POST':
         # Obtener los datos del formulario
         form_data = {
@@ -43,7 +45,7 @@ def crear_usuario(request):
             'sexo': request.POST.get('sexo'),
             'grupo': request.POST.get('grupo'),
             'solapin': request.POST.get('solapin'),
-            'cargo': request.POST.get('cargo'),
+            'rol': request.POST.get('rol'),
             'telefono': request.POST.get('telefono'),
             'email': request.POST.get('email'),
             'username': request.POST.get('username'),
@@ -65,13 +67,15 @@ def crear_usuario(request):
                 first_name=form_data['first_name'],
                 last_name=form_data['last_name'],
                 email=form_data['email'],
-                cargo=form_data['cargo'],
+                rol=form_data['rol'],
                 sexo=form_data['sexo'],
                 grupo=form_data['grupo'],
                 solapin=form_data['solapin'],
                 telefono=form_data['telefono']
             )
             # Guardar el segundo apellido si se proporciona
+            if form_data['grupo']:
+                usuario.grupo_id = Grupo.objects.get(id=form_data['grupo'])
             if form_data['second_last_name']:
                 usuario.last_name = f"{form_data['last_name']} {form_data['second_last_name']}"
             usuario.save()
@@ -79,7 +83,7 @@ def crear_usuario(request):
             messages.success(request, f'Usuario {usuario.username} creado exitosamente.')
             return redirect('p_usuarios')  # Redirige a la lista de usuarios
 
-    return render(request, 'profesor_principal/formular_usuario.html')
+    return render(request, 'profesor_principal/formular_usuario.html', {'grupos': grupos})
 
 # Eliminar un usuario específico
 def eliminar_usuario(request, usuario_id):
@@ -121,10 +125,11 @@ def modificar_usuario(request, usuario_id):
         messages.error(request, "No tienes permiso para funcion modelo.")
         return redirect("pagina_principal")
     usuario = get_object_or_404(Usuario, id=usuario_id)
+    grupos = Grupo.objects.all()
     if request.method == 'POST':
         form_data = {
             'username': request.POST.get('username', usuario.username),
-            'cargo': request.POST.get('cargo', usuario.cargo),
+            'rol': request.POST.get('rol', usuario.rol),
             'sexo': request.POST.get('sexo', usuario.sexo),
             'grupo': request.POST.get('grupo', usuario.grupo),
             'solapin': request.POST.get('solapin', usuario.solapin),
@@ -140,7 +145,7 @@ def modificar_usuario(request, usuario_id):
         except Exception as e:
             messages.error(request, f'Error al modificar el usuario: {str(e)}')
 
-    return render(request, 'profesor_principal/modificar_usuario.html', {'usuario': usuario})
+    return render(request, 'profesor_principal/modificar_usuario.html', {'usuario': usuario, 'grupos': grupos})
 
 
 # Visualizar un usuario específico

@@ -6,11 +6,13 @@
   <!-- Sección del Formulario de Evento -->
   <section id="formulario-evento" class="estrategia-educativa">
     <div class="container">
+      <!-- Título y descripción -->
       <div class="section-title">
         <h2>Formulario de Evento</h2>
         <p>Complete los siguientes campos para registrar un nuevo evento.</p>
       </div>
 
+      <!-- Formulario de registro de evento -->
       <form id="form-evento" method="POST" class="php-email-form" action="{% url 'p_formular_evento' %}">
         {% csrf_token %}
         <!-- Campo: Nombre del Evento -->
@@ -19,17 +21,39 @@
           <input type="text" id="nombre-evento" name="nombre_evento" class="form-control" maxlength="100" required>
         </div>
 
+
+
+
+<!------------------------------------------->
+
+
+
         <!-- Fila 1: Fechas de Inicio y Fin -->
         <div class="row mb-4">
           <div class="form-group col-md-6">
             <label for="fecha-inicio">Fecha de Inicio</label>
             <input type="date" id="fecha-inicio" name="fecha_inicio" class="form-control" required>
           </div>
+
+
+
+
+<!------------------------------------------->
+
+
+
           <div class="form-group col-md-6">
             <label for="fecha-fin">Fecha de Fin</label>
             <input type="date" id="fecha-fin" name="fecha_fin" class="form-control" required>
           </div>
         </div>
+
+
+
+
+<!------------------------------------------->
+
+
 
         <!-- Fila 2: Horas de Inicio y Fin -->
         <div class="row mb-4">
@@ -37,17 +61,39 @@
             <label for="hora-inicio">Hora de Inicio</label>
             <input type="time" id="hora-inicio" name="hora_inicio" class="form-control" required>
           </div>
+
+
+
+
+<!------------------------------------------->
+
+
+
           <div class="form-group col-md-6">
             <label for="hora-fin">Hora de Fin</label>
             <input type="time" id="hora-fin" name="hora_fin" class="form-control" required>
           </div>
         </div>
 
+
+
+
+<!------------------------------------------->
+
+
+
         <!-- Campo: Ubicación -->
         <div class="form-group mb-4">
           <label for="ubicacion-evento">Ubicación</label>
           <input type="text" id="ubicacion-evento" name="ubicacion_evento" class="form-control" maxlength="100" required>
         </div>
+
+
+
+
+<!------------------------------------------->
+
+
 
         <!-- Campo: Tipo de Evento -->
         <div class="form-group mb-4">
@@ -61,11 +107,25 @@
           </select>
         </div>
 
+
+
+
+<!------------------------------------------->
+
+
+
         <!-- Campo: Descripción -->
         <div class="form-group mb-4">
           <label for="descripcion-evento">Descripción</label>
           <textarea id="descripcion-evento" name="descripcion" class="form-control" rows="4" required></textarea>
         </div>
+
+
+
+
+<!------------------------------------------->
+
+
 
         <!-- Fila 3: Profesor a Cargo y Teléfono de Contacto -->
         <div class="row mb-4">
@@ -78,6 +138,14 @@
               {% endfor %}
             </select>
           </div>
+
+
+
+
+<!------------------------------------------->
+
+
+
           <div class="form-group col-md-6">
             <label for="telefono-contacto">Teléfono de Contacto</label>
             <input type="tel" id="telefono-contacto" name="telefono_contacto" class="form-control" maxlength="15" required>
@@ -96,8 +164,7 @@
       </form>
     </div>
   </section>
- 
 {% endblock%}
 {% block scripts %}
-  
+  <!-- Aquí pueden agregarse scripts personalizados si es necesario -->
 {% endblock %}

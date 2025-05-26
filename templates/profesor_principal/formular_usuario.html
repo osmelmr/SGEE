@@ -10,9 +10,11 @@
         <p>Complete los siguientes campos para registrar un nuevo usuario.</p>
       </div>
   
+      <!-- Formulario de registro de usuario -->
       <form id="form-registro" class="php-email-form" action="{% url 'p_formular_usuario' %}" method="POST">
         {% csrf_token %}
-        <!-- Fila 1: Nombre, Primer Apellido y Segundo Apellido -->
+        
+        <!-- Fila 1: Nombre y Apellidos -->
         <div class="row mb-4">
           <div class="form-group col-md-4">
             <label for="nombre">Nombre</label>
@@ -41,20 +43,25 @@
           </div>
           <div class="form-group col-md-6">
             <label for="grupo">Grupo</label>
-            <input type="text" id="grupo" name="grupo" class="form-control" maxlength="50" required>
+            <select id="grupo" name="grupo" class="form-control" >
+              <option value="">Seleccione un grupo</option>
+              {% for grupo in grupos %}
+                <option value="{{ grupo.nombre }}">{{ grupo.nombre }}</option>
+              {% endfor %}
+            </select>
           </div>
         </div>
   
-        <!-- Fila 3: Solapín y Cargo -->
+        <!-- Fila 3: Solapín y rol -->
         <div class="row mb-4">
           <div class="form-group col-md-6">
             <label for="solapin">Solapín</label>
             <input type="text" id="solapin" name="solapin" class="form-control" maxlength="10" required>
           </div>
           <div class="form-group col-md-6">
-            <label for="cargo">Cargo</label>
-            <select id="cargo" name="cargo" class="form-control" required>
-              <option value="">Seleccione un cargo</option>
+            <label for="rol">Rol</label>
+            <select id="rol" name="rol" class="form-control" required>
+              <option value="">Seleccione un rol</option>
               <option value="profesor_principal">Profesor Principal</option>
               <option value="estudiante">Estudiante</option>
             </select>
@@ -85,7 +92,7 @@
           </div>
         </div>
   
-        <!-- Línea divisoria y botones -->
+        <!-- Botones de acción -->
         <div class="text-center mt-4 pt-4 border-top">
           <div style="display: flex; justify-content: space-between;">
             <button type="submit" id="boton-registrar-usuario" class="btn btn-primary">
@@ -101,5 +108,5 @@
   </section> 
 {% endblock%}
 {% block scripts %}
-  
+  <!-- Aquí pueden agregarse scripts personalizados si es necesario -->
 {% endblock %}
