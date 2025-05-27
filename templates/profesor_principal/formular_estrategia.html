@@ -16,6 +16,7 @@
       <form id="form-estrategia" class="php-email-form" action="" method="POST">
         {% csrf_token %}
         <!-- Sección: Datos generales -->
+        <div class="form-step active">
         <div class="form-section mb-4 p-4 border rounded">
           <h3 class="mb-4">Datos generales</h3>
           <div class="row">
@@ -50,21 +51,27 @@
             </div>
           </div>
         </div>
-      
+        
         <!-- Sección 1: Introducción -->
-        <div class="form-section mb-4 p-4 border rounded">
+        <div class="form-section mb-4 p-4 border rounded ">
           <h3 class="mb-4">1. Introducción</h3>
           <div class="form-group">
             <label for="plan_estudios">1.1 Plan de estudios</label>
             <textarea id="plan_estudios" name="plan_estudios" class="form-control" rows="4"></textarea>
           </div>
+          </div>
+          </div>
+          <div class="form-step">
+          <div class="form-section mb-4 p-4 border rounded ">
+          <h3 class="mb-4">1. Introducción</h3>
           <div class="form-group">
             <label for="obj_estrategia">1.2 Objetivos de la Estrategia Educativa</label>
             <textarea id="obj_estrategia" name="obj_estrategia" class="form-control" rows="4"></textarea>
           </div>
         </div>
-      
+        </div>
         <!-- Sección 2: Caracterización de la grupo -->
+         <div class="form-step">
         <div class="form-section mb-4 p-4 border rounded">
           <h3 class="mb-4">2. Caracterización de la grupo</h3>
           <div class="form-group">
@@ -75,6 +82,9 @@
             <label for="caracteristicas-grupo">2.2 Características de la grupo</label>
             <textarea id="caracteristicas-grupo" name="caract_grupo" class="form-control" rows="4"></textarea>
           </div>
+          </div>
+          </div>
+          <div class="form-step">
           <div class="form-group">
             <label for="colectivo-pedagogico">2.3 Colectivo pedagógico</label>
             <textarea id="colectivo-pedagogico" name="colect_pedagogico" class="form-control" rows="4"></textarea>
@@ -84,8 +94,8 @@
             <textarea id="otros-aspectos" name="otros_aspectos" class="form-control" rows="4"></textarea>
           </div>
         </div>
-      
         <!-- Sección 3: Problemas detectados en la grupo -->
+         <div class="form-step">
         <div class="form-section mb-4 p-4 border rounded">
           <h3 class="mb-4">3. Problemas detectados en la grupo</h3>
           <div class="form-group">
@@ -96,6 +106,9 @@
             <label for="dimension-extensionista">3.2 Dimensión extensionista</label>
             <textarea id="dimension-extensionista" name="dim_extensionista" class="form-control" rows="4"></textarea>
           </div>
+          </div>
+          </div>
+          <div class="form-step">
           <div class="form-group">
             <label for="dimension-politico-ideologica">3.3 Dimensión político-ideológica</label>
             <textarea id="dimension-politico-ideologica" name="dim_politica" class="form-control" rows="4"></textarea>
@@ -105,8 +118,8 @@
             <textarea id="conclusiones" name="conclusiones" class="form-control" rows="4"></textarea>
           </div>
         </div>
-      
         <!-- Sección 4: Plan de acciones -->
+         <div class="form-step">
         <div class="form-section mb-4 p-4 border rounded">
           <h3 class="mb-4">4. Plan de acciones</h3>
           <div class="form-group">
@@ -117,6 +130,11 @@
             <label for="objetivos-especificos-curricular">4.2.1 Objetivos específicos (Dimensión curricular)</label>
             <textarea id="objetivos-especificos-curricular" name="obj_dc" class="form-control" rows="4"></textarea>
           </div>
+          </div>
+          </div>
+          <div class="form-step">
+            <div class="form-section mb-4 p-4 border rounded">
+          <h3 class="mb-4">4. Plan de acciones</h3>
           <div class="form-group">
             <label for="plan-acciones-curricular">4.2.2 Plan de acciones (Dimensión curricular)</label>
             <textarea id="plan-acciones-curricular" name="plan_dc" class="form-control" rows="4"></textarea>
@@ -125,10 +143,16 @@
             <label for="objetivos-especificos-extensionista">4.3.1 Objetivos específicos (Dimensión extensionista)</label>
             <textarea id="objetivos-especificos-extensionista" name="obj_de" class="form-control" rows="4"></textarea>
           </div>
+          
           <div class="form-group">
             <label for="plan-acciones-extensionista">4.3.2 Plan de acciones (Dimensión extensionista)</label>
             <textarea id="plan-acciones-extensionista" name="plan_de" class="form-control" rows="4"></textarea>
           </div>
+          </div>
+          </div>  
+          <div class="form-step">
+            <div class="form-section mb-4 p-4 border rounded">
+          <h3 class="mb-4">4. Plan de acciones</h3>
           <div class="form-group">
             <label for="objetivos-especificos-politico-ideologica">4.4.1 Objetivos específicos (Dimensión político-ideológica)</label>
             <textarea id="objetivos-especificos-politico-ideologica" name="obj_dp" class="form-control" rows="4"></textarea>
@@ -137,9 +161,11 @@
             <label for="plan-acciones-politico-ideologica">4.4.2 Plan de acciones (Dimensión político-ideológica)</label>
             <textarea id="plan-acciones-politico-ideologica" name="plan_dp" class="form-control" rows="4"></textarea>
           </div>
+          </div>
         </div>
       
         <!-- Sección 5: Evaluación integral -->
+         <div class="form-step">
         <div class="form-section mb-4 p-4 border rounded">
           <h3 class="mb-4">5. Evaluación integral</h3>
           <div class="form-group">
@@ -156,14 +182,21 @@
             <input type="text" id="autor" name="autor" value="{{user.first_name}} {{ user.last_name }}" class="form-control">
           </div>
         </div>
-        
+        </div>
         <!-- Línea divisoria y botones -->
         <div class="text-center mt-4 pt-4 border-top">
+          <div class="form-navigation">
           <div class="d-flex justify-content-between">
+            <button type="button" class="btn btn-primary btn-next">Siguiente</button>
+  
             <button type="submit" id="boton-registrar-estrategia" class="btn btn-primary">
               <i class="bi bi-save"></i> Registrar Estrategia
             </button>
+            
+            <button type="button" class="btn btn-secondary btn-prev" style="display:none;">Anterior</button>
+            
             <button type="button" id="boton-cancelar-estrategias" class="btn btn-cancelar" onclick="window.history.back()">Cancelar</button>
+            </div>
           </div>
         </div>
       </form>
@@ -172,6 +205,8 @@
 {% endblock %}
 {% block scripts %}
   <!-- Script para autocompletar campos según el grupo seleccionado -->
+   <script src="{% static 'estrategias/js/paginar.js' %}"></script>
+
   <script>
     // Inserta el JSON serializado desde la vista aquí
     const gruposData = {{ grupos_json|safe }};
