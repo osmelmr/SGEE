@@ -13,8 +13,15 @@ def visualizar_profesores(request):
     if query:
         profesores = Profesor.objects.filter(
             Q(nombre__icontains=query) |
-            Q(apellidos__icontains=query) |
-            Q(especialidad__icontains=query)
+            Q(primer_apellido__icontains=query) |
+            Q(segundo_apellido__icontains=query) |
+            Q(sexo__icontains=query) |
+            Q(categoria_docente__icontains=query) |
+            Q(asignatura__icontains=query) |
+            Q(solapin__icontains=query) |
+            Q(telefono__icontains=query) |
+            Q(correo__icontains=query) |
+            Q(descripcion__icontains=query)
         )
     else:
         profesores = Profesor.objects.all()

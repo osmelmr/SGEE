@@ -15,7 +15,11 @@ def visualizar_eventos(request):
         eventos = Evento.objects.filter(
             Q(nombre_evento__icontains=query) |
             Q(descripcion__icontains=query) |
-            Q(fecha_inicio__icontains=query)
+            Q(ubicacion_evento__icontains=query) |
+            Q(tipo_evento__icontains=query) |
+            Q(telefono_contacto__icontains=query) |
+            Q(profesor_encargado__nombre__icontains=query) |
+            Q(profesor_encargado__primer_apellido__icontains=query)
         )
     else:
         eventos = Evento.objects.all()

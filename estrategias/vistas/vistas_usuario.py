@@ -21,7 +21,7 @@ def visualizar_estrategias(request):
             Q(nombre__icontains=query) |
             Q(curso__icontains=query) |
             Q(anio_escolar__icontains=query) |
-            Q(grupo__nombre__icontains=query) |
+            Q(grupo__icontains=query) |
             Q(autor__icontains=query)
         )
 

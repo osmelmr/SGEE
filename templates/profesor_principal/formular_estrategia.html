@@ -210,20 +210,23 @@
     const gruposData = {{ grupos_json|safe }};
 
     document.getElementById('grupo').addEventListener('change', function() {
-        const selectedName = this.value;
-        const grupo = gruposData.find(b => b.nombre == selectedName);
-        if (grupo) {
-            document.getElementById('direccion-grupo').value = grupo.direccion;
-            document.getElementById('caracteristicas-grupo').value = grupo.caracterizacion;
-            document.getElementById('curso').value = grupo.curso;
-            document.getElementById('ano-escolar').value = grupo.anio_escolar;
-        } else {
-            document.getElementById('direccion-grupo').value = '';
-            document.getElementById('caracteristicas-grupo').value = '';
-            document.getElementById('curso').value = '';
-            document.getElementById('ano-escolar').value = '';
-        }
-    });
+    const selectedName = this.value;
+    const grupo = gruposData.find(b => b.nombre == selectedName);
+    if (grupo) {
+        document.getElementById('direccion-grupo').value = grupo.direccion;
+        document.getElementById('caracteristicas-grupo').value = grupo.caracterizacion;
+        document.getElementById('curso').value = grupo.curso;
+        document.getElementById('ano-escolar').value = grupo.anio_escolar;
+        // Rellenar colectivo pedagógico
+        document.getElementById('colectivo-pedagogico').value = grupo.profesores.join(', ');
+    } else {
+        document.getElementById('direccion-grupo').value = '';
+        document.getElementById('caracteristicas-grupo').value = '';
+        document.getElementById('curso').value = '';
+        document.getElementById('ano-escolar').value = '';
+        document.getElementById('colectivo-pedagogico').value = '';
+    }
+});
   </script>
 {% endblock %}
 <style>

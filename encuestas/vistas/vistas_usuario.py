@@ -16,7 +16,9 @@ def visualizar_encuestas(request):
     if query:
         encuestas = base_queryset.filter(
             Q(titulo__icontains=query) |
-            Q(descripcion__icontains=query)
+            Q(descripcion__icontains=query) |
+            Q(autor__icontains=query) |
+            Q(estado__icontains=query)
         )
     else:
         encuestas = base_queryset

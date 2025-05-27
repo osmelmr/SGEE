@@ -50,7 +50,11 @@ def crear_estrategia(request):
             "direccion": grupo.direccion,
             "curso": grupo.curso,
             "anio_escolar": grupo.anio_escolar,
-            "caracterizacion": grupo.caracterizacion
+            "caracterizacion": grupo.caracterizacion,
+            "profesores": [
+                f"{prof.nombre} {prof.primer_apellido} {prof.segundo_apellido or ''}".strip()
+                for prof in grupo.profesores.all()
+            ]
         }
         for grupo in grupos
     ])

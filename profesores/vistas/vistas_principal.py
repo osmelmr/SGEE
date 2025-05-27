@@ -136,20 +136,21 @@ def modificar_profesor(request, profesor_id):
             'correo': request.POST.get('correo'),
             'descripcion': request.POST.get('descripcion')
         }
+        grupos_ids = request.POST.getlist('grupos')  # <-- Añadido para obtener los grupos seleccionados
 
-       
         try:
             # Update professor with new data
             for key, value in form_data.items():
                 setattr(profesor, key, value)
             profesor.save()
+            profesor.grupos.set(grupos_ids)  # <-- Actualiza los grupos asignados
             messages.success(request, "Profesor actualizado correctamente.")
             return redirect('p_profesores')
         except Exception as e:
             messages.error(request, f"Error al actualizar el profesor: {str(e)}")
-            return render(request, 'profesor_principal/modificar_profesor.html', {'profesor': profesor})
+            return render(request, 'profesor_principal/modificar_profesor.html', {'profesor': profesor, 'grupos': grupos})
 
-    return render(request, 'profesor_principal/modificar_profesor.html', {'profesor': profesor,'grupos': grupos})
+    return render(request, 'profesor_principal/modificar_profesor.html', {'profesor': profesor, 'grupos': grupos})
 
 def visualizar_profesor(request, profesor_id):
     if not request.user.is_authenticated:
