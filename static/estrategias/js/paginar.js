@@ -2,16 +2,28 @@ document.addEventListener('DOMContentLoaded', function() {
   const steps = Array.from(document.querySelectorAll('.form-step'));
   const btnNext = document.querySelector('.btn-next');
   const btnPrev = document.querySelector('.btn-prev');
-  const btnSubmit = document.querySelector('.btn-submit');
+  const btnRegistrar = document.querySelector('.btn-registrar');
   let currentStep = 0;
 
   function showStep(index) {
     steps.forEach((step, i) => {
       step.style.display = i === index ? 'block' : 'none';
     });
-    btnPrev.style.display = index === 0 ? 'none' : 'inline-block';
-    btnNext.style.display = index === steps.length - 1 ? 'none' : 'inline-block';
-    btnSubmit.style.display = index === steps.length - 1 ? 'inline-block' : 'none';
+
+    // Mostrar/ocultar botones según el paso
+    if (index === 0) {
+      btnNext.style.display = 'inline-block';
+      btnRegistrar.style.display = 'none';
+      btnPrev.style.visibility = 'hidden'; // Oculto pero mantiene el espacio
+    } else if (index === steps.length - 1) {
+      btnNext.style.display = 'none';
+      btnRegistrar.style.display = 'inline-block';
+      btnPrev.style.visibility = 'visible';
+    } else {
+      btnNext.style.display = 'inline-block';
+      btnRegistrar.style.display = 'none';
+      btnPrev.style.visibility = 'visible';
+    }
   }
 
   btnNext.addEventListener('click', function() {

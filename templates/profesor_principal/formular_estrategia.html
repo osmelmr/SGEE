@@ -185,19 +185,17 @@
         </div>
         <!-- Línea divisoria y botones -->
         <div class="text-center mt-4 pt-4 border-top">
-          <div class="form-navigation">
-          <div class="d-flex justify-content-between">
-            <button type="button" class="btn btn-primary btn-next">Siguiente</button>
-  
-            <button type="submit" id="boton-registrar-estrategia" class="btn btn-primary">
-              <i class="bi bi-save"></i> Registrar Estrategia
-            </button>
-            
-            <button type="button" class="btn btn-secondary btn-prev" style="display:none;">Anterior</button>
-            
-            <button type="button" id="boton-cancelar-estrategias" class="btn btn-cancelar" onclick="window.history.back()">Cancelar</button>
-            </div>
-          </div>
+          <div class="form-navigation d-flex justify-content-between mt-4">
+  <!-- Izquierda: Siguiente o Registrar -->
+  <button type="button" class="btn btn-primary btn-next">Siguiente</button>
+  <button type="submit" class="btn btn-success btn-registrar" style="display:none;">
+    <i class="bi bi-save"></i> Registrar Estrategia
+  </button>
+  <!-- Centro: Anterior (espacio reservado aunque esté oculto) -->
+  <button type="button" class="btn btn-secondary btn-prev" style="visibility:hidden;">Anterior</button>
+  <!-- Derecha: Cancelar -->
+  <button type="button" class="btn btn-cancelar" onclick="window.history.back()">Cancelar</button>
+</div>
         </div>
       </form>
     </div>
@@ -228,3 +226,15 @@
     });
   </script>
 {% endblock %}
+<style>
+/* Puedes poner esto en tu archivo base.css */
+.form-navigation {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+.form-navigation > * {
+  min-width: 120px; /* Ajusta según el tamaño de tus botones */
+  text-align: center;
+}
+</style>
