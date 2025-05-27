@@ -10,22 +10,27 @@ def visualizar_estrategias(request):
         return redirect('login')
     """Visualizar todas las estrategias."""
     query = request.GET.get("q", "")
+    estrategias = Estrategia.objects.all()
+
+    # Si el usuario tiene grupo, filtrar por ese grupo
+    if hasattr(request.user, 'grupo') and request.user.grupo:
+        estrategias = estrategias.filter(grupo=request.user.grupo)
+
     if query:
-        estrategias = Estrategia.objects.filter(
+        estrategias = estrategias.filter(
             Q(nombre__icontains=query) |
             Q(curso__icontains=query) |
             Q(anio_escolar__icontains=query) |
             Q(grupo__nombre__icontains=query) |
             Q(autor__icontains=query)
         )
-    else:
-        estrategias = Estrategia.objects.all()
+
     return render(request, "usuarios/listar_estrategias.html", {"estrategias": estrategias, "query": query})
 
-def visualizar_estrategia(request, estrategia_id):
+def visualizar_estrategia(request, estra_id):
     if not request.user.is_authenticated:
         messages.error(request, "Debes iniciar sesión para realizar esta acción.")
         return redirect('login')
     """Visualizar una estrategia específica."""
-    estrategia = get_object_or_404(Estrategia, id=estrategia_id)
+    estrategia = get_object_or_404(Estrategia, id=estra_id)
     return render(request, "usuarios/visualizar_estrategia.html", {"estrategia": estrategia})

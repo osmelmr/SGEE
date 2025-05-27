@@ -74,7 +74,13 @@
         </div>
         <div class="detail-group col-md-6">
           <h4>Grupos a Impartir</h4>
-          <p>{{profesor.grupos_impartir}}</p>
+          <ul>
+            {% for grupo in profesor.grupos.all %}
+              <li>{{ grupo.nombre }}</li>
+            {% empty %}
+              <li>No tiene grupos asignados.</li>
+            {% endfor %}
+          </ul>
         </div>
       </div>
 
@@ -82,6 +88,18 @@
       <div class="detail-group mb-4">
         <h4>Descripción</h4>
         <p>{{profesor.descripcion}}</p>
+      </div>
+
+      <!-- Fila 9: Grupos Asignados -->
+      <div class="detail-group mb-4">
+        <h4>Grupos Asignados</h4>
+        <ul>
+          {% for grupo in profesor.grupos.all %}
+            <li>{{ grupo.nombre }}</li>
+          {% empty %}
+            <li>No tiene grupos asignados.</li>
+          {% endfor %}
+        </ul>
       </div>
 
       <!-- Botón de Cancelar -->

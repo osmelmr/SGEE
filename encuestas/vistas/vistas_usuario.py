@@ -8,17 +8,18 @@ def visualizar_encuestas(request):
     if not request.user.is_authenticated:
         messages.error(request, "Debes iniciar sesión para realizar esta acción.")
         return redirect('login')
-    """Visualizar solo las encuestas que el usuario no ha realizado."""
+    """Visualizar solo las encuestas que el usuario no ha realizado y que están activas."""
     usuario = request.user
     encuestas_realizadas = usuario.encuestas_realizadas.all()
     query = request.GET.get("q", "")
+    base_queryset = Encuesta.objects.filter(estado='activa').exclude(id__in=encuestas_realizadas.values_list('id', flat=True))
     if query:
-        encuestas = Encuesta.objects.exclude(id__in=encuestas_realizadas.values_list('id', flat=True)).filter(
+        encuestas = base_queryset.filter(
             Q(titulo__icontains=query) |
             Q(descripcion__icontains=query)
         )
     else:
-        encuestas = Encuesta.objects.exclude(id__in=encuestas_realizadas.values_list('id', flat=True))
+        encuestas = base_queryset
     return render(request, "usuarios/listar_encuestas.html", {"encuestas": encuestas, "query": query})
 
 def visualizar_encuesta(request, encuesta_id):

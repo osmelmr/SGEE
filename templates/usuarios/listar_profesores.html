@@ -33,12 +33,7 @@
                   <th>Primer Apellido</th>
                   <th>Segundo Apellido</th>
                   <th>Asignatura</th>
-                  <th>
-                    Acciones
-                    <button id="btn-seleccionar-todo" class="btn btn-link p-0 ms-2" title="Seleccionar Todo">
-                      <i class="bi bi-check-all"></i>
-                    </button>
-                  </th>
+                  <th>Acciones</th>
                 </tr>
               </thead>
               <tbody>
@@ -52,13 +47,6 @@
                     <button type="button" class="btn btn-action btn-ver-detalles" data-id="{{ profesor.id }}" title="Ver Detalles">
                       <i class="bi bi-eye"></i>
                     </button>
-                    <button type="button" class="btn btn-action btn-modificar" data-id="{{ profesor.id }}" title="Modificar">
-                      <i class="bi bi-pencil"></i>
-                    </button>
-                    <button type="button" class="btn btn-action btn-eliminar" data-id="{{ profesor.id }}" title="Eliminar">
-                      <i class="bi bi-trash"></i>
-                    </button>
-                    <input type="checkbox" class="form-check-input seleccionar-fila" name="profesores[]" value="{{ profesor.id }}">
                   </td>
                 </tr>
                 {% empty %}

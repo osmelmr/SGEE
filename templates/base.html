@@ -34,8 +34,13 @@
   <!-- ======= Header ======= -->
   <header id="header" class="d-flex align-items-center fixed-top">
     <div class="container d-flex align-items-center">
+      <h1 class="logo me-auto">
+        <a href="{% url 'p_pagina_principal' %}">ESTRA
+        <p class="text-muted" style="font-size: 0.7rem; margin-bottom: 0;">
+        sistema gestor de <br>estrategias educativas
+      </p></a>
+      </h1>
       
-      <h1 class="logo me-auto"><a href="{% url 'p_pagina_principal' %}">ESTRA</a></h1>
 
       <!-- Navegación -->
       <nav id="navbar" class="navbar">
@@ -61,7 +66,6 @@
               <li><a href="{% url 'p_grupos' %}"> Grupos</a></li>
             </ul>
           </li>
-          <li><a href="{% url 'p_contactar' %}">Contáctenos</a></li>
           <li class="dropdown user-menu">
             <a href="#"><i class="bi bi-person-circle"></i> Mi cuenta <i class="bi bi-chevron-down"></i></a>
             <ul>
@@ -100,12 +104,6 @@
             <span>ESTRA</span>
           </a>
           <p>"Recuerda: una buena gestión educativa es la base del éxito. ¡Gracias por visitarnos!"</p>
-          <div class="d-flex mt-4 social-links">
-            <a href="#"><i class="bi bi-twitter"></i></a>
-            <a href="#"><i class="bi bi-facebook"></i></a>
-            <a href="#"><i class="bi bi-instagram"></i></a>
-            <a href="#"><i class="bi bi-linkedin"></i></a>
-          </div>
         </div>
 
         <!-- Columna 2: Enlaces útiles -->

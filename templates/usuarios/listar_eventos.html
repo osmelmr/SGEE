@@ -51,12 +51,18 @@
                 <td>{{ evento.fecha_inicio }}</td>
                 <td>{{ evento.profesor_encargado }}</td>
                 <td>
-                  <button type="button"  class="btn btn-action btn-ver-detalles" data-id="{{ evento.id }}" title="Ver Detalles">
+                  <button type="button" class="btn btn-action btn-ver-detalles" data-id="{{ evento.id }}" title="Ver Detalles">
                     <i class="bi bi-eye"></i>
                   </button>
-                  <button type="button" class="btn btn-action btn-inscribirse btn-secondary" data-id="{{ evento.id }}" title="inscribirse">
-                    <i class="bi bi-pencil"></i>
-                  </button>
+                  {% if evento.id in eventos_inscritos_ids %}
+                    <button type="button" class="btn btn-action btn-inscribirse btn-success" data-id="{{ evento.id }}" title="Inscrito">
+                      <i class="bi bi-check-circle"></i> Inscrito
+                    </button>
+                  {% else %}
+                    <button type="button" class="btn btn-action btn-inscribirse btn-secondary" data-id="{{ evento.id }}" title="Inscribirse">
+                      <i class="bi bi-pencil"></i> Inscribir
+                    </button>
+                  {% endif %}
                 </td>
 
               </tr>

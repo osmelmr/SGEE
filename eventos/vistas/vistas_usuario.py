@@ -15,11 +15,26 @@ def visualizar_eventos(request):
         eventos = Evento.objects.filter(
             Q(nombre_evento__icontains=query) |
             Q(descripcion__icontains=query) |
-            Q(fecha__icontains=query)
+            Q(fecha_inicio__icontains=query)
         )
     else:
         eventos = Evento.objects.all()
-    return render(request, "usuarios/listar_eventos.html", {"eventos": eventos, "query": query})
+    
+    # Obtener los IDs de los eventos a los que el usuario está inscrito
+    if hasattr(request.user, 'eventos'):
+        eventos_inscritos_ids = list(request.user.eventos.values_list('id', flat=True))
+    else:
+        eventos_inscritos_ids = []
+
+    return render(
+        request,
+        "usuarios/listar_eventos.html",
+        {
+            "eventos": eventos,
+            "query": query,
+            "eventos_inscritos_ids": eventos_inscritos_ids
+        }
+    )
 
 def visualizar_evento(request, evento_id):
     if not request.user.is_authenticated:

@@ -59,6 +59,8 @@ def crear_usuario(request):
             messages.error(request, 'El solapín ya está registrado.')
         elif Usuario.objects.filter(email=form_data['email']).exists():
             messages.error(request, 'El correo ya está registrado.')
+        elif Usuario.objects.filter(telefono=form_data['telefono']).exists():
+            messages.error(request, 'El telefono ya está registrado.')
         else:
             # Crear el usuario
             usuario = Usuario.objects.create_user(
@@ -75,8 +77,6 @@ def crear_usuario(request):
                 telefono=form_data['telefono']
             )
             # Guardar el segundo apellido si se proporciona
-            if form_data['grupo']:
-                usuario.grupo_id = Grupo.objects.get(id=form_data['grupo'])
             usuario.save()
 
             messages.success(request, f'Usuario {usuario.username} creado exitosamente.')

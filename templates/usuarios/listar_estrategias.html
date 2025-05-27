@@ -52,7 +52,10 @@
                       <button type="button" class="btn btn-action btn-ver-detalles" data-id="{{ estrategia.id }}" title="Ver Detalles">
                         <i class="bi bi-eye"></i>
                       </button>
-                      </td>
+                      <button type="button" class="btn btn-action btn-descargar-pdf  btn-secondary" data-id="{{ estrategia.id }}" title="DescargarPdf">
+                        <i class="bi bi-download"></i>
+                      </button>
+                    </td>
                   </tr>
                   {% endfor %}
                 </tbody>
@@ -65,5 +68,5 @@
 </div>
 {% endblock %}
 {% block scripts %}
-  
+  <script src="{% static 'estrategias/js/usuario_listar.js' %}"></script>
 {% endblock %}

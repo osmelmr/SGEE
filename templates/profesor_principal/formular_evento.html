@@ -134,7 +134,7 @@
             <select id="profesor-cargo" name="profesor_encargado" class="form-control" required>
               <option value="">Seleccione un profesor</option>
               {% for profesor in profesores %}
-                <option value="{{ profesor.id }}">{{ profesor.nombre }} {{ profesor.primer_apellido }}</option>
+                <option value="{{ profesor.id }}" data-telefono="{{ profesor.telefono }}">{{ profesor.nombre }} {{ profesor.primer_apellido }}</option>
               {% endfor %}
             </select>
           </div>
@@ -164,7 +164,8 @@
       </form>
     </div>
   </section>
-{% endblock%}
+{% endblock %}
 {% block scripts %}
+  <script src="{% static 'eventos/js/form.js' %}"></script>
   <!-- Aquí pueden agregarse scripts personalizados si es necesario -->
 {% endblock %}
