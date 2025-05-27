@@ -122,7 +122,7 @@ def modificar_profesor(request, profesor_id):
         return redirect("pagina_principal")
     """Modify a single professor."""
     profesor = get_object_or_404(Profesor, id=profesor_id)
-    
+    grupos = Grupo.objects.all()
     if request.method == 'POST':
         form_data = {
             'nombre': request.POST.get('nombre'),
@@ -137,11 +137,7 @@ def modificar_profesor(request, profesor_id):
             'descripcion': request.POST.get('descripcion')
         }
 
-        # Validate required fields
-        if not all(form_data.values()):
-            messages.error(request, "Todos los campos obligatorios deben ser completados.")
-            return render(request, 'profesor_principal/modificar_profesor.html', {'profesor': profesor})
-
+       
         try:
             # Update professor with new data
             for key, value in form_data.items():
@@ -153,7 +149,7 @@ def modificar_profesor(request, profesor_id):
             messages.error(request, f"Error al actualizar el profesor: {str(e)}")
             return render(request, 'profesor_principal/modificar_profesor.html', {'profesor': profesor})
 
-    return render(request, 'profesor_principal/modificar_profesor.html', {'profesor': profesor})
+    return render(request, 'profesor_principal/modificar_profesor.html', {'profesor': profesor,'grupos': grupos})
 
 def visualizar_profesor(request, profesor_id):
     if not request.user.is_authenticated:

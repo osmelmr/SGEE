@@ -18,7 +18,7 @@ def visualizar_reportes(request):
     query = request.GET.get('q', '')
     if query:
         reportes = Reporte.objects.filter(
-            Q(grupo__icontains=query) |
+            Q(grupo__nombre__icontains=query) |  # Buscar por nombre del grupo asociado
             Q(codigo__icontains=query) |
             Q(periodo__icontains=query) |
             Q(autor__icontains=query) |

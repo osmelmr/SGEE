@@ -42,7 +42,11 @@
       <div class="row mb-4">
         <div class="form-group col-md-6">
           <label for="periodo">Periodo</label>
-          <input type="text" id="periodo" name="periodo" class="form-control" maxlength="10" required>
+          <select id="periodo" name="periodo" class="form-control" required>
+            <option value="">Seleccione...</option>
+            <option value="primer_semestre">Primer Semestre</option>
+            <option value="segundo_semestre">Segundo Semestre</option>
+          </select>
         </div>
 
 
@@ -200,4 +204,4 @@
       if (input) input.value = selectedValue;
     });
   </script>
-{% endblock %
+{% endblock %}

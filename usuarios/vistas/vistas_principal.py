@@ -66,6 +66,7 @@ def crear_usuario(request):
                 password=form_data['password'],
                 first_name=form_data['first_name'],
                 last_name=form_data['last_name'],
+                second_last_name=form_data['second_last_name'],
                 email=form_data['email'],
                 rol=form_data['rol'],
                 sexo=form_data['sexo'],
@@ -76,8 +77,6 @@ def crear_usuario(request):
             # Guardar el segundo apellido si se proporciona
             if form_data['grupo']:
                 usuario.grupo_id = Grupo.objects.get(id=form_data['grupo'])
-            if form_data['second_last_name']:
-                usuario.last_name = f"{form_data['last_name']} {form_data['second_last_name']}"
             usuario.save()
 
             messages.success(request, f'Usuario {usuario.username} creado exitosamente.')
@@ -133,7 +132,12 @@ def modificar_usuario(request, usuario_id):
             'sexo': request.POST.get('sexo', usuario.sexo),
             'grupo': request.POST.get('grupo', usuario.grupo),
             'solapin': request.POST.get('solapin', usuario.solapin),
-            'telefono': request.POST.get('telefono', usuario.telefono)
+            'telefono': request.POST.get('telefono', usuario.telefono),
+            'second_last_name': request.POST.get('second_last_name', usuario.second_last_name),
+            'email': request.POST.get('email', usuario.email),
+            'first_name': request.POST.get('first_name', usuario.first_name),
+            'last_name': request.POST.get('last_name', usuario.last_name),
+
         }
 
         try:

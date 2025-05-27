@@ -86,13 +86,20 @@
         <div class="text-center mt-4 pt-4 border-top">
           <div style="display: flex; justify-content: space-between;">
             <button type="button" id="boton-cancelar-estrategias" class="btn btn-cancelar" onclick="window.history.back()">Cancelar</button>
-            <button type="button" id="boton-descargar-estrategia" class="btn btn-descargar" onclick="window.location.href='{% url 'descargar/estrategia/pdf' estrategia.id %}'">Descargar</button>
+            <a href="{% url 'descargar_estrategia_pdf' estrategia.id %}" 
+              class="btn btn-descargar" 
+              id="boton-descargar-estrategia"
+              data-nombre="{{ estrategia.nombre|escapejs }}">
+              Descargar
+            </a>
           </div>
         </div>
     </div>
     </div>
 </section>
 
-{% endblock%}
+{% endblock %}
 {% block scripts %}
+<script src="{% static 'estrategias/js/visualizar_estrategia.js' %}"></script>
+<!-- filepath: e:\Osmel\Proyectos\django\django-full\SGEE\templates\profesor_principal\visualizar_estrategia.html -->
 {% endblock %}

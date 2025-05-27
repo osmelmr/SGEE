@@ -23,6 +23,7 @@ class Usuario(AbstractUser):
     grupo = models.CharField(max_length=50, blank=True, null=True)
     solapin = models.CharField(max_length=10, unique=True)
     telefono = models.CharField(max_length=15, blank=True, null=True)
+    second_last_name = models.CharField(max_length=50, blank=True, null=True)
 
     # Relaciones
     encuestas_realizadas = models.ManyToManyField(

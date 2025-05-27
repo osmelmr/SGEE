@@ -42,16 +42,9 @@ class Estrategia(models.Model):
     evaluacion = models.TextField(blank=True, default="evaluacion_integral_{id}")
     otros_aspectos = models.TextField(blank=True, default="otros_aspectos_{id}")
     conclusiones = models.TextField(blank=True, default="conclusiones_{id}")
-
-    # Relación uno a uno con Grupo (opcional)
-    grupo_id = models.OneToOneField(
-        'grupos.Grupo',
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name='estrategia'
-    )
-
+    fecha_creacion = models.DateTimeField(auto_now_add=True, null=True,blank=True)
+    fecha_modificacion = models.DateTimeField(auto_now=True, null=True,blank=True)
+    
     class Meta:
         unique_together = ('curso', 'grupo')
 
