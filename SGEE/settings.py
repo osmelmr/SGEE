@@ -131,3 +131,12 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# Seguridad de sesiones
+SESSION_COOKIE_AGE = 1800  # 30 minutos (en segundos)
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # Expira al cerrar el navegador
+SESSION_COOKIE_SECURE = True  # Solo enviar cookies por HTTPS (actívalo en producción)
+SESSION_COOKIE_HTTPONLY = True  # Evita acceso a la cookie desde JavaScript
+SESSION_SAVE_EVERY_REQUEST = True  # Renueva el tiempo de sesión en cada petición
+
+CSRF_COOKIE_SECURE = True  # Solo enviar CSRF cookie por HTTPS (actívalo en producción)
