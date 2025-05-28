@@ -40,5 +40,18 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
+  // Prevención de doble submit en el formulario de estrategia
+  const form = document.getElementById('form-estrategia');
+  if (form && btnRegistrar) {
+    form.addEventListener('submit', function(e) {
+      // Si usas validación personalizada, asegúrate de que sea válida antes de deshabilitar
+      if (form.checkValidity()) {
+        btnRegistrar.disabled = true;
+        btnRegistrar.innerHTML = '<i class="bi bi-hourglass-split"></i> Enviando...';
+      }
+      // Si no es válido, el navegador muestra los errores y el botón sigue habilitado
+    });
+  }
+
   showStep(currentStep);
 });
