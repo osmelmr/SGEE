@@ -896,15 +896,13 @@ function validarCampoGenerico(campo, regex, mensajeError) {
     });
 
     configurarValidacionFormulario('form-evento', {
-      'nombre-evento': validarNombreEvento,
       'fecha-inicio': () => validarFechasEvento(),
       'fecha-fin': () => validarFechasEvento(),
       'hora-inicio': validarHoraInicio,
       'hora-fin': validarHoraFin,
-      'ubicacion-evento': validarUbicacion,
-      'tipo-evento': validarTipoEvento,
+      /**'tipo-evento': validarTipoEvento,
       'descripcion-evento': validarDescripcionEvento,
-      'profesor-cargo': validarProfesorCargo,
+      'profesor-cargo': validarProfesorCargo,**/
       'telefono-contacto': validarTelefonoContacto
     });
 

@@ -12,6 +12,8 @@
   <meta name="keywords" content="ESTRA, educación, gestión, UCI, estrategias educativas">
 
   <!-- Favicons -->
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+
   <!-- Google Fonts -->
  
   <!-- Archivos CSS de Vendor -->
@@ -138,7 +140,7 @@
   </footer><!-- Fin del Footer -->
 
   <!-- Archivos JS de Vendor -->
-  
+  <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
   <!-- Archivo JS Principal -->
   <!--<script src="{% static 'assets/js/main.js' %}"></script>-->
   {% if messages %}
@@ -153,5 +155,6 @@
   {% block scripts %}
   <!-- Aquí puedes incluir scripts adicionales específicos de cada página -->
   {% endblock %}
+  <script src="{% static 'assets/js/main.js' %}"></script>
 </body>
 </html>
