@@ -1,3 +1,5 @@
+let showStep; // Declaración global
+
 document.addEventListener('DOMContentLoaded', function() {
   const steps = Array.from(document.querySelectorAll('.form-step'));
   const btnNext = document.querySelector('.btn-next');
@@ -5,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const btnRegistrar = document.querySelector('.btn-registrar');
   let currentStep = 0;
 
-  function showStep(index) {
+   showStep = function(index) {
     steps.forEach((step, i) => {
       step.style.display = i === index ? 'block' : 'none';
     });
@@ -48,9 +50,12 @@ document.addEventListener('DOMContentLoaded', function() {
 function getStepIndexOfElement(element) {
   // Busca el form-step ancestro más cercano
   const step = element.closest('.form-step');
-  if (!step) return -1;
+  if (!step) return;
   // Obtiene todos los form-step en orden
   const steps = Array.from(document.querySelectorAll('.form-step'));
-  // Devuelve el índice del form-step encontrado
-  return steps.indexOf(step);
+  // Llama a showStep con el índice del form-step encontrado
+  const index = steps.indexOf(step);
+  if (typeof showStep === 'function' && index !== -1) {
+    showStep(index);
+  }
 }

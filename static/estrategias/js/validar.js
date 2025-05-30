@@ -23,11 +23,12 @@ function validarFormulario() {
 
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('form-estrategia');
+    const btnRegistrar = document.querySelector('.btn-registrar');
     const cursoInput = document.getElementById('curso');
 
     form.addEventListener('submit', function(e) {
-        const cursoVal = cursoInput.value.trim();
-        if (!validarCurso(cursoVal)) {
+        // Validación personalizada
+        if (!validarFormulario()) {
             e.preventDefault();
             cursoInput.classList.add('is-invalid');
             if (!document.getElementById('curso-error')) {
@@ -38,24 +39,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 cursoInput.parentNode.appendChild(error);
             }
             cursoInput.focus();
+            getStepIndexOfElement(cursoInput);
+            return;
         } else {
             cursoInput.classList.remove('is-invalid');
             const err = document.getElementById('curso-error');
             if (err) err.remove();
         }
-    });
 
-  // Prevención de doble submit en el formulario de estrategia
-  //const form = document.getElementById('form-estrategia');
-  if (form && btnRegistrar) {
-    form.addEventListener('submit', function(e) {
-      // Si usas validación personalizada, asegúrate de que sea válida antes de deshabilitar
-      if (form.checkValidity()) {
-        btnRegistrar.disabled = true;
-        btnRegistrar.innerHTML = '<i class="bi bi-hourglass-split"></i> Enviando...';
-      }
-      // Si no es válido, el navegador muestra los errores y el botón sigue habilitado
+        // Prevención de doble submit solo si es válido
+        if (btnRegistrar) {
+            btnRegistrar.disabled = true;
+            btnRegistrar.innerHTML = '<i class="bi bi-hourglass-split"></i> Enviando...';
+        }
     });
-  }
-
 });
