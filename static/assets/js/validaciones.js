@@ -43,15 +43,15 @@
   }
 
   /**
-   * Valida que los campos requeridos no estén vacíos
+   * Valida que los campos no estén vacíos
    * @param {HTMLFormElement} form - Formulario a validar
-   * @returns {boolean} True si todos los campos requeridos están llenos
+   * @returns {boolean} True si todos los campos están llenos
    */
   function validarCamposVacios(form) {
     let valido = true;
-    const camposRequeridos = form.querySelectorAll('[required]');
+    const campos = form.querySelectorAll('input, textarea, select');
     
-    camposRequeridos.forEach(campo => {
+    campos.forEach(campo => {
       if (campo.disabled || campo.readOnly) return;
       
       if (!campo.value.trim()) {
@@ -64,7 +64,7 @@
   }
 
   /**
-   * Función base de validación para campos de formulario (versión corregida)
+   * Función base de validación para campos de formulario
    * @param {HTMLElement} campo - Campo a validar (input/select/textarea)
    * @param {RegExp} [regex] - Patrón de validación (opcional)
    * @param {string} [mensajeError] - Mensaje de error personalizado (opcional)
@@ -72,27 +72,20 @@
    */
   function validarCampoGenerico(campo, regex, mensajeError) {
     const valor = campo.value.trim();
-    const esRequerido = campo.hasAttribute('required');
     
-    // 1. Validación de campo requerido vacío (tiene máxima prioridad)
-    if (esRequerido && !valor) {
-        mostrarError(campo, 'Este campo es obligatorio');
-        return false;
+    // 1. Validación de campo vacío (siempre se ejecuta)
+    if (!valor) {
+      mostrarError(campo, 'Este campo es obligatorio');
+      return false;
     }
     
-    // 2. Si no es requerido y está vacío, no validar más
-    if (!esRequerido && !valor) {
-        mostrarError(campo); // Limpiar errores previos
-        return true; // Considerar válido porque no es requerido
-    }
-    
-    // 3. Validar contra regex si se proporcionó
+    // 2. Validar contra regex si se proporcionó
     if (regex && !regex.test(valor)) {
-        mostrarError(campo, mensajeError || 'El formato no es válido');
-        return false;
+      mostrarError(campo, mensajeError || 'El formato no es válido');
+      return false;
     }
     
-    // 4. Si pasa todas las validaciones
+    // 3. Si pasa todas las validaciones
     mostrarError(campo); // Limpiar errores
     campo.classList.add('is-valid');
     return true;
@@ -124,7 +117,7 @@
   function validarGrupo() {
     const campo = document.getElementById('grupo');
     if (!campo) return true;
-    const valor = campo.value.trim(); // Eliminar espacios en blanco
+    const valor = campo.value.trim();
     return validarCampoGenerico(
       campo,
       /^ID[A-Z]{2}\d{3}$/,
@@ -180,14 +173,13 @@
     );
   }
   
-  // Nuevas funciones para validación de horas (añadir estas)
   function validarHoraInicio() {
     const campo = document.getElementById('hora-inicio');
     const horaFin = document.getElementById('hora-fin');
     const fechaInicio = document.getElementById('fecha-inicio');
     const fechaFin = document.getElementById('fecha-fin');
     
-    // Validación básica de campo requerido
+    // Validación básica de campo vacío
     if (!campo.value) {
       mostrarError(campo, 'Este campo es obligatorio');
       return false;
@@ -211,7 +203,7 @@
     const fechaInicio = document.getElementById('fecha-inicio');
     const fechaFin = document.getElementById('fecha-fin');
     
-    // Validación básica de campo requerido
+    // Validación básica de campo vacío
     if (!campo.value) {
       mostrarError(campo, 'Este campo es obligatorio');
       return false;
@@ -347,17 +339,6 @@
   }
 
   // ------------------- Reporte de Cumplimiento -------------------
-  function validarGrupo() {
-    const campo = document.getElementById('grupo');
-    if (!campo) return true;
-    const valor = campo.value.trim(); // Eliminar espacios en blanco
-    return validarCampoGenerico(
-      campo,
-      /^ID[A-Z]{2}\d{3}$/,
-      'Debe comenzar con "ID" en mayúsculas, seguido de 2 letras y 3 números'
-    );
-  }
-
   function validarCodigo() {
     const campo = document.getElementById('codigo');
     if (!campo) return true;
@@ -381,7 +362,6 @@
   function validarFecha() {
     const campo = document.getElementById('fecha');
     if (!campo) return true;
-    // La validación de fecha es manejada por el input type="date"
     return validarCampoGenerico(campo);
   }
 
@@ -513,13 +493,6 @@
     );
   }
 
-  /**
-   * Valida que la contraseña cumpla con los requisitos de seguridad:
-   * - Mínimo 8 caracteres
-   * - Al menos una letra mayúscula
-   * - Al menos un número
-   * - Al menos un carácter especial
-   */
   function validarPassword() {
     const campo = document.getElementById('password');
     if (!campo) return true;
@@ -645,9 +618,6 @@
       'fecha-fin': () => validarFechasEvento(),
       'hora-inicio': validarHoraInicio,
       'hora-fin': validarHoraFin,
-      /**'tipo-evento': validarTipoEvento,
-      'descripcion-evento': validarDescripcionEvento,
-      'profesor-cargo': validarProfesorCargo,**/
       'telefono-contacto': validarTelefonoContacto
     });
 
@@ -701,8 +671,4 @@
 
   // Exponer funciones globalmente para otros scripts si es necesario
   window.configurarValidacionFormulario = configurarValidacionFormulario;
-  // Puedes exponer otras funciones si las necesitas fuera de este archivo
-  // window.validarCurso = validarCurso;
-  // window.validarAnoEscolar = validarAnoEscolar;
-  // etc.
 })();
