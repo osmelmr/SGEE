@@ -1,4 +1,4 @@
-let showStep; // Declaración global
+let showStep;
 
 document.addEventListener('DOMContentLoaded', function() {
   const steps = Array.from(document.querySelectorAll('.form-step'));
@@ -7,16 +7,14 @@ document.addEventListener('DOMContentLoaded', function() {
   const btnRegistrar = document.querySelector('.btn-registrar');
   let currentStep = 0;
 
-   showStep = function(index) {
+  showStep = function(index) {
     steps.forEach((step, i) => {
       step.style.display = i === index ? 'block' : 'none';
     });
-
-    // Mostrar/ocultar botones según el paso
     if (index === 0) {
       btnNext.style.display = 'inline-block';
       btnRegistrar.style.display = 'none';
-      btnPrev.style.visibility = 'hidden'; // Oculto pero mantiene el espacio
+      btnPrev.style.visibility = 'hidden';
     } else if (index === steps.length - 1) {
       btnNext.style.display = 'none';
       btnRegistrar.style.display = 'inline-block';
@@ -26,34 +24,32 @@ document.addEventListener('DOMContentLoaded', function() {
       btnRegistrar.style.display = 'none';
       btnPrev.style.visibility = 'visible';
     }
+    currentStep = index;
+  };
+
+  if (btnNext) {
+    btnNext.addEventListener('click', function() {
+      if (currentStep < steps.length - 1) {
+        showStep(currentStep + 1);
+      }
+    });
   }
 
-  btnNext.addEventListener('click', function() {
-    if (currentStep < steps.length - 1) {
-      currentStep++;
-      showStep(currentStep);
-    }
-  });
-
-  btnPrev.addEventListener('click', function() {
-    if (currentStep > 0) {
-      currentStep--;
-      showStep(currentStep);
-    }
-  });
+  if (btnPrev) {
+    btnPrev.addEventListener('click', function() {
+      if (currentStep > 0) {
+        showStep(currentStep - 1);
+      }
+    });
+  }
 
   showStep(currentStep);
 });
 
-// Puedes colocar esto en paginar.js o en un archivo global
-
 function getStepIndexOfElement(element) {
-  // Busca el form-step ancestro más cercano
   const step = element.closest('.form-step');
   if (!step) return;
-  // Obtiene todos los form-step en orden
   const steps = Array.from(document.querySelectorAll('.form-step'));
-  // Llama a showStep con el índice del form-step encontrado
   const index = steps.indexOf(step);
   if (typeof showStep === 'function' && index !== -1) {
     showStep(index);
