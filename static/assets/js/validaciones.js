@@ -698,6 +698,15 @@
       'descripcion-encuesta': validarDescripcionEncuesta
     });
   });
+  document.querySelectorAll('[required]').forEach(campo => {
+    campo.addEventListener('blur', () => {
+      if (!campo.value.trim()) {
+        mostrarError(campo, 'Este campo es obligatorio');
+      } else {
+        limpiarError(campo);
+      }
+    });
+  });
 
   // Exponer funciones globalmente para otros scripts si es necesario
   window.configurarValidacionFormulario = configurarValidacionFormulario;
