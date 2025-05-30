@@ -91,7 +91,11 @@ def crear_estrategia(request):
             messages.success(request, "Estrategia registrada correctamente.")
             return redirect("p_estrategias")
         except Exception as e:
-            messages.error(request, f"Error al registrar la estrategia: {str(e)}")
+            if "UNIQUE constraint failed: estrategias_estrategia.curso, estrategias_estrategia.grupo" in str(e):
+                messages.error(request, "Estrategia educativa existente.")
+            else:
+                messages.error(request, f"Error al registrar la estrategia: {str(e)}")
+            print(str(e))
             return render(request, "profesor_principal/formular_estrategia.html", {
                 "grupos": grupos,
                 "grupos_json": grupos_json
