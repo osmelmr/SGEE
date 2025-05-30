@@ -40,18 +40,17 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  // Prevención de doble submit en el formulario de estrategia
-  const form = document.getElementById('form-estrategia');
-  if (form && btnRegistrar) {
-    form.addEventListener('submit', function(e) {
-      // Si usas validación personalizada, asegúrate de que sea válida antes de deshabilitar
-      if (form.checkValidity()) {
-        btnRegistrar.disabled = true;
-        btnRegistrar.innerHTML = '<i class="bi bi-hourglass-split"></i> Enviando...';
-      }
-      // Si no es válido, el navegador muestra los errores y el botón sigue habilitado
-    });
-  }
-
   showStep(currentStep);
 });
+
+// Puedes colocar esto en paginar.js o en un archivo global
+
+function getStepIndexOfElement(element) {
+  // Busca el form-step ancestro más cercano
+  const step = element.closest('.form-step');
+  if (!step) return -1;
+  // Obtiene todos los form-step en orden
+  const steps = Array.from(document.querySelectorAll('.form-step'));
+  // Devuelve el índice del form-step encontrado
+  return steps.indexOf(step);
+}
