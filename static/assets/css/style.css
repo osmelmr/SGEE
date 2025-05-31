@@ -3623,3 +3623,183 @@ section {
 .form-control {
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
+/*--------------------------------------------------------------
+# Sección de Lista de Grupos
+--------------------------------------------------------------*/
+#grupos {
+  background-color: #ffffff;
+  padding: 60px 0;
+}
+
+#grupos .section-title h2 {
+  color: #100380;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+#grupos .section-title p {
+  color: #848484;
+  font-size: 16px;
+}
+
+/* Barra de búsqueda */
+#grupos .search-bar {
+  margin-bottom: 30px;
+}
+
+#grupos .search-bar .form-control {
+  border: 1px solid #d3d3d3;
+  border-radius: 4px;
+  padding: 10px 15px;
+  font-size: 14px;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s ease;
+}
+
+#grupos .search-bar .form-control:focus {
+  border-color: #100380;
+  outline: none;
+  box-shadow: none;
+}
+
+#grupos .search-bar .btn-primary {
+  background-color: #100380;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  transition: background-color 0.3s ease;
+}
+
+#grupos .search-bar .btn-primary:hover {
+  background-color: #08024e;
+}
+
+/* Tabla de grupos */
+#grupos .table-container {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+#grupos .custom-table {
+  margin-bottom: 0;
+}
+
+#grupos .custom-table thead {
+  background-color: #100380;
+  color: white;
+}
+
+#grupos .custom-table th {
+  font-weight: 500;
+  padding: 12px 15px;
+}
+
+#grupos .custom-table td {
+  padding: 12px 15px;
+  vertical-align: middle;
+}
+
+#grupos .custom-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+#grupos .custom-table tbody tr:hover {
+  background-color: #f0f0f0;
+}
+
+/* Botones de acción */
+#grupos .btn-action {
+  padding: 6px 12px;
+  margin: 0 3px;
+  font-size: 14px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+#grupos .btn-info {
+  background-color: #100380;
+  border-color: #100380;
+}
+
+#grupos .btn-info:hover {
+  background-color: #08024e;
+  border-color: #08024e;
+}
+
+/* Botones inferiores */
+#botones-accion-estrategia-educativa {
+  margin-top: 30px;
+}
+
+#btn-registrar-estrategia-educativa {
+  background-color: #100380;
+  border: none;
+  padding: 10px 24px;
+  color: #fff;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+#btn-registrar-estrategia-educativa:hover {
+  background-color: #08024e;
+}
+
+#btn-eliminar-grupo {
+  background-color: #dc3545;
+  border: none;
+  padding: 10px 24px;
+  color: #fff;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+#btn-eliminar-grupo:hover {
+  background-color: #bb2d3b;
+}
+
+/*--------------------------------------------------------------
+# Responsive Design
+--------------------------------------------------------------*/
+@media (max-width: 768px) {
+  #grupos {
+    padding: 30px 0;
+  }
+  
+  #grupos .section-title h2 {
+    font-size: 22px;
+  }
+  
+  #grupos .section-title p {
+    font-size: 14px;
+  }
+  
+  #grupos .table-responsive {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  #grupos .custom-table th,
+  #grupos .custom-table td {
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+  
+  #btn-registrar-estrategia-educativa,
+  #btn-eliminar-grupo {
+    padding: 8px 16px;
+    font-size: 14px;
+    width: 48%;
+  }
+  
+  #botones-accion-estrategia-educativa {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+}
