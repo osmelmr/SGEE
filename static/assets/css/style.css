@@ -3626,9 +3626,6 @@ section {
 /*--------------------------------------------------------------
 # Sección de Lista de Grupos
 --------------------------------------------------------------*/
-/*--------------------------------------------------------------
-# Sección de Lista de Grupos
---------------------------------------------------------------*/
 #grupos {
   background-color: #ffffff;
   padding: 60px 0;
@@ -3779,7 +3776,7 @@ section {
 }
 
 #btn-eliminar-grupo {
-  background-color: #dc3545;
+  background-color: #100380;
   border: none;
   padding: 10px 24px;
   color: #fff;
