@@ -3763,6 +3763,31 @@ section {
 #btn-eliminar-grupo:hover {
   background-color: #bb2d3b;
 }
+/* Ajustes específicos para tablas con pocas columnas */
+#grupos .table-container {
+  max-width: 700px; /* Ajusta este valor según necesites */
+  margin: 0 auto; /* Centra la tabla horizontalmente */
+}
+
+#grupos .custom-table {
+  width: 100%;
+}
+
+/* Opcional: Ajustar el ancho de columnas específicas */
+#grupos .custom-table th:nth-child(1), 
+#grupos .custom-table td:nth-child(1) {
+  width: 15%; /* Ancho para columna ID */
+}
+
+#grupos .custom-table th:nth-child(2), 
+#grupos .custom-table td:nth-child(2) {
+  width: 70%; /* Ancho para columna Nombre */
+}
+
+#grupos .custom-table th:nth-child(3), 
+#grupos .custom-table td:nth-child(3) {
+  width: 15%; /* Ancho para columna Acciones */
+}
 
 /*--------------------------------------------------------------
 # Responsive Design
