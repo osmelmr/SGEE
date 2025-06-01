@@ -23,19 +23,19 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="titulo-estrategia">Nombre de Estrategia </label>
-                <input type="text" id="titulo-estrategia" name="nombre" class="form-control" required>
+                <input type="text" id="titulo-estrategia" name="nombre" class="form-control" >
               </div>
             </div>
             <div class="col-md-2">
               <div class="form-group">
                 <label for="curso">Curso</label>
-                <input type="text" id="curso" name="curso" class="form-control" required>
+                <input type="text" id="curso" name="curso" class="form-control" >
               </div>
             </div>
             <div class="col-md-2">
               <div class="form-group">
                 <label for="ano-escolar">Año escolar</label>
-                <select id="ano-escolar" name="anio_escolar" class="form-control" required>
+                <select id="ano-escolar" name="anio_escolar" class="form-control" >
                   <option value="" disabled selected>Seleccione un año escolar</option>
                   <option value="primero">Primero</option>
                   <option value="segundo">Segundo</option>
@@ -47,7 +47,7 @@
             <div class="col-md-2">
               <div class="form-group">
                 <label for="grupo">Grupo</label>
-                <select id="grupo" name="grupo" class="form-control" required>
+                <select id="grupo" name="grupo" class="form-control" >
                     <option value="" disabled selected>Seleccione una grupo</option>
                     {% for grupo in grupos %}
                         <option value="{{ grupo.nombre }}">{{ grupo.nombre }}</option>
@@ -210,7 +210,8 @@
 {% block scripts %}
   <!-- Script para autocompletar campos según el grupo seleccionado -->
   <script src="{% static 'estrategias/js/paginar.js' %}"></script>
-  <script src="{% static 'estrategias/js/validar.js' %}"></script>
+  <script src="{% static 'estrategias/js/validar_submit.js' %}"></script>
+  <script src="{% static 'estrategias/js/validar_cambio.js' %}"></script>
 
   <script>
     // Inserta el JSON serializado desde la vista aquí

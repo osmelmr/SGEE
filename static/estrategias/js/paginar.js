@@ -1,3 +1,5 @@
+let showStep;
+
 document.addEventListener('DOMContentLoaded', function() {
   const steps = Array.from(document.querySelectorAll('.form-step'));
   const btnNext = document.querySelector('.btn-next');
@@ -5,16 +7,14 @@ document.addEventListener('DOMContentLoaded', function() {
   const btnRegistrar = document.querySelector('.btn-registrar');
   let currentStep = 0;
 
-  function showStep(index) {
+  showStep = function(index) {
     steps.forEach((step, i) => {
       step.style.display = i === index ? 'block' : 'none';
     });
-
-    // Mostrar/ocultar botones según el paso
     if (index === 0) {
       btnNext.style.display = 'inline-block';
       btnRegistrar.style.display = 'none';
-      btnPrev.style.visibility = 'hidden'; // Oculto pero mantiene el espacio
+      btnPrev.style.visibility = 'hidden';
     } else if (index === steps.length - 1) {
       btnNext.style.display = 'none';
       btnRegistrar.style.display = 'inline-block';
@@ -24,34 +24,34 @@ document.addEventListener('DOMContentLoaded', function() {
       btnRegistrar.style.display = 'none';
       btnPrev.style.visibility = 'visible';
     }
+    currentStep = index;
+  };
+
+  if (btnNext) {
+    btnNext.addEventListener('click', function() {
+      if (currentStep < steps.length - 1) {
+        showStep(currentStep + 1);
+      }
+    });
   }
 
-  btnNext.addEventListener('click', function() {
-    if (currentStep < steps.length - 1) {
-      currentStep++;
-      showStep(currentStep);
-    }
-  });
-
-  btnPrev.addEventListener('click', function() {
-    if (currentStep > 0) {
-      currentStep--;
-      showStep(currentStep);
-    }
-  });
-
-  // Prevención de doble submit en el formulario de estrategia
-  const form = document.getElementById('form-estrategia');
-  if (form && btnRegistrar) {
-    form.addEventListener('submit', function(e) {
-      // Si usas validación personalizada, asegúrate de que sea válida antes de deshabilitar
-      if (form.checkValidity()) {
-        btnRegistrar.disabled = true;
-        btnRegistrar.innerHTML = '<i class="bi bi-hourglass-split"></i> Enviando...';
+  if (btnPrev) {
+    btnPrev.addEventListener('click', function() {
+      if (currentStep > 0) {
+        showStep(currentStep - 1);
       }
-      // Si no es válido, el navegador muestra los errores y el botón sigue habilitado
     });
   }
 
   showStep(currentStep);
 });
+
+function getStepIndexOfElement(element) {
+  const step = element.closest('.form-step');
+  if (!step) return;
+  const steps = Array.from(document.querySelectorAll('.form-step'));
+  const index = steps.indexOf(step);
+  if (typeof showStep === 'function' && index !== -1) {
+    showStep(index);
+  }
+}
