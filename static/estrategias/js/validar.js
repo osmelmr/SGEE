@@ -49,7 +49,37 @@ document.addEventListener('DOMContentLoaded', function() {
 
     form.addEventListener('submit', function(e) {
         let errorMostrado = false;
-
+        // Validación de campos vacíos (excepto curso y titulo-estrategia)
+        const campos = form.querySelectorAll('input, select, textarea');
+        for (const campo of campos) {
+            if (
+                campo.type === 'button' ||
+                campo.type === 'submit' ||
+                campo.disabled ||
+                campo.id === 'curso' ||
+                campo.id === 'titulo-estrategia'
+            ) continue;
+            if (!campo.value.trim()) {
+                e.preventDefault();
+                campo.classList.add('is-invalid');
+                if (!document.getElementById(campo.id + '-error')) {
+                    const error = document.createElement('div');
+                    error.id = campo.id + '-error';
+                    error.className = 'invalid-feedback';
+                    error.innerText = 'Este campo es obligatorio.';
+                    campo.parentNode.appendChild(error);
+                }
+                if (!errorMostrado) {
+                    getStepIndexOfElement(campo);
+                    campo.focus();
+                    errorMostrado = true;
+                }
+            } else {
+                campo.classList.remove('is-invalid');
+                const err = document.getElementById(campo.id + '-error');
+                if (err) err.remove();
+            }
+        }
         // Validación campo curso
         if (!validarCurso(cursoInput.value.trim())) {
             e.preventDefault();
