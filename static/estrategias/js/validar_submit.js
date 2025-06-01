@@ -49,39 +49,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     form.addEventListener('submit', function(e) {
         let errorMostrado = false;
-        // Validación de campos vacíos (excepto curso y titulo-estrategia)
-        const campos = form.querySelectorAll('input, select, textarea');
-        for (const campo of campos) {
-            if (
-                campo.type === 'button' ||
-                campo.type === 'submit' ||
-                campo.disabled ||
-                campo.id === 'curso' ||
-                campo.id === 'titulo-estrategia'
-            ) continue;
-            if (!campo.value.trim()) {
-                e.preventDefault();
-                campo.classList.add('is-invalid');
-                if (!document.getElementById(campo.id + '-error')) {
-                    const error = document.createElement('div');
-                    error.id = campo.id + '-error';
-                    error.className = 'invalid-feedback';
-                    error.innerText = 'Este campo es obligatorio.';
-                    campo.parentNode.appendChild(error);
-                }
-                if (!errorMostrado) {
-                    getStepIndexOfElement(campo);
-                    campo.focus();
-                    errorMostrado = true;
-                }
-            } else {
-                campo.classList.remove('is-invalid');
-                const err = document.getElementById(campo.id + '-error');
-                if (err) err.remove();
-            }
-        }
+
         // Validación campo curso
-        if (!validarCurso(cursoInput.value.trim())) {
+        if (!cursoInput.value.trim() || !validarCurso(cursoInput.value.trim())) {
             e.preventDefault();
             cursoInput.classList.add('is-invalid');
             if (!document.getElementById('curso-error')) {
@@ -103,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Validación campo nombre
-        if (!validarNombre(nombreInput.value.trim())) {
+        if (!nombreInput.value.trim() || !validarNombre(nombreInput.value.trim())) {
             e.preventDefault();
             nombreInput.classList.add('is-invalid');
             if (!document.getElementById('nombre-error')) {
@@ -122,6 +92,40 @@ document.addEventListener('DOMContentLoaded', function() {
             nombreInput.classList.remove('is-invalid');
             const err = document.getElementById('nombre-error');
             if (err) err.remove();
+        }
+
+        // Solo si curso y nombre son válidos, validar el resto de los campos vacíos
+        if (!errorMostrado) {
+            const campos = form.querySelectorAll('input, select, textarea');
+            for (const campo of campos) {
+                if (
+                    campo.type === 'button' ||
+                    campo.type === 'submit' ||
+                    campo.disabled ||
+                    campo.id === 'curso' ||
+                    campo.id === 'titulo-estrategia'
+                ) continue;
+                if (!campo.value.trim()) {
+                    e.preventDefault();
+                    campo.classList.add('is-invalid');
+                    if (!document.getElementById(campo.id + '-error')) {
+                        const error = document.createElement('div');
+                        error.id = campo.id + '-error';
+                        error.className = 'invalid-feedback';
+                        error.innerText = 'Este campo es obligatorio.';
+                        campo.parentNode.appendChild(error);
+                    }
+                    if (!errorMostrado) {
+                        getStepIndexOfElement(campo);
+                        campo.focus();
+                        errorMostrado = true;
+                    }
+                } else {
+                    campo.classList.remove('is-invalid');
+                    const err = document.getElementById(campo.id + '-error');
+                    if (err) err.remove();
+                }
+            }
         }
 
         // Prevención de doble submit solo si es válido
