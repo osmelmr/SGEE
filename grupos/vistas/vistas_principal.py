@@ -92,7 +92,7 @@ def modificar_grupo(request, grupo_id):
             return redirect('p_grupos')
     return render(
         request,
-        'profesor_principal/formular_grupo.html',
+        'profesor_principal/modificar_grupo.html',
         {
             'grupo': grupo,
             'profesores': profesores,

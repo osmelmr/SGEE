@@ -1,23 +1,23 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %}Crear Grupo{% endblock %}
+{% block title %}Modificar Grupo{% endblock %}
 {% block content %}
-<!-- Sección del Formulario de Crear Grupo -->
+<!-- Sección del Formulario de Modificar Grupo -->
 <div class="container" style=" margin-top: 130px;">
-    <h1>Crear Grupo</h1>
-    <!-- Formulario de creación de grupo -->
-    <form method="post" action="{% url 'p_formular_grupo' %}">
+    <h1>Modificar Grupo</h1>
+    <!-- Formulario de modificación de grupo -->
+    <form method="post" action="">
         {% csrf_token %}
 
         <!-- Fila: Nombre y Dirección -->
         <div class="row">
             <div class="mb-3 col-md-6">
                 <label for="nombre" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre del grupo" required>
+                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre del grupo" required value="{{ grupo.nombre }}">
             </div>
             <div class="mb-3 col-md-6">
                 <label for="direccion" class="form-label">Dirección</label>
-                <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Dirección" required>
+                <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Dirección" required value="{{ grupo.direccion }}">
             </div>
         </div>
 
@@ -25,18 +25,18 @@
         <div class="row">
             <div class="mb-3 col-md-6">
                 <label for="curso" class="form-label">Curso</label>
-                <input type="text" class="form-control" id="curso" name="curso" placeholder="Curso" required>
+                <input type="text" class="form-control" id="curso" name="curso" placeholder="Curso" required value="{{ grupo.curso }}">
             </div>
             <div class="mb-3 col-md-6">
                 <label for="anio_escolar" class="form-label">Año Escolar (Periodo)</label>
-                <input type="text" class="form-control" id="anio_escolar" name="anio_escolar" placeholder="Año escolar" required>
+                <input type="text" class="form-control" id="anio_escolar" name="anio_escolar" placeholder="Año escolar" required value="{{ grupo.anio_escolar }}">
             </div>
         </div>
 
         <!-- Campo: Caracterización (ocupa todo el ancho) -->
         <div class="mb-3">
             <label for="caracterizacion" class="form-label">Caracterización</label>
-            <textarea class="form-control" id="caracterizacion" name="caracterizacion" placeholder="Caracterización" rows="3" required></textarea>
+            <textarea class="form-control" id="caracterizacion" name="caracterizacion" placeholder="Caracterización" rows="3" required>{{ grupo.caracterizacion }}</textarea>
         </div>
 
         <!-- Fila: Guía del Grupo y Profesores -->
@@ -46,7 +46,7 @@
                 <select class="form-control" id="guia" name="guia" required>
                     <option value="">Seleccione un guía</option>
                     {% for profesor in profesores_guia %}
-                        <option value="{{ profesor.id }}">{{ profesor }}</option>
+                        <option value="{{ profesor.id }}" {% if grupo.guia.id == profesor.id %}selected{% endif %}>{{ profesor }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -55,7 +55,8 @@
                 <div class="border rounded p-2" style="max-height: 180px; overflow-y: auto;">
                     {% for profesor in profesores %}
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="profesores" id="profesor_{{ profesor.id }}" value="{{ profesor.id }}">
+                            <input class="form-check-input" type="checkbox" name="profesores" id="profesor_{{ profesor.id }}" value="{{ profesor.id }}"
+                                {% if profesor in grupo.profesores.all %}checked{% endif %}>
                             <label class="form-check-label" for="profesor_{{ profesor.id }}">{{ profesor }}</label>
                         </div>
                     {% endfor %}
