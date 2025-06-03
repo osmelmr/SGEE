@@ -1,6 +1,6 @@
-from grupos.forms import GrupoForm
-from django.shortcuts import render, redirect
 from grupos.models import Grupo
+from profesores.models import Profesor  # Ajusta el import según tu proyecto
+from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.db.models import Q
 from django.http import JsonResponse
@@ -12,16 +12,41 @@ def crear_grupo(request):
     if not request.user.es_profesor():
         messages.error(request, "No tienes permiso para crear grupos.")
         return redirect("pagina_principal")
+    profesores = Profesor.objects.all()
+    profesores_guia = Profesor.objects.all()
     if request.method == 'POST':
-        form = GrupoForm(request.POST)
-        if form.is_valid():
-            grupo = form.save(commit=False)
+        nombre = request.POST.get('nombre', '').strip()
+        direccion = request.POST.get('direccion', '').strip()
+        curso = request.POST.get('curso', '').strip()
+        anio_escolar = request.POST.get('anio_escolar', '').strip()
+        caracterizacion = request.POST.get('caracterizacion', '').strip()
+        guia_id = request.POST.get('guia')
+        profesores_ids = request.POST.getlist('profesores')
+
+        # Validación básica
+        if not (nombre and direccion and curso and anio_escolar and caracterizacion and guia_id and profesores_ids):
+            messages.error(request, "Todos los campos son obligatorios.")
+        else:
+            grupo = Grupo(
+                nombre=nombre,
+                direccion=direccion,
+                curso=curso,
+                anio_escolar=anio_escolar,
+                caracterizacion=caracterizacion,
+                guia_id=guia_id
+            )
             grupo.save()
-            form.save_m2m()
+            grupo.profesores.set(profesores_ids)
+            messages.success(request, "Grupo creado correctamente.")
             return redirect('p_grupos')
-    else:
-        form = GrupoForm()
-    return render(request, 'profesor_principal/formular_grupo.html', {'form': form})
+    return render(
+        request,
+        'profesor_principal/formular_grupo.html',
+        {
+            'profesores': profesores,
+            'profesores_guia': profesores_guia
+        }
+    )
 
 def visualizar_grupo(request, grupo_id):
     if not request.user.is_authenticated:
@@ -41,7 +66,39 @@ def modificar_grupo(request, grupo_id):
         messages.error(request, "No tienes permiso para modificar grupos.")
         return redirect("pagina_principal")
     grupo = Grupo.objects.get(id=grupo_id)
-    return render(request, 'profesor_principal/modificar_grupo.html', {'grupo': grupo})
+    profesores = Profesor.objects.all()
+    profesores_guia = Profesor.objects.all()
+    if request.method == 'POST':
+        nombre = request.POST.get('nombre', '').strip()
+        direccion = request.POST.get('direccion', '').strip()
+        curso = request.POST.get('curso', '').strip()
+        anio_escolar = request.POST.get('anio_escolar', '').strip()
+        caracterizacion = request.POST.get('caracterizacion', '').strip()
+        guia_id = request.POST.get('guia')
+        profesores_ids = request.POST.getlist('profesores')
+
+        if not (nombre and direccion and curso and anio_escolar and caracterizacion and guia_id and profesores_ids):
+            messages.error(request, "Todos los campos son obligatorios.")
+        else:
+            grupo.nombre = nombre
+            grupo.direccion = direccion
+            grupo.curso = curso
+            grupo.anio_escolar = anio_escolar
+            grupo.caracterizacion = caracterizacion
+            grupo.guia_id = guia_id
+            grupo.save()
+            grupo.profesores.set(profesores_ids)
+            messages.success(request, "Grupo modificado correctamente.")
+            return redirect('p_grupos')
+    return render(
+        request,
+        'profesor_principal/formular_grupo.html',
+        {
+            'grupo': grupo,
+            'profesores': profesores,
+            'profesores_guia': profesores_guia
+        }
+    )
 
 def listar_grupos(request):
     if not request.user.is_authenticated:
