@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
-{% block title %}Lista de Grupos{% endblock %}
+{% load static %}
+
+{% block title %}Grupos Educativas{% endblock %}
+
 {% block content %}
-<!-- Sección de Grupos -->
-<section id="grupos" class="estrategia-educativa section-bg">
+<!-- Sección de Grupo Educativa -->
+<section id="grupo" class="grupo section-bg">
   <div class="container-fluid">
     <div class="section-title">
-      <h2>Repositorio de Grupos</h2>
-      <br>
+      <h2>Repositorio de Grupos Educativas</h2>
       <p>Gestión de grupos.</p>
-      <br>
     </div>
 
     <!-- Barra de búsqueda -->
@@ -22,56 +23,69 @@
     </form>
 
     <!-- Contenedor de la tabla con scroll -->
-    <div class="table-container">
-      <div class="table-responsive">
-        <table class="table table-bordered table-hover custom-table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Nombre</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for grupo in grupos %}
-            <tr>
-              <td>{{ grupo.id }}</td>
-              <td>
-                <i class="bi bi-people"></i> {{ grupo.nombre }}
-              </td>
-              <td>
-                <a href="{% url 'p_visualizar_grupo' grupo.id %}" class="btn btn-action btn-info btn-sm" title="Ver">
-                  <i class="bi bi-eye"></i>
-                </a>
-              </td>
-            </tr>
-            {% empty %}
-            <tr>
-              <td colspan="3" class="text-center">No hay grupos registrados.</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- Botones independientes debajo de la tabla -->
-    <div id="botones-accion-estrategia-educativa" class="d-flex justify-content-between mt-4">
-      <a href="{% url 'p_formular_grupo' %}">
-        <div id="btn-registrar-estrategia-educativa" class="btn btn-success">
-          <i class="bi bi-plus-circle"></i> Registrar
+    <form id="form-eliminar-grupos" method="POST" action="{% url 'p_eliminar_grupos' %}">
+      {% csrf_token %}
+      <div class="table-container">
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover custom-table">
+            <thead>
+              <tr>
+                <th>Grupo</th>
+                <th>Direccion</th>
+                <th>Curso</th>
+                <th>Año Escolar</th>
+                <th>
+                  Acciones
+                  <button type="button" id="btn-seleccionar-todo" class="btn btn-link p-0 ms-2" title="Seleccionar Todo Para Eliminar">
+                    <i class="bi bi-check-all"></i>
+                  </button>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for grupo in grupos %}
+              <tr data-id="{{ grupo.id }}">
+                <td>
+                  <i class="bi bi-file-earmark"></i>{{ grupo.nombre }}
+                </td>
+                <td>{{ grupo.direccion }}</td>
+                <td>{{ grupo.curso }}</td>
+                <td>{{ grupo.anio_escolar }}</td>
+                <td>
+                  <button type="button" class="btn btn-action btn-ver-detalles" data-id="{{ grupo.id }}" title="Ver Detalles">
+                    <i class="bi bi-eye"></i>
+                  </button>
+                  <button type="button" class="btn btn-action btn-modificar" data-id="{{ grupo.id }}" title="Modificar">
+                    <i class="bi bi-pencil"></i>
+                  </button>
+                  <button type="button" class="btn btn-action btn-eliminar" data-id="{{ grupo.id }}" title="Eliminar">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                  <input type="checkbox" class="form-check-input seleccionar-fila" name="grupos[]" value="{{ grupo.id }}">
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
         </div>
-      </a>
-      <button type="submit" id="btn-eliminar-evento" class="btn btn-danger"> 
-        <i class="bi bi-trash"></i> Aceptar 
-      </button>
-    </div>
+      </div>
+
+      <!-- Botones independientes debajo de la tabla -->
+      <div id="botones-accion-grupo" class="d-flex justify-content-between mt-4">
+        <a href="{% url 'p_formular_grupo' %}">
+          <div id="btn-registrar-grupo" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Registrar
+          </div>
+        </a>
+        <button type="submit" id="btn-eliminar-grupo" class="btn btn-danger">
+          <i class="bi bi-trash"></i> Aceptar
+        </button>
+      </div>
+    </form>
   </div>
 </section>
 {% endblock %}
 {% block scripts %}
-<script>
-  // Ejemplo: puedes agregar aquí lógica para eliminar grupos seleccionados si agregas checkboxes en la tabla
-  // document.getElementById('btn-eliminar-grupo').addEventListener('click', function() { ... });
-</script>
+<link rel="stylesheet" href="{% static 'grupos/css/listar.css' %}">
+<script src="{% static 'grupos/js/crud.js' %}"></script>
 {% endblock %}

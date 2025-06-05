@@ -23,7 +23,7 @@ def login_view(request):
                 return redirect('p_pagina_principal')
             return redirect('pagina_principal')
         else:
-            messages.error(request, 'Usuario o contraseña incorrectos.')
+            messages.error(request, 'Usuario incorrecto/Clave no valida.')
     return render(request, 'login.html')
 
 

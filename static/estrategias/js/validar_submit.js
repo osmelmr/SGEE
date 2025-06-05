@@ -95,15 +95,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Solo si curso y nombre son válidos, validar el resto de los campos vacíos
-        if (!errorMostrado) {
+        if (errorMostrado) {
             const campos = form.querySelectorAll('input, select, textarea');
             for (const campo of campos) {
                 if (
                     campo.type === 'button' ||
                     campo.type === 'submit' ||
-                    campo.disabled ||
-                    campo.id === 'curso' ||
-                    campo.id === 'titulo-estrategia'
+                    campo.disabled 
                 ) continue;
                 if (!campo.value.trim()) {
                     e.preventDefault();
