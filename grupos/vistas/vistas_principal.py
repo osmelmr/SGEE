@@ -25,7 +25,7 @@ def crear_grupo(request):
 
         # Validación básica
         if not (nombre and direccion and curso and anio_escolar and caracterizacion and guia_id and profesores_ids):
-            messages.error(request, "Todos los campos son obligatorios.")
+            messages.error(request, ".")
         else:
             grupo = Grupo(
                 nombre=nombre,

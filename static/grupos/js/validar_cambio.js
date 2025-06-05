@@ -1,3 +1,4 @@
+let validarFormulario = null; // Declarar la función para que sea accesible globalmente
 document.addEventListener('DOMContentLoaded', function () {
     const nombreInput = document.getElementById('nombre');
     const anioEscolarSelect = document.getElementById('anio_escolar');
@@ -154,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    function validarFormulario() {
+    validarFormulario=()=> {
         let valido = true;
         if (!validarNombreYActualizarAnio()) valido = false;
         if (!validarDireccion()) valido = false;
@@ -196,7 +197,4 @@ document.addEventListener('DOMContentLoaded', function () {
     profesoresChecks.forEach(chk => {
         chk.addEventListener('change', validarProfesoresSeleccionados);
     });
-
-    // Validación inicial al cargar
-    validarFormulario();
 });
