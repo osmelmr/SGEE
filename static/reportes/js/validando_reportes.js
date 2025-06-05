@@ -37,6 +37,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Validaciones específicas para los campos del formulario de reporte
   manejarMensajeDeError(
+    document.getElementById("codigo"),
+    /^.+$/, // Acepta cualquier valor no vacío
+    "Este campo es obligatorio"
+  );
+
+  manejarMensajeDeError(
+    document.getElementById("fecha"),
+    /^\d{4}-\d{2}-\d{2}$/, // Formato de fecha YYYY-MM-DD
+    "Debe ingresar una fecha válida (YYYY-MM-DD)"
+  );
+
+  manejarMensajeDeError(
+    document.getElementById("periodo"),
+    /^.+$/, // Acepta cualquier valor no vacío
+    "Este campo es obligatorio"
+  );
+
+  manejarMensajeDeError(
+    document.getElementById("grupo"),
+    /^.+$/, // Acepta cualquier valor no vacío
+    "Este campo es obligatorio"
+  );
+
+  manejarMensajeDeError(
     document.getElementById("resumen"),
     /^.{10,1000}$/,
     "Debe tener entre 10 y 1000 caracteres"
@@ -91,6 +115,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Validar todos los campos
     const campos = [
+      { id: "codigo", regex: /^.+$/ },
+      { id: "fecha", regex: /^\d{4}-\d{2}-\d{2}$/ },
+      { id: "periodo", regex: /^.+$/ },
+      { id: "grupo", regex: /^.+$/ },
       { id: "resumen", regex: /^.{10,1000}$/ },
       { id: "objetivos", regex: /^.{10,1000}$/ },
       { id: "actividades", regex: /^.{10,1000}$/ },
@@ -103,9 +131,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
     campos.forEach(({ id, regex }) => {
       const campo = document.getElementById(id);
-      if (campo.value.trim() === "" || !regex.test(campo.value)) {
+      const errorMessage = campo.nextElementSibling;
+
+      if (campo.value.trim() === "") {
         isValid = false;
         campo.focus(); // Enfocar el primer campo inválido
+        errorMessage.textContent = "Este campo es obligatorio";
+        errorMessage.style.display = "block";
+      } else if (!regex.test(campo.value)) {
+        isValid = false;
+        campo.focus(); // Enfocar el primer campo inválido
+        errorMessage.textContent = "Debe cumplir con el formato especificado";
+        errorMessage.style.display = "block";
       }
     });
 
