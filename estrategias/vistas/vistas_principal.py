@@ -88,7 +88,7 @@ def crear_estrategia(request):
         }
         try:
             Estrategia.objects.create(**form_data)
-            messages.success(request, "Estrategia registrada correctamente.")
+            messages.success(request, "Registro satisfactorio.")
             return redirect("p_estrategias")
         except Exception as e:
             if "UNIQUE constraint failed: estrategias_estrategia.curso, estrategias_estrategia.grupo" in str(e):

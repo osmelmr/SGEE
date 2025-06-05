@@ -60,6 +60,16 @@
         <button type="submit" class="btn btn-primary w-100">Ingresar</button>
       </form>
     </div>
+    {% if messages %}
+  <div id="alert-container">
+    {% for message in messages %}
+      <div class="alert {{ message.tags }}">
+        {{ message }}
+      </div>
+    {% endfor %}
   </div>
+  {% endif %}
+  </div>
+  
   </body>
 </html>

@@ -11,7 +11,7 @@ def visualizar_encuestas(request):
         messages.error(request, "No estas autenticado.")
         return redirect("login")
     if not request.user.es_profesor():
-        messages.error(request, "No tienes permiso para visualizar encuestas.")
+        messages.error(request, "Usuario no autorizado.")
         return redirect("pagina_principal")
     query = request.GET.get('q', '')
     if query:
@@ -49,7 +49,7 @@ def crear_encuesta(request):
             for texto in preguntas:
                 if texto.strip():
                     encuesta.preguntas.create(texto=texto)
-            messages.success(request, "Encuesta registrada correctamente.")
+            messages.success(request, "Registro satisfactorio.")
             return redirect('p_encuestas')
         except Exception as e:
             messages.error(request, f"Error al registrar la encuesta: {str(e)}")
