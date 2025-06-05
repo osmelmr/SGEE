@@ -8,8 +8,6 @@ document.addEventListener("DOMContentLoaded", function () {
     campo.parentNode.appendChild(errorMessage);
 
     campo.addEventListener("input", function () {
-      console.log(`Validando ${campo.id}:`, this.value);
-
       if (this.value.trim() === "") {
         // Si el campo está vacío, oculta el mensaje de error
         errorMessage.style.display = "none";
@@ -21,6 +19,19 @@ document.addEventListener("DOMContentLoaded", function () {
         // Si el valor es válido, oculta el mensaje de error
         errorMessage.style.display = "none";
       }
+    });
+
+    campo.addEventListener("blur", function () {
+      if (this.value.trim() === "" && !permitirVacio) {
+        // Si el campo está vacío al salir y no se permite vacío, muestra el mensaje obligatorio
+        errorMessage.textContent = "Este campo es obligatorio";
+        errorMessage.style.display = "block";
+      }
+    });
+
+    campo.addEventListener("focus", function () {
+      // Oculta el mensaje de error al volver a enfocar el campo
+      errorMessage.style.display = "none";
     });
   }
 
@@ -65,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("segundo-apellido"),
     /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{0,50}$/,
     "Solo letras y espacios (máx. 50 caracteres)",
-    true // Permitir vacío
+    false // Cambiar a false para que sea obligatorio
   );
 
   manejarMensajeDeError(
@@ -73,4 +84,36 @@ document.addEventListener("DOMContentLoaded", function () {
     /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s]{5,50}$/,
     "Solo letras, números y espacios (5-50 caracteres)"
   );
+
+  // Función para manejar el evento de submit
+  const form = document.getElementById("formulario-profesor");
+  form.addEventListener("submit", function (event) {
+    let isValid = true;
+
+    // Validar todos los campos
+    const campos = [
+      { id: "solapin", regex: /^[A-Z][0-9]{6}$/ },
+      { id: "telefono", regex: /^[0-9]{8,15}$/ },
+      { id: "correo", regex: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/ },
+      { id: "descripcion-profesor", regex: /^.{10,500}$/ },
+      { id: "nombre-profesor", regex: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{2,50}$/ },
+      { id: "primer-apellido", regex: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{2,50}$/ },
+      { id: "segundo-apellido", regex: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{0,50}$/ },
+      { id: "asignatura", regex: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s]{5,50}$/ }
+    ];
+
+    campos.forEach(({ id, regex }) => {
+      const campo = document.getElementById(id);
+      if (campo.value.trim() === "" || !regex.test(campo.value)) {
+        isValid = false;
+        campo.focus(); // Enfocar el primer campo inválido
+      }
+    });
+
+    // Si no es válido, prevenir el envío del formulario
+    if (!isValid) {
+      event.preventDefault();
+      alert("Por favor, complete todos los campos correctamente.");
+    }
+  });
 });
