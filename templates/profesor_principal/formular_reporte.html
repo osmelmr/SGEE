@@ -179,7 +179,7 @@
 </section>
 {% endblock%}
 {% block scripts %}
-  <!-- Aquí pueden agregarse scripts personalizados si es necesario -->
+  <script src="{% static 'reportes/js/validando_reportes.js' %}"></script>
   <script>
     // Sincroniza el valor del grupo seleccionado con un input oculto (si es necesario)
     window.addEventListener('DOMContentLoaded', function() {
