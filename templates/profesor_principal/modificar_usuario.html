@@ -99,3 +99,8 @@
     </div>
   </section>
 {% endblock %}
+{% block scripts %}
+  <!-- Aquí pueden agregarse scripts personalizados si es necesario -->
+   <script src="{% static 'usuarios/js/validar_cambios.js' %}"></script>
+  <script src="{% static 'usuarios/js/validar_submit.js' %}"></script>
+{% endblock %}
