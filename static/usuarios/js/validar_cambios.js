@@ -34,6 +34,37 @@ function validarUsuario(valor) {
     return /^[a-z0-9]+$/.test(valor);
 }
 
+// Función para aplicar o quitar blur
+function aplicarBlur(input, activar) {
+    if (activar) {
+        input.style.filter = 'blur(0.2px)';
+        input.style.opacity = '0.6';
+        input.style.pointerEvents = 'none';
+    } else {
+        input.style.filter = '';
+        input.style.opacity = '';
+        input.style.pointerEvents = '';
+    }
+}
+
+function mostrarMensajeGrupo(input, mensaje) {
+    let msg = input.parentNode.querySelector('.mensaje-activar');
+    if (!msg) {
+        msg = document.createElement('div');
+        msg.className = 'mensaje-activar';
+        msg.style.color = '#333';
+        msg.style.fontSize = '0.9em';
+        msg.style.marginTop = '2px';
+        input.parentNode.appendChild(msg);
+    }
+    msg.textContent = mensaje;
+}
+
+function ocultarMensajeGrupo(input) {
+    let msg = input.parentNode.querySelector('.mensaje-activar');
+    if (msg) msg.remove();
+}
+
 // Asignar eventos
 window.addEventListener('DOMContentLoaded', function() {
     // Nombre
@@ -95,5 +126,36 @@ window.addEventListener('DOMContentLoaded', function() {
             clearError(usuario);
         }
     });
+
+    const grupo = document.getElementById('grupo');
+    const rol = document.getElementById('rol');
+
+    function actualizarCampos() {
+        if (rol.value === 'profesor_principal') {
+            // Si el rol es profesor principal, desactivar grupo y limpiar selección
+            grupo.value = '';
+            grupo.disabled = true;
+            aplicarBlur(grupo, true);
+            mostrarMensajeGrupo(grupo, 'Para seleccionar un grupo, cambie el rol a "usuario".');
+        } else {
+            grupo.disabled = false;
+            aplicarBlur(grupo, false);
+            ocultarMensajeGrupo(grupo);
+        }
+
+        if (grupo.value) {
+            // Si hay grupo seleccionado, rol es usuario (pero no se desactiva ni se aplica blur)
+            rol.value = 'usuario';
+            aplicarBlur(rol, false);
+        } else {
+            aplicarBlur(rol, false);
+        }
+    }
+
+    grupo.addEventListener('change', actualizarCampos);
+    rol.addEventListener('change', actualizarCampos);
+
+    // Inicializar al cargar
+    actualizarCampos();
 });
 

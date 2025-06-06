@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% load static %}
 {% block title %} formulario de usuario {% endblock %}
+{% block extrahead %}
+  <!-- Aquí pueden agregarse estilos personalizados si es necesario -->
+  <link href="{% static 'usuarios/css/formulario.css' %}" rel="stylesheet">
+{% endblock %}
 {% block content %}
   <!-- Sección del Formulario de Registro -->
   <section id="formulario-registro" class="formulario-registro">
