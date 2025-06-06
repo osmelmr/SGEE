@@ -31,7 +31,7 @@
 <div class="container" style=" margin-top: 130px;">
     <h1>Crear Grupo</h1>
     <!-- Formulario de creación de grupo -->
-    <form method="post" action="{% url 'p_formular_grupo' %}">
+    <form method="post" action="{% url 'p_formular_grupo' %}" id="form-grupo">
         {% csrf_token %}
 
         <!-- Fila: Nombre y Dirección -->

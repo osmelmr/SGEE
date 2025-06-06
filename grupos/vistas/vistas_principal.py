@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.db.models import Q
 from django.http import JsonResponse
+from django.db import IntegrityError
 
 def crear_grupo(request):
     if not request.user.is_authenticated:
@@ -26,20 +27,27 @@ def crear_grupo(request):
         # Validación básica
         if not (nombre and direccion and curso and anio_escolar and caracterizacion and guia_id and profesores_ids):
             messages.error(request, ".")
-            return redirect('p_formular_grupo')  # 👍 Esto está bien
+            return redirect('p_formular_grupo')
         else:
-            grupo = Grupo(
-                nombre=nombre,
-                direccion=direccion,
-                curso=curso,
-                anio_escolar=anio_escolar,
-                caracterizacion=caracterizacion,
-                guia_id=guia_id
-            )
-            grupo.save()
-            grupo.profesores.set(profesores_ids)
-            messages.success(request, "Grupo creado correctamente.")
-            return redirect('p_grupos')
+            try:
+                grupo = Grupo(
+                    nombre=nombre,
+                    direccion=direccion,
+                    curso=curso,
+                    anio_escolar=anio_escolar,
+                    caracterizacion=caracterizacion,
+                    guia_id=guia_id
+                )
+                grupo.save()
+                grupo.profesores.set(profesores_ids)
+                messages.success(request, "Grupo creado correctamente.")
+                return redirect('p_grupos')
+            except IntegrityError as e:
+                if "UNIQUE constraint failed: grupos_grupo.guia_id" in str(e):
+                    messages.error(request, "El profesor guía seleccionado ya está asignado a otro grupo.")
+                else:
+                    messages.error(request, "Ocurrió un error al crear el grupo.")
+                return redirect('p_formular_grupo')
     return render(
         request,
         'profesor_principal/formular_grupo.html',
