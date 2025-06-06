@@ -34,6 +34,16 @@ function validarUsuario(valor) {
     return /^[a-z0-9]+$/.test(valor);
 }
 
+function validarContrasena(valor) {
+    // Mínimo 8 caracteres, al menos una mayúscula, una minúscula y un número
+    return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(valor);
+}
+
+// Validar correo UCI
+function validarCorreo(valor) {
+    return /^[a-zA-Z0-9._%+-]+@uci\.cu$/.test(valor);
+}
+
 // Función para aplicar o quitar blur
 function aplicarBlur(input, activar) {
     if (activar) {
@@ -124,6 +134,28 @@ window.addEventListener('DOMContentLoaded', function() {
             setError(usuario, 'Solo minúsculas y números, sin espacios.');
         } else {
             clearError(usuario);
+        }
+    });
+
+    // Contraseña
+    const password = document.getElementById('password');
+    if (password) {
+        password.addEventListener('input', function() {
+            if (!validarContrasena(password.value)) {
+                setError(password, 'Debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número.');
+            } else {
+                clearError(password);
+            }
+        });
+    }
+
+    // Correo
+    const correo = document.getElementById('correo');
+    correo.addEventListener('input', function() {
+        if (!validarCorreo(correo.value)) {
+            setError(correo, 'El correo debe terminar en @uci.cu');
+        } else {
+            clearError(correo);
         }
     });
 
