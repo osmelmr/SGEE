@@ -1,37 +1,47 @@
 document.addEventListener("DOMContentLoaded", function () {
   // Función genérica para manejar mensajes de error
   function manejarMensajeDeError(campo, regex, mensajeError, permitirVacio = false) {
-    const errorMessage = document.createElement("span");
-    errorMessage.style.color = "red";
-    errorMessage.style.fontSize = "0.9em";
-    errorMessage.style.display = "none"; // Oculto por defecto
-    campo.parentNode.appendChild(errorMessage);
+    let errorMessage = campo.parentNode.querySelector(".error-message");
+    if (!errorMessage) {
+      errorMessage = document.createElement("span");
+      errorMessage.className = "error-message";
+      errorMessage.style.color = "red";
+      errorMessage.style.fontSize = "0.9em";
+      errorMessage.style.display = "none"; // Oculto por defecto
+      campo.parentNode.appendChild(errorMessage);
+    }
 
     campo.addEventListener("input", function () {
       if (this.value.trim() === "") {
-        // Si el campo está vacío, oculta el mensaje de error
-        errorMessage.style.display = "none";
+        if (!permitirVacio) {
+          errorMessage.textContent = "Este campo es obligatorio";
+          errorMessage.style.display = "block";
+          campo.classList.add("is-invalid");
+        } else {
+          errorMessage.style.display = "none";
+          campo.classList.remove("is-invalid");
+        }
       } else if (!regex.test(this.value)) {
-        // Si el valor no cumple con la expresión regular, muestra el mensaje de error
         errorMessage.textContent = mensajeError;
         errorMessage.style.display = "block";
+        campo.classList.add("is-invalid");
       } else {
-        // Si el valor es válido, oculta el mensaje de error
         errorMessage.style.display = "none";
+        campo.classList.remove("is-invalid");
       }
     });
 
     campo.addEventListener("blur", function () {
       if (this.value.trim() === "" && !permitirVacio) {
-        // Si el campo está vacío al salir y no se permite vacío, muestra el mensaje obligatorio
         errorMessage.textContent = "Este campo es obligatorio";
         errorMessage.style.display = "block";
+        campo.classList.add("is-invalid");
       }
     });
 
     campo.addEventListener("focus", function () {
-      // Oculta el mensaje de error al volver a enfocar el campo
       errorMessage.style.display = "none";
+      campo.classList.remove("is-invalid");
     });
   }
 
@@ -55,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
   );
 
   manejarMensajeDeError(
-    document.getElementById("grupo"),
+    document.getElementById("select_grupo"),
     /^.+$/, // Acepta cualquier valor no vacío
     "Este campo es obligatorio"
   );
@@ -118,7 +128,7 @@ document.addEventListener("DOMContentLoaded", function () {
       { id: "codigo", regex: /^.+$/ },
       { id: "fecha", regex: /^\d{4}-\d{2}-\d{2}$/ },
       { id: "periodo", regex: /^.+$/ },
-      { id: "grupo", regex: /^.+$/ },
+      { id: "select_grupo", regex: /^.+$/ },
       { id: "resumen", regex: /^.{10,1000}$/ },
       { id: "objetivos", regex: /^.{10,1000}$/ },
       { id: "actividades", regex: /^.{10,1000}$/ },
@@ -131,18 +141,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
     campos.forEach(({ id, regex }) => {
       const campo = document.getElementById(id);
-      const errorMessage = campo.nextElementSibling;
+      const errorMessage = campo.parentNode.querySelector(".error-message");
 
       if (campo.value.trim() === "") {
         isValid = false;
-        campo.focus(); // Enfocar el primer campo inválido
         errorMessage.textContent = "Este campo es obligatorio";
         errorMessage.style.display = "block";
+        campo.classList.add("is-invalid");
       } else if (!regex.test(campo.value)) {
         isValid = false;
-        campo.focus(); // Enfocar el primer campo inválido
         errorMessage.textContent = "Debe cumplir con el formato especificado";
         errorMessage.style.display = "block";
+        campo.classList.add("is-invalid");
+      } else {
+        errorMessage.style.display = "none";
+        campo.classList.remove("is-invalid");
       }
     });
 
