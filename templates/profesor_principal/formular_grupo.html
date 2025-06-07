@@ -3,113 +3,103 @@
 {% block title %}Crear Grupo{% endblock %}
 {% block content %}
 <!-- Sección del Formulario de Crear Grupo -->
-<style>
-/* Mensajes de error debajo de los inputs */
-.error-validacion {
-  font-size: 0.85rem;
-  color: #dc3545;
-  margin-top: 0.25rem;
-  display: block;
-  animation: fadeIn 0.3s ease-in-out;
-}
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-5px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.form-control.is-invalid:focus {
-  box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
-  border-color: #dc3545;
-}
-.form-control.is-valid:focus {
-  box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.25);
-  border-color: #198754;
-}
-.form-control {
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
-</style>
-<div class="container" style=" margin-top: 130px;">
-    <h1>Crear Grupo</h1>
+<section id="formulario-grupo" class="formulario-grupo">
+  <div class="container">
+    <!-- Título y descripción -->
+    <div class="section-title">
+      <h2>Formulario de Crear Grupo</h2>
+      <p>Complete los siguientes campos para registrar un nuevo grupo.</p>
+    </div>
+
     <!-- Formulario de creación de grupo -->
     <form method="post" action="{% url 'p_formular_grupo' %}">
-        {% csrf_token %}
+      {% csrf_token %}
 
-        <!-- Fila: Nombre y Dirección -->
-        <div class="row">
-            <div class="mb-3 col-md-6">
-                <label for="nombre" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre del grupo" >
-            </div>
-            <div class="mb-3 col-md-6">
-                <label for="direccion" class="form-label">Dirección</label>
-                <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Dirección" >
-            </div>
+      <!-- Fila: Nombre y Dirección -->
+      <div class="row mb-4">
+        <div class="form-group col-md-6">
+          <label for="nombre" class="form-label">Nombre</label>
+          <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre del grupo" required>
         </div>
-
-        <!-- Fila: Curso y Año Escolar -->
-        <div class="row">
-            <div class="mb-3 col-md-6">
-                <label for="curso" class="form-label">Curso</label>
-                {% now "Y" as current_year %}
-                {% with prev_year=current_year|add:"-1" next_year=current_year|add:"1" %}
-                <select class="form-control" id="curso" name="curso">
-                    <option value="{{ prev_year }}-{{ current_year }}">{{ prev_year }}-{{ current_year }}</option>
-                    <option value="{{ current_year }}-{{ next_year }}">{{ current_year }}-{{ next_year }}</option>
-                </select>
-                {% endwith %}
-            </div>
-            <div class="mb-3 col-md-6">
-                <label for="anio_escolar" class="form-label">Año Escolar</label>
-                <select class="form-control" id="anio_escolar" name="anio_escolar">
-                    <option value="">Seleccione año escolar</option>
-                    <option value="primero">Primero</option>
-                    <option value="segundo">Segundo</option>
-                    <option value="tercero">Tercero</option>
-                    <option value="cuarto">Cuarto</option>
-                </select>
-            </div>
+        <div class="form-group col-md-6">
+          <label for="direccion" class="form-label">Dirección</label>
+          <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Dirección" required>
         </div>
+      </div>
 
-        <!-- Campo: Caracterización (ocupa todo el ancho) -->
-        <div class="mb-3">
-            <label for="caracterizacion" class="form-label">Caracterización</label>
-            <textarea class="form-control" id="caracterizacion" name="caracterizacion" placeholder="Caracterización" rows="3"></textarea>
+      <!-- Fila: Curso y Año Escolar -->
+      <div class="row mb-4">
+        <div class="form-group col-md-6">
+          <label for="curso" class="form-label">Curso</label>
+          {% now "Y" as current_year %}
+          {% with prev_year=current_year|add:"-1" next_year=current_year|add:"1" %}
+          <select class="form-control" id="curso" name="curso" required>
+            <option value="{{ prev_year }}-{{ current_year }}">{{ prev_year }}-{{ current_year }}</option>
+            <option value="{{ current_year }}-{{ next_year }}">{{ current_year }}-{{ next_year }}</option>
+          </select>
+          {% endwith %}
         </div>
-
-        <!-- Fila: Guía del Grupo y Profesores -->
-        <div class="row">
-            <div class="mb-3 col-md-6">
-                <label for="guia" class="form-label">Guía del Grupo</label>
-                <select class="form-control" id="guia" name="guia">
-                    <option value="">Seleccione un guía</option>
-                    {% for profesor in profesores_guia %}
-                        <option value="{{ profesor.id }}">{{ profesor }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="mb-3 col-md-6">
-                <label class="form-label">Profesores</label>
-                <div class="border rounded p-2" style="max-height: 180px; overflow-y: auto;">
-                    {% for profesor in profesores %}
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="profesores" id="profesor_{{ profesor.id }}" value="{{ profesor.id }}">
-                            <label class="form-check-label" for="profesor_{{ profesor.id }}">{{ profesor }}</label>
-                        </div>
-                    {% endfor %}
-                </div>
-                <small class="form-text text-muted">
-                    Marca o desmarca para agregar o quitar profesores del grupo.
-                </small>
-            </div>
+        <div class="form-group col-md-6">
+          <label for="anio_escolar" class="form-label">Año Escolar</label>
+          <select class="form-control" id="anio_escolar" name="anio_escolar" required>
+            <option value="">Seleccione año escolar</option>
+            <option value="primero">Primero</option>
+            <option value="segundo">Segundo</option>
+            <option value="tercero">Tercero</option>
+            <option value="cuarto">Cuarto</option>
+          </select>
         </div>
+      </div>
 
-        <!-- Botón para guardar el grupo -->
-        <button type="submit" id="btn-submit" disabled>Guardar</button>
+      <!-- Campo: Caracterización -->
+      <div class="form-group mb-4">
+        <label for="caracterizacion" class="form-label">Caracterización</label>
+        <textarea class="form-control" id="caracterizacion" name="caracterizacion" placeholder="Caracterización" rows="3" required></textarea>
+      </div>
+
+      <!-- Fila: Guía del Grupo y Profesores -->
+      <div class="row mb-4">
+        <div class="form-group col-md-6">
+          <label for="guia" class="form-label">Guía del Grupo</label>
+          <select class="form-control" id="guia" name="guia" required>
+            <option value="">Seleccione un guía</option>
+            {% for profesor in profesores_guia %}
+              <option value="{{ profesor.id }}">{{ profesor }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group col-md-6">
+          <label class="form-label">Profesores</label>
+          <div class="border rounded p-2" style="max-height: 180px; overflow-y: auto;">
+            {% for profesor in profesores %}
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="profesores" id="profesor_{{ profesor.id }}" value="{{ profesor.id }}">
+                <label class="form-check-label" for="profesor_{{ profesor.id }}">{{ profesor }}</label>
+              </div>
+            {% endfor %}
+          </div>
+          <small class="form-text text-muted">
+            Marca o desmarca para agregar o quitar profesores del grupo.
+          </small>
+        </div>
+      </div>
+
+      <!-- Botones -->
+      <div class="text-center mt-4 pt-4 border-top">
+        <div style="display: flex; justify-content: space-between;">
+          <button type="submit" id="boton-guardar-grupo" class="btn btn-primary">
+            <i class="bi bi-save"></i> Registrar Grupo
+          </button>
+          <button type="button" id="boton-cancelar-grupo" class="btn btn-cancelar" onclick="window.history.back()">
+            <i class="bi bi-x-circle"></i> Cancelar
+          </button>
+        </div>
+      </div>
     </form>
-</div>
+  </div>
+</section>
 {% endblock %}
 {% block scripts %}
-  <!-- Aquí pueden agregarse scripts personalizados si es necesario -->
   <script src="{% static 'grupos/js/validar_cambio.js' %}"></script>
   <script src="{% static 'grupos/js/validar_submit.js' %}"></script>
 {% endblock %}

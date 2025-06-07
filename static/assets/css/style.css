@@ -3392,7 +3392,6 @@ section {
 #formulario-crear-encuesta {
   background-color: #ffffff;
   padding: 60px 0;
-  margin-top: 60px;
 }
 
 #formulario-crear-encuesta .section-title h2 {
@@ -3833,4 +3832,82 @@ section {
     flex-wrap: wrap;
     gap: 10px;
   }
+}
+/* Estilos para el formulario de grupo */
+#formulario-grupo {
+  background-color: #ffffff;
+  padding: 60px 0;
+  margin-top: 60px;
+}
+
+#formulario-grupo .section-title h2 {
+  color: #100380;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+#formulario-grupo .section-title p {
+  color: #848484;
+  font-size: 16px;
+}
+
+#formulario-grupo .form-group {
+  margin-bottom: 20px;
+}
+
+#formulario-grupo .form-group label {
+  color: #000000;
+  font-weight: 500;
+  margin-bottom: 8px;
+  display: block;
+}
+
+#formulario-grupo .form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #d3d3d3;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s ease;
+}
+
+#formulario-grupo .form-control:focus {
+  border-color: #100380;
+  outline: none;
+}
+
+#formulario-grupo textarea.form-control {
+  resize: vertical;
+}
+
+#formulario-grupo .btn-primary {
+  background-color: #100380;
+  border: none;
+  padding: 10px 24px;
+  color: #fff;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+#formulario-grupo .btn-primary:hover {
+  background-color: #08024e;
+}
+
+#formulario-grupo .btn-cancelar {
+  background-color: #6c757d; /* Color gris */
+  border: none;
+  padding: 10px 24px;
+  color: #fff;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+#formulario-grupo .btn-cancelar:hover {
+  background-color: #5a6268; /* Color gris más oscuro al pasar el mouse */
 }
