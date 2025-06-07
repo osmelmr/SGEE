@@ -30,6 +30,7 @@
   <!-- Archivo CSS Principal -->
   <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
   <link href="{% static 'css/base.css' %}" rel="stylesheet">
+  {% block extrahead %}{% endblock %}
 </head>
 <body>
   <!-- ======= Header ======= -->
@@ -156,7 +157,7 @@
   <!-- Aquí puedes incluir scripts adicionales específicos de cada página -->
   {% endblock %}
   <script src="{% static 'assets/vendor/waypoints/noframework.waypoints.min.js' %}"></script>
-  <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'assets//min.js' %}"></script>
   <script src="{% static 'assets/js/main.js' %}"></script>
 </body>
 </html>

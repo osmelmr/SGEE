@@ -167,7 +167,8 @@
 
         <div class="form-group col-md-6">
           <label for="grupos">Grupos</label>
-          <select id="grupos" name="grupos" class="form-control" multiple maxlength="10" required>
+          <div id="grupos-checkboxes"></div>
+          <select id="grupos" name="grupos" class="form-control" multiple maxlength="10" style="display:none;">
             {% for grupo in grupos %}
             <option value="{{ grupo.id }}">{{ grupo.nombre }}</option>
             {% endfor %}
@@ -204,5 +205,6 @@
 </section>
 {% endblock%}
 {% block scripts %}
+<script src="{% static 'profesores/js/form.js' %}"></script>
   <script src="{% static 'profesores/js/validar_cambios.js' %}"></script>
 {% endblock %}

@@ -20,8 +20,12 @@ def login_view(request):
         if user is not None:
             login(request, user)
             if hasattr(request.user, 'es_profesor') and request.user.es_profesor():
+                
+                messages.success(request, f'Bienvenido, {user.get_username()}.')
                 return redirect('p_pagina_principal')
+            messages.success(request, f'Bienvenido, {user.get_username()}.')
             return redirect('pagina_principal')
+            
         else:
             messages.error(request, 'Usuario incorrecto/Clave no valida.')
     return render(request, 'login.html')

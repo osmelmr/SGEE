@@ -1,3 +1,4 @@
+// Declarar la función para que sea accesible globalmente
 document.addEventListener('DOMContentLoaded', function () {
     const nombreInput = document.getElementById('nombre');
     const anioEscolarSelect = document.getElementById('anio_escolar');
@@ -61,7 +62,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const valor = nombreInput.value.trim();
         if (!valor) {
             mostrarError(nombreInput, 'Este campo es obligatorio.');
-            nombreInput.setCustomValidity('Este campo es obligatorio.');
             nombreInput.reportValidity();
             return false;
         }
@@ -75,12 +75,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 anioEscolarSelect.value = prefijoToAnio[primerDigito];
             }
             mostrarError(nombreInput, '');
-            nombreInput.setCustomValidity('');
             return true;
         } else {
             const msg = 'El nombre debe tener al menos 3 letras mayúsculas seguidas de 3 números. El primer dígito indica el año escolar.';
             mostrarError(nombreInput, msg);
-            nombreInput.setCustomValidity(msg);
             nombreInput.reportValidity();
             return false;
         }
@@ -106,7 +104,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const valor = direccionInput.value.trim();
         if (!valor) {
             mostrarError(direccionInput, 'Este campo es obligatorio.');
-            direccionInput.setCustomValidity('Este campo es obligatorio.');
             direccionInput.reportValidity();
             return false;
         }
@@ -114,12 +111,10 @@ document.addEventListener('DOMContentLoaded', function () {
         const regex = /^([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)(\s+[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)+$/;
         if (regex.test(valor)) {
             mostrarError(direccionInput, '');
-            direccionInput.setCustomValidity('');
             return true;
         } else {
             const msg = 'Debe ingresar un nombre y apellidos válidos, cada uno iniciando con mayúscula.';
             mostrarError(direccionInput, msg);
-            direccionInput.setCustomValidity(msg);
             direccionInput.reportValidity();
             return false;
         }
@@ -130,12 +125,10 @@ document.addEventListener('DOMContentLoaded', function () {
         const valor = input.value.trim();
         if (!valor) {
             mostrarError(input, mensaje || 'Este campo es obligatorio.');
-            input.setCustomValidity(mensaje || 'Este campo es obligatorio.');
             input.reportValidity();
             return false;
         } else {
             mostrarError(input, '');
-            input.setCustomValidity('');
             return true;
         }
     }
@@ -154,7 +147,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    function validarFormulario() {
+    validarFormulario = () => {
         let valido = true;
         if (!validarNombreYActualizarAnio()) valido = false;
         if (!validarDireccion()) valido = false;
@@ -196,7 +189,4 @@ document.addEventListener('DOMContentLoaded', function () {
     profesoresChecks.forEach(chk => {
         chk.addEventListener('change', validarProfesoresSeleccionados);
     });
-
-    // Validación inicial al cargar
-    validarFormulario();
 });
