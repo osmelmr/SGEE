@@ -5,10 +5,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const cursoSelect = document.getElementById('curso');
     const caracterizacionInput = document.getElementById('caracterizacion');
     const guiaSelect = document.getElementById('guia');
-    // Profesores checkboxes
     const profesoresChecks = document.querySelectorAll('input[name="profesores"]');
+    const form = document.querySelector('form');
 
-    // Prefijos por año escolar (solo el primer dígito)
     const prefijos = {
         'primero': '1',
         'segundo': '2',
@@ -44,7 +43,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function mostrarErrorProfesores(mensaje) {
-        // Busca el contenedor de los checkboxes
         const profesoresContainer = profesoresChecks.length ? profesoresChecks[0].closest('.mb-3') || profesoresChecks[0].parentNode.parentNode : null;
         if (!profesoresContainer) return;
         let errorElem = profesoresContainer.querySelector('.error-validacion');
@@ -61,27 +59,18 @@ document.addEventListener('DOMContentLoaded', function () {
         const valor = nombreInput.value.trim();
         if (!valor) {
             mostrarError(nombreInput, 'Este campo es obligatorio.');
-            nombreInput.setCustomValidity('Este campo es obligatorio.');
-            nombreInput.reportValidity();
             return false;
         }
-        // Regex: 3+ mayúsculas seguidas de 3 dígitos
         const match = valor.match(/^([A-ZÁÉÍÓÚÑ]{3,})(\d{3})$/);
         if (match) {
-            const letras = match[1];
-            const numeros = match[2];
-            const primerDigito = numeros.charAt(0);
+            const primerDigito = match[2].charAt(0);
             if (prefijoToAnio[primerDigito]) {
                 anioEscolarSelect.value = prefijoToAnio[primerDigito];
             }
             mostrarError(nombreInput, '');
-            nombreInput.setCustomValidity('');
             return true;
         } else {
-            const msg = 'El nombre debe tener al menos 3 letras mayúsculas seguidas de 3 números. El primer dígito indica el año escolar.';
-            mostrarError(nombreInput, msg);
-            nombreInput.setCustomValidity(msg);
-            nombreInput.reportValidity();
+            mostrarError(nombreInput, 'El nombre debe tener al menos 3 letras mayúsculas seguidas de 3 números.');
             return false;
         }
     }
@@ -90,52 +79,38 @@ document.addEventListener('DOMContentLoaded', function () {
         const valor = nombreInput.value.trim();
         const anio = anioEscolarSelect.value;
         if (!anio || !prefijos[anio]) return;
-        // Si el nombre ya tiene letras y 3 números, reemplaza solo el primer dígito
         const match = valor.match(/^([A-ZÁÉÍÓÚÑ]{3,})(\d)(\d{2})$/);
         if (match) {
             nombreInput.value = match[1] + prefijos[anio] + match[3];
         } else if (valor.match(/^[A-ZÁÉÍÓÚÑ]{3,}$/)) {
-            // Si solo hay letras, añade el prefijo y dos ceros
             nombreInput.value = valor + prefijos[anio] + '00';
         }
         validarNombreYActualizarAnio();
     }
 
     function validarDireccion() {
-        if (!direccionInput) return false;
         const valor = direccionInput.value.trim();
         if (!valor) {
             mostrarError(direccionInput, 'Este campo es obligatorio.');
-            direccionInput.setCustomValidity('Este campo es obligatorio.');
-            direccionInput.reportValidity();
             return false;
         }
-        // Debe ser al menos dos palabras, cada una con mayúscula inicial y minúsculas después
         const regex = /^([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)(\s+[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)+$/;
         if (regex.test(valor)) {
             mostrarError(direccionInput, '');
-            direccionInput.setCustomValidity('');
             return true;
         } else {
-            const msg = 'Debe ingresar un nombre y apellidos válidos, cada uno iniciando con mayúscula.';
-            mostrarError(direccionInput, msg);
-            direccionInput.setCustomValidity(msg);
-            direccionInput.reportValidity();
+            mostrarError(direccionInput, 'Debe ingresar al menos dos palabras, cada una iniciando con mayúscula.');
             return false;
         }
     }
 
     function validarCampoVacio(input, mensaje) {
-        if (!input) return false;
         const valor = input.value.trim();
         if (!valor) {
             mostrarError(input, mensaje || 'Este campo es obligatorio.');
-            input.setCustomValidity(mensaje || 'Este campo es obligatorio.');
-            input.reportValidity();
             return false;
         } else {
             mostrarError(input, '');
-            input.setCustomValidity('');
             return true;
         }
     }
@@ -158,38 +133,36 @@ document.addEventListener('DOMContentLoaded', function () {
         let valido = true;
         if (!validarNombreYActualizarAnio()) valido = false;
         if (!validarDireccion()) valido = false;
-        if (!validarCampoVacio(cursoSelect)) valido = false;
-        if (!validarCampoVacio(anioEscolarSelect)) valido = false;
-        if (!validarCampoVacio(caracterizacionInput)) valido = false;
+        if (!validarCampoVacio(cursoSelect, 'Debe seleccionar un curso.')) valido = false;
+        if (!validarCampoVacio(anioEscolarSelect, 'Debe seleccionar un año escolar.')) valido = false;
+        if (!validarCampoVacio(caracterizacionInput, 'Debe completar la caracterización.')) valido = false;
         if (!validarCampoVacio(guiaSelect, 'Debe seleccionar un guía.')) valido = false;
         if (!validarProfesoresSeleccionados()) valido = false;
         return valido;
     }
 
     if (nombreInput && anioEscolarSelect) {
-        nombreInput.addEventListener('input', function() {
-            validarNombreYActualizarAnio();
-        });
-        anioEscolarSelect.addEventListener('change', function() {
+        nombreInput.addEventListener('blur', validarNombreYActualizarAnio);
+        anioEscolarSelect.addEventListener('change', function () {
             actualizarNombrePorAnio();
             validarCampoVacio(anioEscolarSelect);
         });
     }
     if (direccionInput) {
-        direccionInput.addEventListener('input', validarDireccion);
+        direccionInput.addEventListener('blur', validarDireccion);
     }
     if (cursoSelect) {
-        cursoSelect.addEventListener('change', function() {
-            validarCampoVacio(cursoSelect);
+        cursoSelect.addEventListener('change', function () {
+            validarCampoVacio(cursoSelect, 'Debe seleccionar un curso.');
         });
     }
     if (caracterizacionInput) {
-        caracterizacionInput.addEventListener('input', function() {
-            validarCampoVacio(caracterizacionInput);
+        caracterizacionInput.addEventListener('blur', function () {
+            validarCampoVacio(caracterizacionInput, 'Debe completar la caracterización.');
         });
     }
     if (guiaSelect) {
-        guiaSelect.addEventListener('change', function() {
+        guiaSelect.addEventListener('change', function () {
             validarCampoVacio(guiaSelect, 'Debe seleccionar un guía.');
         });
     }
@@ -197,6 +170,9 @@ document.addEventListener('DOMContentLoaded', function () {
         chk.addEventListener('change', validarProfesoresSeleccionados);
     });
 
-    // Validación inicial al cargar
-    validarFormulario();
+    form.addEventListener('submit', function (e) {
+        if (!validarFormulario()) {
+            e.preventDefault();
+        }
+    });
 });
