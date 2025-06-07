@@ -33,10 +33,10 @@
             <table id="tablita-reportes" class="table table-bordered table-hover custom-table">
               <thead>
                 <tr>
-                  <th>Código</th>
+                  <th>Institución</th>
                   <th>Grupo</th>
-                  <th>Curso</th>
-                  <th>Año Escolar</th>
+                  <th>Autor</th>
+                  <th>Periodo</th>
                   <th>
                     Acciones
                     <button id="btn-seleccionar-todo" class="btn btn-link p-0 ms-2" title="Seleccionar Todo">
@@ -48,10 +48,10 @@
               <tbody>
                 {% for reporte in reportes %}
                 <tr data-id="{{ reporte.id }}">
-                  <td>{{ reporte.codigo }}</td>
+                  <td>{{ reporte.institucion }}</td>
                   <td>{{ reporte.grupo }}</td>
-                  <td>{{ reporte.curso }}</td>
-                  <td>{{ reporte.anio_escolar }}</td>
+                  <td>{{ reporte.autor }}</td>
+                  <td>{{ reporte.periodo }}</td>
                   <td>
                     <button type="button" class="btn btn-action btn-ver-detalles" data-id="{{ reporte.id }}" title="Ver Detalles">
                       <i class="bi bi-eye"></i>
