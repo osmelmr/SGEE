@@ -80,7 +80,7 @@ def crear_reporte(request):
                 nuevo_nombre = f"reporte_{reporte.id}_anexo{ext}"
                 file_content = ContentFile(file.read())
                 reporte.anexos.save(nuevo_nombre, file_content, save=True)
-            messages.success(request, "Reporte registrado correctamente.")
+            messages.success(request, "Registro satisfactorio.")
             return redirect('p_reportes')
         except Exception as e:
             messages.error(request, f"Error al registrar el reporte: {str(e)}")
@@ -97,7 +97,7 @@ def eliminar_reporte(request, reporte_id):
         return redirect("pagina_principal")
     reporte = get_object_or_404(Reporte, id=reporte_id)
     reporte.delete()
-    messages.success(request, "Reporte eliminado correctamente.")
+    messages.success(request, "Eliminación satisfactoria.")
     return redirect('p_reportes')
 
 def eliminar_reportes(request):
@@ -112,7 +112,7 @@ def eliminar_reportes(request):
         reportes_ids = request.POST.getlist('reportes[]')
         if reportes_ids:
             Reporte.objects.filter(id__in=reportes_ids).delete()
-            messages.success(request, "Reportes eliminados correctamente.")
+            messages.success(request, "Eliminación satisfactoria.")
         else:
             messages.error(request, "No se seleccionaron reportes para eliminar.")
         return redirect('p_reportes')
@@ -154,7 +154,7 @@ def modificar_reporte(request, reporte_id):
             for key, value in form_data.items():
                 setattr(reporte, key, value)
             reporte.save()
-            messages.success(request, "Reporte actualizado correctamente.")
+            messages.success(request, "Modificación satisfactoria.")
             return redirect('p_reportes')
         except Exception as e:
             messages.error(request, f"Error al actualizar el reporte: {str(e)}")
