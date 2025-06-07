@@ -1,0 +1,465 @@
+/*--------------------------------------------------------------
+# Sección de Lista de Grupos
+--------------------------------------------------------------*/
+#grupos {
+  background-color: #ffffff;
+  padding: 60px 0;
+}
+
+#grupos .section-title h2 {
+  color: #100380;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+#grupos .section-title p {
+  color: #848484;
+  font-size: 16px;
+}
+
+/* Barra de búsqueda */
+#grupos .search-bar {
+  margin-bottom: 30px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#grupos .search-bar .form-control {
+  border: 1px solid #d3d3d3;
+  border-radius: 4px;
+  padding: 10px 15px;
+  font-size: 14px;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s ease;
+}
+
+#grupos .search-bar .form-control:focus {
+  border-color: #100380;
+  outline: none;
+  box-shadow: none;
+}
+
+#grupos .search-bar .btn-primary {
+  background-color: #100380;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  transition: background-color 0.3s ease;
+}
+
+#grupos .search-bar .btn-primary:hover {
+  background-color: #08024e;
+}
+
+/* Contenedor de tabla */
+#grupos .table-container {
+  max-width: 700px;
+  margin: 0 auto;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+/* Tabla de grupos */
+#grupos .custom-table {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+#grupos .custom-table thead {
+  background-color: #100380;
+  color: white;
+}
+
+#grupos .custom-table th {
+  font-weight: 500;
+  padding: 12px 15px;
+}
+
+#grupos .custom-table td {
+  padding: 12px 15px;
+  vertical-align: middle;
+}
+
+/* Ajuste de ancho de columnas */
+#grupos .custom-table th:nth-child(1), 
+#grupos .custom-table td:nth-child(1) {
+  width: 15%; /* Ancho para columna ID */
+}
+
+#grupos .custom-table th:nth-child(2), 
+#grupos .custom-table td:nth-child(2) {
+  width: 70%; /* Ancho para columna Nombre */
+}
+
+#grupos .custom-table th:nth-child(3), 
+#grupos .custom-table td:nth-child(3) {
+  width: 15%; /* Ancho para columna Acciones */
+}
+
+#grupos .custom-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+#grupos .custom-table tbody tr:hover {
+  background-color: #f0f0f0;
+}
+
+/* Botones de acción */
+#grupos .btn-action {
+  padding: 6px 12px;
+  margin: 0 3px;
+  font-size: 14px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+#grupos .btn-info {
+  background-color: #100380;
+  border-color: #100380;
+}
+
+#grupos .btn-info:hover {
+  background-color: #08024e;
+  border-color: #08024e;
+}
+
+/* Botones inferiores */
+#botones-accion-estrategia-educativa {
+  max-width: 700px;
+  margin: 30px auto 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+#btn-registrar-estrategia-educativa {
+  background-color: #100380;
+  border: none;
+  padding: 10px 24px;
+  color: #fff;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+#btn-registrar-estrategia-educativa:hover {
+  background-color: #08024e;
+}
+
+/*--------------------------------------------------------------
+# Responsive Design
+--------------------------------------------------------------*/
+@media (max-width: 768px) {
+  #grupos {
+    padding: 30px 15px;
+  }
+  
+  #grupos .section-title h2 {
+    font-size: 22px;
+  }
+  
+  #grupos .section-title p {
+    font-size: 14px;
+  }
+  
+  #grupos .search-bar,
+  #grupos .table-container {
+    max-width: 100%;
+  }
+  
+  #grupos .custom-table {
+    min-width: unset;
+  }
+  
+  #grupos .custom-table th,
+  #grupos .custom-table td {
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+  
+  /* Ajuste de columnas en móvil */
+  #grupos .custom-table th:nth-child(1), 
+  #grupos .custom-table td:nth-child(1) {
+    width: 20%;
+  }
+  
+  #grupos .custom-table th:nth-child(2), 
+  #grupos .custom-table td:nth-child(2) {
+    width: 60%;
+  }
+  
+  #grupos .custom-table th:nth-child(3), 
+  #grupos .custom-table td:nth-child(3) {
+    width: 20%;
+  }
+  
+  #btn-registrar-estrategia-educativa,
+  #btn-eliminar-grupo {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+  
+  #botones-accion-estrategia-educativa {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+}
+
+/*--------------------------------------------------------------
+# Estilos específicos de la tabla y acciones de grupos
+--------------------------------------------------------------*/
+.table-container {
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid #dee2e6;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  margin: 0 auto;
+  width: 60%;
+}
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.custom-table th, .custom-table td {
+  padding: 10px;
+  text-align: center;
+  border: none;
+}
+
+.custom-table th {
+  background-color: #100380;
+  color: #fff;
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+}
+
+.custom-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.custom-table th:nth-child(1), .custom-table td:nth-child(1) {
+  width: 15%;
+}
+
+.custom-table th:nth-child(2), .custom-table td:nth-child(2) {
+  width: 10%;
+}
+
+.custom-table th:nth-child(3), .custom-table td:nth-child(3) {
+  width: 10%;
+}
+
+.custom-table th:nth-child(4), .custom-table td:nth-child(4) {
+  width: 15%;
+}
+
+.custom-table th:nth-child(5),.custom-table td:nth-child(5) {
+  width: 15%;
+}
+
+.btn-ver-detalles {
+  background-color: #b8b7b7;
+  color: #fff;
+}
+
+.btn-ver-detalles:hover {
+  background-color: #12724c;
+}
+
+.btn-action {
+  padding: 4px 8px;
+  border: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+  margin: 0 2px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+.btn-action i {
+  color: #fff;
+  font-size: 12px;
+}
+
+.btn-action:hover i {
+  color: #fff;
+}
+
+.btn-modificar {
+  background-color: #b8b7b7;
+  color: #fff;
+}
+
+.btn-modificar:hover {
+  background-color: #dad723;
+}
+
+.btn-eliminar {
+  background-color: #b8b7b7;
+  color: #fff;
+}
+
+.btn-eliminar:hover {
+  background-color: #920303;
+}
+
+.seleccionar-fila {
+  margin: 0 5px;
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+  vertical-align: middle;
+}
+
+#botones-accion-grupo {
+  display: flex;
+  gap: 60px;
+  justify-content: center;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+#btn-eliminar-grupo, #btn-registrar-grupo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background-color: #260591;
+  color: white;
+}
+
+#btn-eliminar-grupo:hover, #btn-registrar-grupo:hover {
+  background-color: #0b0047;
+  transform: translateY(-2px);
+}
+
+#btn-eliminar-grupo:active, #btn-registrar-grupo:active {
+  background-color: #050048;
+  transform: translateY(0);
+}
+
+#btn-eliminar-grupo i, #btn-registrar-grupo i {
+  margin-right: 8px;
+  font-size: 14px;
+}
+
+/*--------------------------------------------------------------
+# Responsive Design para tabla de grupos
+--------------------------------------------------------------*/
+@media (max-width: 768px) {
+  .table-container {
+    width: 90%;
+  }
+
+  .custom-table th,
+  .custom-table td {
+    padding: 8px;
+    font-size: 12px;
+  }
+
+  .btn-action {
+    padding: 2px 4px;
+    font-size: 8px;
+    margin: 0 4px;
+  }
+
+  .btn-action i {
+    font-size: 8px;
+  }
+
+  #botones-accion-grupo {
+    gap: 20px;
+  }
+
+  #btn-eliminar-grupo,
+  #btn-registrar-grupo {
+    padding: 6px 15px;
+    font-size: 12px;
+  }
+
+  /* Ajustes para la barra de búsqueda en pantallas pequeñas */
+  .search-bar {
+    max-width: 80%; /* Aumentar el ancho en móviles */
+    margin-left: auto; /* Centrar la barra de búsqueda */
+    margin-right: auto;
+  }
+
+  .search-bar .form-control {
+    font-size: 12px;
+    padding: 5px 8px;
+    width: 70%;
+  }
+
+  .search-bar .btn-primary {
+    padding: 5px 10px;
+    font-size: 12px;
+    width: auto; /* Ancho automático */
+  }
+}
+
+@media (max-width: 480px) {
+  .table-container {
+    width: 100%;
+  }
+
+  .custom-table th,
+  .custom-table td {
+    padding: 6px;
+    font-size: 10px;
+  }
+
+  .btn-action {
+    padding: 2px 3px;
+    font-size: 7px;
+  }
+
+  .btn-action i {
+    font-size: 7px;
+  }
+
+  #botones-accion-grupo {
+    gap: 10px;
+  }
+
+  #btn-eliminar-grupo,
+  #btn-registrar-grupo {
+    padding: 5px 10px;
+    font-size: 10px;
+  }
+
+  /* Ajustes para la barra de búsqueda en pantallas muy pequeñas */
+  .search-bar {
+    max-width: 90%; /* Aumentar el ancho en pantallas muy pequeñas */
+  }
+
+  .search-bar .form-control {
+    font-size: 10px;
+    padding: 4px 6px;
+    width: 60%;
+  }
+
+  .search-bar .btn-primary {
+    padding: 4px 8px;
+    font-size: 10px;
+    width: auto; /* Ancho automático */
+  }
+}

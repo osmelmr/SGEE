@@ -2,6 +2,17 @@
 {% load static %}
 {% block title %} Crear Evento {% endblock %}
 {% block content %}
+  <style>
+    .invalid-feedback {
+      color: #dc3545;
+      font-size: 0.95em;
+      margin-top: 0.25rem;
+      display: none;
+    }
+    .is-invalid {
+      border-color: #dc3545 !important;
+    }
+  </style>
 
   <!-- Sección del Formulario de Evento -->
   <section id="formulario-evento" class="estrategia-educativa">
@@ -167,5 +178,7 @@
 {% endblock %}
 {% block scripts %}
   <script src="{% static 'eventos/js/form.js' %}"></script>
+  <script src="{% static 'eventos/validar_cambio.js' %}"></script>
+  <script src="{% static 'eventos/validar_submit.js' %}"></script>
   <!-- Aquí pueden agregarse scripts personalizados si es necesario -->
 {% endblock %}
