@@ -119,7 +119,7 @@ def eliminar_estrategia(request, estra_id):
     
     estra = get_object_or_404(Estrategia, id=estra_id)
     estra.delete()
-    messages.success(request, "Estrategia eliminada correctamente.")
+    messages.success(request, "Eliminación satisfactoria.")
     return redirect("p_estrategias")
 
 # Delete Views - Multiple Items
@@ -137,7 +137,7 @@ def eliminar_estrategias(request):
         estrategias_ids = request.POST.getlist("estrategias[]")
         if estrategias_ids:
             Estrategia.objects.filter(id__in=estrategias_ids).delete()
-            messages.success(request, "Estrategias eliminadas correctamente.")
+            messages.success(request, "Eliminación satisfactoria.")
         else:
             messages.error(request, "No se seleccionaron estrategias para eliminar.")
         return redirect("p_estrategias")
@@ -186,7 +186,7 @@ def modificar_estrategia(request, estra_id):
             for field, value in form_data.items():
                 setattr(estra, field, value)
             estra.save()
-            messages.success(request, "Estrategia modificada correctamente.")
+            messages.success(request, "Modificacion satisfactoria.")
             return redirect("p_estrategias")
         except Exception as e:
             print(str(e))

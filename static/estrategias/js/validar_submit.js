@@ -66,6 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 getStepIndexOfElement(cursoInput);
                 errorMostrado = true;
             }
+            alert("Por favor, complete todos los campos correctamente.");
         } else {
             cursoInput.classList.remove('is-invalid');
             const err = document.getElementById('curso-error');

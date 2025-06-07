@@ -65,7 +65,7 @@ def eliminar_encuesta(request, encuesta_id):
         return redirect("pagina_principal")
     encuesta = get_object_or_404(Encuesta, id=encuesta_id)
     encuesta.delete()
-    messages.success(request, "Encuesta eliminada correctamente.")
+    messages.success(request, "Eliminación satisfactoria.")
     return redirect('p_encuestas')
 
 def eliminar_encuestas(request):
@@ -80,7 +80,7 @@ def eliminar_encuestas(request):
         encuestas_ids = request.POST.getlist('encuestas[]')
         if encuestas_ids:
             Encuesta.objects.filter(id__in=encuestas_ids).delete()
-            messages.success(request, "Encuestas eliminadas correctamente.")
+            messages.success(request, "Eliminación satisfactoria.")
         else:
             messages.error(request, "No se seleccionaron encuestas para eliminar.")
         return redirect('p_encuestas')
@@ -111,7 +111,7 @@ def modificar_encuesta(request, encuesta_id):
             for texto in preguntas:
                 if texto.strip():
                     encuesta.preguntas.create(texto=texto)
-            messages.success(request, "Encuesta actualizada correctamente.")
+            messages.success(request, "Modificación satisfactoria.")
             return redirect('p_encuestas')
         except Exception as e:
             messages.error(request, f"Error al actualizar la encuesta: {str(e)}")
