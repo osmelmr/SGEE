@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     const error = document.createElement('div');
                     error.id = 'curso-error';
                     error.className = 'invalid-feedback';
-                    error.innerText = 'El campo curso debe tener el formato AAAA-BBBB, donde BBBB = AAAA+1 y ambos entre 2000 y 2100.';
+                    error.innerText = 'El curso solo puede contener dos años consecutivos separados por - (EJ: 2014-2015)';
                     cursoInput.parentNode.appendChild(error);
                 }
             } else {
