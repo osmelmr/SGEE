@@ -137,12 +137,16 @@ def modificar_usuario(request, usuario_id):
             'email': request.POST.get('email', usuario.email),
             'first_name': request.POST.get('first_name', usuario.first_name),
             'last_name': request.POST.get('last_name', usuario.last_name),
-
+            'password': request.POST.get('password', None),  # Añadido
         }
 
         try:
             for key, value in form_data.items():
-                setattr(usuario, key, value)
+                if key == 'password':
+                    if value:  # Solo si se proporciona una nueva contraseña
+                        usuario.set_password(value)
+                else:
+                    setattr(usuario, key, value)
             usuario.save()
             messages.success(request, f'Usuario {usuario.username} modificado exitosamente.')
             return redirect('p_usuarios')

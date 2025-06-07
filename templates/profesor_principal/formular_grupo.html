@@ -12,8 +12,13 @@
     </div>
 
     <!-- Formulario de creación de grupo -->
+<<<<<<< HEAD
     <form method="post" action="{% url 'p_formular_grupo' %}">
       {% csrf_token %}
+=======
+    <form method="post" action="{% url 'p_formular_grupo' %}" id="form-grupo">
+        {% csrf_token %}
+>>>>>>> 72907408c87c6aa406c4e1a02df2cbb8c2f76edf
 
       <!-- Fila: Nombre y Dirección -->
       <div class="row mb-4">
@@ -51,6 +56,7 @@
         </div>
       </div>
 
+<<<<<<< HEAD
       <!-- Campo: Caracterización -->
       <div class="form-group mb-4">
         <label for="caracterizacion" class="form-label">Caracterización</label>
@@ -95,6 +101,10 @@
           </button>
         </div>
       </div>
+=======
+        <!-- Botón para guardar el grupo -->
+        <button type="submit" id="btn-submit" >Guardar</button>
+>>>>>>> 72907408c87c6aa406c4e1a02df2cbb8c2f76edf
     </form>
   </div>
 </section>

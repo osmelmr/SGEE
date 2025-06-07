@@ -1,3 +1,4 @@
+// Declarar la función para que sea accesible globalmente
 document.addEventListener('DOMContentLoaded', function () {
     const nombreInput = document.getElementById('nombre');
     const anioEscolarSelect = document.getElementById('anio_escolar');
@@ -59,6 +60,10 @@ document.addEventListener('DOMContentLoaded', function () {
         const valor = nombreInput.value.trim();
         if (!valor) {
             mostrarError(nombreInput, 'Este campo es obligatorio.');
+<<<<<<< HEAD:static/grupos/js/validando_grupo.js
+=======
+            nombreInput.reportValidity();
+>>>>>>> 72907408c87c6aa406c4e1a02df2cbb8c2f76edf:static/grupos/js/validar_cambio.js
             return false;
         }
         const match = valor.match(/^([A-ZÁÉÍÓÚÑ]{3,})(\d{3})$/);
@@ -70,7 +75,13 @@ document.addEventListener('DOMContentLoaded', function () {
             mostrarError(nombreInput, '');
             return true;
         } else {
+<<<<<<< HEAD:static/grupos/js/validando_grupo.js
             mostrarError(nombreInput, 'El nombre debe tener al menos 3 letras mayúsculas seguidas de 3 números.');
+=======
+            const msg = 'El nombre debe tener al menos 3 letras mayúsculas seguidas de 3 números. El primer dígito indica el año escolar.';
+            mostrarError(nombreInput, msg);
+            nombreInput.reportValidity();
+>>>>>>> 72907408c87c6aa406c4e1a02df2cbb8c2f76edf:static/grupos/js/validar_cambio.js
             return false;
         }
     }
@@ -92,6 +103,10 @@ document.addEventListener('DOMContentLoaded', function () {
         const valor = direccionInput.value.trim();
         if (!valor) {
             mostrarError(direccionInput, 'Este campo es obligatorio.');
+<<<<<<< HEAD:static/grupos/js/validando_grupo.js
+=======
+            direccionInput.reportValidity();
+>>>>>>> 72907408c87c6aa406c4e1a02df2cbb8c2f76edf:static/grupos/js/validar_cambio.js
             return false;
         }
         const regex = /^([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)(\s+[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)+$/;
@@ -99,7 +114,13 @@ document.addEventListener('DOMContentLoaded', function () {
             mostrarError(direccionInput, '');
             return true;
         } else {
+<<<<<<< HEAD:static/grupos/js/validando_grupo.js
             mostrarError(direccionInput, 'Debe ingresar al menos dos palabras, cada una iniciando con mayúscula.');
+=======
+            const msg = 'Debe ingresar un nombre y apellidos válidos, cada uno iniciando con mayúscula.';
+            mostrarError(direccionInput, msg);
+            direccionInput.reportValidity();
+>>>>>>> 72907408c87c6aa406c4e1a02df2cbb8c2f76edf:static/grupos/js/validar_cambio.js
             return false;
         }
     }
@@ -108,6 +129,10 @@ document.addEventListener('DOMContentLoaded', function () {
         const valor = input.value.trim();
         if (!valor) {
             mostrarError(input, mensaje || 'Este campo es obligatorio.');
+<<<<<<< HEAD:static/grupos/js/validando_grupo.js
+=======
+            input.reportValidity();
+>>>>>>> 72907408c87c6aa406c4e1a02df2cbb8c2f76edf:static/grupos/js/validar_cambio.js
             return false;
         } else {
             mostrarError(input, '');
@@ -129,7 +154,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    function validarFormulario() {
+    validarFormulario = () => {
         let valido = true;
         if (!validarNombreYActualizarAnio()) valido = false;
         if (!validarDireccion()) valido = false;
@@ -169,10 +194,13 @@ document.addEventListener('DOMContentLoaded', function () {
     profesoresChecks.forEach(chk => {
         chk.addEventListener('change', validarProfesoresSeleccionados);
     });
+<<<<<<< HEAD:static/grupos/js/validando_grupo.js
 
     form.addEventListener('submit', function (e) {
         if (!validarFormulario()) {
             e.preventDefault();
         }
     });
+=======
+>>>>>>> 72907408c87c6aa406c4e1a02df2cbb8c2f76edf:static/grupos/js/validar_cambio.js
 });

@@ -1,0 +1,12 @@
+/* Puedes poner esto en tu archivo CSS global o en el template */
+.campo-deshabilitado {
+    opacity: 0.5;
+    filter: blur(1px);
+    pointer-events: none;
+    transition: opacity 0.2s, filter 0.2s;
+}
+.mensaje-activar {
+    color: #333;
+    font-size: 0.9em;
+    margin-top: 2px;
+}
