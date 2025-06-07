@@ -31,7 +31,7 @@ function validarTelefono(valor) {
 }
 
 function validarUsuario(valor) {
-    return /^[a-z0-9]+$/.test(valor);
+    return /^[a-z]+$/.test(valor); // Solo minúsculas
 }
 
 function validarContrasena(valor) {
@@ -143,7 +143,7 @@ window.addEventListener('DOMContentLoaded', function() {
         if (!usuario.value.trim()) {
             setError(usuario, 'Este campo es obligatorio.');
         } else if (!validarUsuario(usuario.value)) {
-            setError(usuario, 'Solo minúsculas y números, sin espacios.');
+            setError(usuario, 'Solo minúsculas.');
         } else {
             clearError(usuario);
         }
@@ -184,7 +184,7 @@ window.addEventListener('DOMContentLoaded', function() {
             grupo.value = '';
             grupo.disabled = true;
             aplicarBlur(grupo, true);
-            mostrarMensajeGrupo(grupo, 'Para seleccionar un grupo, cambie el rol a "usuario".');
+            mostrarMensajeGrupo(grupo, 'Para seleccionar un grupo, cambie el rol a "Estudiante".');
         } else {
             grupo.disabled = false;
             aplicarBlur(grupo, false);

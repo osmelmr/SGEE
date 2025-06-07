@@ -4,30 +4,68 @@
 {% block title %} Detalle de Grupo {% endblock %}
 
 {% block content %}
-<div class="container mt-4">
-    <h1>Detalle de Grupo</h1>
-    <p><strong>ID:</strong> {{ grupo.id }}</p>
-    <p><strong>Nombre:</strong> {{ grupo.nombre }}</p>
-    <p><strong>Descripción:</strong> {{ grupo.descripcion }}</p>
+<section id="visualizar-grupo" class="visualizar-grupo">
+  <div class="container" style="margin-top: 90px;">
+    <div class="section-title">
+      <h2>Detalle de Grupo</h2>
+      <p>Información detallada del grupo seleccionado.</p>
+    </div>
 
-    <h2>Profesores Asignados</h2>
-    <ul>
-        {% for profesor in grupo.profesores.all %}
-        <li>{{ profesor.nombre }} {{ profesor.primer_apellido }} {{ profesor.segundo_apellido }}</li>
-        {% empty %}
-        <li>No hay profesores asignados a esta grupo.</li>
-        {% endfor %}
-    </ul>
+    <div class="grupo-details" style="background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); padding: 32px;">
+      <div class="detail-group mb-4">
+        <h4>ID</h4>
+        <p>{{ grupo.id }}</p>
+      </div>
+      <div class="detail-group mb-4">
+        <h4>Nombre</h4>
+        <p>{{ grupo.nombre }}</p>
+      </div>
+      <div class="detail-group mb-4">
+        <h4>Dirección</h4>
+        <p>{{ grupo.direccion }}</p>
+      </div>
+      <div class="detail-group mb-4">
+        <h4>Curso</h4>
+        <p>{{ grupo.curso }}</p>
+      </div>
+      <div class="detail-group mb-4">
+        <h4>Año Escolar</h4>
+        <p>{{ grupo.get_anio_escolar_display }}</p>
+      </div>
+      <div class="detail-group mb-4">
+        <h4>Caracterización</h4>
+        <p>{{ grupo.caracterizacion }}</p>
+      </div>
+      <div class="detail-group mb-4">
+        <h4>Guía</h4>
+        {% if grupo.guia %}
+          <p>{{ grupo.guia.nombre }} {{ grupo.guia.primer_apellido }}{% if grupo.guia.segundo_apellido %} {{ grupo.guia.segundo_apellido }}{% endif %}</p>
+        {% else %}
+          <p>No tiene guía asignado.</p>
+        {% endif %}
+      </div>
+      <div class="detail-group mb-4">
+        <h4>Profesores Asignados</h4>
+        <ul>
+          {% for profesor in grupo.profesores.all %}
+            <li>{{ profesor.nombre }} {{ profesor.primer_apellido }}{% if profesor.segundo_apellido %} {{ profesor.segundo_apellido }}{% endif %}</li>
+          {% empty %}
+            <li>No hay profesores asignados a este grupo.</li>
+          {% endfor %}
+        </ul>
+      </div>
 
-    <div class="text-center mt-4 pt-4 border-top">
-      <div style="display: flex; justify-content: flex-start;">
-        <a href="{% url 'p_grupos' %}" class="btn btn-secondary"
-          style="background-color: #100380; color: #fff; border: none;">
-          <i class="bi bi-check-circle-fill"></i> Aceptar
-        </a>
+      <div class="text-center mt-4 pt-4 border-top">
+        <div style="display: flex; justify-content: flex-start;">
+          <a href="{% url 'p_grupos' %}" class="btn btn-secondary"
+            style="background-color: #100380; color: #fff; border: none;">
+            <i class="bi bi-check-circle-fill"></i> Aceptar
+          </a>
+        </div>
       </div>
     </div>
-</div>
+  </div>
+</section>
 {% endblock %}
 {% block scripts %}
   
