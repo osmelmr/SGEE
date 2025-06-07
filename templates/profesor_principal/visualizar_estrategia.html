@@ -85,12 +85,13 @@
         <!-- Línea divisoria y botones -->
         <div class="text-center mt-4 pt-4 border-top">
           <div style="display: flex; justify-content: space-between;">
-            <button type="button" id="boton-cancelar-estrategias" class="btn btn-cancelar" onclick="window.history.back()">Cancelar</button>
+            <button type="button" id="boton-cancelar-estrategias" class="btn btn-cancelar" onclick="window.history.back()">Aceptar</button>
             <a href="{% url 'descargar_estrategia_pdf' estrategia.id %}" 
-              class="btn btn-descargar" 
-              id="boton-descargar-estrategia"
-              data-nombre="{{ estrategia.nombre|escapejs }}">
-              Descargar
+               class="btn btn-descargar"
+               id="boton-descargar-estrategia"
+               style="background-color: #198754; color: #fff; border: none;"
+               data-nombre="{{ estrategia.nombre|escapejs }}">
+               Descargar
             </a>
           </div>
         </div>
