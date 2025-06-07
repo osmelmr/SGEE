@@ -1,6 +1,62 @@
-usuarios/vistas/__pycache__/vistas_principal.cpython-313.pyc
-SGEE/vistas/__pycache__/vistas_generales.cpython-313.pyc
-grupos/vistas/__pycache__/vistas_principal.cpython-313.pyc
-grupos/__pycache__/urls.cpython-313.pyc
-estrategias/vistas/__pycache__/vistas_principal.cpython-313.pyc
-encuestas/vistas/__pycache__/vistas_principal.cpython-313.pyc
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django specific
+*.log
+*.pot
+*.pyc
+*.pyo
+*.db
+*.sqlite3
+
+# Ignore Django migrations (optional: uncomment if you don’t want to track them)
+# **/migrations/*.py
+# **/migrations/*.pyc
+
+# Media & static files (if generated)
+media/
+staticfiles/
+
+# Local settings
+.env
+*.env
+
+# VSCode settings (optional)
+.vscode/
+
+# Virtual environment
+venv/
+ENV/
+env/
+.venv/
+
+# MacOS
+.DS_Store
+
+# pyenv
+.python-version
+
+# Pipenv
+Pipfile.lock
+
+# pytest
+.pytest_cache/
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+
+# mypy
+.mypy_cache/
+
+# pyright
+.pyright/
+
+# Build
+build/
+dist/
+*.egg-info/
+.eggs/
