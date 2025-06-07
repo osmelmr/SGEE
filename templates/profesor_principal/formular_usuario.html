@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %} formulario de usuario {% endblock %}
+{% block title %}Formulario de Usuario{% endblock %}
 {% block content %}
   <!-- Sección del Formulario de Registro -->
   <section id="formulario-registro" class="formulario-registro">
     <div class="container">
       <div class="section-title">
-        <h2>Formulario de Registro</h2>
-        <p>Complete los siguientes campos para registrar un nuevo usuario.</p>
+        <h2>Formulario de Registro de Usuario</h2>
+        <p>Complete los campos para registrar un nuevo usuario.</p>
       </div>
   
       <!-- Formulario de registro de usuario -->
@@ -108,5 +108,5 @@
   </section> 
 {% endblock%}
 {% block scripts %}
-  <!-- Aquí pueden agregarse scripts personalizados si es necesario -->
+  <script src="{% static 'usuarios/js/validando_usuarios.js' %}"></script>
 {% endblock %}
