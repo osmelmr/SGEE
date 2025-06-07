@@ -1,21 +1,22 @@
 /*--------------------------------------------------------------
 # Sección de Lista de Grupos
 --------------------------------------------------------------*/
-#grupos {
+#grupo {
   background-color: #ffffff;
   padding: 60px 0;
+  margin-top: 40px;
 }
 
-#grupos .section-title h2 {
-  color: #100380;
-  font-size: 28px;
-  font-weight: 700;
+#grupo .section-title h2 {
+  color: #100380 !important; /* Asegura que el color sea azul */
+  font-size: 32px !important; /* Tamaño de fuente mayor */
+  font-weight: 700 !important; /* Negrita */
   margin-bottom: 20px;
 }
 
-#grupos .section-title p {
-  color: #848484;
-  font-size: 16px;
+#grupo .section-title p {
+  color: #848484 !important; /* Color gris */
+  font-size: 16px !important; /* Tamaño de fuente menor */
 }
 
 /* Barra de búsqueda */
