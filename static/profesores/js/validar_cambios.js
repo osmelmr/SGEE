@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
   manejarMensajeDeError(
     document.getElementById("segundo-apellido"),
     /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{0,50}$/,
-    "Solo letras y espacios (máx. 50 caracteres)",
+    "Solo letras y espacios (2-50 caracteres)",
     false // Cambiar a false para que sea obligatorio
   );
 
