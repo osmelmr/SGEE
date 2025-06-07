@@ -19,7 +19,14 @@
         {% endfor %}
     </ul>
 
-    <a href="{% url 'p_grupos' %}" class="btn btn-secondary">Volver a la lista</a>
+    <div class="text-center mt-4 pt-4 border-top">
+      <div style="display: flex; justify-content: flex-start;">
+        <a href="{% url 'p_grupos' %}" class="btn btn-secondary"
+          style="background-color: #100380; color: #fff; border: none;">
+          <i class="bi bi-check-circle-fill"></i> Aceptar
+        </a>
+      </div>
+    </div>
 </div>
 {% endblock %}
 {% block scripts %}
