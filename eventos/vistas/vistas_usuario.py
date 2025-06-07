@@ -65,7 +65,7 @@ def toggleEvento(request, evento_id):
             else:
                 # Si el evento no está asociado, agregarlo
                 usuario.eventos.add(evento)
-                messages.success(request, f"Te has registrado en el evento '{evento.nombre_evento}' correctamente.")
+                messages.success(request, "Inscripcion exitosa")
         except Exception as e:
             messages.error(request, f"Error al procesar el evento: {str(e)}")
     else:

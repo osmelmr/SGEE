@@ -79,7 +79,7 @@ def crear_usuario(request):
             # Guardar el segundo apellido si se proporciona
             usuario.save()
 
-            messages.success(request, f'Usuario {usuario.username} creado exitosamente.')
+            messages.success(request, "Registro satisfactorio.")
             return redirect('p_usuarios')  # Redirige a la lista de usuarios
 
     return render(request, 'profesor_principal/formular_usuario.html', {'grupos': grupos})
@@ -95,7 +95,7 @@ def eliminar_usuario(request, usuario_id):
         return redirect("pagina_principal")
     usuario = get_object_or_404(Usuario, id=usuario_id)
     usuario.delete()
-    messages.success(request, f'Usuario {usuario.username} eliminado exitosamente.')
+    messages.success(request, "Eliminación satisfactoria.")
     return redirect('p_usuarios')
 
 # Eliminar múltiples usuarios
@@ -110,7 +110,7 @@ def eliminar_usuarios(request):
     if request.method == 'POST':
         ids = request.POST.getlist('ids')
         Usuario.objects.filter(id__in=ids).delete()
-        messages.success(request, 'Usuarios eliminados exitosamente.')
+        messages.success(request, "Eliminación satisfactoria.")
         return JsonResponse({'success': True})
     return JsonResponse({'error': 'Método no permitido'}, status=405)
 
@@ -148,7 +148,7 @@ def modificar_usuario(request, usuario_id):
                 else:
                     setattr(usuario, key, value)
             usuario.save()
-            messages.success(request, f'Usuario {usuario.username} modificado exitosamente.')
+            messages.success(request, "Modificación satisfactoria.")
             return redirect('p_usuarios')
         except Exception as e:
             messages.error(request, f'Error al modificar el usuario: {str(e)}')

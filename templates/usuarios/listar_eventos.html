@@ -58,8 +58,8 @@
                       <i class="bi bi-check-circle"></i> Inscrito
                     </button>
                   {% else %}
-                    <button type="button" class="btn btn-action btn-inscribirse btn-secondary" data-id="{{ evento.id }}" title="Inscribirse">
-                      <i class="bi bi-pencil"></i> Inscribir
+                    <button type="button" class="btn btn-action btn-inscribirse btn-secondary" data-id="{{ evento.id }}" data-inscrito="0" title="Inscribirse">
+                      <i class="bi bi-pencil"></i> Inscribirse
                     </button>
                   {% endif %}
                 </td>
@@ -87,7 +87,13 @@
       button.addEventListener("click", function (e) {
           //e.stopPropagation();
           const eventoId = this.getAttribute("data-id"); // Obtiene el ID desde el atributo data-id
-          window.location.href = `/inscribir/evento/${eventoId}/`;
+          // Cambia el mensaje según el texto del botón
+          let mensaje = this.textContent.includes("Inscrito")
+              ? "¿Está seguro que desea desinscribirse de este evento?"
+              : "¿Está seguro que desea inscribirse en este evento?";
+          if (confirm(mensaje)) {
+              window.location.href = `/inscribir/evento/${eventoId}/`;
+          }
       });
   });
 </script>
