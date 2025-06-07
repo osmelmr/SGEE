@@ -2241,17 +2241,6 @@ section {
   background-color: #fff; /* Fondo blanco */
 }
 
-/* Ajustar campos válidos e inválidos en formulario-evento */
-#formulario-evento .form-control.is-valid {
-  border-color: #198754; /* Verde */
-  box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25); /* Sombra verde */
-}
-
-#formulario-evento .form-control.is-invalid {
-  border-color: #dc3545; /* Rojo */
-  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25); /* Sombra roja */
-}
-
 /* Botones */
 #formulario-evento .d-flex.justify-content-between {
   margin-top: 2rem;
