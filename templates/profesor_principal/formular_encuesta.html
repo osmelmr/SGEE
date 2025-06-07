@@ -53,7 +53,8 @@
                 <!-- Autor de la Encuesta -->
                 <div class="form-group mb-3">
                     <label for="autor-encuesta">Autor</label>
-                    <input type="text" id="autor-encuesta" name="autor" class="form-control" required value="{{user.first_name}} {{ user.last_name }}">
+                    <input type="text" id="autor-encuesta" class="form-control" required value="{{user.first_name}} {{ user.last_name }}" disabled>
+                    <input type="hidden" name="autor" value="{{user.first_name}} {{ user.last_name }}">
                 </div>
 
 <!------------------------------------------->

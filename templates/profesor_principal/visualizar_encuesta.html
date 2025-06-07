@@ -45,11 +45,15 @@
                 {% endfor %}
             </div>
 
-            <!-- Botón de Cancelar -->
+            <!-- Botón de Aceptar -->
             <div class="text-center mt-4 pt-4 border-top">
-                <button type="button" id="boton-cancelar-encuesta" class="btn btn-cancelar" onclick="window.history.back()">
-                    <i class="bi bi-x-circle"></i> Cancelar
-                </button>
+                <div style="display: flex; justify-content: flex-start;">
+                  <button type="button" id="boton-cancelar-encuesta" class="btn btn-cancelar"
+                    onclick="window.history.back()"
+                    style="background-color: #100380; color: #fff; border: none;">
+                      <i class="bi bi-check-circle-fill"></i> Aceptar
+                  </button>
+                </div>
             </div>
         </div>
     </div>

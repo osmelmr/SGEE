@@ -12,14 +12,14 @@
 
     <!-- Fila 1: Nombre, Primer Apellido, Segundo Apellido -->
     <div class="row mb-4">
-      <div class="col-md-4"><strong>Nombre:</strong> {{ usuario.nombre }}</div>
-      <div class="col-md-4"><strong>Primer Apellido:</strong> {{ usuario.primer_apellido }}</div>
-      <div class="col-md-4"><strong>Segundo Apellido:</strong> {{ usuario.segundo_apellido }}</div>
+      <div class="col-md-4"><strong>Nombre:</strong> {{ usuario.first_name }}</div>
+      <div class="col-md-4"><strong>Primer Apellido:</strong> {{ usuario.last_name }}</div>
+      <div class="col-md-4"><strong>Segundo Apellido:</strong> {{ usuario.second_last_name }}</div>
     </div>
 
     <!-- Fila 2: Sexo, Grupo -->
     <div class="row mb-4">
-      <div class="col-md-6"><strong>Sexo:</strong> {{ usuario.sexo }}</div>
+      <div class="col-md-6"><strong>Sexo:</strong> {{ usuario.get_sexo_display }}</div>
       <div class="col-md-6"><strong>Grupo:</strong> {{ usuario.grupo }}</div>
     </div>
 
@@ -35,12 +35,6 @@
       <div class="col-md-6"><strong>Correo:</strong> {{ usuario.email }}</div>
     </div>
 
-    <!-- Fila 5: Sexo, Grupo -->
-    <div class="row mb-4">
-      <div class="col-md-6"><strong>Sexo:</strong> {{ usuario.get_sexo_display }}</div>
-      <div class="col-md-6"><strong>Grupo:</strong> {{ usuario.grupo }}</div>
-    </div>
-
     <!-- Fila 6: Usuario -->
     <div class="row mb-4">
       <div class="col-md-6"><strong>Usuario:</strong> {{ usuario.username }}</div>
@@ -49,9 +43,13 @@
 
     <!-- Botón de regreso -->
     <div class="text-center mt-4 pt-4 border-top">
-      <button type="button" class="btn btn-secondary" onclick="window.history.back()">
-        <i class="bi bi-arrow-left-circle"></i> Volver
-      </button>
+      <div style="display: flex; justify-content: flex-start;">
+        <button type="button" class="btn btn-secondary"
+          onclick="window.history.back()"
+          style="background-color: #100380; color: #fff; border: none;">
+          <i class="bi bi-check-circle-fill"></i> Aceptar
+        </button>
+      </div>
     </div>
   </div>
 </section>

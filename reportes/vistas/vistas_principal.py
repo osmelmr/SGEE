@@ -52,9 +52,7 @@ def crear_reporte(request):
         grupo_instance = Grupo.objects.filter(id=grupo_id).first()
         form_data = {
             'grupo': grupo_instance,
-            'codigo': request.POST.get('codigo'),
             'periodo': request.POST.get('periodo'),
-            'fecha': request.POST.get('fecha'),
             'autor': request.POST.get('autor'),
             'institucion': request.POST.get('institucion'),
             'resumen': request.POST.get('resumen'),
@@ -127,12 +125,11 @@ def modificar_reporte(request, reporte_id):
         messages.error(request, "No tienes permiso para funcion modelo.")
         return redirect("pagina_principal")
     reporte = get_object_or_404(Reporte, id=reporte_id)
+    grupos = Grupo.objects.all()
     if request.method == 'POST':
         form_data = {
             'grupo': request.POST.get('grupo'),
-            'codigo': request.POST.get('codigo'),
             'periodo': request.POST.get('periodo'),
-            'fecha': request.POST.get('fecha'),
             'autor': request.POST.get('autor'),
             'institucion': request.POST.get('institucion'),
             'resumen': request.POST.get('resumen'),
@@ -158,9 +155,9 @@ def modificar_reporte(request, reporte_id):
             return redirect('p_reportes')
         except Exception as e:
             messages.error(request, f"Error al actualizar el reporte: {str(e)}")
-            return render(request, 'profesor_principal/modificar_reporte.html', {'reporte': reporte})
+            return render(request, 'profesor_principal/modificar_reporte.html', {'reporte': reporte, 'grupos': grupos})
 
-    return render(request, 'profesor_principal/modificar_reporte.html', {'reporte': reporte})
+    return render(request, 'profesor_principal/modificar_reporte.html', {'reporte': reporte, 'grupos': grupos})
 
 def visualizar_reporte(request, reporte_id):
     """View a single strategy."""

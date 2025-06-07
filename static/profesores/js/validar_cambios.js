@@ -44,8 +44,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   manejarMensajeDeError(
     document.getElementById("telefono"),
-    /^[0-9]{8,15}$/,
-    "Solo números (8-15 dígitos)"
+    /^(\+?\d{8,14})$/,
+    "Debe tener entre 8 y 14 números, puede iniciar con +"
   );
 
   manejarMensajeDeError(
@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
   manejarMensajeDeError(
     document.getElementById("segundo-apellido"),
     /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{0,50}$/,
-    "Solo letras y espacios (máx. 50 caracteres)",
+    "Solo letras y espacios (2-50 caracteres)",
     false // Cambiar a false para que sea obligatorio
   );
 
@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Validar todos los campos
     const campos = [
       { id: "solapin", regex: /^[A-Z][0-9]{6}$/ },
-      { id: "telefono", regex: /^[0-9]{8,15}$/ },
+      { id: "telefono", regex: /^(\+?\d{8,14})$/ },
       { id: "correo", regex: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/ },
       { id: "descripcion-profesor", regex: /^.{10,500}$/ },
       { id: "nombre-profesor", regex: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{2,50}$/ },

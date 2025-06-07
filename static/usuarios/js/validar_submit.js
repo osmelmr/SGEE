@@ -28,7 +28,7 @@ function validarTelefono(valor) {
     return /^(\+?\d{8,14})$/.test(valor);
 }
 function validarUsuario(valor) {
-    return /^[a-z0-9]+$/.test(valor);
+    return /^[a-z]+$/.test(valor);
 }
 function validarContrasena(valor) {
     return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(valor);
@@ -87,7 +87,7 @@ window.addEventListener('DOMContentLoaded', function() {
             primerError = primerError || telefono;
         }
         if (!usuario.value.trim() || !validarUsuario(usuario.value)) {
-            setError(usuario, 'Solo minúsculas y números, sin espacios.');
+            setError(usuario, 'Solo minúsculas.');
             valido = false;
             primerError = primerError || usuario;
         }

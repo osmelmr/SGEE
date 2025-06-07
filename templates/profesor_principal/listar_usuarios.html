@@ -49,8 +49,8 @@
                 {% for usuario in usuarios %}
                 <tr>
                   <td>{{ usuario.first_name }}</td>
-                  <td>{{ usuario.last_name.split|first }}</td>
-                  <td>{{ usuario.last_name.split|last }}</td>
+                  <td>{{ usuario.last_name }}</td>
+                  <td>{{ usuario.second_last_name }}</td>
                   <td>{{ usuario.rol }}</td>
                   <td>
                     <button type="button" class="btn btn-action btn-ver-detalles" data-id="{{ usuario.id }}" title="Ver Detalles">
