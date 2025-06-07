@@ -2228,25 +2228,28 @@ section {
   display: block;
 }
 
+/* Simplificar estilos de los campos en formulario-evento */
 #formulario-evento .form-control {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #d3d3d3;
+  border: 1px solid #d3d3d3; /* Borde gris claro */
   border-radius: 4px;
-  font-size: 14px;
-  background-color: #f9f9f9;
-  transition: border-color 0.3s ease;
+  background-color: #f9f9f9; /* Fondo gris claro */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 #formulario-evento .form-control:focus {
-  border-color: #100380;
-  outline: none;
-  box-shadow: 0 0 0 0.2rem rgba(16, 3, 128, 0.25);
+  border-color: #100380; /* Azul oscuro */
+  background-color: #fff; /* Fondo blanco */
 }
 
-#formulario-evento textarea.form-control {
-  resize: vertical;
-  min-height: 100px;
+/* Ajustar campos válidos e inválidos en formulario-evento */
+#formulario-evento .form-control.is-valid {
+  border-color: #198754; /* Verde */
+  box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25); /* Sombra verde */
+}
+
+#formulario-evento .form-control.is-invalid {
+  border-color: #dc3545; /* Rojo */
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25); /* Sombra roja */
 }
 
 /* Botones */
