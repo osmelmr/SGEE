@@ -9,7 +9,7 @@
 
 #grupo .section-title h2 {
   color: #100380 !important; /* Asegura que el color sea azul */
-  font-size: 32px !important; /* Tamaño de fuente mayor */
+  font-size: 28px !important; /* Tamaño de fuente mayor */
   font-weight: 700 !important; /* Negrita */
   margin-bottom: 20px;
 }
