@@ -12,13 +12,8 @@
     </div>
 
     <!-- Formulario de creación de grupo -->
-<<<<<<< HEAD
-    <form method="post" action="{% url 'p_formular_grupo' %}">
-      {% csrf_token %}
-=======
-    <form method="post" action="{% url 'p_formular_grupo' %}" id="form-grupo">
+   <form method="post" action="{% url 'p_formular_grupo' %}" id="form-grupo">
         {% csrf_token %}
->>>>>>> 72907408c87c6aa406c4e1a02df2cbb8c2f76edf
 
       <!-- Fila: Nombre y Dirección -->
       <div class="row mb-4">
@@ -101,15 +96,10 @@
           </button>
         </div>
       </div>
-=======
-        <!-- Botón para guardar el grupo -->
-        <button type="submit" id="btn-submit" >Guardar</button>
->>>>>>> 72907408c87c6aa406c4e1a02df2cbb8c2f76edf
     </form>
   </div>
 </section>
 {% endblock %}
 {% block scripts %}
   <script src="{% static 'grupos/js/validando_grupo.js' %}"></script>
-  <script src="{% static 'grupos/js/validar_submit.js' %}"></script>
 {% endblock %}
