@@ -74,7 +74,7 @@ def crear_profesor(request):
                 grupo_asignado.guia = profesor
                 grupo_asignado.save()
 
-            messages.success(request, "Profesor registrado correctamente.")
+            messages.success(request, "Registro satisfactorio.")
             return redirect('p_profesores')
         except Exception as e:
             print(f"Error: {str(e)}")
@@ -92,7 +92,7 @@ def eliminar_profesor(request, profesor_id):
     """Delete a single professor."""
     profesor = get_object_or_404(Profesor, id=profesor_id)
     profesor.delete()
-    messages.success(request, "Profesor eliminado correctamente.")
+    messages.success(request, "Eliminación satisfactoria.")
     return redirect('p_profesores')
 
 def eliminar_profesores(request):
@@ -107,7 +107,7 @@ def eliminar_profesores(request):
         profesores_ids = request.POST.getlist('profesores[]')
         if profesores_ids:
             Profesor.objects.filter(id__in=profesores_ids).delete()
-            messages.success(request, "Profesores eliminadas correctamente.")
+            messages.success(request, "Eliminación satisfactoria.")
         else:
             messages.error(request, "No se seleccionaron profesores para eliminar.")
         return redirect('p_profesores')
@@ -144,7 +144,7 @@ def modificar_profesor(request, profesor_id):
                 setattr(profesor, key, value)
             profesor.save()
             profesor.grupos.set(grupos_ids)  # <-- Actualiza los grupos asignados
-            messages.success(request, "Profesor actualizado correctamente.")
+            messages.success(request, "Modificación satisfactoria.")
             return redirect('p_profesores')
         except Exception as e:
             messages.error(request, f"Error al actualizar el profesor: {str(e)}")

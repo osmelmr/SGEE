@@ -99,3 +99,9 @@
   </section>
 
 {% endblock%}
+{% block scripts %}
+  <script src="{% static 'eventos/js/form.js' %}"></script>
+  <script src="{% static 'eventos/validar_eventos.js' %}"></script>
+  <script src="{% static 'eventos/validar_submit.js' %}"></script>
+  <!-- Aquí pueden agregarse scripts personalizados si es necesario -->
+{% endblock %}

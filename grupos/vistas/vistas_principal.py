@@ -40,7 +40,7 @@ def crear_grupo(request):
                 )
                 grupo.save()
                 grupo.profesores.set(profesores_ids)
-                messages.success(request, "Grupo creado correctamente.")
+                messages.success(request, "Registro satisfactorio.")
                 return redirect('p_grupos')
             except IntegrityError as e:
                 if "UNIQUE constraint failed: grupos_grupo.guia_id" in str(e):
@@ -97,7 +97,7 @@ def modificar_grupo(request, grupo_id):
             grupo.guia_id = guia_id
             grupo.save()
             grupo.profesores.set(profesores_ids)
-            messages.success(request, "Grupo modificado correctamente.")
+            messages.success(request, "Modificación satisfactoria.")
             return redirect('p_grupos')
     return render(
         request,
@@ -139,7 +139,7 @@ def eliminar_grupo(request, grupo_id):
     grupo = Grupo.objects.filter(id=grupo_id).first()
     if grupo:
         grupo.delete()
-        messages.success(request, "Grupo eliminado correctamente.")
+        messages.success(request, "Eliminación satisfactoria.")
     else:
         messages.error(request, "El grupo no existe.")
     return redirect('p_grupos')
@@ -155,7 +155,7 @@ def eliminar_grupos(request, grupo_id=None):
         grupos_ids = request.POST.getlist("grupos[]")
         if grupos_ids:
             Grupo.objects.filter(id__in=grupos_ids).delete()
-            messages.success(request, "Grupos eliminados correctamente.")
+            messages.success(request, "Eliminación satisfactoria.")
         else:
             messages.error(request, "No se seleccionaron grupos para eliminar.")
         return redirect('p_grupos')

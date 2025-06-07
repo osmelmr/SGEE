@@ -67,7 +67,7 @@ def crear_evento(request):
         try:
             evento = Evento(**form_data)
             evento.save()
-            messages.success(request, "Evento registrado correctamente.")
+            messages.success(request, "Registro satisfactorio.")
             return redirect('p_eventos')
         except Exception as e:
             print(str(e))
@@ -86,7 +86,7 @@ def eliminar_evento(request, evento_id):
         return redirect("pagina_principal")
     evento = get_object_or_404(Evento, id=evento_id)
     evento.delete()
-    messages.success(request, "Evento eliminado correctamente.")
+    messages.success(request, "Eliminación satisfactoria.")
     return redirect('p_eventos')
 
 def eliminar_eventos(request):
@@ -101,7 +101,7 @@ def eliminar_eventos(request):
         eventos_ids = request.POST.getlist('eventos[]')
         if eventos_ids:
             Evento.objects.filter(id__in=eventos_ids).delete()
-            messages.success(request, "Eventos eliminados correctamente.")
+            messages.success(request, "Eliminación satisfactoria.")
         else:
             messages.error(request, "No se seleccionaron eventos para eliminar.")
         return redirect('p_eventos')
@@ -148,7 +148,7 @@ def modificar_evento(request, evento_id):
             for key, value in form_data.items():
                 setattr(evento, key, value)
             evento.save()
-            messages.success(request, "Evento actualizado correctamente.")
+            messages.success(request, "Actualización satisfactoria.")
             return redirect('p_eventos')
         except Exception as e:
             messages.error(request, f"Error al actualizar el evento: {str(e)}")

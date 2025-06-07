@@ -80,7 +80,9 @@ window.addEventListener('DOMContentLoaded', function() {
     // Nombre
     const nombre = document.getElementById('nombre');
     nombre.addEventListener('input', function() {
-        if (!validarNombre(nombre.value)) {
+        if (!nombre.value.trim()) {
+            setError(nombre, 'Este campo es obligatorio.');
+        } else if (!validarNombre(nombre.value)) {
             setError(nombre, 'Debe comenzar con mayúscula y solo letras.');
         } else {
             clearError(nombre);
@@ -90,7 +92,9 @@ window.addEventListener('DOMContentLoaded', function() {
     // Primer Apellido
     const primerApellido = document.getElementById('primer-apellido');
     primerApellido.addEventListener('input', function() {
-        if (!validarNombre(primerApellido.value)) {
+        if (!primerApellido.value.trim()) {
+            setError(primerApellido, 'Este campo es obligatorio.');
+        } else if (!validarNombre(primerApellido.value)) {
             setError(primerApellido, 'Debe comenzar con mayúscula y solo letras.');
         } else {
             clearError(primerApellido);
@@ -100,7 +104,9 @@ window.addEventListener('DOMContentLoaded', function() {
     // Segundo Apellido
     const segundoApellido = document.getElementById('segundo-apellido');
     segundoApellido.addEventListener('input', function() {
-        if (!validarNombre(segundoApellido.value)) {
+        if (!segundoApellido.value.trim()) {
+            setError(segundoApellido, 'Este campo es obligatorio.');
+        } else if (!validarNombre(segundoApellido.value)) {
             setError(segundoApellido, 'Debe comenzar con mayúscula y solo letras.');
         } else {
             clearError(segundoApellido);
@@ -110,7 +116,9 @@ window.addEventListener('DOMContentLoaded', function() {
     // Solapín
     const solapin = document.getElementById('solapin');
     solapin.addEventListener('input', function() {
-        if (!validarSolapin(solapin.value)) {
+        if (!solapin.value.trim()) {
+            setError(solapin, 'Este campo es obligatorio.');
+        } else if (!validarSolapin(solapin.value)) {
             setError(solapin, 'Debe comenzar con una letra mayúscula seguida de 6 números.');
         } else {
             clearError(solapin);
@@ -120,7 +128,9 @@ window.addEventListener('DOMContentLoaded', function() {
     // Teléfono
     const telefono = document.getElementById('telefono');
     telefono.addEventListener('input', function() {
-        if (!validarTelefono(telefono.value)) {
+        if (!telefono.value.trim()) {
+            setError(telefono, 'Este campo es obligatorio.');
+        } else if (!validarTelefono(telefono.value)) {
             setError(telefono, 'Debe tener entre 8 y 14 números, puede iniciar con +.');
         } else {
             clearError(telefono);
@@ -130,7 +140,9 @@ window.addEventListener('DOMContentLoaded', function() {
     // Usuario
     const usuario = document.getElementById('user');
     usuario.addEventListener('input', function() {
-        if (!validarUsuario(usuario.value)) {
+        if (!usuario.value.trim()) {
+            setError(usuario, 'Este campo es obligatorio.');
+        } else if (!validarUsuario(usuario.value)) {
             setError(usuario, 'Solo minúsculas y números, sin espacios.');
         } else {
             clearError(usuario);
@@ -141,7 +153,9 @@ window.addEventListener('DOMContentLoaded', function() {
     const password = document.getElementById('password');
     if (password) {
         password.addEventListener('input', function() {
-            if (!validarContrasena(password.value)) {
+            if (!password.value.trim()) {
+                setError(password, 'Este campo es obligatorio.');
+            } else if (!validarContrasena(password.value)) {
                 setError(password, 'Debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número.');
             } else {
                 clearError(password);
@@ -152,7 +166,9 @@ window.addEventListener('DOMContentLoaded', function() {
     // Correo
     const correo = document.getElementById('correo');
     correo.addEventListener('input', function() {
-        if (!validarCorreo(correo.value)) {
+        if (!correo.value.trim()) {
+            setError(correo, 'Este campo es obligatorio.');
+        } else if (!validarCorreo(correo.value)) {
             setError(correo, 'El correo debe terminar en @uci.cu');
         } else {
             clearError(correo);
