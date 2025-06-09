@@ -9,8 +9,15 @@ class EventoModelTest(TestCase):
     def setUp(self):
         self.profesor = Profesor.objects.create(
             nombre="Juan",
-            apellido="Pérez",
-            email="juanperez@example.com"
+            primer_apellido="Pérez",
+            segundo_apellido="Gómez",
+            sexo="masculino",
+            categoria_docente="titular",
+            asignatura="Matemáticas",
+            solapin="123456",
+            telefono="5551234567",
+            correo="juanperez@example.com",
+            descripcion="Profesor con experiencia en matemáticas avanzadas."
         )
 
     def test_creacion_evento_valido(self):

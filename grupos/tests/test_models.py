@@ -8,13 +8,23 @@ class GrupoModelTest(TestCase):
     def setUp(self):
         self.profesor1 = Profesor.objects.create(
             nombre="Ana",
-            apellido="Gómez",
-            email="ana@example.com"
+primer_apellido="Gómez",
+            segundo_apellido="Pérez",
+            sexo="femenino",
+            categoria_docente="titular",
+            asignatura="Matemáticas",
+            solapin="123456",
+            telefono="5551234567"
         )
         self.profesor2 = Profesor.objects.create(
             nombre="Luis",
-            apellido="Martínez",
-            email="luis@example.com"
+primer_apellido="Martínez",
+            segundo_apellido="López",
+            sexo="masculino",
+            categoria_docente="auxiliar",
+            asignatura="Física",
+            solapin="654321",
+            telefono="5557654321"
         )
 
     def test_creacion_grupo_valido(self):

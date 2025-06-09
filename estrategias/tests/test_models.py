@@ -49,3 +49,6 @@ class EstrategiaModelTest(TestCase):
         self.estrategia.obj_general = "Nuevo objetivo general"
         self.estrategia.save()
         self.assertEqual(self.estrategia.obj_general, "Nuevo objetivo general")
+
+    def test_creacion_estrategia(self):
+        self.assertEqual(self.estrategia.curso, "Curso 1")

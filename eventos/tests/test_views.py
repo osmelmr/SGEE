@@ -1,18 +1,29 @@
 from django.test import TestCase, Client
 from django.urls import reverse
-from django.contrib.auth.models import User
+from usuarios.models import Usuario
 from profesores.models import Profesor
 from eventos.models import Evento
 from datetime import date, time
 
 class EventoViewsTestCase(TestCase):
     def setUp(self):
-        # Crear usuario y profesor
-        self.user = User.objects.create_user(username='profesor1', password='testpass')
+        # Crear usuario
+        self.user = Usuario.objects.create_user(username='profesor1', password='testpass')
         self.user.es_profesor = lambda: True  # Mock el método es_profesor()
         self.user.save()
 
-        self.profesor = Profesor.objects.create(nombre="Juan", primer_apellido="Perez", user=self.user)
+        # Crear profesor
+        self.profesor = Profesor.objects.create(
+            nombre="Juan",
+            primer_apellido="Perez",
+            sexo="masculino",
+            categoria_docente="titular",
+            asignatura="Matemáticas",
+            solapin="123456",
+            telefono="5551234567",
+            correo="juanperez@example.com",
+            descripcion="Profesor con experiencia en matemáticas avanzadas."
+        )
 
         # Crear cliente autenticado
         self.client = Client()
@@ -33,7 +44,7 @@ class EventoViewsTestCase(TestCase):
         )
 
     def test_visualizar_eventos(self):
-        response = self.client.get(reverse('p_eventos'))
+        response = self.client.get(reverse('p_eventos'))  # Ruta correcta
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Evento de Prueba")
 
@@ -50,12 +61,12 @@ class EventoViewsTestCase(TestCase):
             'profesor_encargado': self.profesor.id,
             'telefono_contacto': "87654321"
         }
-        response = self.client.post(reverse('crear_evento'), data)
+        response = self.client.post(reverse('p_formular_evento'), data)  # Ruta correcta
         self.assertEqual(response.status_code, 302)  # Redirige tras éxito
         self.assertTrue(Evento.objects.filter(nombre_evento="Nuevo Evento").exists())
 
     def test_eliminar_evento(self):
-        response = self.client.post(reverse('eliminar_evento', args=[self.evento.id]))
+        response = self.client.post(reverse('p_eliminar_evento', args=[self.evento.id]))  # Ruta correcta
         self.assertEqual(response.status_code, 302)
         self.assertFalse(Evento.objects.filter(id=self.evento.id).exists())
 
@@ -72,13 +83,13 @@ class EventoViewsTestCase(TestCase):
             'profesor_encargado': self.profesor.id,
             'telefono_contacto': "99999999"
         }
-        response = self.client.post(reverse('modificar_evento', args=[self.evento.id]), data)
+        response = self.client.post(reverse('p_modificar_evento', args=[self.evento.id]))  # Ruta correcta
         self.assertEqual(response.status_code, 302)
         evento = Evento.objects.get(id=self.evento.id)
         self.assertEqual(evento.nombre_evento, "Evento Modificado")
 
     def test_visualizar_evento(self):
-        response = self.client.get(reverse('visualizar_evento', args=[self.evento.id]))
+        response = self.client.get(reverse('p_visualizar_evento', args=[self.evento.id]))  # Ruta correcta
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Evento de Prueba")
 
@@ -96,7 +107,7 @@ class EventoViewsTestCase(TestCase):
             telefono_contacto="11223344"
         )
         data = {'eventos[]': [self.evento.id, otro_evento.id]}
-        response = self.client.post(reverse('eliminar_eventos'), data)
+        response = self.client.post(reverse('p_eliminar_eventos'), data)  # Ruta correcta
         self.assertEqual(response.status_code, 302)
         self.assertFalse(Evento.objects.filter(id=self.evento.id).exists())
         self.assertFalse(Evento.objects.filter(id=otro_evento.id).exists())
