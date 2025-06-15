@@ -7,10 +7,14 @@ from datetime import date, time
 
 class EventoViewsTestCase(TestCase):
     def setUp(self):
-        # Crear usuario
-        self.user = Usuario.objects.create_user(username='profesor1', password='testpass')
-        self.user.es_profesor = lambda: True  # Mock el método es_profesor()
-        self.user.save()
+        # Crear usuario correctamente
+        self.user = Usuario.objects.create_user(
+            username='profesor1',
+            password='testpass',
+            rol='profesor_principal',
+            sexo='masculino',
+            solapin='12345'
+        )
 
         # Crear profesor
         self.profesor = Profesor.objects.create(
@@ -44,7 +48,7 @@ class EventoViewsTestCase(TestCase):
         )
 
     def test_visualizar_eventos(self):
-        response = self.client.get(reverse('p_eventos'))  # Ruta correcta
+        response = self.client.get(reverse('eventos'))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Evento de Prueba")
 
@@ -61,12 +65,12 @@ class EventoViewsTestCase(TestCase):
             'profesor_encargado': self.profesor.id,
             'telefono_contacto': "87654321"
         }
-        response = self.client.post(reverse('p_formular_evento'), data)  # Ruta correcta
-        self.assertEqual(response.status_code, 302)  # Redirige tras éxito
+        response = self.client.post(reverse('p_formular_evento'), data)
+        self.assertEqual(response.status_code, 302)
         self.assertTrue(Evento.objects.filter(nombre_evento="Nuevo Evento").exists())
 
     def test_eliminar_evento(self):
-        response = self.client.post(reverse('p_eliminar_evento', args=[self.evento.id]))  # Ruta correcta
+        response = self.client.post(reverse('p_eliminar_evento', args=[self.evento.id]))
         self.assertEqual(response.status_code, 302)
         self.assertFalse(Evento.objects.filter(id=self.evento.id).exists())
 
@@ -78,18 +82,18 @@ class EventoViewsTestCase(TestCase):
             'hora_inicio': "10:00",
             'hora_fin': "12:00",
             'ubicacion_evento': "Sala 103",
-            'tipo_evento': "Seminario",
+            'tipo_evento': "academico",
             'descripcion': "Descripción modificada",
-            'profesor_encargado': self.profesor.id,
+            'profesor_encargado': str(self.profesor.id),
             'telefono_contacto': "99999999"
         }
-        response = self.client.post(reverse('p_modificar_evento', args=[self.evento.id]))  # Ruta correcta
+        response = self.client.post(reverse('p_modificar_evento', args=[self.evento.id]), data)  # <--- aquí agregas data
         self.assertEqual(response.status_code, 302)
         evento = Evento.objects.get(id=self.evento.id)
         self.assertEqual(evento.nombre_evento, "Evento Modificado")
 
     def test_visualizar_evento(self):
-        response = self.client.get(reverse('p_visualizar_evento', args=[self.evento.id]))  # Ruta correcta
+        response = self.client.get(reverse('visualizar_evento', args=[self.evento.id]))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Evento de Prueba")
 
@@ -107,7 +111,7 @@ class EventoViewsTestCase(TestCase):
             telefono_contacto="11223344"
         )
         data = {'eventos[]': [self.evento.id, otro_evento.id]}
-        response = self.client.post(reverse('p_eliminar_eventos'), data)  # Ruta correcta
+        response = self.client.post(reverse('p_eliminar_eventos'), data)
         self.assertEqual(response.status_code, 302)
         self.assertFalse(Evento.objects.filter(id=self.evento.id).exists())
         self.assertFalse(Evento.objects.filter(id=otro_evento.id).exists())

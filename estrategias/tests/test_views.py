@@ -17,8 +17,8 @@ class EstrategiaViewsTest(TestCase):
         )
 
         # Crear usuarios
-        self.profesor = User.objects.create_user(username="profe", password="1234", es_profesor=True)
-        self.no_profesor = User.objects.create_user(username="alumno", password="1234", es_profesor=False)
+        self.profesor = User.objects.create_user(username="profe", password="1234", rol='profesor_principal', sexo='masculino', solapin='12345')
+        self.no_profesor = User.objects.create_user(username="alumno", password="1234", rol='usuario', sexo='femenino', solapin='12346')
 
         # Crear estrategia
         self.estrategia = Estrategia.objects.create(
@@ -59,13 +59,13 @@ class EstrategiaViewsTest(TestCase):
 
     def test_crear_estrategia_get(self):
         self.client.login(username="profe", password="1234")
-        response = self.client.get(reverse("crear_estrategia"))
+        response = self.client.get(reverse("p_formular_estrategia"))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "form")
 
     def test_crear_estrategia_post(self):
         self.client.login(username="profe", password="1234")
-        response = self.client.post(reverse("crear_estrategia"), {
+        response = self.client.post(reverse("p_formular_estrategia"), {
             "nombre": "Nueva Estrategia",
             "curso": "11mo",
             "anio_escolar": "2025-2026",
@@ -95,7 +95,7 @@ class EstrategiaViewsTest(TestCase):
 
     def test_modificar_estrategia_post(self):
         self.client.login(username="profe", password="1234")
-        response = self.client.post(reverse("modificar_estrategia", args=[self.estrategia.id]), {
+        response = self.client.post(reverse("p_modificar_estrategia", args=[self.estrategia.id]), {
             "nombre": "Modificada",
             "curso": "10mo",
             "anio_escolar": "2024-2025",
@@ -126,13 +126,13 @@ class EstrategiaViewsTest(TestCase):
 
     def test_visualizar_estrategia(self):
         self.client.login(username="profe", password="1234")
-        response = self.client.get(reverse("visualizar_estrategia", args=[self.estrategia.id]))
+        response = self.client.get(reverse("p_visualizar_estrategia", args=[self.estrategia.id]))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, self.estrategia.nombre)
 
     def test_eliminar_estrategia(self):
         self.client.login(username="profe", password="1234")
-        response = self.client.post(reverse("eliminar_estrategia", args=[self.estrategia.id]))
+        response = self.client.post(reverse("p_eliminar_estrategia", args=[self.estrategia.id]))
         self.assertRedirects(response, reverse("p_estrategias"))
         self.assertFalse(Estrategia.objects.filter(id=self.estrategia.id).exists())
 
@@ -146,7 +146,7 @@ class EstrategiaViewsTest(TestCase):
             obj_general="Gen", obj_dc="DC", plan_dc="DC Plan", obj_de="DE", plan_de="Plan DE",
             obj_dp="DP", plan_dp="Plan DP", evaluacion="Eval", autor="Prof. C"
         )
-        response = self.client.post(reverse("eliminar_estrategias"), {
+        response = self.client.post(reverse("p_eliminar_estrategias"), {
             "estrategias[]": [self.estrategia.id, otra.id]
         })
         self.assertRedirects(response, reverse("p_estrategias"))

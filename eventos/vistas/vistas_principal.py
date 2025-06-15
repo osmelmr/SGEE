@@ -115,14 +115,15 @@ def modificar_evento(request, evento_id):
     if not request.user.es_profesor():
         messages.error(request, "No tienes permiso para funcion modelo.")
         return redirect("pagina_principal")
+    
     profesores = Profesor.objects.all()
     evento = get_object_or_404(Evento, id=evento_id)
-    
+
     if request.method == 'POST':
         profesor_id = request.POST.get('profesor_encargado')
         try:
-            profesor_obj = Profesor.objects.get(id=profesor_id)
-        except Profesor.DoesNotExist:
+            profesor_obj = Profesor.objects.get(id=int(profesor_id))  # << Fix aquí
+        except (Profesor.DoesNotExist, ValueError, TypeError):
             profesor_obj = None
 
         form_data = {
@@ -137,14 +138,12 @@ def modificar_evento(request, evento_id):
             'profesor_encargado': profesor_obj,
             'telefono_contacto': request.POST.get('telefono_contacto')
         }
-        
-        # Validate required fields
+
         if not all(form_data.values()):
             messages.error(request, "Todos los campos obligatorios deben ser completados.")
-            return render(request, 'profesor_principal/modificar_evento.html', {'evento': evento})
+            return render(request, 'profesor_principal/modificar_evento.html', {'evento': evento, 'profesores': profesores})
 
         try:
-            # Update event with new data
             for key, value in form_data.items():
                 setattr(evento, key, value)
             evento.save()
@@ -152,9 +151,9 @@ def modificar_evento(request, evento_id):
             return redirect('p_eventos')
         except Exception as e:
             messages.error(request, f"Error al actualizar el evento: {str(e)}")
-            return render(request, 'profesor_principal/modificar_evento.html', {'evento': evento})
+            return render(request, 'profesor_principal/modificar_evento.html', {'evento': evento, 'profesores': profesores})
 
-    return render(request, 'profesor_principal/modificar_evento.html', {'evento': evento, 'profesores': profesores })
+    return render(request, 'profesor_principal/modificar_evento.html', {'evento': evento, 'profesores': profesores})
 
 def visualizar_evento(request, evento_id):
     """View a single event."""
