@@ -10,10 +10,10 @@ class EncuestaViewsTest(TestCase):
         self.client = Client()
 
         # Crear usuario profesor
-        self.profesor = User.objects.create_user(username="profe", password="1234", es_profesor=True)
+        self.profesor = User.objects.create_user(username="profe", password="1234", rol='profesor_principal', sexo='masculino', solapin='12345')
 
         # Crear usuario no profesor
-        self.no_profesor = User.objects.create_user(username="alumno", password="1234", es_profesor=False)
+        self.no_profesor = User.objects.create_user(username="alumno", password="1234", rol='usuario', sexo='femenino', solapin='12346')
 
         # Encuesta de prueba
         self.encuesta = Encuesta.objects.create(
@@ -40,7 +40,7 @@ class EncuestaViewsTest(TestCase):
 
     def test_crear_encuesta_post_valida(self):
         self.client.login(username="profe", password="1234")
-        response = self.client.post(reverse("crear_encuesta"), {
+        response = self.client.post(reverse("p_formular_encuesta"), {
             "titulo": "Nueva",
             "descripcion": "Descripcion",
             "autor": "Prof. A",
@@ -52,13 +52,13 @@ class EncuestaViewsTest(TestCase):
 
     def test_crear_encuesta_get(self):
         self.client.login(username="profe", password="1234")
-        response = self.client.get(reverse("crear_encuesta"))
+        response = self.client.get(reverse("p_formular_encuesta"))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "<form")
 
     def test_modificar_encuesta(self):
         self.client.login(username="profe", password="1234")
-        url = reverse("modificar_encuesta", args=[self.encuesta.id])
+        url = reverse("p_modificar_encuesta", args=[self.encuesta.id])
         response = self.client.post(url, {
             "titulo": "Modificado",
             "descripcion": "Desc nueva",
@@ -79,7 +79,7 @@ class EncuestaViewsTest(TestCase):
 
     def test_eliminar_encuesta(self):
         self.client.login(username="profe", password="1234")
-        url = reverse("eliminar_encuesta", args=[self.encuesta.id])
+        url = reverse("p_eliminar_encuesta", args=[self.encuesta.id])
         response = self.client.post(url)
         self.assertRedirects(response, reverse("p_encuestas"))
         self.assertFalse(Encuesta.objects.filter(id=self.encuesta.id).exists())
@@ -89,7 +89,7 @@ class EncuestaViewsTest(TestCase):
         otra_encuesta = Encuesta.objects.create(
             titulo="Otra", descripcion="Desc", autor="X", estado="Borrador"
         )
-        response = self.client.post(reverse("eliminar_encuestas"), {
+        response = self.client.post(reverse("p_eliminar_encuestas"), {
             "encuestas[]": [self.encuesta.id, otra_encuesta.id]
         })
         self.assertRedirects(response, reverse("p_encuestas"))
