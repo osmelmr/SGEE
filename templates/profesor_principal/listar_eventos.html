@@ -2,16 +2,19 @@
 {% load static %}
 {% block title %} Listar Eventos {% endblock %}
 {% block content %}
-<div id="maind">
+
+<style>
+  #eventos {
+    margin-top: -40px;
+  }
+</style>
 
 <!-- Sección de Eventos -->
 <section id="eventos" class="eventos section-bg">
   <div class="container-fluid">
     <div class="section-title">
       <h2>Repositorio de Eventos</h2>
-      <br>
       <p>Gestión de Eventos</p>
-      <br>
     </div>
 
     <!-- Barra de búsqueda -->
@@ -38,7 +41,7 @@
                 <th> Responsable</th>
                 <th>
                   Acciones
-                  <button id="btn-seleccionar-todo" class="btn btn-link p-0 ms-2" title="Seleccionar Todo">
+                  <button type="button" id="btn-seleccionar-todo" class="btn btn-link p-0 ms-2" title="Seleccionar Todo">
                     <i class="bi bi-check-all"></i>
                   </button>
                 </th>
@@ -88,7 +91,7 @@
     </form>
   </div>
 </section>
-</div>
+
 {% endblock %}
 {% block scripts %}
   <script src="{% static 'js/submit_buscar.js' %}"></script>
