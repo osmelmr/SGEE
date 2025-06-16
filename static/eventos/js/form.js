@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const selected = selectProfesor.options[selectProfesor.selectedIndex];
       const telefono = selected.getAttribute('data-telefono') || '';
       inputTelefono.value = telefono;
+      inputTelefono.dispatchEvent(new Event('input')); // <-- dispara validación
     });
   }
 });
