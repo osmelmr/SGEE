@@ -75,7 +75,7 @@
             <select id="profesor-cargo" name="profesor_encargado" class="form-control" required>
               <option value="">Seleccione un profesor</option>
               {% for profesor in profesores %}
-                <option value="{{ profesor.id }}" {% if evento.profesor_encargado.id == profesor.id %}selected{% endif %}>{{ profesor.nombre }} {{ profesor.primer_apellido }}</option>
+                <option value="{{ profesor.id }}" data-telefono="{{ profesor.telefono }}" {% if evento.profesor_encargado.id == profesor.id %}selected{% endif %}>{{ profesor.nombre }} {{ profesor.primer_apellido }}</option>
               {% endfor %}
             </select>
           </div>

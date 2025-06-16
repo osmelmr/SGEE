@@ -8,5 +8,12 @@ document.addEventListener('DOMContentLoaded', function() {
       inputTelefono.value = telefono;
       inputTelefono.dispatchEvent(new Event('input')); // <-- dispara validación
     });
+
+    // Autocompletar teléfono al cargar si ya hay un profesor seleccionado
+    const selected = selectProfesor.options[selectProfesor.selectedIndex];
+    if (selected && selected.getAttribute('data-telefono')) {
+      inputTelefono.value = selected.getAttribute('data-telefono');
+      inputTelefono.dispatchEvent(new Event('input')); // <-- dispara validación
+    }
   }
 });
