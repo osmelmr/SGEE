@@ -4,9 +4,10 @@ from profesores.models import Profesor
 from django.contrib import messages
 from django.http import JsonResponse
 from django.db.models import Q
+from django.core.paginator import Paginator
 
 def visualizar_eventos(request):
-    """Display all events with optional search functionality."""
+    """Display all events with optional search functionality and pagination."""
     if not request.user.is_authenticated:
         messages.error(request, "No estas autenticado.")
         return redirect("login")
@@ -26,8 +27,14 @@ def visualizar_eventos(request):
         )
     else:
         eventos = Evento.objects.all()
+    
+    paginator = Paginator(eventos, 4)  # 4 eventos por página
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     return render(request, 'profesor_principal/listar_eventos.html', {
-        'eventos': eventos,
+        'eventos': page_obj.object_list,
+        'page_obj': page_obj,
         'query': query
     })
 
