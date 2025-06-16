@@ -33,9 +33,9 @@ document.addEventListener('DOMContentLoaded', function() {
         input.classList.remove('is-invalid');
     }
     function setError(input, message) {
-        input.setCustomValidity(message);
+        input.setCustomValidity(''); // <-- Evita el mensaje flotante
         showErrorBelow(input, message);
-        input.reportValidity();
+        // input.reportValidity(); // <-- No mostrar el mensaje nativo
     }
     function clearError(input) {
         input.setCustomValidity('');

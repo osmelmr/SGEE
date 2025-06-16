@@ -29,7 +29,7 @@
         <!-- Campo: Nombre del Evento -->
         <div class="form-group mb-4">
           <label for="nombre-evento">Nombre del Evento</label>
-          <input type="text" id="nombre-evento" name="nombre_evento" class="form-control" maxlength="100" required>
+          <input type="text" id="nombre-evento" name="nombre_evento" class="form-control" maxlength="100" >
         </div>
 
 
@@ -43,7 +43,7 @@
         <div class="row mb-4">
           <div class="form-group col-md-6">
             <label for="fecha-inicio">Fecha de Inicio</label>
-            <input type="date" id="fecha-inicio" name="fecha_inicio" class="form-control" required>
+            <input type="date" id="fecha-inicio" name="fecha_inicio" class="form-control" >
           </div>
 
 
@@ -55,7 +55,7 @@
 
           <div class="form-group col-md-6">
             <label for="fecha-fin">Fecha de Fin</label>
-            <input type="date" id="fecha-fin" name="fecha_fin" class="form-control" required>
+            <input type="date" id="fecha-fin" name="fecha_fin" class="form-control" >
           </div>
         </div>
 
@@ -70,7 +70,7 @@
         <div class="row mb-4">
           <div class="form-group col-md-6">
             <label for="hora-inicio">Hora de Inicio</label>
-            <input type="time" id="hora-inicio" name="hora_inicio" class="form-control" required>
+            <input type="time" id="hora-inicio" name="hora_inicio" class="form-control" >
           </div>
 
 
@@ -82,7 +82,7 @@
 
           <div class="form-group col-md-6">
             <label for="hora-fin">Hora de Fin</label>
-            <input type="time" id="hora-fin" name="hora_fin" class="form-control" required>
+            <input type="time" id="hora-fin" name="hora_fin" class="form-control" >
           </div>
         </div>
 
@@ -96,7 +96,7 @@
         <!-- Campo: Ubicación -->
         <div class="form-group mb-4">
           <label for="ubicacion-evento">Ubicación</label>
-          <input type="text" id="ubicacion-evento" name="ubicacion_evento" class="form-control" maxlength="100" required>
+          <input type="text" id="ubicacion-evento" name="ubicacion_evento" class="form-control" maxlength="100" >
         </div>
 
 
@@ -109,7 +109,7 @@
         <!-- Campo: Tipo de Evento -->
         <div class="form-group mb-4">
           <label for="tipo-evento">Tipo de Evento</label>
-          <select id="tipo-evento" name="tipo_evento" class="form-control" required>
+          <select id="tipo-evento" name="tipo_evento" class="form-control" >
             <option value="">Seleccione un tipo</option>
             <option value="academico">Académico</option>
             <option value="cultural">Cultural</option>
@@ -128,7 +128,7 @@
         <!-- Campo: Descripción -->
         <div class="form-group mb-4">
           <label for="descripcion-evento">Descripción</label>
-          <textarea id="descripcion-evento" name="descripcion" class="form-control" rows="4" required></textarea>
+          <textarea id="descripcion-evento" name="descripcion" class="form-control" rows="4" ></textarea>
         </div>
 
 
@@ -142,7 +142,7 @@
         <div class="row mb-4">
           <div class="form-group col-md-6">
             <label for="profesor-cargo">Profesor a Cargo</label>
-            <select id="profesor-cargo" name="profesor_encargado" class="form-control" required>
+            <select id="profesor-cargo" name="profesor_encargado" class="form-control" >
               <option value="">Seleccione un profesor</option>
               {% for profesor in profesores %}
                 <option value="{{ profesor.id }}" data-telefono="{{ profesor.telefono }}">{{ profesor.nombre }} {{ profesor.primer_apellido }}</option>
@@ -159,7 +159,7 @@
 
           <div class="form-group col-md-6">
             <label for="telefono-contacto">Teléfono de Contacto</label>
-            <input type="tel" id="telefono-contacto" name="telefono_contacto" class="form-control" maxlength="15" required>
+            <input type="tel" id="telefono-contacto" name="telefono_contacto" class="form-control" maxlength="15" >
           </div>
         </div>
 
